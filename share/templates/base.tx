@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <title>SunRiser - <: block title -> { :>Status<: } :></title>
+    <!-- META -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scaleable=no, width=device-width" />
+    <base href="/">
+    <!-- STYLE -->
+    <link href="/css/reset.css" type="text/css" rel="stylesheet">
+    <link href="/css/sunriser.css" type="text/css" rel="stylesheet">
+    <!-- FONTS -->
+    <link rel="stylesheet" href="/css/font-awesome.css">
+  </head>
+  <body>
+    <noscript>
+      <div class="noscript-overlay">
+        <section class="noscript-text">
+          <h2>Bitte aktivieren Sie Javascript!</h2>
+          <p>Dieses Interface nutzt Javascript um die Möglichkeiten eines modernen Web Interfaces auch voll ausnutzen zu können. Bitte aktivieren Sie JavaScript auf Ihrem Browser oder benutzen Sie einen anderen Browser, wie z.B. Chrome oder FireFox.</p>
+        </section>
+      </div>
+    </noscript>
+    <div class="overlay"></div>
+    <main class="main">
+      <header>
+        <: block header -> { :>
+          <h1 class="sunriser">
+            <a href="#">SunRiser 8</a>
+          </h1>
+          <div class="sunriser_time">
+            <span>14.10.2014 - </span>21:39:39
+          </div>
+        <: } :>
+      </header>
+      <div class="page control_center">
+        <: block page -> { :>
+          <nav>
+            <: block nav -> { :>
+              <: include "nav.tx" :>
+            <: } :>
+          </nav>
+          <section>
+            <: block content -> { :>
+              Default content
+            <: } :>
+          </section>
+        <: } :>
+      </div>
+    </div>
+    <script src="/js/jquery-1.11.1.min.js" type="text/javascript"></script>
+    <script src="/js/sunriser.js" type="text/javascript"></script>
+  </body>
+</html>

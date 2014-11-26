@@ -1,0 +1,4 @@
+: cascade base
+: override content -> {
+  Status page
+: }

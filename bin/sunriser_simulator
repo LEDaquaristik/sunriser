@@ -1,0 +1,17 @@
+#!/usr/bin/env perl
+# PODNAME: sunriser_simulator
+# ABSTRACT: 
+
+$|=1;
+
+use strict;
+use warnings;
+
+use FindBin;
+use lib $FindBin::Dir . "/../lib";
+use SunRiser::Simulator;
+
+my $srsim = SunRiser::Simulator->new_with_options;
+$srsim->run;
+
+exit 0;

@@ -1,0 +1,51 @@
+<ul id="menu">
+  <li title="Status" id="status" class="selected first-level">
+    <i class="fa fa-clock-o fa-2x"></i>
+    <ul class="second-nav">
+      <h2 class="second-level">Zeitplanung</h2>
+      <li class="second-level">
+        <a href="/day.html">
+          <i class="fa fa-clock-o"></i>Tagesplanung
+        </a>
+      </li>
+      <li class="second-level">
+        <a href="/moon.html">
+          <i class="fa fa-moon-o"></i>Mondphasen
+        </a>
+      </li>
+    </ul>
+  </li>
+  <li title="Wettersimulation" id="weather" class="first-level">
+    <i class="fa fa-cloud fa-2x"></i>
+    <ul class="second-nav">
+      <h2 class="second-level">Wettersimulation</h2>
+      <li class="second-level">
+        <a href="/thunderstorm.html">
+          <i class="fa fa-flash"></i>Gewitter</li>
+        </a>
+      </li>
+      <li class="second-level">
+        <a href="/rain.html">
+          <i class="fa fa-cloud"></i>Wolken &amp; Regen</li>
+        </a>
+      </li>
+    </ul>
+  </li>
+  <li title="LED Farben" id="leds" class="first-level">
+    <a href="/led.html"><i class="fa fa-lightbulb-o fa-2x"></i></a>
+  </li>
+  <li title="Einstellungen" id="settings" class="first-level">
+    <i class="fa fa-gear fa-2x"></i>
+    <ul class="second-nav">
+      <h2 class="second-level">Einstellungen</h2>
+      <li class="second-level"><i class="fa fa-home"></i>System</li>
+      <li class="second-level"><i class="fa fa-sitemap"></i>Netzwerk</li>
+    </ul>
+  </li>
+  <li title="Hilfe" class="first-level">
+    <a href="/help.html"><i class="fa fa-question fa-2x"></i></a>
+  </li>
+  <li title="Abmelden" class="logout first-level">
+    <a href="/logout"><i class="fa fa-power-off fa-2x"></i></a>
+  </li>
+</ul>

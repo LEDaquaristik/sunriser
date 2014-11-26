@@ -1,0 +1,12 @@
+: cascade base
+: override title -> {
+  Login
+: }
+: override page -> {
+
+<form method="POST" action="/">
+  Passwort: <input type="text" name="password" placeholder="">
+  <input type="submit" value="Anmelden">
+</form>
+
+: }
