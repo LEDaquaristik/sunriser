@@ -313,7 +313,6 @@ sub _build_web {
 
       if ($method eq 'POST') {
         # process POST values
-        use DDP; p($req->raw_body);
       }
 
       if ($method eq 'GET' or $method eq 'POST') {
