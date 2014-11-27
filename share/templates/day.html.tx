@@ -1,0 +1,6 @@
+: cascade base { title => "Tagesplanung", nav => "planner" }
+: override content -> {
+
+
+
+: }

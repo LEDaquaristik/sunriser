@@ -1,0 +1,11 @@
+: cascade base { title => 'Gewitter', nav => 'weather' }
+: override content -> {
+
+<form method="POST">
+  Maximale Anzahl von Gewittern pro Tag:
+  <: include form::text { name => "weather#setup#X#thunder#daymax" } :>
+  <br>
+  <: include form::save :>
+</form>
+
+: }

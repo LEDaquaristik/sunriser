@@ -1,0 +1,6 @@
+: cascade base { title => "Systeminformationen", nav => "info" }
+: override content -> {
+
+<!-- simple key value table -->
+
+: }

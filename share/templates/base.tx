@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="de">
   <head>
-    <title>SunRiser - <: block title -> { :>Status<: } :></title>
+    <title><: $title ? $title ~ " | " : "" :>SunRiser</title>
     <!-- META -->
     <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scaleable=no, width=device-width" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" />
     <base href="/">
     <!-- STYLE -->
     <link href="/css/reset.css" type="text/css" rel="stylesheet">
@@ -17,7 +17,7 @@
       <div class="noscript-overlay">
         <section class="noscript-text">
           <h2>Bitte aktivieren Sie Javascript!</h2>
-          <p>Dieses Interface nutzt Javascript um die Möglichkeiten eines modernen Web Interfaces auch voll ausnutzen zu können. Bitte aktivieren Sie JavaScript auf Ihrem Browser oder benutzen Sie einen anderen Browser, wie z.B. Chrome oder FireFox.</p>
+          <p>Dieses Interface nutzt Javascript um die M&ouml;glichkeiten eines modernen Web Interfaces auch voll ausnutzen zu k&ouml;nnen. Bitte aktivieren Sie JavaScript auf Ihrem Browser oder benutzen Sie einen anderen Browser, wie z.B. <a href="http://www.google.com/chrome/">Chrome</a> oder <a href="https://www.mozilla.org/de/firefox/new/">FireFox</a>.</p>
         </section>
       </div>
     </noscript>
@@ -26,7 +26,7 @@
       <header>
         <: block header -> { :>
           <h1 class="sunriser">
-            <a href="#">SunRiser 8</a>
+            <a href="#">SunRiser 8</a><: $title ? " | " ~ $title : "" :>
           </h1>
           <div class="sunriser_time">
             <span>14.10.2014 - </span>21:39:39
@@ -37,18 +37,19 @@
         <: block page -> { :>
           <nav>
             <: block nav -> { :>
-              <: include "nav.tx" :>
+              <: include base::nav :>
             <: } :>
           </nav>
           <section>
             <: block content -> { :>
-              Default content
+              Not found
             <: } :>
           </section>
         <: } :>
       </div>
     </div>
     <script src="/js/jquery-1.11.1.min.js" type="text/javascript"></script>
+    <script src="/js/moment-with-locales.2.8.4.min.js" type="text/javascript"></script>
     <script src="/js/sunriser.js" type="text/javascript"></script>
   </body>
 </html>

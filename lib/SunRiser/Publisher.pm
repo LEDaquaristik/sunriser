@@ -1,4 +1,5 @@
 package SunRiser::Publisher;
+# ABSTRACT: SunRiser static file generation
 
 use Moo;
 
@@ -20,8 +21,23 @@ has publish_files => (
 sub _build_publish_files {
   my ( $self ) = @_;
   return [qw(
+    clouds.html
+    contact.html
+    day.html
+    help.html
     index.html
+    intro.html
+    sysinfo.html
+    led.html
+    licenses.html
     login.html
+    moon.html
+    network.html
+    other.html
+    password.html
+    rain.html
+    system.html
+    thunderstorm.html
   )];
 }
 
@@ -103,5 +119,19 @@ sub _build_template_engine {
   );
 }
 
-
 1;
+
+=head1 DESCRIPTION
+
+=head1 SUPPORT
+
+Repository
+
+  http://github.com/LEDaquaristik/sunriser
+  Pull request and additional contributors are welcome
+ 
+Issue Tracker
+
+  http://github.com/LEDaquaristik/sunriser/issues
+
+=cut

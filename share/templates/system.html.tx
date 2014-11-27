@@ -1,0 +1,20 @@
+: cascade base { title => "System Einstellungen", nav => "setup" }
+: override content -> {
+
+<form method="POST">
+  Angezeigter Name des Systems:
+  <: include form::text { name => "name" } :>
+  <br>
+  Startseite nach Anmeldung:
+  <: include form::text { name => "indexfile" } :>
+  <br>
+  Zeitzone:
+  <: include form::timezone :>
+  <br>
+  Ignoriere Sommerzeit:
+  <: include form::checkbox { name => "nodst" } :>
+  <br>
+  <: include form::save :>
+</form>
+
+: }

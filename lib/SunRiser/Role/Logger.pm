@@ -1,4 +1,5 @@
 package SunRiser::Role::Logger;
+# ABSTRACT: Role for logging
 
 use Moo::Role;
 use Log::Any::Adapter ('Stdout');
@@ -12,3 +13,18 @@ sub notice { shift->_logger->notice(@_) }
 sub warning { shift->_logger->warning(@_) }
 
 1;
+
+=head1 DESCRIPTION
+
+=head1 SUPPORT
+
+Repository
+
+  http://github.com/LEDaquaristik/sunriser
+  Pull request and additional contributors are welcome
+ 
+Issue Tracker
+
+  http://github.com/LEDaquaristik/sunriser/issues
+
+=cut

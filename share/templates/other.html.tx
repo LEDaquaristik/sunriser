@@ -1,0 +1,9 @@
+: cascade base { title => "Open Source Lizenzen", nav => "info" }
+: override content -> {
+
+<h2>Background Image</h2>
+<p>Source: <a href="https://www.flickr.com/photos/s_fox/358214800/">
+  fox_kiyo via Flickr
+</a> (CC BY-SA 2.0)</p>
+
+: }

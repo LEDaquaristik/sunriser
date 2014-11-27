@@ -1,0 +1,6 @@
+: cascade base { title => 'Wolken', nav => 'weather' }
+: override content -> {
+
+
+
+: }

@@ -1,0 +1,6 @@
+: cascade base { title => "LED konfigurieren", nav => "setup" }
+: override content -> {
+
+
+
+: }

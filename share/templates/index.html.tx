@@ -1,4 +1,6 @@
-: cascade base
+: cascade base { title => "Status", nav => "home" }
 : override content -> {
-  Status page
+
+  Homepage
+
 : }

@@ -1,0 +1,38 @@
+: cascade base { title => 'Netzwerk Einstellungen', nav => 'setup' }
+: override content -> {
+
+<form method="POST">
+  Hostname im Netzwerk:
+  <: include form::text { name => "hostname" } :>
+  <br>
+  NTP Server:
+  <: include form::text { name => "ntpserver" } :>
+  <br>
+  NTP Server benutzen:
+  <: include form::checkbox { name => "usentp" } :>
+  <br>
+  Feste IPv4 Adresse:
+  <: include form::text { name => "ip4" } :>
+  <br>
+  Feste IPv4 Adresse Subnet:
+  <: include form::text { name => "ip4_subnet" } :>
+  <br>
+  Feste IPv4 Adresse Gateway:
+  <: include form::text { name => "ip4_gateway" } :>
+  <br>
+  Feste IPv4 Adresse DNS:
+  <: include form::text { name => "ip4_dns" } :>
+  <br>
+  IPv4 Whitelist Filter aktivieren:
+  <: include form::checkbox { name => "ip4_filter" } :>
+  <br>
+  IPv4 Whitelist:
+  <: include form::text { name => "ip4_whitelist" } :>
+  <br>
+  Webserver Port:
+  <: include form::text { name => "webport" } :>
+  <br>
+  <: include form::save :>
+</form>
+
+: }

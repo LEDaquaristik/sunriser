@@ -1,4 +1,5 @@
 package SunRiser::Simulator;
+# ABSTRACT: SunRiser simulator application class
 
 use MooX qw(
   Options
@@ -310,7 +311,12 @@ sub _build_web {
         );        
       }
 
-      if ($method eq 'GET') {
+      if ($method eq 'POST') {
+        # process POST values
+        use DDP; p($req->raw_body);
+      }
+
+      if ($method eq 'GET' or $method eq 'POST') {
         my ( $file ) = $uri =~ m/^\/([^\?]*)/;
         if ($uri =~ /^\/state/) {
           return $self->_web_state;
@@ -343,3 +349,18 @@ sub run {
 }
 
 1;
+
+=head1 DESCRIPTION
+
+=head1 SUPPORT
+
+Repository
+
+  http://github.com/LEDaquaristik/sunriser
+  Pull request and additional contributors are welcome
+ 
+Issue Tracker
+
+  http://github.com/LEDaquaristik/sunriser/issues
+
+=cut

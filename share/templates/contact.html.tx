@@ -1,0 +1,6 @@
+: cascade base { title => "Kontaktinformationen", nav => "info" }
+: override content -> {
+
+
+
+: }

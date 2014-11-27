@@ -1,0 +1,15 @@
+: cascade base { title => "Hilfe" }
+: override content -> {
+
+<h2><a href="/intro.html">Einf&uuml;hrung anschauen</a></h2>
+
+<h2>Themen:</h2>
+
+<!-- 3-4 Column table -->
+
+<h2>H&auml;ufig gestellte Fragen:</h2>
+<ul>
+  <li><a href=""></a></li>
+</ul>
+
+: }
