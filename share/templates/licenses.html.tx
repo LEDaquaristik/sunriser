@@ -20,7 +20,7 @@
  */
 </pre>
 
-<h2><a href="http://momentjs.com/">Moment.js</a></h2>
+<h3><a href="http://momentjs.com/">Moment.js</a></h3>
 <pre>
 Copyright (c) 2011-2014 Tim Wood, Iskren Chernev, Moment.js contributors
 
@@ -46,7 +46,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 </pre>
 
-<h2><a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a></h2>
+<h3><a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a></h3>
 <pre>
 Font Awesome by Dave Gandy - http://fontawesome.io
 
