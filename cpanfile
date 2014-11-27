@@ -1,9 +1,6 @@
 
 requires 'Path::Tiny', '0';
 requires 'File::ShareDir::ProjectDistDir', '0';
-requires 'CSS::Minifier::XS', '0';
-requires 'JavaScript::Minifier', '0';
-requires 'MIME::Base64', '0';
 requires 'AnyEvent', '0';
 requires 'Twiggy::Server', '0';
 requires 'Plack', '0';
