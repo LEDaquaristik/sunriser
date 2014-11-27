@@ -1,6 +1,17 @@
 : cascade base { title => "Status", nav => "home" }
 : override content -> {
 
-  Homepage
+  <div id="home_not_configured">
+    <h2>Ihr Ger&auml;t wurde noch nicht konfiguriert!</h2>
+    <p>
+      Ihr Ger&auml;t wurde noch nicht konfiguriert, Sie k&ouml;nnen daf&uuml;r
+      eine Einf&uuml;hrung durchgehen die wir f&uuml;r Sie vorbereitet haben oder
+      als erfahrener Benutzer einfacher auf der linken Seite das Men&uuml;
+      erkunden oder unsere direkt Links vorschl&auml;ge nutzen.
+    </p>
+    <a class="bigbutton red" href="/intro.html">Einf&uuml;hrung anschauen</a>
+    <a class="bigbutton" href="/led.html">LED Farben einstellen</a>
+    <a class="bigbutton" href="/day.html">Tagesplanung einstellen</a>
+  </div>
 
 : }

@@ -74,7 +74,9 @@ has base_vars => (
 
 sub _build_base_vars {
   my ( $self ) = @_;
-  return {};
+  return {
+    pwm_count => 8,
+  };
 }
 
 has template_path => (

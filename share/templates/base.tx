@@ -50,6 +50,7 @@
     </div>
     <script src="/js/jquery-1.11.1.min.js" type="text/javascript"></script>
     <script src="/js/moment-with-locales.2.8.4.min.js" type="text/javascript"></script>
+    <script src="/js/interact-1.1.2.min.js" type="text/javascript"></script>
     <script src="/js/sunriser.js" type="text/javascript"></script>
   </body>
 </html>
