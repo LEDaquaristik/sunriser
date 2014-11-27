@@ -8,7 +8,6 @@ with 'SunRiser::Role::Logger';
 sub _build__logger_category { 'SR_PUBLISHER' }
 
 use Text::Xslate qw( mark_raw );
-use JavaScript::Value::Escape;
 use Path::Tiny;
 use File::ShareDir::ProjectDistDir;
 
@@ -100,7 +99,6 @@ sub _build_template_engine {
   return Text::Xslate->new(
     path => [$templates],
     function => {
-      js => sub { return mark_raw(javascript_value_escape(join("",@_))) },
       r => sub { return mark_raw(join("",@_)) },
       substr => sub {
         my($str, $offset, $length) = @_;
