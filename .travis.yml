@@ -2,6 +2,7 @@
 before_install:
   - export HARNESS_OPTIONS=j10:c HARNESS_TIMER=1
   - rm .travis.yml
+  - sudo apt-get install -qq libcdb-dev libev-dev
   - git config --global user.name "Dist Zilla Plugin TravisCI"
   - git config --global user.email $HOSTNAME":not-for-mail@travis-ci.org"
 install:
@@ -10,6 +11,7 @@ install:
   - dzil listdeps | grep -ve '^\W' | cpanm  --quiet   --notest  --skip-installed
 language: perl
 perl:
+  - 5.20
   - 5.18
   - 5.16
   - 5.14
