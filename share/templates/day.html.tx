@@ -72,6 +72,8 @@
 
 <script type="text/javascript">
 
+$(function(){
+
   document.addEventListener('DOMContentLoaded', function () {
     'use strict';
 
@@ -217,6 +219,8 @@
         event.preventDefault();
     });
   });
+
+});
 
 </script>
 
