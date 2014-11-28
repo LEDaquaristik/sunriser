@@ -109,7 +109,7 @@ header{
   background-color: white;
   width: 100%;
   height: auto;
-  margin-bottom:50px;
+  margin-bottom:100px;
   position:relative;
   display: table;
 }
@@ -263,21 +263,21 @@ nav h2{
 
 /**  footer  **/
 
-footer {
-  white-space: pre;
-  margin-bottom: 50px;
-  max-width: 1100px;
-  overflow: hidden;
-  height: 64px;
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.5);
-  font-family: monospace;
-}
-.copyright{
-  overflow-x: scroll;
-  text-overflow: ellipsis;
-  height: 100px;
-}
+/* footer { */
+/*   white-space: pre; */
+/*   margin-bottom: 50px; */
+/*   max-width: 1100px; */
+/*   overflow: hidden; */
+/*   height: 64px; */
+/*   padding: 20px; */
+/*   background-color: rgba(255, 255, 255, 0.5); */
+/*   font-family: monospace; */
+/* } */
+/* .copyright{ */
+/*   overflow-x: scroll; */
+/*   text-overflow: ellipsis; */
+/*   height: 100px; */
+/* } */
 
 /***  RESPONSIVE  ***/
 
