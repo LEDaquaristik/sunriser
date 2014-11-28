@@ -9,6 +9,7 @@
         - font awesome fix
         - NoScript
         - content
+        - footer
     - RESPONSIVE
       - max-width : 900px
       - max-width : 500px
@@ -58,7 +59,18 @@ h1{
 img{
   display:block
 }
-
+pre{
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+hr{
+  border-width: 1px 0px 0px;
+  border-color: #ddd;
+  border-style: solid;
+}
 
 .main{
   height:100%;
@@ -66,6 +78,7 @@ img{
   margin:0 auto;
   padding:0 50px;
 }
+
 /***  CLASSES  ***/
 /** Header **/
 
@@ -96,7 +109,7 @@ header{
   background-color: white;
   width: 100%;
   height: auto;
-  margin-bottom:100px;
+  margin-bottom:50px;
   position:relative;
   display: table;
 }
@@ -246,6 +259,24 @@ nav h2{
   max-width:1030px;
   margin-left: 70px; /*TODO : Ugly!  */
   min-height: 420px;
+}
+
+/**  footer  **/
+
+footer {
+  white-space: pre;
+  margin-bottom: 50px;
+  max-width: 1100px;
+  overflow: hidden;
+  height: 64px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.5);
+  font-family: monospace;
+}
+.copyright{
+  overflow-x: scroll;
+  text-overflow: ellipsis;
+  height: 100px;
 }
 
 /***  RESPONSIVE  ***/
