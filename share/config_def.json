@@ -50,6 +50,7 @@
       "name", [    "Custom name for weather setup", "text"],
       "pwms", [    "Identification of pwms effected", "csv(text)"],
       "thunder", "Thunderstorm setup", [
+        "activated", ["Produce thunderstorms", "bool", 0],
         "daymax", ["Maximum amount of thunderstorms per day", "unsigned", 1],
         "minlength", ["Minimum amount of time a thunderstorm should be (in seconds)", "unsigned", 300],
         "maxlength", ["Maximum amount of time a thunderstorm should be (in seconds)", "unsigned", 900],
@@ -72,20 +73,20 @@
         "weekdays", ["Apply moon to given weekdays (else every day)", "csv(weekday)"]
       ],
       "clouds", "Clouds setup", [
-        "activated", ["Show clouds", "bool", 1],
-        "clouddays", ["Weekdays who may have rain (else every day)", "csv(weekday)"],
+        "activated", ["Show clouds", "bool", 0],
         "cloudminlength", ["Minimum amount of time a cloud takes (in seconds)", "unsigned", 5],
         "cloudmaxlength", ["Maximum amount of time a cloud takes (in seconds)", "unsigned", 30],
         "cloudbalancelength", ["Amount of random numbers used to reach the amount of time a cloud takes", "unsigned", 2],
         "clouddarkness", ["Maximum percentage of darkness to apply on cloud", "percent", 25],
-        "cloudchance", ["Chance that a cloud comes up per minute", "percent", 15]
+        "cloudchance", ["Chance that a cloud comes up per minute", "percent", 5]
+        "weekdays", ["Weekdays who may have rain (else every day)", "csv(weekday)"],
       ],
       "rain", "Rain setup", [
         "activated", ["Make rainy days", "bool", 0],
-        "raindays", ["Weekdays who may have rain (else every day)", "csv(weekday)"],
         "rainchance", ["Chance that the day is rainy", "percent", 10],
         "raindarkness", ["Maximum percentage of darkness to apply on raindays", "percent", 20],
-        "rainwithcloud", ["Cloud adds up over maximum darkness", "bool", 0]
+        "rainwithclouds", ["Clouds add up over maximum darkness of rain", "bool", 0]
+        "weekdays", ["Weekdays who may have rain (else every day)", "csv(weekday)"],
       ]
     ]
   ]

@@ -1,0 +1,33 @@
+<script type="text/html" id="form_std_tmpl">
+<form method="POST">
+  <table>
+  <% if (formtitle) { %>
+    <tr>
+      <th colspan="2"><%=formtitle %></th>
+    </tr>
+  <% } %>
+  <% for ( var i = 0; i < fields.length; i++ ) { %>
+    <tr>
+      <td<% if (typeof fields[i].desc !== 'undefined') { %> class="tip" data-tip="<%=fields[i].desc %>"<% } %>>
+        <%=fields[i].label %>:
+      </td>
+      <td>
+        <% if (fields[i].type == 'checkbox') { %>
+          <: include form::checkbox :>
+        <% } else if (fields[i].type ==  'timezone') { %>
+          <: include form::timezone :>
+        <% } else if (fields[i].type ==  'password') { %>
+          <: include form::password :>
+        <% } else { %>
+          <: include form::text :>
+        <% } %>
+      <td>
+    </tr>
+  <% } %>
+  <tr>
+    <th colspan="2">
+      <input type="submit" value="<%=formsubmit %>">
+    </th>
+  </tr>
+</form>
+</script>
