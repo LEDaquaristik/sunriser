@@ -1,4 +1,5 @@
 /* Summary
+    - FONT
     - GLOBAL
     - CLASSES
       - Header
@@ -7,11 +8,24 @@
         - Click/Touch effect
         - font awesome fix
         - NoScript
+        - content
     - RESPONSIVE
       - max-width : 900px
       - max-width : 500px
       - max-width : 400px
 */
+
+/*** FONT ***/
+
+@font-face {
+  font-family: 'DIN1451';
+  src: url('../fonts/din_1451_std_mittelschrift.eot');
+  src: local('☺'), url('../fonts/din_1451_std_mittelschrift.woff') format('woff'),
+                  url('../fonts/din_1451_std_mittelschrift.ttf') format('truetype'),
+                  url('../fonts/din_1451_std_mittelschrift.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
 
 /*** GLOBAL ***/
 *,
@@ -30,7 +44,7 @@ body{
   font-size: 16px;
   line-height:1.5em;
   color:#444;
-  font-family:'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family:'DIN1451', 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 300;
   background : url('/img/background.jpg') no-repeat fixed center center / cover transparent;
   transform-origin: 50% 400px 0px;
@@ -119,6 +133,7 @@ nav .first-level:hover{
   background-color: #1D2029;
   color:#fff;
 }
+nav .selected,
 nav .selected a{
   color:#68D472 !important
 }
@@ -140,9 +155,10 @@ nav .selected a{
   width:300px; /* TODO : Also not the best solution. 
                   Have to check if something better exists */
 }
-.first-level .second-nav li{
+.first-level .second-nav li a{
   padding: 14px 2em 0 2em;
   height:50px;
+  display: block;
 }
 .first-level .second-nav li:hover{
   background-color:#f5f5f5
@@ -224,8 +240,7 @@ nav h2{
 }
 /**  Content  **/
 
-/* TODO : add a class to the section!*/
-section{
+.sunriser_content{
   padding: 40px;
   display:inline-block;
   max-width:1030px;

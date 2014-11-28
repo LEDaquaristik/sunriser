@@ -40,7 +40,7 @@
               <: include base::nav :>
             <: } :>
           </nav>
-          <section>
+          <section class="sunriser_content">
             <: block content -> { :>
               Not found
             <: } :>
