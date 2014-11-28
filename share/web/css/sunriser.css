@@ -60,11 +60,14 @@ header{
   width:auto;
   padding-top:40px;
 }
-.sunriser a{
+.sunriser{
   font-size:30px;
   color:white;
-  text-decoration:none;
   float:left
+}
+.sunriser a{
+  color:white;
+  text-decoration:none;
 }
 .sunriser_time{
   text-a.first-levelgn:right;
@@ -78,11 +81,10 @@ header{
 .control_center{
   background-color: white;
   width: 100%;
-  /* height: auto; */
-  height: 600px; /*Only for base! we will switch to height auto when we will
-                  have stuff to shovel in the section part*/
+  height: auto;
   margin-bottom:100px;
-  position:relative
+  position:relative;
+  display: table;
 }
 /*Navigation*/
 
@@ -90,10 +92,10 @@ nav{
   width: 70px;
   background-color: #202731;
   height: 100%;
-  display: table;
   text-align: center;
-  position:relative;
-  z-index:4
+  position:absolute;
+  z-index:4;
+  min-height: 420px;
 }
 nav a,
 nav{
@@ -117,7 +119,7 @@ nav .first-level:hover{
   background-color: #1D2029;
   color:#fff;
 }
-nav .selected{
+nav .selected a{
   color:#68D472 !important
 }
 .second-nav{
@@ -134,8 +136,9 @@ nav .selected{
   z-index:3;
   height:100%;
   overflow:hidden;
-  width:200px;
-  display:none
+  display:none;
+  width:300px; /* TODO : Also not the best solution. 
+                  Have to check if something better exists */
 }
 .first-level .second-nav li{
   padding: 14px 2em 0 2em;
@@ -218,6 +221,16 @@ nav h2{
   color:#000;
   font-size:2em;
   margin-bottom: 1em;
+}
+/**  Content  **/
+
+/* TODO : add a class to the section!*/
+section{
+  padding: 40px;
+  display:inline-block;
+  max-width:1030px;
+  margin-left: 70px; /*TODO : Ugly!  */
+  min-height: 420px;
 }
 
 /***  RESPONSIVE  ***/
