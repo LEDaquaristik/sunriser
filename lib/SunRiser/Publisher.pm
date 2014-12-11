@@ -11,6 +11,8 @@ use Text::Xslate qw( mark_raw );
 use Path::Tiny;
 use File::ShareDir::ProjectDistDir;
 use SunRiser::Config;
+use JSON::MaybeXS;
+use Carp qw( croak );
 
 has config => (
   is => 'lazy',
@@ -22,14 +24,13 @@ sub _build_config {
 }
 
 has publish_files => (
-  is => 'ro',
-  lazy => 1,
-  builder => 1,
+  is => 'lazy',
 );
 
 sub _build_publish_files {
   my ( $self ) = @_;
   return [qw(
+
     clouds.html
     contact.html
     day.html
@@ -46,6 +47,9 @@ sub _build_publish_files {
     rain.html
     system.html
     thunderstorm.html
+
+    config.json
+
   )];
 }
 
@@ -68,17 +72,41 @@ sub publish_to {
 
 sub render {
   my ( $self, $file ) = @_;
-  $self->info('Generating '.$file.' from template');
-  my $template = $file.'.tx';
-  my %vars = %{$self->base_vars};
-  $vars{file} = $file;
-  return $self->template_engine->render($template,\%vars);
+  my @parts = split('\.',$file);
+  my $ext = pop @parts;
+  my $filename = pop @parts;
+  if ($ext eq 'html') {
+    $self->info('Generating '.$file.' from template');
+    my $template = $file.'.tx';
+    my %vars = %{$self->base_vars};
+    $vars{file} = $file;
+    return $self->template_engine->render($template,\%vars);    
+  } elsif ($ext eq 'json') {
+    my $func = 'json_'.$filename;
+    $self->info('Generating '.$file.' from function '.$func);
+    return encode_json($self->$func());
+  }
+  croak "Don't know how to render ".$ext;
 }
 
+########################################################################
+
+sub json_config {
+  my ( $self ) = @_;
+  my @keys = keys %{$self->config->types};
+  return {map {
+    $_, {
+      type => $self->config->types->{$_},
+      defined $self->config->defaults->{$_}
+        ? ( default => $self->config->defaults->{$_} ) : (),
+    };
+  } @keys};
+}
+
+########################################################################
+
 has base_vars => (
-  is => 'ro',
-  lazy => 1,
-  builder => 1,
+  is => 'lazy',
 );
 
 sub _build_base_vars {
@@ -89,9 +117,7 @@ sub _build_base_vars {
 }
 
 has template_path => (
-  is => 'ro',
-  lazy => 1,
-  builder => 1,
+  is => 'lazy',
 );
 
 sub _build_template_path {
@@ -99,9 +125,7 @@ sub _build_template_path {
 }
 
 has template_engine => (
-  is => 'ro',
-  lazy => 1,
-  builder => 1,
+  is => 'lazy',
 );
 
 sub _build_template_engine {

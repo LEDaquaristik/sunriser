@@ -304,15 +304,15 @@ sub _build_web {
       }
 
       if ($uri =~ /^\/logout(.*)$/) {
-        # Trick to simulate logout with specific deleting cookie
+        # Trick to simulate logout with instead of deleting cookie
         # just garbage it with a wrong session id (safe method)
         return $self->_web_serve_file('login.html',
           'Set-Cookie' => 'sid=x'
-        );        
+        );
       }
 
       if ($method eq 'POST') {
-        # process POST values
+        use DDP; p($req->params);
       }
 
       if ($method eq 'GET' or $method eq 'POST') {

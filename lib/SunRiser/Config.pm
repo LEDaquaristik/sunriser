@@ -35,10 +35,12 @@ has init_values => (
 );
 
 has definition_file => (
-  is => 'ro',
-  lazy => 1,
-  default => sub { path(dist_dir('SunRiser'),'config_def.json')->absolute->stringify },
+  is => 'lazy',
 );
+
+sub _build_definition_file {
+  path(dist_dir('SunRiser'),'config_def.json')->absolute->stringify
+}
 
 has types => (
   is => 'lazy',
@@ -65,9 +67,7 @@ sub type {
 }
 
 has defaults => (
-  is => 'ro',
-  lazy => 1,
-  builder => 1,
+  is => 'lazy',
 );
 
 sub _build_defaults {
@@ -91,9 +91,7 @@ sub default {
 }
 
 has _definition_data => (
-  is => 'ro',
-  lazy => 1,
-  builder => 1,
+  is => 'lazy',
 );
 
 sub _build__definition_data {
