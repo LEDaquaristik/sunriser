@@ -10,6 +10,16 @@ sub _build__logger_category { 'SR_PUBLISHER' }
 use Text::Xslate qw( mark_raw );
 use Path::Tiny;
 use File::ShareDir::ProjectDistDir;
+use SunRiser::Config;
+
+has config => (
+  is => 'lazy',
+);
+
+sub _build_config {
+  my ( $self ) = @_;
+  return SunRiser::Config->new;
+}
 
 has publish_files => (
   is => 'ro',
@@ -32,7 +42,6 @@ sub _build_publish_files {
     login.html
     moon.html
     network.html
-    other.html
     password.html
     rain.html
     system.html

@@ -2,6 +2,7 @@
   "factory", [     "Is factory file (contains all data)", "bool", 0],
   "factory_version", [ "Factory version",        "text"],
   "factory_model", [ "Factory file for this model", "text"],
+  "created_by", [  "Creator of this image",      "text"],
   "hex", [         "Hex file for the microcontroller","binary"],
   "savecount", [   "Count of saves on custom file (autoset by system, always 0 on factory files)", "unsigned"],
   "updated", [     "Timestamp of last update (autoset by system)", "datetime"],

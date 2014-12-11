@@ -1,0 +1,18 @@
+#!/usr/bin/env perl
+# PODNAME: sunriser_factory
+# ABSTRACT: Build SunRiser factory image
+
+$|=1;
+
+use strict;
+use warnings;
+
+use FindBin;
+use lib $FindBin::Dir . "/../lib";
+use SunRiser::Publisher;
+use SunRiser::CDB;
+
+my $publisher = SunRiser::Publisher->new;
+my $filename = shift @ARGV;
+
+exit SunRiser::CDB->create_factory($filename,$publisher) ? 0 : 1;

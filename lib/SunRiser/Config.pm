@@ -10,16 +10,22 @@ sub _build__logger_category { 'SR_CONFIG' }
 use JSON::MaybeXS;
 use Path::Tiny;
 use File::ShareDir::ProjectDistDir;
+use Carp qw( croak );
 
 has values => (
-  is => 'ro',
-  lazy => 1,
+  is => 'lazy',
   init_arg => undef,
 );
 
 sub _build_values {
   my ( $self ) = @_;
-  return {} unless $self->has_init_values;
+  my %values = %{$self->get_defaults};
+  if ($self->has_init_values) {
+    for my $k (keys %{$self->init_values}) {
+      $values{$k} = $self->init_values->{$k};
+    }
+  }
+  return { %values };
 }
 
 has init_values => (
@@ -35,9 +41,7 @@ has definition_file => (
 );
 
 has types => (
-  is => 'ro',
-  lazy => 1,
-  builder => 1,
+  is => 'lazy',
 );
 
 sub _build_types {
@@ -51,8 +55,13 @@ sub _build_types {
 
 sub type {
   my ( $self, @args ) = @_;
-  my $key = join('#',@args);
-  return defined $self->types->{$key} ? $self->types->{$key} : undef
+  my $regex_key = join('#',map { $_ eq 'X' ? '\w+' : $_ } @args);
+  for my $key (keys %{$self->types}) {
+    if ($key =~ m/$regex_key/) {
+      return $self->types->{$key};
+    }
+  }
+  croak "Cant find definition for ".join('#',@args);
 }
 
 has defaults => (
@@ -65,15 +74,20 @@ sub _build_defaults {
   my ( $self ) = @_;
   my %defaults;
   for my $key (@{$self->_definition_data}) {
-    $defaults{$key->[0]} = $key->[3] unless $key->[4];
+    $defaults{$key->[0]} = $key->[3] unless $key->[4] or !defined $key->[3];
   }
   return { %defaults };
 }
 
 sub default {
   my ( $self, @args ) = @_;
-  my $key = join('#',@args);
-  return defined $self->defaults->{$key} ? $self->defaults->{$key} : undef
+  my $regex_key = join('#',map { $_ eq 'X' ? '\w+' : $_ } @args);
+  for my $key (keys %{$self->defaults}) {
+    if ($key =~ m/$regex_key/) {
+      return $self->defaults->{$key};
+    }
+  }
+  return undef;
 }
 
 has _definition_data => (
@@ -127,6 +141,15 @@ sub markdown {
     }
   }
   return "\n\n".join("\n",@rows)."\n\n\n";
+}
+
+sub get_defaults {
+  my ( $self, @args ) = @_;
+  return {map {
+    $_ =~ m/X/ ? () : ( $_, $self->defaults->{$_} );
+  } keys %{$self->defaults}} unless scalar @args;
+  my $base = join('#',@args);
+  croak 'TODO';
 }
 
 1;
