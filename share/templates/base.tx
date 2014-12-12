@@ -45,6 +45,9 @@
             <: block content -> { :>
               Not found
             <: } :>
+            <aside class="sunriser_dialogue">
+              <a class="help tip" data-tip="Hilfe" href="#"><i class="fa fa-question"></i></a>
+            </aside>
           </section>
         <: } :>
       </div>

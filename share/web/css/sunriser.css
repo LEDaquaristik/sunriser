@@ -9,7 +9,7 @@
         - font awesome fix
         - NoScript
         - content
-        - footer
+        - dialogue
     - RESPONSIVE
       - max-width : 900px
       - max-width : 500px
@@ -148,7 +148,8 @@ nav .first-level:hover{
 }
 nav .selected,
 nav .selected a{
-  color:#68D472 !important
+  color:#68D472 !important;
+  width: 70px;
 }
 .second-nav{
   margin-left: 70px;
@@ -254,30 +255,70 @@ nav h2{
 /**  Content  **/
 
 .sunriser_content{
-  padding: 40px;
+  position:relative;
+  padding: 40px 40px 110px 40px;
   display:inline-block;
   max-width:1030px;
-  margin-left: 70px; /*TODO : Ugly!  */
+  width:100%;
+  margin-left: 70px;
   min-height: 420px;
+  /*Text formating*/
+  font-size:18px;
+  color:#7A7A7A;
+  line-height:1.5em;
+}
+.sunriser_content h1{ font-size:1.5em; }
+.sunriser_content h2{ font-size:1.325em; }
+.sunriser_content h3{ font-size:1.25em; }
+.sunriser_content h4{ font-size:1.125em; }
+.sunriser_content h5,h6{ font-size:1em; }
+
+.sunriser_content h1,
+.sunriser_content h2,
+.sunriser_content h3,
+.sunriser_content h4,
+.sunriser_content h5,
+.sunriser_content h6{
+  color:#333;
+  padding-bottom: 20px
+}
+.sunriser_content hr + h1,
+.sunriser_content hr + h2,
+.sunriser_content hr + h3,
+.sunriser_content hr + h4,
+.sunriser_content hr + h5,
+.sunriser_content hr + h6{
+  padding: 20px 0;
 }
 
-/**  footer  **/
+/**  dialogue  **/
 
-/* footer { */
-/*   white-space: pre; */
-/*   margin-bottom: 50px; */
-/*   max-width: 1100px; */
-/*   overflow: hidden; */
-/*   height: 64px; */
-/*   padding: 20px; */
-/*   background-color: rgba(255, 255, 255, 0.5); */
-/*   font-family: monospace; */
-/* } */
-/* .copyright{ */
-/*   overflow-x: scroll; */
-/*   text-overflow: ellipsis; */
-/*   height: 100px; */
-/* } */
+.sunriser_dialogue{
+  bottom: 0px;
+  position: absolute;
+  height: 70px;
+  border-top: 1px solid #ddd;
+  width: 100%;
+  left: 0;
+  padding: 20px 20px 0px 70px;
+}
+.help{
+  position: relative;
+  right: 0px;
+  float: right;
+  background-color: #eeeeee;
+  width: 30px;
+  height: 30px;
+  padding: 4px 0px 0px 9px;
+  font-size: 18px;
+  text-decoration: none;
+  color: #A6A9AD;
+  border-radius: 50%;
+}
+
+.help:hover{
+  color: #84878a;
+}
 
 /***  RESPONSIVE  ***/
 
@@ -298,11 +339,15 @@ nav h2{
       padding: 12px 0 0 12px;
       background-color: #34495e;
   }
+  header span{
+    display:none
+  }
   .sunriser_time {
       padding-right: 20px;
   }
   nav {
       width: 100%;
+      min-height: 50px;
       height: 50px;
       font-size:12px;
   }
@@ -344,9 +389,17 @@ nav h2{
     right: 10px;
     top: 50px;
   }
-}
-@media screen and (max-width:400px) {
-  header span{
-    display:none
+  .sunriser_content {
+    padding: 60px 10px 80px 10px;
+    margin-left:0;
+    min-height: inherit;
+  }
+  .control_center {
+    margin-bottom: 0px;
+  }
+
+  .sunriser_dialogue{
+    padding: 10px 10px 0px 10px;
+    height: 50px;
   }
 }
