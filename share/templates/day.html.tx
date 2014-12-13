@@ -12,6 +12,34 @@ $(function(){
 
   'use strict';
 
+  $('#dayplanner').css({
+    width: 800,
+    height: 210
+  });
+
+  var s = Snap('#dayplanner');
+  var width = $('#dayplanner').width() - 2;
+  var border = s.rect(2,2,width - 2,206);
+  border.attr({
+    fill: "none",
+    strokeWidth: 4,
+    stroke: "#000000"
+  });
+  s.paper.line()
+  var sixhours = ( width - 8 ) / 4;
+  var sixoclock = s.paper.line(4+sixhours,0,4+sixhours,210).attr({
+    strokeWidth: 1,
+    stroke: "#000000"
+  });
+  var twelveoclock = s.paper.line(4+(sixhours*2),0,4+(sixhours*2),210).attr({
+    strokeWidth: 1,
+    stroke: "#000000"
+  });
+  var eighteenoclock = s.paper.line(4+(sixhours*3),0,4+(sixhours*3),210).attr({
+    strokeWidth: 1,
+    stroke: "#000000"
+  });
+
 });
 
 </script>
