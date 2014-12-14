@@ -1,6 +1,13 @@
 : cascade base { title => "Tagesplanung", nav => "planner" }
 : override content -> {
 
+<select>
+  <option value="pwm1">PWM1</option>
+  <option value="pwm2">PWM2</option>
+  <option value="pwm3">PWM3</option>
+  <option value="pwm4">PWM4</option>
+</select>
+<hr>
 <svg id="dayplanner"></svg>
 
 : }
@@ -25,7 +32,6 @@ $(function(){
     strokeWidth: 4,
     stroke: "#000000"
   });
-  s.paper.line()
   var sixhours = ( width - 8 ) / 4;
   var sixoclock = s.paper.line(4+sixhours,0,4+sixhours,210).attr({
     strokeWidth: 1,
@@ -39,6 +45,13 @@ $(function(){
     strokeWidth: 1,
     stroke: "#000000"
   });
+
+  var lines = [];
+  for (var i = 1; i < 10; i++) {
+    lines.push(s.paper.line(
+      0,4+(20*i),width,4+(20*i)
+    ).attr({ strokeWidth: 1, stroke: "#000000" }));
+  }
 
 });
 

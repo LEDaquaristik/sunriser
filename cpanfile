@@ -1,6 +1,6 @@
 
 requires 'AnyEvent', '0';
-requires 'CDB::TinyCDB' , '0';
+requires 'BeePack' , '0';
 requires 'File::Copy::Recursive', '0';
 requires 'File::ShareDir::ProjectDistDir', '0';
 requires 'File::Temp', '0';

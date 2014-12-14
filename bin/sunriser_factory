@@ -10,9 +10,9 @@ use warnings;
 use FindBin;
 use lib $FindBin::Dir . "/../lib";
 use SunRiser::Publisher;
-use SunRiser::CDB;
+use SunRiser::BeePack;
 
 my $publisher = SunRiser::Publisher->new;
 my $filename = shift @ARGV;
 
-exit SunRiser::CDB->new->create_factory($filename,$publisher) ? 0 : 1;
+exit SunRiser::BeePack->new->create_factory($filename,$publisher) ? 0 : 1;
