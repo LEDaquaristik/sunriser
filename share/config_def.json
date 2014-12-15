@@ -4,7 +4,7 @@
   "factory_model", [ "Factory file for this model", "text"],
   "created_by", [  "Creator of this image",      "text"],
   "hex", [         "Hex file for the microcontroller","binary"],
-  "savecount", [   "Count of saves on custom file (autoset by system, always 0 on factory files)", "unsigned"],
+  "savecount", [   "Count of saves on custom file (autoset by system, always 0 on factory files)", "integer"],
   "updated", [     "Timestamp of last update (autoset by system)", "datetime"],
   "created", [     "Timestamp of config generation (autoset by system)", "datetime"],
   "password", [    "Login password",             "text"],
@@ -19,72 +19,72 @@
   "ip4_whitelist", [ "IPv4 access whitelist",    "array(ip4)"],
   "direct_ip4", [  "Direct link IPv4",           "ip4", "192.168.0.1"],
   "direct_ip4_subnet", [ "Direct link IPv4 Subnet", "ip4", "255.255.255.0"],
-  "webport", [     "Webserver Port",             "unsigned", 80],
+  "webport", [     "Webserver Port",             "integer", 80],
   "indexfile", [   "Root file of webserver",     "text", "index.html"],
   "language", [    "Interface language (ISO 639-1)", "text", "de"],
-  "timezone", [    "Timezone UTC offset in minutes during standard time", "signed", 60],
+  "timezone", [    "Timezone UTC offset in minutes during standard time", "integer", 60],
   "nodst", [       "Ignore Daylight Saving Time", "bool", 0],
   "name", [        "Custom visual name of device", "text"],
   "hostname", [    "Hostname for the device",    "text", "sunriser"],
   "pwm#X",       "Main data of PWM X", [
-    "manager", [   "Assigned manager, 0 = unassigned, 1 = dayplanner, 2 = event", "unsigned", 0],
+    "manager", [   "Asinteger manager, 0 = unasinteger, 1 = dayplanner, 2 = event", "integer", 0],
     "name", [      "Custom name for pwm",        "text"],
     "color", [     "Color definition",           "text"]
   ],
   "web#X",       "Web files storage for file X", [
     "content", [   "Content of file",            "binary"],
     "gzip", [      "File is gzipped",            "bool"],
-    "bytes", [     "Original filesize (only required if gzipped)", "unsigned"],
+    "bytes", [     "Original filesize (only required if gzipped)", "integer"],
     "type", [      "Content type (else defined by file extension)", "text"],
     "parse", [     "Data goes through replace engine (else only done on .html)", "bool"],
     "extra_headers", [ "Extra headers to add on send out (need to be full)", "text"]
   ],
   "dayplanner",    "Day planner configuration", [
-    "marker#X", [ "Control markers for PWM X (time and percent)", "repeated(time+percent)"],
-    "deferralmax", ["Maximum random deferral (in seconds)", "unsigned", 0]
+    "marker#X", [ "Control markers for PWM X (time and percent)", "array(time,integer)"],
+    "deferralmax", ["Maximum random deferral (in seconds)", "integer", 0]
   ],
   "weather",       "Weather simulation configuration", [
-    "last_setup_id", ["Holding the last id used for new setup", "unsigned", 0],
-    "setups", [    "List of activated setups",   "csv(text)"],
+    "last_setup_id", ["Holding the last id used for new setup", "integer", 0],
+    "setups", [    "List of activated setups",   "array(text)"],
     "setup#X",     "Weather simulation setup X", [
       "name", [    "Custom name for weather setup", "text"],
-      "pwms", [    "Identification of pwms effected", "csv(text)"],
+      "pwms", [    "Identification of pwms effected", "array(text)"],
       "thunder", "Thunderstorm setup", [
         "activated", ["Produce thunderstorms", "bool", 0],
-        "daymax", ["Maximum amount of thunderstorms per day", "unsigned", 1],
-        "minlength", ["Minimum amount of time a thunderstorm should be (in seconds)", "unsigned", 300],
-        "maxlength", ["Maximum amount of time a thunderstorm should be (in seconds)", "unsigned", 900],
-        "balancelength", ["Amount of random numbers used to reach the amount of time for a thunderstorm", "unsigned", 2],
-        "mindist", ["Minimum distance between thunders (in seconds)", "unsigned", 5],
-        "maxdist", ["Maximum distance between thunders (in seconds)", "unsigned", 120],
-        "balancedist", ["Amount of random numbers used to reach the distance between thunder", "unsigned", 1],
-        "fadepercent", ["Percentage of thunderstorm which is fade in and fade out (less thunders, lower light intensity, while fade)", "percent", 60],
-        "daychance", ["Percentage for a thunderstorm to happen (Tried per day in daymax amount)", "percent", 10],
-        "darkness", ["Percentage of darkness to apply", "percent", 25],
+        "daymax", ["Maximum amount of thunderstorms per day", "integer", 1],
+        "minlength", ["Minimum amount of time a thunderstorm should be (in seconds)", "integer", 300],
+        "maxlength", ["Maximum amount of time a thunderstorm should be (in seconds)", "integer", 900],
+        "balancelength", ["Amount of random numbers used to reach the amount of time for a thunderstorm", "integer", 2],
+        "mindist", ["Minimum distance between thunders (in seconds)", "integer", 5],
+        "maxdist", ["Maximum distance between thunders (in seconds)", "integer", 120],
+        "balancedist", ["Amount of random numbers used to reach the distance between thunder", "integer", 1],
+        "fadepercent", ["Percentage of thunderstorm which is fade in and fade out (less thunders, lower light intensity, while fade)", "integer", 60],
+        "daychance", ["Percentage for a thunderstorm to happen (Tried per day in daymax amount)", "integer", 10],
+        "darkness", ["Percentage of darkness to apply", "integer", 25],
         "fixedtimes", ["Fixed times for thunderstorms (daychance still applies, daymax tries still added)", "repeated(time)"],
-        "weekdays", ["Apply thunderstorms to given weekdays (else always)", "csv(weekday)"]
+        "weekdays", ["Apply thunderstorms to given weekdays (else always)", "array(weekday)"]
       ],
       "moonphase", "Moonphase setup", [
         "activated", ["Show moonphase based on reality", "bool", 0],
         "starttime", ["Most early start at this time", "time"],
         "endtime", ["Always end at least at this time", "time"],
-        "maximum", ["Intensity of moon in percent (can be over 100%)", "unsigned", 100],
-        "deferral", ["Deferral against real moon phase (in days)", "signed", 0],
-        "weekdays", ["Apply moon to given weekdays (else every day)", "csv(weekday)"]
+        "maximum", ["Intensity of moon in percent (can be over 100%)", "integer", 100],
+        "deferral", ["Deferral against real moon phase (in days)", "integer", 0],
+        "weekdays", ["Apply moon to given weekdays (else every day)", "array(weekday)"]
       ],
       "clouds", "Clouds setup", [
         "activated", ["Show clouds", "bool", 0],
-        "cloudminlength", ["Minimum amount of time a cloud takes (in seconds)", "unsigned", 5],
-        "cloudmaxlength", ["Maximum amount of time a cloud takes (in seconds)", "unsigned", 30],
-        "cloudbalancelength", ["Amount of random numbers used to reach the amount of time a cloud takes", "unsigned", 2],
-        "clouddarkness", ["Maximum percentage of darkness to apply on cloud", "percent", 25],
-        "cloudchance", ["Chance that a cloud comes up per minute", "percent", 5],
-        "weekdays", ["Weekdays who may have rain (else every day)", "csv(weekday)"]
+        "cloudminlength", ["Minimum amount of time a cloud takes (in seconds)", "integer", 5],
+        "cloudmaxlength", ["Maximum amount of time a cloud takes (in seconds)", "integer", 30],
+        "cloudbalancelength", ["Amount of random numbers used to reach the amount of time a cloud takes", "integer", 2],
+        "clouddarkness", ["Maximum percentage of darkness to apply on cloud", "integer", 25],
+        "cloudchance", ["Chance that a cloud comes up per minute", "integer", 5],
+        "weekdays", ["Weekdays who may have rain (else every day)", "array(weekday)"]
       ],
       "rain", "Rain setup", [
         "activated", ["Make rainy days", "bool", 0],
-        "rainchance", ["Chance that the day is rainy", "percent", 10],
-        "raindarkness", ["Maximum percentage of darkness to apply on raindays", "percent", 20],
+        "rainchance", ["Chance that the day is rainy", "integer", 10],
+        "raindarkness", ["Maximum percentage of darkness to apply on raindays", "integer", 20],
         "rainwithclouds", ["Clouds add up over maximum darkness of rain", "bool", 0],
         "weekdays", ["Weekdays who may have rain (else every day)", "csv(weekday)"]
       ]

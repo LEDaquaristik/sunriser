@@ -22,6 +22,7 @@ use SunRiser::Publisher;
 use JSON::MaybeXS;
 use File::Temp qw/ tempfile tempdir tmpnam /;
 use bytes;
+use Data::MessagePack;
 
 option port => (
   is => 'ro',
@@ -284,23 +285,34 @@ sub _build_web {
         $logged_in = 1;
       }
 
+      if ($logged_in && $method eq 'PUT') {
+        my $body = $req->raw_body;
+        use DDC; pc($body); print("\n");
+        my $h = unpack('H*',$body);
+        use DDP; p($h); 1;
+        my $data = Data::MessagePack->unpack($body);
+        use DDP; p($data); 1;
+        return $self->_web_notfound;
+      }
+
       if ($uri eq '/') {
         # if logged in serve index.html
         if ($logged_in) {
           return $self->_web_serve_file('index.html');
-        }
-        # if POST check if body matches password=$password
-        if ($method eq 'POST') {
-          my $body = $req->raw_body;
-          if ($body eq 'password='.$self->password) {
-            # Set Cookie to newly generated sessionid from EPROM
-            return $self->_web_serve_file('index.html',
-              'Set-Cookie' => 'sid='.$sessionid
-            );
+        } else {
+          # if POST check if body matches password=$password
+          if ($method eq 'POST') {
+            my $body = $req->raw_body;
+            if ($body eq 'password='.$self->password) {
+              # Set Cookie to newly generated sessionid from EPROM
+              return $self->_web_serve_file('index.html',
+                'Set-Cookie' => 'sid='.$sessionid
+              );
+            }
           }
+          # if no post or password not accepted, show login.html
+          return $self->_web_serve_file('login.html');
         }
-        # if no post, logged in or password not accepted, show login.html
-        return $self->_web_serve_file('login.html');
       }
 
       if ($uri =~ /^\/logout(.*)$/) {
@@ -309,10 +321,6 @@ sub _build_web {
         return $self->_web_serve_file('login.html',
           'Set-Cookie' => 'sid=x'
         );
-      }
-
-      if ($method eq 'POST') {
-        #use DDP; p($req->params);
       }
 
       if ($method eq 'GET' or $method eq 'POST') {

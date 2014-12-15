@@ -48,7 +48,9 @@ sub _build_publish_files {
     system.html
     thunderstorm.html
 
-    config.json
+    notfound.html
+
+    sr_config_def.json
 
   )];
 }
@@ -91,7 +93,7 @@ sub render {
 
 ########################################################################
 
-sub json_config {
+sub json_sr_config_def {
   my ( $self ) = @_;
   my @keys = keys %{$self->config->types};
   return {map {

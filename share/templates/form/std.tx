@@ -23,6 +23,10 @@
         <% } %>
       <td>
     </tr>
+    <tr id="<%=fields[i].name%>_error">
+      <td colspan="2">
+      </td>
+    </tr>
   <% } %>
   <tr>
     <th colspan="2">

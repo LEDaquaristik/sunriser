@@ -57,13 +57,14 @@ sub _build_types {
 
 sub type {
   my ( $self, @args ) = @_;
-  my $regex_key = join('#',map { $_ eq 'X' ? '\w+' : $_ } @args);
-  for my $key (keys %{$self->types}) {
-    if ($key =~ m/^$regex_key$/) {
-      return $self->types->{$key};
+  my $key = join('#',@args);
+  for my $tk (keys %{$self->types}) {
+    my $tkr = $tk; $tkr =~ s/X/\\w+/g;
+    if ($key =~ m/^$tkr$/) {
+      return $self->types->{$tk};
     }
   }
-  croak "Cant find definition for ".join('#',@args);
+  croak "Cant find definition for ".$key;
 }
 
 has defaults => (
@@ -81,10 +82,11 @@ sub _build_defaults {
 
 sub default {
   my ( $self, @args ) = @_;
-  my $regex_key = join('#',map { $_ eq 'X' ? '\w+' : $_ } @args);
-  for my $key (sort { length($a) <=> length($b) } keys %{$self->defaults}) {
-    if ($key =~ m/$regex_key/) {
-      return $self->defaults->{$key};
+  my $key = join('#',@args);
+  for my $dk (keys %{$self->defaults}) {
+    my $dkr = $dk; $dkr =~ s/X/\\w+/g;
+    if ($key =~ m/^$dkr$/) {
+      return $self->defaults->{$dk};
     }
   }
   return undef;

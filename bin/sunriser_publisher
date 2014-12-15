@@ -1,0 +1,17 @@
+#!/usr/bin/env perl
+# PODNAME: sunriser_publisher
+# ABSTRACT: Generate all SunRiser web files into a directory
+
+$|=1;
+
+use strict;
+use warnings;
+
+use FindBin;
+use lib $FindBin::Dir . "/../lib";
+use SunRiser::Publisher;
+
+my $publisher = SunRiser::Publisher->new;
+my $dirname = shift @ARGV;
+
+exit $publisher->publish_to($dirname);

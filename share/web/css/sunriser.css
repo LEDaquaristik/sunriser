@@ -79,6 +79,13 @@ hr{
   padding:0 50px;
 }
 
+/***  FORMS  ***/
+
+.error{
+  color: #ff0000;
+}
+
+
 /***  CLASSES  ***/
 /** Header **/
 

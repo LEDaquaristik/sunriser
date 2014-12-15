@@ -26,7 +26,7 @@ sub create_factory {
   $values{factory} = 1;
   $values{factory_model} = 'SunRiser 8';
   my $mp = Data::MessagePack->new();
-  $mp->canonical->prefer_integer;
+  $mp->canonical->utf8->prefer_integer;
   $self->info('Creating CDB '.$filename);
   my $cdb = CDB::TinyCDB->create($filename,$filename.".$$");
   for my $k (sort { $a cmp $b } keys %values) {
@@ -55,35 +55,18 @@ sub _msgpack {
   my ( $type, $data ) = @_;
   return Data::MessagePack->pack(undef) if !defined $data;
   if ($type eq 'bool') {
-    my $h = unpack('H*',Data::MessagePack->pack(
-      $data
-        ? Data::MessagePack::true()
-        : Data::MessagePack::false()
-    ));
     return Data::MessagePack->pack(
       $data
         ? Data::MessagePack::true()
         : Data::MessagePack::false()
     );
-  } elsif ($type eq 'unsigned') {
+  } elsif ($type eq 'integer') {
     return Data::MessagePack->pack(0 + $data);
-  } elsif ($type eq 'signed') {
-    return _msgpack_signed($data);
   } elsif ($type eq 'text') {
     return Data::MessagePack->pack("$data");
   } else {
     return Data::MessagePack->pack($data);
   }
-}
-
-sub _msgpack_signed {
-  my ( $num ) = @_;
-  my $abs = abs($num);
-  return $abs <= 32 ?   pack 'C', ($num & 255)
-    : $abs <= 2 **  7 ? pack 'Cc', 0xd0, $num
-    : $abs <= 2 ** 15 ? pack 'Cn', 0xd1, $num
-    : $abs <= 2 ** 31 ? pack 'CN', 0xd2, $num
-    : croak("can't handle the absolute value of %d as signed",$abs);
 }
 
 sub _add_web {

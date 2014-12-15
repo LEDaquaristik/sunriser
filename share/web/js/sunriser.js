@@ -33,10 +33,10 @@ var sr_forms = {
       name: "name", label: "Angezeigter Name des Systems", desc: "Test"
     },{
       name: "indexfile", label: "Startseite nach Anmeldung"
+    // },{
+    //   name: "timezone", label: "Zeitzone", type: "timezone"
     },{
-      name: "timezone", label: "Zeitzone", type: "timezone"
-    },{
-      name: "nodst", label: "Ignoriere Sommerzeit"
+      name: "nodst", label: "Ignoriere Sommerzeit", type: "checkbox"
     }]
   },
   password: {
@@ -133,6 +133,9 @@ var sr_forms = {
 
 };
 
+var sr_config_def;
+var sr_config_types = {};
+
 $(function(){
 
   // All external links in new window
@@ -163,20 +166,73 @@ $(function(){
     }
   });
 
+  $(".form").each(function(){
+    $(this).html('<img src="/img/ajaxload.gif">');
+  });
+
   // Menu overlay click functionality
   $(".overlay").click(function(){
     $(".toggle").removeClass("toggle");
     $(".overlay").removeClass("actif");
   });
 
+  $(".tip").tipr({ mode: 'top' });
+
+  $.getJSON( "/sr_config_def.json", function( data ) {
+    sr_config_def = data;
+    $('body').trigger('sr_config_def');
+  });
+
+});
+
+$('body').on('sr_config_def',function(){
+
   $(".form").each(function(){
     var id = $(this).attr('id');
     sr_make_form(this,sr_forms[id]);
   });
 
-  $(".tip").tipr({ mode: 'top' });
-
 });
+
+function sr_type(){
+  var args = Array.prototype.slice.call(arguments);
+  var key = args.join('#');
+  var found;
+  $.each(sr_config_def,function(k,val){
+    if (typeof found === 'undefined') {
+      var regexp = new RegExp('^' + k.replace('X','\\w+') + '$');
+      if (regexp.test(key)) {
+        found = val['type'];
+      }      
+    }
+  });
+  return found;
+}
+
+function sr_default(){
+  var args = Array.prototype.slice.call(arguments);
+  var key = args.join('#');
+  var found;
+  $.each(sr_config_def,function(k,val){
+    if (typeof found === 'undefined') {
+      var regexp = new RegExp('^' + k.replace('X','\\w+') + '$');
+      if (regexp.test(key)) {
+        found = val['default'];
+      }      
+    }
+  });
+  return found;
+}
+
+function sr_form_error(field,error) {
+  var err = $('#' + field + '_error');
+  if (error) {
+    $('#' + field).trigger('error',error);
+    err.append('<div class="error">' + error + '</div>');
+  } else {
+    err.html('');
+  }
+}
 
 function sr_make_form(target,args){
   var template = "form_std_tmpl";
@@ -193,6 +249,56 @@ function sr_make_form(target,args){
   $(target).html(tmpl(template,args));
   $(target).find('form').submit(function(e){
     e.preventDefault();
-    console.log($(this).serialize());
+    var values = {};
+    var error;
+    $.each($(this).serializeArray(),function(i,field){
+      values[field.name] = field.value;
+    });
+    $.each(args['fields'],function(i,field){
+      if (field['type'] == 'checkbox') {
+        if (!(field['name'] in values)) {
+          values[field['name']] = $('#' + field['name']).prop("checked") ? true : false;
+        }
+      }
+      sr_form_error(field['name']); // clear error
+    });
+    $.each(values,function(k,val){
+      if (val === "") {
+        values[k] = undefined;
+      } else {
+        var type = sr_type(k);
+        if (type == 'bool') {
+          values[k] = val ? true : false;
+        } else if (type == 'integer') {
+          if (isNaN(val)) {
+            values[k] = parseInt(val);            
+          } else {
+            error = 1; sr_form_error(k,"Hier muss eine Zahl angegeben werden.");
+          }
+        } else if (type == 'text') {
+          values[k] = String(val);
+        } else if (type == 'ip4') {
+          if (ipaddr.isValid(values[k])) {
+            var ipparts = values[k].split(".");
+            var ip = [];
+            $.each(ipparts,function(i,val){
+              ip.push(parseInt(val));
+            });
+            values[k] = ip;
+          } else {
+            error = 1; sr_form_error(k,"Du musst eine g&uuml;ltige IPv4 Adresse angeben (z.b. 192.168.0.1).");
+          }
+        }
+      }
+    });
+    if (!error) {
+      // var mpack = msgpack.pack(values);
+      // console.log(mpack);
+      msgpack.upload('/', { data: values }, function(data, option, response) {
+        if (response.ok) {
+        } else {
+        }
+      });
+    }
   });
 }
