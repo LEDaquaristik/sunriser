@@ -29,11 +29,11 @@ sub create_factory {
   $mp->canonical->prefer_integer;
   $self->info('Creating CDB '.$filename);
   my $cdb = CDB::TinyCDB->create($filename,$filename.".$$");
-  for my $k (keys %values) {
-    $self->debug('Adding key '.$k.' with value '.$values{$k});
+  for my $k (sort { $a cmp $b } keys %values) {
     my $type = $config->type($k);
+    $self->debug('Adding key '.$k.' ('.$type.') with value '.$values{$k});
     $keys++;
-    $cdb->put_replace($k,_msgpack($values{$k}));
+    $cdb->put_replace($k,_msgpack($type,$values{$k}));
   }
   for my $publisher_file (@{$publisher->publish_files}) {
     $keys++;
@@ -53,16 +53,24 @@ sub create_factory {
 
 sub _msgpack {
   my ( $type, $data ) = @_;
+  return Data::MessagePack->pack(undef) if !defined $data;
   if ($type eq 'bool') {
-    return Data::MessagePack->pack($data
-      ? Data::MessagePack::true() : Data::MessagePack::false()
+    my $h = unpack('H*',Data::MessagePack->pack(
+      $data
+        ? Data::MessagePack::true()
+        : Data::MessagePack::false()
+    ));
+    return Data::MessagePack->pack(
+      $data
+        ? Data::MessagePack::true()
+        : Data::MessagePack::false()
     );
   } elsif ($type eq 'unsigned') {
     return Data::MessagePack->pack(0 + $data);
   } elsif ($type eq 'signed') {
     return _msgpack_signed($data);
   } elsif ($type eq 'text') {
-    return Data::MessagePack->pack("".$data);
+    return Data::MessagePack->pack("$data");
   } else {
     return Data::MessagePack->pack($data);
   }

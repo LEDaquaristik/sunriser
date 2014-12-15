@@ -59,7 +59,7 @@ sub type {
   my ( $self, @args ) = @_;
   my $regex_key = join('#',map { $_ eq 'X' ? '\w+' : $_ } @args);
   for my $key (keys %{$self->types}) {
-    if ($key =~ m/$regex_key/) {
+    if ($key =~ m/^$regex_key$/) {
       return $self->types->{$key};
     }
   }
@@ -82,7 +82,7 @@ sub _build_defaults {
 sub default {
   my ( $self, @args ) = @_;
   my $regex_key = join('#',map { $_ eq 'X' ? '\w+' : $_ } @args);
-  for my $key (keys %{$self->defaults}) {
+  for my $key (sort { length($a) <=> length($b) } keys %{$self->defaults}) {
     if ($key =~ m/$regex_key/) {
       return $self->defaults->{$key};
     }

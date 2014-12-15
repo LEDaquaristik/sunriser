@@ -37,7 +37,6 @@
     "bytes", [     "Original filesize (only required if gzipped)", "unsigned"],
     "type", [      "Content type (else defined by file extension)", "text"],
     "parse", [     "Data goes through replace engine (else only done on .html)", "bool"],
-    "deleted", [   "File is deleted",            "bool"],
     "extra_headers", [ "Extra headers to add on send out (need to be full)", "text"]
   ],
   "dayplanner",    "Day planner configuration", [
