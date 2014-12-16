@@ -292,13 +292,22 @@ function sr_make_form(target,args){
       }
     });
     if (!error) {
-      // var mpack = msgpack.pack(values);
-      // console.log(mpack);
-      msgpack.upload('/', { data: values }, function(data, option, response) {
-        if (response.ok) {
-        } else {
-        }
-      });
+      var mpack = msgpack.pack(values);
+      var bytesarray = new Uint8Array(mpack.length);
+      for (var i = 0; i < mpack.length; i++) {
+        bytesarray[i] = mpack[i];
+      }
+      var call_options = {
+        type: 'PUT',
+        url: '/',
+        data: bytesarray,
+        contentType: 'application/x-msgpack',
+        error: function(xhr,error,errorthrown){},
+        dataType: 'arraybuffer',
+        processData: false,
+        success: function(data,status,xhr){}
+      };
+      $.ajax(call_options);
     }
   });
 }

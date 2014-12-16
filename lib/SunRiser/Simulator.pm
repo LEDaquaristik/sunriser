@@ -288,6 +288,7 @@ sub _build_web {
       if ($logged_in && $method eq 'PUT') {
         my $body = $req->raw_body;
         my $data = Data::MessagePack->unpack($body);
+        use DDP; p($data);
         return $self->_web_notfound;
       }
 
