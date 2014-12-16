@@ -183,6 +183,7 @@ nav .selected a{
   padding: 14px 2em 0 2em;
   height:50px;
   display: block;
+  white-space: pre;
 }
 .first-level .second-nav li:hover{
   background-color:#f5f5f5
@@ -268,7 +269,6 @@ nav h2{
   position:relative;
   padding: 40px 40px 110px 110px;
   display:block;
-  max-width:1030px;
   width:100%;
   min-height: 420px;
   /*Text formating*/
