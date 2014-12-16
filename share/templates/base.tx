@@ -30,7 +30,7 @@
             <a href="/">SunRiser 8</a><: $title ? " | " ~ $title : "" :>
           </h1>
           <div class="sunriser_datetime">
-            <span id="sunriser_date">14.10.2014</span> - <span id="sunriser_time">21:39:39</span>
+            <span class="sunriser_date" id="sunriser_date">14.10.2014</span> - <span class="sunriser_time" id="sunriser_time">21:39:39</span>
           </div>
         <: } :>
       </header>
