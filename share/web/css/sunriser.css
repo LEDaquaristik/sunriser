@@ -266,11 +266,10 @@ nav h2{
 
 .sunriser_content{
   position:relative;
-  padding: 40px 40px 110px 40px;
-  display:inline-block;
+  padding: 40px 40px 110px 110px;
+  display:block;
   max-width:1030px;
   width:100%;
-  margin-left: 70px;
   min-height: 420px;
   /*Text formating*/
   font-size:18px;
@@ -300,6 +299,30 @@ nav h2{
 .sunriser_content hr + h6{
   padding: 20px 0;
 }
+.sunriser_content a {
+  color: #2980b9;
+  text-decoration: none;
+  border-bottom: 2px solid #97c1dd;
+}
+.sunriser_content input[type='password'],
+.sunriser_content input[type='text']{
+  background-color:white;
+  padding:5px;
+  border:1px solid #ccc;
+  margin:5px;
+}
+.sunriser_content input[type='submit']{
+  background-color:#2980b9;
+  padding:10px;
+  bottom:20px;
+  /* right:70px; */
+  right:20px;
+  position:absolute;
+  font-size: 18px;
+  color: white;
+  border-radius: 2px;
+  border: none;
+}
 
 /**  dialogue  **/
 
@@ -322,8 +345,9 @@ nav h2{
   padding: 4px 0px 0px 9px;
   font-size: 18px;
   text-decoration: none;
-  color: #A6A9AD;
+  color: #A6A9AD !important;
   border-radius: 50%;
+  border-bottom:0px solid transparent !important;
 }
 
 .help:hover{
