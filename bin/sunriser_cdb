@@ -1,0 +1,26 @@
+#!/usr/bin/env perl
+# PODNAME: sunriser_cdb
+# ABSTRACT: Debugging tool for msgpack cdbs of SunRiser
+
+$|=1;
+
+use strict;
+use warnings;
+
+use FindBin;
+use lib $FindBin::Dir . "/../lib";
+use CDB::TinyCDB;
+use Data::MessagePack;
+use DDP;
+
+my $filename = shift @ARGV;
+my $cdb = CDB::TinyCDB->open($filename, for_update => $filename.".$$");
+
+for my $key (sort { $a cmp $b } $cdb->keys) {
+  p($key);
+  my $msgpack = $cdb->get($key);
+  my $value = Data::MessagePack->unpack($msgpack);
+  p($value);
+}
+
+exit 0;

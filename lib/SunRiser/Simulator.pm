@@ -23,6 +23,7 @@ use JSON::MaybeXS;
 use File::Temp qw/ tempfile tempdir tmpnam /;
 use bytes;
 use Data::MessagePack;
+use CDB::TinyCDB;
 
 option port => (
   is => 'ro',
@@ -48,7 +49,7 @@ option password => (
 option changes_cdb => (
   is => 'ro',
   format => 's',
-  default => sub { 'CONFIG.CDB' },
+  default => sub { 'config.cdb' },
   doc => 'CDB file for changed variable storage',
 );
 
@@ -288,8 +289,14 @@ sub _build_web {
       if ($logged_in && $method eq 'PUT') {
         my $body = $req->raw_body;
         my $data = Data::MessagePack->unpack($body);
-        use DDP; p($data);
-        return $self->_web_notfound;
+        my $cdb = -f $self->changes_cdb
+          ? CDB::TinyCDB->open($self->changes_cdb, for_update => $self->changes_cdb.".$$")
+          : CDB::TinyCDB->create($self->changes_cdb, $self->changes_cdb.".$$");
+        for my $k (keys %{$data}) {
+          $cdb->put_replace($k,Data::MessagePack->pack($data->{$k}));
+        }
+        $cdb->finish( save_changes => 1 );
+        return $self->_web_ok;
       }
 
       if ($uri eq '/') {
