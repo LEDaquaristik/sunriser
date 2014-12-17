@@ -149,8 +149,15 @@ sub get {
   for my $cdb (@{$self->cdbs}) {
     return $cdb->get($key) if $cdb->exists($key);
   }
-  return undef if $self->no_fallback;
-  return $self->config->default($key);
+  return undef;
+}
+
+sub exists {
+  my ( $self, $key ) = @_;
+  for my $cdb (@{$self->cdbs}) {
+    return 1 if $cdb->exists($key);
+  }
+  return 0;
 }
 
 sub _web_ok { $_[0]->debug("Sending OK"); [
@@ -377,9 +384,13 @@ sub _build_web {
           } elsif ($method eq 'POST') {
             my $body = $req->raw_body;
             my $data = $self->_mp->unpack($body);
-            return $self->_web_serve_msgpack({map {
-              $_, $self->get($_)
-            } @{$data}});
+            my %values;
+            for my $key (@{$data}) {
+              if ($self->exists($key)) {
+                $values{$key} = $self->get($key);
+              }
+            }
+            return $self->_web_serve_msgpack(\%values);
           } else {
             return $self->_web_serve_file('index.html');          
           }

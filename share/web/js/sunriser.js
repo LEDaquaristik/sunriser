@@ -85,9 +85,9 @@ var sr_forms = {
     fields: [{
       name: "activated", label: "Simuliere Mondphasen nach Realit&auml;t", type: "checkbox"
     },{
-      name: "starttime", label: "Fr&uuml;ster Mondaufgang"
+      name: "starttime", label: "Fr&uuml;hster Mondaufgang"
     },{
-      name: "endtime", label: "Sp&uuml;tester Monduntergang"
+      name: "endtime", label: "Sp&auml;tester Monduntergang"
     },{
       name: "maximum", label: "Intensit&auml;t des Monds"
     },{
@@ -251,9 +251,16 @@ function sr_make_form(target,args){
     keys.push(args["fields"][i]["name"]);
   }
   sr_request_mpack('POST','/',keys,function(values){
+    console.log(values);
     $.each(args['fields'],function(i,field){
       if (values[field['name']] !== null) {
         args['fields'][i]['value'] = values[field['name']];
+      }
+      if (typeof field['value'] === 'undefined') {
+        var value = sr_default(field['name']);
+        if (typeof value !== 'undefined') {
+          field['value'] = value;
+        }
       }
     });
     $(target).html(tmpl(template,args));
@@ -321,10 +328,11 @@ function sr_request_mpack(method,url,data,success) {
     url: url,
     data: bytesarray,
     contentType: 'application/x-msgpack',
+    dataType: 'arraybuffer',
+    processData: false,
     error: function(xhr,error,errorthrown){
       // TODO error handling
     },
-    dataType: 'arraybuffer',
     success: function(data,status,xhr){
       if (xhr.getResponseHeader('content-type') == 'application/x-msgpack') {
         var bytearray = new Uint8Array(data);
@@ -334,7 +342,6 @@ function sr_request_mpack(method,url,data,success) {
         success.call(this,data,status,xhr);
       }
     },
-    processData: false,
   };
   $.ajax(call_options);
 }
