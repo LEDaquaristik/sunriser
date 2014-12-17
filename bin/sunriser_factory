@@ -12,6 +12,7 @@ use lib $FindBin::Dir . "/../lib";
 use SunRiser::Config;
 use SunRiser::Publisher;
 use SunRiser::CDB;
+use SunRiser;
 
 my $config = SunRiser::Config->new;
 my $publisher = SunRiser::Publisher->new( config => $config );
@@ -22,5 +23,5 @@ unlink($filename) if -f $filename;
 my $cdb = SunRiser::CDB->new(
   filename => $filename, config => $config
 );
-$cdb->add_factory($publisher);
+$cdb->add_factory($publisher, %{SunRiser->model_info('sr8')});
 exit $cdb->save ? 0 : 1;

@@ -1,7 +1,10 @@
 [
   "factory", [     "Is factory file (contains all data)", "bool", 0],
   "factory_version", [ "Factory version",        "text"],
-  "factory_model", [ "Factory file for this model", "text"],
+  "model", [       "File made for this model (human)", "text"],
+  "model_id", [    "File made for this model (short)", "text"],
+  "pwm_count", [   "Amount of pwms",             "integer"],
+  "showhelp", [    "Show help on the interface", "bool", 1],
   "created_by", [  "Creator of this image",      "text"],
   "hex", [         "Hex file for the microcontroller","binary"],
   "savecount", [   "Count of saves on custom file (autoset by system, always 0 on factory files)", "integer"],

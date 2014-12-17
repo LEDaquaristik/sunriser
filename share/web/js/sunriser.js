@@ -133,6 +133,7 @@ var sr_forms = {
 
 };
 
+var sr_config;
 var sr_config_def;
 var sr_config_types = {};
 
@@ -186,6 +187,25 @@ $(function(){
 });
 
 $('body').on('sr_config_def',function(){
+
+  var keys = [
+    'model','model_id','pwm_count','factory_version','language','timezone',
+    'updated','name'
+  ];
+
+  sr_request_mpack('POST','/',keys,function(values){
+    $.each(keys,function(i,key){
+      if (typeof values[key] === 'undefined') {
+        values[key] = sr_default(key);
+      }
+    });
+    sr_config = values;
+    $('body').trigger('sr_config');
+  });
+
+});
+
+$('body').on('sr_config',function(){
 
   $(".form").each(function(){
     var id = $(this).attr('id');
@@ -251,7 +271,6 @@ function sr_make_form(target,args){
     keys.push(args["fields"][i]["name"]);
   }
   sr_request_mpack('POST','/',keys,function(values){
-    console.log(values);
     $.each(args['fields'],function(i,field){
       if (values[field['name']] !== null) {
         args['fields'][i]['value'] = values[field['name']];

@@ -4,6 +4,19 @@ package SunRiser;
 use strict;
 use warnings;
 
+our %models = (
+  sr8 => {
+    model => 'SunRiser 8',
+    model_id => 'sr8',
+    pwm_count => 8,
+  },
+);
+
+sub model_info {
+  my ( $class, $model ) = @_;
+  return $models{$model};
+}
+
 1;
 
 =head1 DESCRIPTION

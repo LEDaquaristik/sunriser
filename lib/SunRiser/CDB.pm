@@ -98,9 +98,7 @@ sub save {
 
 sub add_factory {
   my ( $self, $publisher, %other ) = @_;
-  my %values = ( %{$self->config->get_defaults}, (
-    factory => 1, factory_model => 'SunRiser 8',
-  ), %other );
+  my %values = ( %{$self->config->get_defaults}, %other );
   # Add values
   for my $k (sort { $a cmp $b } keys %values) {
     $self->set($k,$values{$k});

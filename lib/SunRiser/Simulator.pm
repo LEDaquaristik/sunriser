@@ -25,19 +25,33 @@ use Data::MessagePack;
 use CDB::TinyCDB;
 use SunRiser::Publisher;
 use SunRiser::CDB;
+use SunRiser;
+
+option model => (
+  is => 'ro',
+  format => 's',
+  lazy => 1,
+  default => sub { 'sr8' },
+  doc => 'model id to simulate',
+);
+
+has model_info => (
+  is => 'lazy',
+);
+
+sub _build_model_info {
+  my ( $self ) = @_;
+  my $model_info = SunRiser->model_info($self->model);
+  croak("No model info for ".$self->model) unless $model_info;
+  return $model_info;
+}
 
 option port => (
   is => 'ro',
   format => 'i',
+  lazy => 1,
   default => sub { 9000 },
   doc => 'port for the webserver',
-);
-
-option pwms => (
-  is => 'ro',
-  format => 'i',
-  default => sub { 8 },
-  doc => 'number of pwms on the SunRiser',
 );
 
 option password => (
@@ -124,7 +138,7 @@ has state => (
 
 sub _build_state {
   my ( $self ) = @_;
-  my $pwms = $self->pwms;
+  my $pwms = $self->model_info->{pwm_count};
   return {
     # PWM name is a number but must be treated like a string
     pwms => [ map { $_."", 0 } 1..$pwms ]
@@ -149,6 +163,7 @@ sub get {
   for my $cdb (@{$self->cdbs}) {
     return $cdb->get($key) if $cdb->exists($key);
   }
+  return $self->model_info->{$key} if defined $self->model_info->{$key};
   return undef;
 }
 
@@ -157,6 +172,7 @@ sub exists {
   for my $cdb (@{$self->cdbs}) {
     return 1 if $cdb->exists($key);
   }
+  return 1 if defined $self->model_info->{$key};
   return 0;
 }
 
@@ -377,6 +393,7 @@ sub _build_web {
             my $body = $req->raw_body;
             my $data = $self->_mp->unpack($body);
             for my $k (keys %{$data}) {
+              $self->debug('Setting key '.$k);
               $self->set($k,$data->{$k});
             }
             $self->save;
@@ -385,9 +402,13 @@ sub _build_web {
             my $body = $req->raw_body;
             my $data = $self->_mp->unpack($body);
             my %values;
+            $self->debug('Requested keys: '.join(',',@{$data}));
             for my $key (@{$data}) {
               if ($self->exists($key)) {
+                $self->debug('Getting key '.$key);
                 $values{$key} = $self->get($key);
+              } else {
+                $self->debug('Key '.$key.' not found');                
               }
             }
             return $self->_web_serve_msgpack(\%values);
@@ -441,6 +462,7 @@ sub BUILD {
   my ( $self ) = @_;
   $self->w;
   $self->web;
+  $self->cdbs;
 }
 
 sub run {
