@@ -12,28 +12,6 @@ use Path::Tiny;
 use File::ShareDir::ProjectDistDir;
 use Carp qw( croak );
 
-has values => (
-  is => 'lazy',
-  init_arg => undef,
-);
-
-sub _build_values {
-  my ( $self ) = @_;
-  my %values = %{$self->get_defaults};
-  if ($self->has_init_values) {
-    for my $k (keys %{$self->init_values}) {
-      $values{$k} = $self->init_values->{$k};
-    }
-  }
-  return { %values };
-}
-
-has init_values => (
-  is => 'ro',
-  predicate => 1,
-  init_arg => 'values',
-);
-
 has definition_file => (
   is => 'lazy',
 );
@@ -59,7 +37,7 @@ sub type {
   my ( $self, @args ) = @_;
   my $key = join('#',@args);
   for my $tk (keys %{$self->types}) {
-    my $tkr = $tk; $tkr =~ s/X/\\w+/g;
+    my $tkr = $tk; $tkr =~ s/X/[\/\\-\\.\\w]+/g;
     if ($key =~ m/^$tkr$/) {
       return $self->types->{$tk};
     }
@@ -84,7 +62,7 @@ sub default {
   my ( $self, @args ) = @_;
   my $key = join('#',@args);
   for my $dk (keys %{$self->defaults}) {
-    my $dkr = $dk; $dkr =~ s/X/\\w+/g;
+    my $dkr = $dk; $dkr =~ s/X/[\/\\-\\.\\w]+/g;
     if ($key =~ m/^$dkr$/) {
       return $self->defaults->{$dk};
     }

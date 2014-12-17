@@ -70,7 +70,7 @@ var sr_forms = {
     },{
       name: "balancedist", label: "Anzahl der Faktoren f&uuml;r die Berechnung des Abstands zwischen den Blitzen"
     },{
-      name: "fadepercent", label: "Prozentualer Anteil f%uuml;r Ein/Ausblendung des Gewitters"
+      name: "fadepercent", label: "Prozentualer Anteil f&uuml;r Ein/Ausblendung des Gewitters"
     },{
       name: "daychance", label: "Wahrscheinlichkeit eines Gewitters pro maximale Anzahl von Gewittern am Tag"
     },{
@@ -246,77 +246,95 @@ function sr_make_form(target,args){
       args["fields"][i]["name"] = prefix + '#' + old_name;
     }
   }
-  $(target).html(tmpl(template,args));
-  $(target).find('form').submit(function(e){
-    e.preventDefault();
-    var values = {};
-    var error;
-    $.each($(this).serializeArray(),function(i,field){
-      values[field.name] = field.value;
-    });
+  var keys = [];
+  for ( var i = 0; i < args["fields"].length; i++ ) {
+    keys.push(args["fields"][i]["name"]);
+  }
+  sr_request_mpack('POST','/',keys,function(values){
     $.each(args['fields'],function(i,field){
-      if (field['type'] == 'checkbox') {
-        if (!(field['name'] in values)) {
-          values[field['name']] = $('#' + field['name']).prop("checked") ? true : false;
-        }
-      }
-      sr_form_error(field['name']); // clear error
-    });
-    $.each(values,function(k,val){
-      if (val === "") {
-        values[k] = undefined;
-      } else {
-        var type = sr_type(k);
-        if (type == 'bool') {
-          values[k] = val ? true : false;
-        } else if (type == 'integer') {
-          if (isNaN(val)) {
-            values[k] = parseInt(val);            
-          } else {
-            error = 1; sr_form_error(k,"Hier muss eine Zahl angegeben werden.");
-          }
-        } else if (type == 'text') {
-          values[k] = String(val);
-        } else if (type == 'ip4') {
-          if (ipaddr.isValid(values[k])) {
-            var ipparts = values[k].split(".");
-            var ip = [];
-            $.each(ipparts,function(i,val){
-              ip.push(parseInt(val));
-            });
-            values[k] = ip;
-          } else {
-            error = 1; sr_form_error(k,"Du musst eine g&uuml;ltige IPv4 Adresse angeben (z.b. 192.168.0.1).");
-          }
-        }
+      if (values[field['name']] !== null) {
+        args['fields'][i]['value'] = values[field['name']];
       }
     });
-    if (!error) {
-      sr_put_mpack('/',values,function(){
-        // TODO show success
+    $(target).html(tmpl(template,args));
+    $(target).find('form').submit(function(e){
+      e.preventDefault();
+      var values = {};
+      var error;
+      $.each($(this).serializeArray(),function(i,field){
+        values[field.name] = field.value;
       });
-    }
+      $.each(args['fields'],function(i,field){
+        if (field['type'] == 'checkbox') {
+          if (!(field['name'] in values)) {
+            values[field['name']] = $('#' + field['name']).prop("checked") ? true : false;
+          }
+        }
+        sr_form_error(field['name']); // clear error
+      });
+      $.each(values,function(k,val){
+        if (val === "") {
+          values[k] = undefined;
+        } else {
+          var type = sr_type(k);
+          if (type == 'bool') {
+            values[k] = val ? true : false;
+          } else if (type == 'integer') {
+            if (isNaN(val)) {
+              values[k] = parseInt(val);            
+            } else {
+              error = 1; sr_form_error(k,"Hier muss eine Zahl angegeben werden.");
+            }
+          } else if (type == 'text') {
+            values[k] = String(val);
+          } else if (type == 'ip4') {
+            if (ipaddr.isValid(values[k])) {
+              var ipparts = values[k].split(".");
+              var ip = [];
+              $.each(ipparts,function(i,val){
+                ip.push(parseInt(val));
+              });
+              values[k] = ip;
+            } else {
+              error = 1; sr_form_error(k,"Du musst eine g&uuml;ltige IPv4 Adresse angeben (z.b. 192.168.0.1).");
+            }
+          }
+        }
+      });
+      if (!error) {
+        sr_request_mpack('PUT','/',values,function(){
+          // TODO show success
+        });
+      }
+    });
   });
 }
 
-function sr_put_mpack(url,data,success) {
-  if (!url) {
-    url = '/';
-  }
+function sr_request_mpack(method,url,data,success) {
   var mpack = msgpack.pack(data);
   var bytesarray = new Uint8Array(mpack.length);
   for (var i = 0; i < mpack.length; i++) {
     bytesarray[i] = mpack[i];
   }
   var call_options = {
-    type: 'PUT',
+    type: method,
     url: url,
     data: bytesarray,
     contentType: 'application/x-msgpack',
-    error: function(xhr,error,errorthrown){},
+    error: function(xhr,error,errorthrown){
+      // TODO error handling
+    },
     dataType: 'arraybuffer',
+    success: function(data,status,xhr){
+      if (xhr.getResponseHeader('content-type') == 'application/x-msgpack') {
+        var bytearray = new Uint8Array(data);
+        data = msgpack.unpack(bytearray);
+      };
+      if (success) {
+        success.call(this,data,status,xhr);
+      }
+    },
     processData: false,
-    success: success
   };
   $.ajax(call_options);
 }

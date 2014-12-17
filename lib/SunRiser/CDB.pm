@@ -16,61 +16,132 @@ use IO::Compress::Gzip qw( gzip $GzipError );
 use Carp qw( croak );
 use File::ShareDir::ProjectDistDir;
 
-sub create_factory {
-  my ( $self, $filename, $publisher, %other ) = @_;
-  my $keys = 0;
-  my $config = $publisher->config;
-  my $share = path(defined $other{share}
-    ? (delete $other{share}) : (dist_dir('SunRiser'),'web'));
-  my %values = ( %{$config->values}, %other );
-  $values{factory} = 1;
-  $values{factory_model} = 'SunRiser 8';
-  my $mp = Data::MessagePack->new();
-  $mp->canonical->utf8->prefer_integer;
-  $self->info('Creating CDB '.$filename);
-  my $cdb = CDB::TinyCDB->create($filename,$filename.".$$");
+has config => (
+  is => 'ro',
+  required => 1,
+);
+
+has filename => (
+  is => 'ro',
+  required => 1,
+);
+
+has readonly => (
+  is => 'lazy',
+);
+
+sub _build_readonly { 0 }
+
+has cdb => (
+  is => 'rw',
+  lazy => 1,
+  builder => 1,
+  init_arg => undef,
+  handles => [qw( keys )],
+);
+
+sub _build_cdb {
+  my ( $self ) = @_;
+  return -f $self->filename
+    ? CDB::TinyCDB->open($self->filename, for_update => $self->filename.".$$")
+    : $self->readonly
+      ? croak("Can't open non-existing readonly database ".$self->filename)
+      : CDB::TinyCDB->create($self->filename,$self->filename.".$$");
+}
+
+has _mp => (
+  is => 'lazy',
+  init_arg => undef,
+);
+
+sub _build__mp { Data::MessagePack->new->canonical->utf8->prefer_integer }
+
+sub BUILD {
+  my ( $self ) = @_;
+  $self->cdb;
+}
+
+##### Package Methods
+
+sub set {
+  my ( $self, $key, $value ) = @_;
+  croak("Trying to set on readonly CDB ".$self->filename) if $self->readonly;
+  my $type = $self->config->type($key);
+  $self->debug('Setting key '.$key.' ('.$type.')');
+  $self->cdb->put_replace($key,$self->msgpack($type,$value));
+}
+
+sub get {
+  my ( $self, $key ) = @_;
+  return undef unless $self->cdb->exists($key);
+  my $msgpack = $self->cdb->get($key);
+  return $self->_mp->unpack($msgpack);
+}
+
+sub exists {
+  my ( $self, $key ) = @_;
+  return 0 unless $self->cdb->exists($key);
+  my $msgpack = $self->cdb->get($key);
+  my $value = $self->_mp->unpack($msgpack);
+  return defined $value ? 1 : 0;
+}
+
+sub save {
+  my ( $self ) = @_;
+  croak("Trying to save readonly CDB ".$self->filename) if $self->readonly;
+  $self->cdb->finish( save_changes => 1, reopen => 1 );
+  # Bug in CDB::TinyCDB?
+  $self->cdb(undef);
+  $self->cdb($self->_build_cdb);
+  return 1;
+}
+
+sub add_factory {
+  my ( $self, $publisher, %other ) = @_;
+  my %values = ( %{$self->config->get_defaults}, (
+    factory => 1, factory_model => 'SunRiser 8',
+  ), %other );
+  # Add values
   for my $k (sort { $a cmp $b } keys %values) {
-    my $type = $config->type($k);
-    $self->debug('Adding key '.$k.' ('.$type.') with value '.$values{$k});
-    $keys++;
-    $cdb->put_replace($k,_msgpack($type,$values{$k}));
+    $self->set($k,$values{$k});
   }
+  # Add published files
   for my $publisher_file (@{$publisher->publish_files}) {
-    $keys++;
-    $self->_add_web($cdb,$publisher_file,$publisher->render($publisher_file));
+    $self->add_web($publisher_file,$publisher->render($publisher_file));
   }
+  # Add share files
+  my $share = path(defined $other{share}
+    ? (delete $other{share})
+    : (dist_dir('SunRiser'),'web'));
   my $iter = $share->iterator({ recurse => 1 });
   while(my $share_file = $iter->()) {
     next unless $share_file->is_file;
     my $file = $share_file->relative($share)->stringify;
-    $keys++;
-    $self->_add_web($cdb,$file,scalar $share_file->slurp_raw);
+    $self->add_web($file,scalar $share_file->slurp_raw);
   }
-  $self->info('Finish CDB with '.$keys.' keys');
-  $cdb->finish;
   return 1;
 }
 
-sub _msgpack {
-  my ( $type, $data ) = @_;
-  return Data::MessagePack->pack(undef) if !defined $data;
+sub msgpack {
+  my ( $self, $type, $data ) = @_;
+  return $self->_mp->pack(undef) if !defined $data;
   if ($type eq 'bool') {
-    return Data::MessagePack->pack(
+    return $self->_mp->pack(
       $data
         ? Data::MessagePack::true()
         : Data::MessagePack::false()
     );
   } elsif ($type eq 'integer') {
-    return Data::MessagePack->pack(0 + $data);
+    return $self->_mp->pack(0 + $data);
   } elsif ($type eq 'text') {
-    return Data::MessagePack->pack("$data");
+    return $self->_mp->pack("$data");
   } else {
-    return Data::MessagePack->pack($data);
+    return $self->_mp->pack($data);
   }
 }
 
-sub _add_web {
-  my ( $self, $cdb, $f, $content ) = @_;
+sub add_web {
+  my ( $self, $f, $content ) = @_;
   my $base_key = 'web#'.$f;
   my $length = length($content);
   my $base_debug = 'Adding '.$f.' with '.$length.' bytes';
@@ -78,13 +149,15 @@ sub _add_web {
     $self->debug($base_debug.' (gzipped)');
     my $gzipped;
     gzip(\$content,\$gzipped) or croak("gzip failed: $GzipError");
-    $cdb->put_replace($base_key.'#bytes',_msgpack('unsigned',$length));
-    $cdb->put_replace($base_key.'#gzip',_msgpack('bool',1));
-    $cdb->put_replace($base_key.'#content',_msgpack('binary',$gzipped));
+    $self->set($base_key.'#bytes',$length);
+    $self->set($base_key.'#gzip',1);
+    $self->set($base_key.'#content',$gzipped);
   } else {
     $self->debug($base_debug);
-    $cdb->put_replace($base_key.'#content',_msgpack('binary',$content));
+    $self->set($base_key.'#gzip',0);
+    $self->set($base_key.'#content',$content);
   }
+  $self->set($base_key.'#deleted',0);
 }
 
 1;

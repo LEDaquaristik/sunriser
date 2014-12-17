@@ -34,10 +34,11 @@
   "web#X",       "Web files storage for file X", [
     "content", [   "Content of file",            "binary"],
     "gzip", [      "File is gzipped",            "bool"],
-    "bytes", [     "Original filesize (only required if gzipped)", "integer"],
+    "bytes", [     "Original filesize (only on gzipped)", "integer"],
     "type", [      "Content type (else defined by file extension)", "text"],
     "parse", [     "Data goes through replace engine (else only done on .html)", "bool"],
-    "extra_headers", [ "Extra headers to add on send out (need to be full)", "text"]
+    "extra_headers", [ "Extra headers to add on send out (need to be full)", "text"],
+    "deleted", [   "File is deleted",            "bool"]
   ],
   "dayplanner",    "Day planner configuration", [
     "marker#X", [ "Control markers for PWM X (time and percent)", "array(time,integer)"],

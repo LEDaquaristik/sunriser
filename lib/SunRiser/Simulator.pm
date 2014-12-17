@@ -18,12 +18,13 @@ use Plack::Util;
 use HTTP::Date;
 use Plack::Request;
 use POSIX qw( floor );
-use SunRiser::Publisher;
 use JSON::MaybeXS;
 use File::Temp qw/ tempfile tempdir tmpnam /;
 use bytes;
 use Data::MessagePack;
 use CDB::TinyCDB;
+use SunRiser::Publisher;
+use SunRiser::CDB;
 
 option port => (
   is => 'ro',
@@ -46,17 +47,55 @@ option password => (
   doc => 'password for login',
 );
 
-option changes_cdb => (
+option changesdb => (
   is => 'ro',
   format => 's',
-  default => sub { 'config.cdb' },
+  short => 'c',
+  default => sub { 'changes.cdb' },
   doc => 'CDB file for changed variable storage',
 );
 
-option system_cdbs => (
+has changes_cdb => (
+  is => 'lazy',
+  handles => [qw(
+    set
+    save
+  )],
+);
+
+sub _build_changes_cdb {
+  my ( $self ) = @_;
+  return SunRiser::CDB->new(
+    filename => $self->changesdb,
+    config => $self->config,
+  );
+}
+
+option systemdb => (
   is => 'ro',
-  format => 's',
+  format => 's@',
   predicate => 1,
+  short => 's',
+  doc => 'CDB file for read only system storages',
+);
+
+has system_cdbs => (
+  is => 'lazy',
+);
+
+sub _build_system_cdbs {
+  my ( $self ) = @_;
+  return $self->has_systemdb ? [map { SunRiser::CDB->new(
+    filename => $_,
+    config => $self->config,
+  )} @{$self->systemdb}] : [];
+}
+
+option no_fallback => (
+  is => 'ro',
+  format => 'i',
+  default => sub { 0 },
+  doc => 'Only use CDBs',
 );
 
 option webdir => (
@@ -92,6 +131,28 @@ sub _build_state {
   };
 }
 
+has cdbs => (
+  is => 'lazy',
+  init_arg => undef,
+);
+
+sub _build_cdbs {
+  my ( $self ) = @_;
+  return [
+    $self->changes_cdb,
+    (reverse @{$self->system_cdbs})
+  ];
+}
+
+sub get {
+  my ( $self, $key ) = @_;
+  for my $cdb (@{$self->cdbs}) {
+    return $cdb->get($key) if $cdb->exists($key);
+  }
+  return undef if $self->no_fallback;
+  return $self->config->default($key);
+}
+
 sub _web_ok { $_[0]->debug("Sending OK"); [
   200,
   [ "Content-Type" => "text/plain" ],
@@ -122,13 +183,13 @@ sub _web_servererror { $_[0]->debug("Nothing todo, sending Internal Server Error
   [ "INTERNAL SERVER ERROR" ]
 ]}
 
-sub _web_serve_json {
+sub _web_serve_msgpack {
   my ( $self, $data, @headers ) = @_;
-  my $json = encode_json($data);
+  my $msgpack = $self->_mp->pack($data);
   return [ 200, [
-    'Content-Type' => 'application/json',
-    'Content-Length' => length($json),
-  ], [ $json ] ];
+    'Content-Type' => 'application/x-msgpack',
+    'Content-Length' => length($msgpack),
+  ], [ $msgpack ] ];
 }
 
 sub _web_serve_file {
@@ -221,17 +282,23 @@ sub _web_serve_file {
 sub _web_state {
   my ( $self ) = @_;
   $self->debug('Sending state');
-  $self->_web_serve_json($self->state); 
+  return $self->_web_serve_msgpack($self->state); 
 }
 
 sub _web_time {
   my ( $self ) = @_;
   $self->debug('Sending time');
   my $perl_time = time; # timestamp
+  return $self->_web_serve_msgpack($perl_time);
+}
 
-  return $self->_web_serve_json({
-    time => $perl_time
-  });
+has config => (
+  is => 'lazy',
+);
+
+sub _build_config {
+  my ( $self ) = @_;
+  return SunRiser::Config->new;
 }
 
 has publisher => (
@@ -245,8 +312,17 @@ has publisher => (
 
 sub _build_publisher {
   my ( $self ) = @_;
-  return SunRiser::Publisher->new;
+  return SunRiser::Publisher->new(
+    config => $self->config
+  );
 }
+
+has _mp => (
+  is => 'lazy',
+  init_arg => undef,
+);
+
+sub _build__mp { Data::MessagePack->new->canonical->utf8->prefer_integer }
 
 has web => (
   is => 'lazy',
@@ -286,23 +362,27 @@ sub _build_web {
         $logged_in = 1;
       }
 
-      if ($logged_in && $method eq 'PUT') {
-        my $body = $req->raw_body;
-        my $data = Data::MessagePack->unpack($body);
-        my $cdb = -f $self->changes_cdb
-          ? CDB::TinyCDB->open($self->changes_cdb, for_update => $self->changes_cdb.".$$")
-          : CDB::TinyCDB->create($self->changes_cdb, $self->changes_cdb.".$$");
-        for my $k (keys %{$data}) {
-          $cdb->put_replace($k,Data::MessagePack->pack($data->{$k}));
-        }
-        $cdb->finish( save_changes => 1 );
-        return $self->_web_ok;
-      }
 
       if ($uri eq '/') {
         # if logged in serve index.html
         if ($logged_in) {
-          return $self->_web_serve_file('index.html');
+          if ($method eq 'PUT') {
+            my $body = $req->raw_body;
+            my $data = $self->_mp->unpack($body);
+            for my $k (keys %{$data}) {
+              $self->set($k,$data->{$k});
+            }
+            $self->save;
+            return $self->_web_ok;
+          } elsif ($method eq 'POST') {
+            my $body = $req->raw_body;
+            my $data = $self->_mp->unpack($body);
+            return $self->_web_serve_msgpack({map {
+              $_, $self->get($_)
+            } @{$data}});
+          } else {
+            return $self->_web_serve_file('index.html');          
+          }
         } else {
           # if POST check if body matches password=$password
           if ($method eq 'POST') {
@@ -327,15 +407,12 @@ sub _build_web {
         );
       }
 
-      if ($method eq 'GET' or $method eq 'POST') {
+      if ($method eq 'GET') {
         my ( $file ) = $uri =~ m/^\/([^\?]*)/;
         if ($uri =~ /^\/state/) {
           return $self->_web_state;
         } elsif ($uri =~ /^\/time/) {
-          my $perl_time = time; # timestamp
-          return $self->_web_serve_json({
-            time => $perl_time
-          });
+          return $self->_web_time;
         }
         # else serve file from storage
         # gives back 200 on success and 404 on not found

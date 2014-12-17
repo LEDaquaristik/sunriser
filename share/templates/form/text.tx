@@ -1,1 +1,1 @@
-<input type="text" name="<%=fields[i].name%>">
+<input type="text" name="<%=fields[i].name%>"<% if (fields[i].value) { %> value="<%=fields[i].value%>"<% } %>>
