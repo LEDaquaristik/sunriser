@@ -349,8 +349,19 @@ function sr_request_mpack(method,url,data,success) {
     contentType: 'application/x-msgpack',
     dataType: 'arraybuffer',
     processData: false,
+    cache: false,
     error: function(xhr,error,errorthrown){
       // TODO error handling
+    },
+    beforeSend: function(xhr,settings){
+      if (method == 'PUT') {
+        // TODO activate saving overlay      
+      }
+    },
+    complete: function(xhr,status){
+      if (method == 'PUT') {
+        // TODO deactivate saving overlay
+      }
     },
     success: function(data,status,xhr){
       if (xhr.getResponseHeader('content-type') == 'application/x-msgpack') {
