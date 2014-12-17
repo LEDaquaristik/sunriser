@@ -345,7 +345,7 @@ nav h2{
 }
 .sunriser_content label:before{
   content:"";
-  border-color: red;
+  border-color: #3498DB;
   border-width: 2px;
   border-style: none solid solid none;
   display: block;
