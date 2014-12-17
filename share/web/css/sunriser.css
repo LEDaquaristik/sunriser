@@ -158,7 +158,6 @@ nav .first-level:hover{
 nav .selected,
 nav .selected a{
   color:#68D472 !important;
-  width: 70px;
 }
 .second-nav{
   margin-left: 70px;
@@ -182,7 +181,6 @@ nav .selected a{
   padding: 14px 2em 0 2em;
   height:50px;
   display: block;
-  white-space: pre;
 }
 .first-level .second-nav li:hover{
   background-color:#f5f5f5
@@ -307,10 +305,13 @@ nav h2{
 .sunriser_content input[type='text']{
   background-color:white;
   padding:8px;
-  border:2px solid #dce4eb;
+  border:2px solid #ccd7e2;
   border-radius:3px;
   margin:5px;
   width:100%;
+}
+.sunriser_content input[type='text']{
+  text-align:right
 }
 .sunriser_content input[type='submit']{
   background-color:#2980b9;
@@ -326,7 +327,7 @@ nav h2{
 }
 .sunriser_content select{
   background: white;
-  border: 2px solid #dce4eb;
+  border: 2px solid #ccd7e2;
   padding: 8px 30px 8px 8px;
   border-radius: 3px;
 }
@@ -361,7 +362,8 @@ nav h2{
   width: 100px;
   height: 35px;
   position:relative;
-  display:table
+  display:table;
+  border-top: 10px solid transparent;
 }
 .sunriser_content .checkbox_switch{
   float: right;
@@ -369,7 +371,7 @@ nav h2{
   width: 100px;
   height: 35px;
   border-radius: 3px;
-  border: 2px solid #DCE4EB;
+  border: 2px solid #ccd7e2;
   position:relative;
 }
 .sunriser_content .checkbox_switch::before{
@@ -549,12 +551,12 @@ nav h2{
     display:table;
   }
   .first-level:first-child .second-nav {
-      border-width: 0 1px 1px 0;
+    border-width: 0 1px 1px 0;
   }
   .first-level.toggle::before {
-      border-color: transparent transparent #FFF transparent;
-      margin: 21px 0px 0px -3px;
-      left:auto
+    border-color: transparent transparent #FFF transparent;
+    margin: 21px 0px 0px -3px;
+    left:auto
   }
   .noscript-text{
     margin: 0;

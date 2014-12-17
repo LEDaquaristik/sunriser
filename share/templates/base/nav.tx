@@ -7,7 +7,9 @@
     <ul class="second-nav">
       <h2 class="second-level"></h2>
       <li class="second-level">
-        <a href="/day.html"><i class="fa fa-clock-o"></i>Tagesplanung</a>
+        <a href="/day.html">
+          <i class="fa fa-clock-o"></i>Tagesplanung
+        </a>
       </li>
     </ul>
   </li>
@@ -16,16 +18,24 @@
     <ul class="second-nav">
       <h2 class="second-level"></h2>
       <li class="second-level">
-        <a href="/thunderstorm.html"><i class="fa fa-flash"></i>Gewitter</a>
+        <a href="/thunderstorm.html">
+          <i class="fa fa-flash"></i>Gewitter
+        </a>
       </li>
       <li class="second-level">
-        <a href="/moon.html"><i class="fa fa-moon-o"></i>Mondphasen</a>
+        <a href="/moon.html">
+          <i class="fa fa-moon-o"></i>Mondphasen
+        </a>
       </li>
       <li class="second-level">
-        <a href="/clouds.html"><i class="fa fa-cloud"></i>Wolken</a>
+        <a href="/clouds.html">
+          <i class="fa fa-cloud"></i>Wolken
+        </a>
       </li>
       <li class="second-level">
-        <a href="/rain.html"><i class="fa fa-cloud"></i>Regentage</a>
+        <a href="/rain.html">
+          <i class="fa fa-cloud"></i>Regentage
+        </a>
       </li>
     </ul>
   </li>
@@ -34,16 +44,24 @@
     <ul class="second-nav">
       <h2 class="second-level"></h2>
       <li class="second-level">
-        <a href="/password.html"><i class="fa fa-key"></i>Passwort &auml;ndern</a>
+        <a href="/password.html">
+          <i class="fa fa-key"></i>Passwort &auml;ndern
+        </a>
       </li>
       <li class="second-level">
-        <a href="/led.html"><i class="fa fa-lightbulb-o fa-2x"></i>LED</a>
+        <a href="/led.html">
+          <i class="fa fa-lightbulb-o fa-2x"></i>LED
+        </a>
       </li>
       <li class="second-level">
-        <a href="/system.html"><i class="fa fa-gear"></i>System</a>
+        <a href="/system.html">
+          <i class="fa fa-gear"></i>System
+        </a>
       </li>
       <li class="second-level">
-        <a href="/network.html"><i class="fa fa-sitemap"></i>Netzwerk</a>
+        <a href="/network.html">
+          <i class="fa fa-sitemap"></i>Netzwerk
+        </a>
       </li>
     </ul>
   </li>
@@ -52,20 +70,30 @@
     <ul class="second-nav">
       <h2 class="second-level"></h2>
       <li class="second-level">
-        <a href="/contact.html"><i class="fa fa-phone"></i>Kontakt</a>
+        <a href="/contact.html">
+          <i class="fa fa-phone"></i>Kontakt
+        </a>
       </li>
       <li class="second-level">
-        <a href="/licenses.html"><i class="fa fa-copyright"></i>Lizenzen</a>
+        <a href="/licenses.html">
+          <i class="fa fa-copyright"></i>Lizenzen
+        </a>
       </li>
       <li class="second-level">
-        <a href="https://github.com/LEDaquaristik/sunriser"><i class="fa fa-github"></i>Quellcode</a>
+        <a href="https://github.com/LEDaquaristik/sunriser">
+          <i class="fa fa-github"></i>Quellcode
+        </a>
       </li>
       <li class="second-level">
-        <a href="/sysinfo.html"><i class="fa fa-info-circle"></i>Systeminformationen</a>
+        <a href="/sysinfo.html">
+          <i class="fa fa-info-circle"></i>Systeminformationen
+        </a>
       </li>
     </ul>
   </li>
   <li title="Abmelden" class="logout first-level">
-    <a href="/logout"><i class="fa fa-power-off fa-2x"></i></a>
+    <a href="/logout">
+      <i class="fa fa-power-off fa-2x"></i>
+    </a>
   </li>
 </ul>
