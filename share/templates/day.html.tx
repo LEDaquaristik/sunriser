@@ -1,12 +1,14 @@
 : cascade base { title => "Tagesplanung", nav => "planner" }
 : override content -> {
 
-<select>
-  <option value="pwm1">PWM1</option>
-  <option value="pwm2">PWM2</option>
-  <option value="pwm3">PWM3</option>
-  <option value="pwm4">PWM4</option>
-</select>
+<label>
+  <select>
+    <option value="pwm1">PWM1</option>
+    <option value="pwm2">PWM2</option>
+    <option value="pwm3">PWM3</option>
+    <option value="pwm4">PWM4</option>
+  </select>
+</label>
 <hr>
 <svg id="dayplanner"></svg>
 

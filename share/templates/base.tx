@@ -12,6 +12,7 @@
     <link href="/css/sunriser.css" type="text/css" rel="stylesheet">
     <!-- FONTS -->
     <link rel="stylesheet" href="/css/font-awesome.css">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
   </head>
   <body>
     <noscript>
@@ -45,10 +46,10 @@
             <: block content -> { :>
               Diese Seite wurde nicht gefunden!
             <: } :>
-            <aside class="sunriser_dialogue">
-              <a class="help tip" data-tip="Hilfe" href="#"><i class="fa fa-question"></i></a>
-            </aside>
           </section>
+          <aside class="sunriser_dialogue">
+            <a class="help tip" data-tip="Hilfe" href="help.html"><i class="fa fa-question"></i></a>
+          </aside>
         <: } :>
       </div>
       <!-- <footer> -->

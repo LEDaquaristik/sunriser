@@ -43,11 +43,10 @@ body{
 }
 
 body{
-  font-size: 16px;
+  font-size: 18px;
   line-height:1.5em;
   color:#444;
   font-family:'DIN1451', 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-weight: 300;
   background : url('/img/background.jpg') no-repeat fixed center center / cover transparent;
   transform-origin: 50% 400px 0px;
 }
@@ -105,7 +104,7 @@ header{
   text-decoration:none;
 }
 .sunriser_datetime{
-  text-a.first-levelgn:right;
+  text-align:right;
   font-size:24px;
   color:white;
   float:right;
@@ -272,9 +271,9 @@ nav h2{
   width:100%;
   min-height: 420px;
   /*Text formating*/
-  font-size:18px;
-  color:#7A7A7A;
+  color:#5f768a;
   line-height:1.5em;
+  font-family:"Open Sans"
 }
 .sunriser_content h1{ font-size:1.5em; }
 .sunriser_content h2{ font-size:1.325em; }
@@ -307,21 +306,55 @@ nav h2{
 .sunriser_content input[type='password'],
 .sunriser_content input[type='text']{
   background-color:white;
-  padding:5px;
-  border:1px solid #ccc;
+  padding:8px;
+  border:2px solid #dce4eb;
+  border-radius:3px;
   margin:5px;
+  width:100%;
 }
 .sunriser_content input[type='submit']{
   background-color:#2980b9;
   padding:10px;
-  bottom:20px;
-  /* right:70px; */
-  right:20px;
+  bottom:11px;
+  right:85px;
   position:absolute;
   font-size: 18px;
   color: white;
   border-radius: 2px;
   border: none;
+  z-index:1;
+}
+.sunriser_content input[type='checkbox']{
+  float:right
+}
+.sunriser_content table{
+  width:100%
+}
+.sunriser_content tr{
+  min-height:50px
+}
+.sunriser_content select{
+  background: white;
+  border: 2px solid #dce4eb;
+  padding: 8px 30px 8px 8px;
+  border-radius: 3px;
+}
+
+.sunriser_content label{
+  position:relative
+}
+.sunriser_content label:before{
+  content:"";
+  border-color: red;
+  border-width: 2px;
+  border-style: none solid solid none;
+  display: block;
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  transform: rotate(45deg);
+  right: 19px;
+  top: 9px;
 }
 
 /**  dialogue  **/
@@ -333,19 +366,19 @@ nav h2{
   border-top: 1px solid #ddd;
   width: 100%;
   left: 0;
-  padding: 20px 20px 0px 70px;
+  padding: 20px 35px 0px 70px;
 }
 .help{
   position: relative;
   right: 0px;
   float: right;
-  background-color: #eeeeee;
+  background-color: #ddd;
   width: 30px;
   height: 30px;
   padding: 4px 0px 0px 9px;
   font-size: 18px;
   text-decoration: none;
-  color: #A6A9AD !important;
+  color: #95989b !important;
   border-radius: 50%;
   border-bottom:0px solid transparent !important;
 }
@@ -477,9 +510,10 @@ nav h2{
   .control_center {
     margin-bottom: 0px;
   }
-
   .sunriser_dialogue{
-    padding: 10px 10px 0px 10px;
-    height: 50px;
+    padding: 20px 10px 0px 70px;
+  }
+  .sunriser_content input[type='submit']{
+    right:60px;
   }
 }
