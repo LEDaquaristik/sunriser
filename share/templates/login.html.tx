@@ -2,7 +2,7 @@
 : override page -> {
 
 <form class="login" method="POST" action="/">
-  <input class="login_input" type="text" name="password" placeholder="Passwort">
+  <input class="login_input" type="password" name="password" placeholder="Passwort">
   <input class="login_button" type="submit" value="Anmelden">
 </form>
 

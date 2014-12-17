@@ -1,1 +1,1 @@
-<input type="checkbox" name="<%=fields[i].name%>"<% if (fields[i].value) { %> checked="checked"<% } %>>
+ <div class="checkbox"><input type="checkbox" name="<%=fields[i].name%>"<% if (fields[i].value) { %> checked="checked"<% } %>><label class="checkbox_switch"></label></div>

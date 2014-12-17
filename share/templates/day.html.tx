@@ -1,7 +1,7 @@
 : cascade base { title => "Tagesplanung", nav => "planner" }
 : override content -> {
 
-<label>
+<label class="select_style">
   <select>
     <option value="pwm1">PWM1</option>
     <option value="pwm2">PWM2</option>

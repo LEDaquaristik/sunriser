@@ -324,15 +324,6 @@ nav h2{
   border: none;
   z-index:1;
 }
-.sunriser_content input[type='checkbox']{
-  float:right
-}
-.sunriser_content table{
-  width:100%
-}
-.sunriser_content tr{
-  min-height:50px
-}
 .sunriser_content select{
   background: white;
   border: 2px solid #dce4eb;
@@ -340,12 +331,12 @@ nav h2{
   border-radius: 3px;
 }
 
-.sunriser_content label{
+.sunriser_content .select_style{
   position:relative
 }
-.sunriser_content label:before{
+.sunriser_content .select_style:before{
   content:"";
-  border-color: #3498DB;
+  border-color: #68D472;
   border-width: 2px;
   border-style: none solid solid none;
   display: block;
@@ -355,6 +346,74 @@ nav h2{
   transform: rotate(45deg);
   right: 19px;
   top: 9px;
+}
+
+/*checkbox styling*/
+.sunriser_content  .checkbox input[type="checkbox"]{
+  height: 100%;
+  position: absolute;
+  z-index: 4;
+  width: 100%;
+  opacity: 0;
+}
+.sunriser_content .checkbox{
+  float: right;
+  width: 100px;
+  height: 35px;
+  position:relative;
+  display:table
+}
+.sunriser_content .checkbox_switch{
+  float: right;
+  background: none repeat scroll 0% 0% white;
+  width: 100px;
+  height: 35px;
+  border-radius: 3px;
+  border: 2px solid #DCE4EB;
+  position:relative;
+}
+.sunriser_content .checkbox_switch::before{
+  content:"";
+  height:27px;
+  width:27px;
+  background:#ccc;
+  position:absolute;
+  border-radius:2px;
+  z-index: 2;
+  margin:2px 0 0 2px;
+  transition-duration: 0.2s;
+}
+.sunriser_content .checkbox_switch::after{
+  content:"OFF";
+  position: absolute;
+  right:20px;
+  z-index:1;
+}
+.sunriser_content input[type="checkbox"]:checked + .checkbox_switch::after{
+  content:"ON";
+  left:20px;
+}
+.sunriser_content input[type="checkbox"]:checked + .checkbox_switch::before{
+  margin:2px 0 0 67px;
+  background-color:#68D472;
+  transition-duration: 0.2s;
+}
+
+/*table stylin'*/
+
+.sunriser_content table{
+  width:100%
+}
+.table_separation{
+  border-bottom:1px solid #eee;
+  height: 70px;
+  border-top: 12px solid #FFF;
+}
+.sunriser_content th{
+  float: left;
+  font-size: 2em;
+  padding: 10px 0;
+  border-bottom: 2px solid #ccc;
 }
 
 /**  dialogue  **/
@@ -384,24 +443,24 @@ nav h2{
 }
 
 .help:hover{
-  color: #84878a;
+  color: #77797c !important;
 }
 
 /** Login **/
 
 .login{
   left: 50%;
-  position: relative;
-  margin-left: -150px;
+  position: absolute;
+  margin: 150px 0 0 -150px;
   width:300px;
 }
 .login_input{
-  background-color:rgba(255,255,255,0.5);
-  border:1px solid rgba(255,255,255,0.5);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  background-color: transparent;
   border-radius:2px;
-  color:#111;
+  color:white;
   width:300px;
-  padding:10px 10px 10px 50px;
+  padding:15px 15px 15px 65px;
   margin-bottom: 1em;
   font-size: 16px;
 }
@@ -411,8 +470,8 @@ nav h2{
   position:absolute;
   color:white;
   font-size:20px;
-  margin:6px 0 0 5px;
-  padding:5px 5px 3px 5px;
+  margin: 8px 0px 0px 5px;
+  padding: 7px 13px 5px;
   border-right:1px solid white;
 }
 .login_button{
@@ -423,8 +482,9 @@ nav h2{
   color:green;
   text-align:center;
   width:300px;
-  padding:10px;
-  text-transform:uppercase
+  padding:15px;
+  text-transform:uppercase;
+  font-weight:bold
 }
 .login_button:hover{
   opacity:0.9;
