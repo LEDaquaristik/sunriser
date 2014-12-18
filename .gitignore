@@ -2,3 +2,5 @@ SunRiser-*
 .build
 *.cdb
 *.cdb.*
+*.bee
+*.bee.*

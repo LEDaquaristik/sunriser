@@ -190,7 +190,7 @@ $('body').on('sr_config_def',function(){
 
   var keys = [
     'model','model_id','pwm_count','factory_version','language','timezone',
-    'updated','name'
+    'updated','name','showhelp','showexpert'
   ];
 
   sr_request_mpack('POST','/',keys,function(values){

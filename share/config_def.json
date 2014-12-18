@@ -5,6 +5,7 @@
   "model_id", [    "File made for this model (short)", "text"],
   "pwm_count", [   "Amount of pwms",             "integer"],
   "showhelp", [    "Show help on the interface", "bool", 1],
+  "showexpert", [  "Show expert settings", "bool", 1],
   "created_by", [  "Creator of this image",      "text"],
   "hex", [         "Hex file for the microcontroller","binary"],
   "savecount", [   "Count of saves on custom file (autoset by system, always 0 on factory files)", "integer"],
@@ -44,7 +45,7 @@
     "deleted", [   "File is deleted",            "bool"]
   ],
   "dayplanner",    "Day planner configuration", [
-    "marker#X", [ "Control markers for PWM X (time and percent)", "array(time,integer)"],
+    "marker#X", [ "Control markers for PWM X (time and percent)", "array(time,percent)"],
     "deferralmax", ["Maximum random deferral (in seconds)", "integer", 0]
   ],
   "weather",       "Weather simulation configuration", [
@@ -66,6 +67,7 @@
         "daychance", ["Percentage for a thunderstorm to happen (Tried per day in daymax amount)", "integer", 10],
         "darkness", ["Percentage of darkness to apply", "integer", 25],
         "fixedtimes", ["Fixed times for thunderstorms (daychance still applies, daymax tries still added)", "repeated(time)"],
+        "deferralmax", ["Maximum random deferral (in seconds)", "integer", 0],
         "weekdays", ["Apply thunderstorms to given weekdays (else always)", "array(weekday)"]
       ],
       "moonphase", "Moonphase setup", [
