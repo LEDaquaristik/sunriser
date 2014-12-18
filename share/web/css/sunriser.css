@@ -77,6 +77,9 @@ hr{
   border-color: #ddd;
   border-style: solid;
 }
+svg{
+  width:100%
+}
 
 .main{
   height:100%;
@@ -534,19 +537,23 @@ nav h2{
   }
 }
 @media screen and (max-width:700px) {
-  header .sunriser_date{
-    display:none
+  header{
+    padding-top:20px
   }
-}
-@media screen and (max-width:600px) {
   .sunriser{
     width:100%
   }
-  .sunriser_time {
-    display:none
+  .sunriser_datetime {
+    float: left;
+    padding-top: 12px;
+    opacity: 0.75;
   }
 }
 @media screen and (max-width:500px) {
+
+  .sunriser_datetime {
+    display:none
+  }
   body{
     background : none;
   }
