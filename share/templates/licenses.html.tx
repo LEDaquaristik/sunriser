@@ -101,7 +101,7 @@ The use of these trademarks does not indicate endorsement of the trademark holde
 <h2>Frontend |  <a href="https://www.flickr.com/photos/s_fox/358214800/">Background Image</a></h2>
 <hr>
 <a href="https://www.flickr.com/photos/s_fox/358214800/">
-<img src="/img/background.jpg" width="500" height="333">
+<img class="img_resp" src="/img/background.jpg" width="500" height="333">
 </a>
 <pre>
 Source: fox_kiyo via Flickr (CC BY-SA 2.0)

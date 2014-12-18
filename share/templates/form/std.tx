@@ -1,11 +1,10 @@
 <script type="text/html" id="form_std_tmpl">
+
+<% if (formtitle) { %>
+    <h2 class="form_title"><%=formtitle %></h2>
+<% } %>
 <form method="POST">
   <table>
-  <% if (formtitle) { %>
-    <tr>
-      <th colspan="2"><%=formtitle %></th>
-    </tr>
-  <% } %>
   <% for ( var i = 0; i < fields.length; i++ ) { %>
     <tr class="table_separation">
       <td<% if (typeof fields[i].desc !== 'undefined') { %> class="tip" data-tip="<%=fields[i].desc %>"<% } %>>
@@ -29,9 +28,9 @@
     </tr>
   <% } %>
   <tr>
-    <th colspan="2">
+    <td colspan="2">
       <input type="submit" value="<%=formsubmit %>">
-    </th>
+    </td>
   </tr>
 </form>
 </script>

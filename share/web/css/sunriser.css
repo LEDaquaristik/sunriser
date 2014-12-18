@@ -58,7 +58,11 @@ h1{
 }
 
 img{
-  display:block
+  display:block;
+}
+.img_resp{
+  width:100%;
+  height:100%;
 }
 pre{
   white-space: pre-wrap;
@@ -99,7 +103,11 @@ header{
 .sunriser{
   font-size:30px;
   color:white;
-  float:left
+  float:left;
+  white-space: nowrap;
+  width: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .sunriser a{
   color:white;
@@ -320,7 +328,6 @@ nav h2{
   padding:8px;
   border:2px solid #ccd7e2;
   border-radius:3px;
-  margin:5px;
   width:100%;
 }
 .sunriser_content input[type='text']{
@@ -399,7 +406,7 @@ nav h2{
   content:"";
   height:27px;
   width:27px;
-  background:#ccc;
+  background-color:#CCD7E2;
   position:absolute;
   border-radius:2px;
   z-index: 2;
@@ -422,7 +429,7 @@ nav h2{
   transition-duration: 0.2s;
 }
 
-/*table stylin'*/
+/*form & table stylin'*/
 
 .sunriser_content table{
   width:100%
@@ -430,13 +437,16 @@ nav h2{
 .table_separation{
   border-bottom:1px solid #eee;
   height: 70px;
-  border-top: 12px solid #FFF;
 }
-.sunriser_content th{
-  float: left;
+.sunriser_content .form_title{
+  display: inline-block;
+  border-bottom: 2px solid #CCC;
+  padding: 10px 0px;
   font-size: 2em;
-  padding: 10px 0;
-  border-bottom: 2px solid #ccc;
+  margin-bottom: 0.5em;
+}
+.sunriser_content td{
+  vertical-align:middle
 }
 
 /**  dialogue  **/
@@ -523,6 +533,19 @@ nav h2{
     padding:0 10px;
   }
 }
+@media screen and (max-width:700px) {
+  header .sunriser_date{
+    display:none
+  }
+}
+@media screen and (max-width:600px) {
+  .sunriser{
+    width:100%
+  }
+  .sunriser_time {
+    display:none
+  }
+}
 @media screen and (max-width:500px) {
   body{
     background : none;
@@ -534,12 +557,6 @@ nav h2{
       height: 50px;
       padding: 12px 0 0 12px;
       background-color: #34495e;
-  }
-  header span{
-    display:none
-  }
-  .sunriser_time {
-      padding-right: 20px;
   }
   nav {
       width: 100%;
@@ -562,8 +579,10 @@ nav h2{
   }
   .second-nav{
     top:50px;
+    left:0;
     margin-left:0px;
-    border-width:0 1px 1px 1px;
+    border-width:0 0 1px 0;
+    width:100%
   }
   nav .first-level:last-child {
     width: 50px;
