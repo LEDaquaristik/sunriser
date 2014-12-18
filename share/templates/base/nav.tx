@@ -1,5 +1,5 @@
 <ul id="menu">
-  <li title="Status" class="<: if $nav == 'home' { 'selected' } :> first-level">
+  <li title="Status" class="back_home <: if $nav == 'home' { 'selected' } :> first-level">
     <a href="/index.html"><i class="fa fa-home fa-2x"></i></a>
   </li>
   <li title="Zeitplanung" class="<: if $nav == 'planner' { 'selected' } :> first-level">

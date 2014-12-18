@@ -7,6 +7,7 @@
         - Naviguation
         - Click/Touch effect
         - font awesome fix
+        - loader
         - NoScript
         - content
         - dialogue
@@ -65,6 +66,7 @@ pre{
   white-space: -pre-wrap;
   white-space: -o-pre-wrap;
   word-wrap: break-word;
+  font-family:'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 hr{
   border-width: 1px 0px 0px;
@@ -155,9 +157,12 @@ nav .first-level:hover{
   background-color: #1D2029;
   color:#fff;
 }
+nav .selected:hover,
 nav .selected,
 nav .selected a{
-  color:#68D472 !important;
+  /* color:#68D472 !important; */
+  color:#fff !important;
+  background: none repeat scroll 0% 0% #68D472;
 }
 .second-nav{
   margin-left: 70px;
@@ -182,7 +187,11 @@ nav .selected a{
   height:50px;
   display: block;
 }
-.first-level .second-nav li:hover{
+.selected .second-level a {
+  background-color:#fff;
+  color: #a6a9ad !important;
+}
+.first-level .second-nav a:hover{
   background-color:#f5f5f5
 }
 .second-level i:after{
@@ -235,6 +244,10 @@ nav h2{
 }
 .fa-2x{
   font-size:20px !important
+}
+/*Loader*/
+.loader {
+    margin: 100px auto 0 auto;
 }
 /*NoScript*/
 
@@ -324,6 +337,14 @@ nav h2{
   border-radius: 2px;
   border: none;
   z-index:1;
+}
+
+
+.sunriser_content input[type='submit']:hover{
+  opacity:0.9;
+}
+.sunriser_content input[type='submit']:active{
+  opacity:0.75;
 }
 .sunriser_content select{
   background: white;

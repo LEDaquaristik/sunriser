@@ -168,7 +168,7 @@ $(function(){
   });
 
   $(".form").each(function(){
-    $(this).html('<img src="/img/ajaxload.gif">');
+    $(this).html('<img class="loader" src="/img/ajaxload.gif">');
   });
 
   // Menu overlay click functionality
