@@ -47,6 +47,7 @@ sub _build_publish_files {
     rain.html
     system.html
     thunderstorm.html
+    firmware.html
 
     notfound.html
 

@@ -130,7 +130,6 @@ var sr_forms = {
       name: "weekdays", label: "Nur an diesen Wochentagen gibt es Mondphasen (sonst jeden Tag)"
     }]
   }
-
 };
 
 var sr_config;
@@ -207,9 +206,28 @@ $('body').on('sr_config_def',function(){
 
 $('body').on('sr_config',function(){
 
-  $(".form").each(function(){
+  $(".form").not( ".noautoload" ).each(function(){
     var id = $(this).attr('id');
     sr_make_form(this,sr_forms[id]);
+  });
+
+  $("#dayplan").each(function(){
+
+    var fields = [];
+    for (i = 1; i <= sr_config['pwm_count']; i++) { 
+      fields.push({
+        name: "marker#" + i,
+        label: "Tagesverlauf LED #" + i,
+        type: "marker"
+      });
+    }
+
+    sr_make_form(this,{
+      formtitle: "Tagesplannung",
+      prefix: "dayplanner",
+      fields: fields
+    });
+
   });
 
 });
@@ -223,7 +241,7 @@ function sr_type(){
       var regexp = new RegExp('^' + k.replace('X','\\w+') + '$');
       if (regexp.test(key)) {
         found = val['type'];
-      }      
+      }
     }
   });
   return found;
@@ -238,7 +256,7 @@ function sr_default(){
       var regexp = new RegExp('^' + k.replace('X','\\w+') + '$');
       if (regexp.test(key)) {
         found = val['default'];
-      }      
+      }
     }
   });
   return found;
@@ -307,10 +325,17 @@ function sr_make_form(target,args){
             values[k] = val ? true : false;
           } else if (type == 'integer') {
             if (isNaN(val)) {
-              values[k] = parseInt(val);            
-            } else {
               error = 1; sr_form_error(k,"Hier muss eine Zahl angegeben werden.");
+            } else {
+              values[k] = parseInt(val);              
             }
+          } else if (type == 'array(time,percent)') {
+            var marker = val.split(",");
+            var packvalues = [];
+            $.each(marker,function(i,value){
+              packvalues.push(value);
+            });
+            values[k] = packvalues;
           } else if (type == 'text') {
             values[k] = String(val);
           } else if (type == 'ip4') {
