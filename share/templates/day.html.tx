@@ -21,9 +21,8 @@ $(function(){
 
   'use strict';
 
-  $('#dayplanner').css({
-    width: 800,
-    height: 210
+  $('#dayplanner').attr({
+    viewBox: "0 0 800 210"
   });
 
   var s = Snap('#dayplanner');
