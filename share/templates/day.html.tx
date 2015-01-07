@@ -26,35 +26,51 @@ $(function(){
 
   var s = Snap('#dayplanner');
   var width = $('#dayplanner').width() - 2;
-  var border = s.rect(2,2,width - 2,206);
+  var border = s.rect(35,11,width - 35,256);
+
+  //box and lines
   s.attr({
-    viewBox: "0 0 950 210"
+    viewBox: "0 0 950 300",
   });
   border.attr({
     fill: "none",
-    strokeWidth: 4,
-    stroke: "#000000"
-  });
-  var sixhours = ( width - 8 ) / 4;
-  var sixoclock = s.paper.line(4+sixhours,0,4+sixhours,210).attr({
     strokeWidth: 1,
-    stroke: "#000000"
+    stroke: "#cdcdcd"
   });
-  var twelveoclock = s.paper.line(4+(sixhours*2),0,4+(sixhours*2),210).attr({
+  var sixhours = ( (width - 35) - 8 ) / 4;
+  var sixoclock = s.paper.line(39+sixhours,12,39+sixhours,266).attr({
     strokeWidth: 1,
-    stroke: "#000000"
+    stroke: "#ebebeb"
   });
-  var eighteenoclock = s.paper.line(4+(sixhours*3),0,4+(sixhours*3),210).attr({
+  var twelveoclock = s.paper.line(39+(sixhours*2),12,39+(sixhours*2),266).attr({
     strokeWidth: 1,
-    stroke: "#000000"
+    stroke: "#ebebeb"
+  });
+  var eighteenoclock = s.paper.line(39+(sixhours*3),12,39+(sixhours*3),266).attr({
+    strokeWidth: 1,
+    stroke: "#ebebeb"
   });
 
   var lines = [];
   for (var i = 1; i < 10; i++) {
     lines.push(s.paper.line(
-      0,4+(20*i),width,4+(20*i)
-    ).attr({ strokeWidth: 1, stroke: "#000000" }));
+      35,14+(25*i),width,14+(25*i)
+    ).attr({ strokeWidth: 1, stroke: "#ebebeb" }));
   }
+
+  //percent text
+  for (var i = 1; i < 10; i++) {
+    s.text(7, 16 + 25 * i, 100-10*i).attr({ "font-size": "14px", fill:"#707070" });
+  }
+  s.text(0, 16, "100").attr({ "font-size": "14px", fill:"#707070" });
+  s.text(15, 268, "  0").attr({ "font-size": "14px", fill:"#707070" });
+
+  //time text
+  s.text(25, 290, "0h").attr({ "font-size": "14px", fill:"#707070" });
+  s.text(30+(sixhours*1), 290, "6h").attr({ "font-size": "14px", fill:"#707070" });
+  s.text(30+(sixhours*2), 290, "12h").attr({ "font-size": "14px", fill:"#707070" });
+  s.text(30+(sixhours*3), 290, "18h").attr({ "font-size": "14px", fill:"#707070" });
+  s.text(20+(sixhours*4), 290, "24h").attr({ "font-size": "14px", fill:"#707070" });
 
 });
 
