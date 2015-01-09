@@ -26,17 +26,12 @@ $(function(){
 
   var s = Snap('#dayplanner');
   var width = $('#dayplanner').width() - 2;
-  var border = s.rect(35,11,width - 35,256);
 
   //box and lines
   s.attr({
     viewBox: "0 0 950 300",
   });
-  border.attr({
-    fill: "none",
-    strokeWidth: 1,
-    stroke: "#cdcdcd"
-  });
+
   var sixhours = ( (width - 35) - 8 ) / 4;
   var sixoclock = s.paper.line(39+sixhours,12,39+sixhours,266).attr({
     strokeWidth: 1,
@@ -71,6 +66,64 @@ $(function(){
   s.text(30+(sixhours*2), 290, "12h").attr({ "font-size": "14px", fill:"#707070" });
   s.text(30+(sixhours*3), 290, "18h").attr({ "font-size": "14px", fill:"#707070" });
   s.text(20+(sixhours*4), 290, "24h").attr({ "font-size": "14px", fill:"#707070" });
+
+  //graph
+  var midnighth =  267;
+  var sixh =  10;
+  var twelveh =  267;
+  var eighteenh =  267;
+  var twentyfourh =  267;
+  var graph = s.polygon(39,267,39,midnighth,39+(sixhours*1),sixh,39+(sixhours*2),twelveh,39+(sixhours*3),eighteenh,39+(sixhours*4),twentyfourh,39+(sixhours*4),267);
+
+  graph.attr({
+    id: 'graph',
+    fill: "#bed8ea",
+    strokeWidth: 2,
+    stroke: "#2980B9"
+  });
+
+  //border
+
+  var border = s.rect(35,11,width - 35,256);
+  border.attr({
+    fill: "none",
+    strokeWidth: 1,
+    stroke: "#cdcdcd"
+  });
+
+  //graph buttons
+  
+  var buttonMidnight = s.circle(39, midnighth, 5);
+  var buttonSix = s.circle(39+(sixhours*1), sixh, 5);
+  var buttonTwelve = s.circle(39+(sixhours*2), twelveh, 5);
+  var buttonEighteen = s.circle(39+(sixhours*3), eighteenh, 5);
+  var buttonTwentyfour = s.circle(39+(sixhours*4), twentyfourh, 5);
+
+  buttonTwentyfour.attr({
+    fill: "#ffffff",
+    strokeWidth: 2,
+    stroke: "#a1c7e0"
+  });
+  buttonSix.attr({
+    fill: "#ffffff",
+    strokeWidth: 2,
+    stroke: "#a1c7e0"
+  });
+  buttonTwelve.attr({
+    fill: "#ffffff",
+    strokeWidth: 2,
+    stroke: "#a1c7e0"
+  });
+  buttonEighteen.attr({
+    fill: "#ffffff",
+    strokeWidth: 2,
+    stroke: "#a1c7e0"
+  });
+  buttonMidnight.attr({
+    fill: "#ffffff",
+    strokeWidth: 2,
+    stroke: "#a1c7e0"
+  });
 
 });
 

@@ -481,6 +481,11 @@ nav h2{
 .help:hover{
   color: #77797c !important;
 }
+/*SVG graph*/
+
+#graph{
+  opacity:0.5
+}
 
 /** Login **/
 
