@@ -333,9 +333,6 @@ nav h2{
   border-radius:3px;
   width:100%;
 }
-.sunriser_content input[type='text']{
-  text-align:right
-}
 .sunriser_content input[type='submit']{
   background-color:#2980b9;
   padding:10px;
@@ -357,6 +354,8 @@ nav h2{
   opacity:0.75;
 }
 .sunriser_content select{
+  -webkit-appearance: none;
+  -moz-appearance: none;
   background: white;
   border: 2px solid #ccd7e2;
   padding: 8px 30px 8px 8px;
@@ -421,6 +420,7 @@ nav h2{
   position: absolute;
   right:20px;
   z-index:1;
+  top:2px
 }
 .sunriser_content input[type="checkbox"]:checked + .checkbox_switch::after{
   content:"ON";
@@ -512,7 +512,7 @@ nav h2{
   color:white;
   font-size:20px;
   margin: 8px 0px 0px 5px;
-  padding: 7px 13px 5px;
+  padding: 5px 13px 5px;
   border-right:1px solid white;
 }
 .login_button{
