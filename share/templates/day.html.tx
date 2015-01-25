@@ -93,17 +93,119 @@ $(function(){
 
   //graph buttons
   
-  var buttonMidnight = s.circle(39, midnighth, 5);
-  var buttonSix = s.circle(39+(sixhours*1), sixh, 5);
-  var buttonTwelve = s.circle(39+(sixhours*2), twelveh, 5);
-  var buttonEighteen = s.circle(39+(sixhours*3), eighteenh, 5);
-  var buttonTwentyfour = s.circle(39+(sixhours*4), twentyfourh, 5);
+  var buttonMidnight = s.rect(34, midnighth - 5, 10, 10, 20, 20);
+  var buttonSix = s.rect(34+(sixhours), sixh - 5, 10, 10, 20, 20);
+  var buttonTwelve = s.rect(34+(sixhours*2), twelveh - 5, 10, 10, 20, 20);
+  var buttonEighteen = s.rect(34+(sixhours*3), eighteenh - 5, 10, 10, 20, 20);
+  var buttonTwentyfour = s.rect(34+(sixhours*4), twentyfourh - 5, 10, 10, 20, 20);
 
   buttonTwentyfour.attr({
     fill: "#ffffff",
     strokeWidth: 2,
     stroke: "#a1c7e0"
   });
+
+  var orig0 = {
+      x: 34,
+      y: 262
+  };
+  var orig6 = {
+      x: 34+(sixhours),
+      y: 262
+  };
+  var orig12 = {
+      x: 34+(sixhours*2),
+      y: 262
+  };
+  var orig18 = {
+      x: 34+(sixhours*3),
+      y: 262
+  };
+  var orig24 = {
+      x: 34+(sixhours*4),
+      y: 262
+  };
+
+  buttonMidnight.drag(
+    function (dx, dy, x, y, e) {
+        var xSnap = Snap.snapTo(34,34);
+        var ySnap = Snap.snapTo(1, orig0.y + dy, 100000000);
+        this.attr({
+            x: xSnap,
+            y: ySnap + 10
+        });
+    },
+    function (x, y, e) {
+        orig0.x = e.toElement.x.baseVal.value;
+        orig0.y = e.toElement.y.baseVal.value;
+    }
+  );
+  buttonSix.drag(
+    function (dx, dy, x, y, e) {
+        var xSnap = Snap.snapTo(34+sixhours,34+sixhours);
+        var ySnap = Snap.snapTo(1, orig6.y + dy, 100000000);
+        this.attr({
+            x: xSnap,
+            y: ySnap + 10
+        });
+    },
+    function (x, y, e) {
+        orig6.x = e.toElement.x.baseVal.value;
+        orig6.y = e.toElement.y.baseVal.value;
+    }
+  );
+  buttonTwelve.drag(
+    function (dx, dy, x, y, e) {
+        var xSnap = Snap.snapTo(34+(sixhours*2),34+(sixhours*2));
+        var ySnap = Snap.snapTo(1, orig12.y + dy, 100000000);
+        this.attr({
+            x: xSnap,
+            y: ySnap + 10
+        });
+    },
+    function (x, y, e) {
+        orig12.x = e.toElement.x.baseVal.value;
+        orig12.y = e.toElement.y.baseVal.value;
+    }
+  );
+  buttonEighteen.drag(
+    function (dx, dy, x, y, e) {
+        var xSnap = Snap.snapTo(34+(sixhours*3),34+(sixhours*3));
+        var ySnap = Snap.snapTo(1, orig18.y + dy, 100000000);
+        this.attr({
+            x: xSnap,
+            y: ySnap + 10
+        });
+    },
+    function (x, y, e) {
+        orig18.x = e.toElement.x.baseVal.value;
+        orig18.y = e.toElement.y.baseVal.value;
+    }
+  );
+  buttonTwentyfour.drag(
+    function (dx, dy, x, y, e) {
+        var xSnap = Snap.snapTo(34+(sixhours*4),34+(sixhours*4));
+        var ySnap = Snap.snapTo(1, orig24.y + dy, 100000000);
+        this.attr({
+            x: xSnap,
+            y: ySnap + 10
+        });
+    },
+    function (x, y, e) {
+        orig24.x = e.toElement.x.baseVal.value;
+        orig24.y = e.toElement.y.baseVal.value;
+    },
+    function (twentyfourh) {
+	twentyfourh = 40	
+    }
+  );
+
+ // var midnighth =  37;
+ // var sixh =  10;
+ // var twelveh =  67;
+ // var eighteenh =  267;
+ // var twentyfourh =  267;
+
   buttonSix.attr({
     fill: "#ffffff",
     strokeWidth: 2,
