@@ -41,6 +41,8 @@ sub _build_publish_files {
       "css/all-".$self->versioned.".css",
       "js/all-".$self->versioned.".js",
     );
+  } else {
+    @versioned = qw( sr_config_def.json );
   }
   return [qw(
 
@@ -63,8 +65,6 @@ sub _build_publish_files {
     firmware.html
 
     notfound.html
-
-    sr_config_def.json
 
   ), @versioned];
 }
@@ -123,7 +123,7 @@ sub render_all_css {
 
 sub render_all_js {
   my ( $self ) = @_;
-  my $js = "";
+  my $js = "var sr_config_def_factory = ".encode_json($self->json_sr_config_def).";\n";
   my $share = path(dist_dir('SunRiser'),'web');
   for my $js_file (@{$self->base_vars->{js_files}}) {
     $js .= $share->child($js_file)->slurp;

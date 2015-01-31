@@ -178,10 +178,15 @@ $(function(){
 
   $(".tip").tipr({ mode: 'top' });
 
-  $.getJSON( "/sr_config_def.json", function( data ) {
-    sr_config_def = data;
+  if (typeof sr_config_def_factory != 'undefined') {
+    sr_config_def = sr_config_def_factory;
     $('body').trigger('sr_config_def');
-  });
+  } else {
+    $.getJSON( "/sr_config_def.json", function( data ) {
+      sr_config_def = data;
+      $('body').trigger('sr_config_def');
+    });
+  }
 
 });
 
