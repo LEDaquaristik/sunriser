@@ -1,0 +1,4 @@
+: cascade base { title => "Firmware Auswahl" }
+: override content -> {
+
+: }

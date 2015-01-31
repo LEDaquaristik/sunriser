@@ -16,13 +16,14 @@
   "ntpserver", [   "NTP server hostname",        "text", "pool.ntp.org"],
   "useip4", [      "Used fixed IPv4 instead of DHCP", "bool", 0],
   "ip4", [         "Set fixed IPv4",             "ip4"],
-  "ip4_subnet", [  "IPv4 Subnet",                "ip4"],
+  "ip4_netmask", [ "IPv4 Netmask",               "ip4"],
   "ip4_gateway", [ "IPv4 Gateway",               "ip4"],
   "ip4_dns", [     "IPv4 DNS",                   "ip4"],
   "ip4_filter", [  "Use IPv4 access whitelist",  "bool", 0],
   "ip4_whitelist", [ "IPv4 access whitelist",    "array(ip4)"],
-  "direct_ip4", [  "Direct link IPv4",           "ip4", "192.168.0.1"],
-  "direct_ip4_subnet", [ "Direct link IPv4 Subnet", "ip4", "255.255.255.0"],
+  "direct_ip4", [  "Direct link IPv4",           "ip4", "192.168.0.2"],
+  "direct_ip4_netmask", [ "Direct link IPv4 Netmask", "ip4", "255.255.255.0"],
+  "direct_ip4_gw", [ "Direct link IPv4 Gateway", "ip4", "192.168.0.1"],
   "webport", [     "Webserver Port",             "integer", 80],
   "indexfile", [   "Root file of webserver",     "text", "index.html"],
   "language", [    "Interface language (ISO 639-1)", "text", "de"],
@@ -39,23 +40,25 @@
     "content", [   "Content of file",            "binary"],
     "gzip", [      "File is gzipped",            "bool"],
     "bytes", [     "Original filesize (only on gzipped)", "integer"],
-    "type", [      "Content type (else defined by file extension)", "text"],
-    "parse", [     "Data goes through replace engine (else only done on .html)", "bool"],
-    "extra_headers", [ "Extra headers to add on send out (need to be full)", "text"],
-    "deleted", [   "File is deleted",            "bool"]
+    "type", [      "(TODO) Content type (else defined by file extension)", "text"],
+    "parse", [     "(TODO) Data goes through replace engine (else only done on .html)", "bool"],
+    "extra_headers", [ "(TODO) Extra headers to add on send out (need to be full)", "text"],
+    "deleted", [   "(TODO) File is deleted",            "bool"]
   ],
   "dayplanner",    "Day planner configuration", [
-    "marker#X", [ "Control markers for PWM X (time and percent)", "array(time,percent)"],
-    "deferralmax", ["Maximum random deferral (in seconds)", "integer", 0]
+    "marker#X", [ "Control markers for PWM X (time and percent)", "array(daymin,percent)"],
+    "randomdeferralmax", ["Maximum random deferral (in minuten)", "integer", 0],
+    "deferral", ["Fixed deferral (in minuten)", "integer", 0]
   ],
   "weather",       "Weather simulation configuration", [
     "last_setup_id", ["Holding the last id used for new setup", "integer", 0],
-    "setups", [    "List of activated setups",   "array(text)"],
+    "setups", [    "List of activated setup ids",   "array(integer)"],
     "setup#X",     "Weather simulation setup X", [
       "name", [    "Custom name for weather setup", "text"],
       "pwms", [    "Identification of pwms effected", "array(text)"],
       "thunder", "Thunderstorm setup", [
         "activated", ["Produce thunderstorms", "bool", 0],
+        "nightonly", ["Thunderstorm only if dayplanner sets pwm to 0", "bool", 0],
         "daymax", ["Maximum amount of thunderstorms per day", "integer", 1],
         "minlength", ["Minimum amount of time a thunderstorm should be (in seconds)", "integer", 300],
         "maxlength", ["Maximum amount of time a thunderstorm should be (in seconds)", "integer", 900],
@@ -66,20 +69,21 @@
         "fadepercent", ["Percentage of thunderstorm which is fade in and fade out (less thunders, lower light intensity, while fade)", "integer", 60],
         "daychance", ["Percentage for a thunderstorm to happen (Tried per day in daymax amount)", "integer", 10],
         "darkness", ["Percentage of darkness to apply", "integer", 25],
-        "fixedtimes", ["Fixed times for thunderstorms (daychance still applies, daymax tries still added)", "repeated(time)"],
+        "fixedtimes", ["Fixed times for thunderstorms (daychance still applies, daymax tries still added)", "repeated(daymin)"],
         "deferralmax", ["Maximum random deferral (in seconds)", "integer", 0],
         "weekdays", ["Apply thunderstorms to given weekdays (else always)", "array(weekday)"]
       ],
       "moonphase", "Moonphase setup", [
         "activated", ["Show moonphase based on reality", "bool", 0],
-        "starttime", ["Most early start at this time", "time"],
-        "endtime", ["Always end at least at this time", "time"],
+        "starttime", ["Most early start at this time", "daymin"],
+        "endtime", ["Always end at least at this time", "daymin"],
         "maximum", ["Intensity of moon in percent (can be over 100%)", "integer", 100],
-        "deferral", ["Deferral against real moon phase (in days)", "integer", 0],
+        "deferral", ["Deferral against real moon phase (in minutes)", "integer", 0],
         "weekdays", ["Apply moon to given weekdays (else every day)", "array(weekday)"]
       ],
       "clouds", "Clouds setup", [
         "activated", ["Show clouds", "bool", 0],
+        "daychance", ["Chance that it is a day with clouds", "integer", 10],
         "cloudminlength", ["Minimum amount of time a cloud takes (in seconds)", "integer", 5],
         "cloudmaxlength", ["Maximum amount of time a cloud takes (in seconds)", "integer", 30],
         "cloudbalancelength", ["Amount of random numbers used to reach the amount of time a cloud takes", "integer", 2],
@@ -89,10 +93,10 @@
       ],
       "rain", "Rain setup", [
         "activated", ["Make rainy days", "bool", 0],
-        "rainchance", ["Chance that the day is rainy", "integer", 10],
+        "rainchance", ["Chance that the day is rainy (with clouds activated, also day with clouds automatically)", "integer", 10],
         "raindarkness", ["Maximum percentage of darkness to apply on raindays", "integer", 20],
         "rainwithclouds", ["Clouds add up over maximum darkness of rain", "bool", 0],
-        "weekdays", ["Weekdays who may have rain (else every day)", "csv(weekday)"]
+        "weekdays", ["Weekdays who may have rain (else every day)", "array(weekday)"]
       ]
     ]
   ]

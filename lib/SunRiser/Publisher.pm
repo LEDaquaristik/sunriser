@@ -14,6 +14,12 @@ use SunRiser::Config;
 use JSON::MaybeXS;
 use Carp qw( croak );
 
+has versioned => (
+  is => 'lazy',
+);
+
+sub _build_versioned { $SunRiser::VERSION || $ENV{V} || 0 }
+
 has config => (
   is => 'lazy',
 );
@@ -29,6 +35,13 @@ has publish_files => (
 
 sub _build_publish_files {
   my ( $self ) = @_;
+  my @versioned;
+  if ($self->versioned) {
+    @versioned = (
+      "css/all-".$self->versioned.".css",
+      "js/all-".$self->versioned.".js",
+    );
+  }
   return [qw(
 
     clouds.html
@@ -53,7 +66,7 @@ sub _build_publish_files {
 
     sr_config_def.json
 
-  )];
+  ), @versioned];
 }
 
 sub has_publish_file {
@@ -88,8 +101,34 @@ sub render {
     my $func = 'json_'.$filename;
     $self->info('Generating '.$file.' from function '.$func);
     return encode_json($self->$func());
+  } elsif ($ext eq 'css') {
+    return $self->render_all_css();
+  } elsif ($ext eq 'js') {
+    return $self->render_all_js();
   }
   croak "Don't know how to render ".$ext;
+}
+
+########################################################################
+
+sub render_all_css {
+  my ( $self ) = @_;
+  my $css = "";
+  my $share = path(dist_dir('SunRiser'),'web');
+  for my $css_file (@{$self->base_vars->{css_files}}) {
+    $css .= $share->child($css_file)->slurp;
+  }
+  return $css;
+}
+
+sub render_all_js {
+  my ( $self ) = @_;
+  my $js = "";
+  my $share = path(dist_dir('SunRiser'),'web');
+  for my $js_file (@{$self->base_vars->{js_files}}) {
+    $js .= $share->child($js_file)->slurp;
+  }
+  return $js;  
 }
 
 ########################################################################
@@ -116,6 +155,25 @@ sub _build_base_vars {
   my ( $self ) = @_;
   return {
     pwm_count => 8,
+    versioned => $self->versioned,
+    css_files => [qw(
+      css/reset.css
+      css/tipr.css
+      css/sunriser.css
+      css/font-awesome.css
+      css/OpenSans-Regular-webfont.css
+    )],
+    js_files => [qw(
+      js/jquery-1.11.1.min.js
+      js/tmpl.js
+      js/moment-with-locales-2.8.4.min.js
+      js/snap.svg-0.3.0.min.js
+      js/tipr-1.0.1.min.js
+      js/ipaddr-0.1.6.min.js
+      js/jquery-ajax-blob-arraybuffer.js
+      js/msgpack-1.05.js
+      js/sunriser.js
+    )],
   };
 }
 

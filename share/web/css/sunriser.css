@@ -49,6 +49,7 @@ body{
   color:#444;
   font-family:'DIN1451', 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   background : url('/img/background.jpg') no-repeat fixed center center / cover transparent;
+  /*background-color: #0087f7;*/
   transform-origin: 50% 400px 0px;
 }
 
