@@ -7,7 +7,7 @@
   "showhelp", [    "Show help on the interface", "bool", 1],
   "showexpert", [  "Show expert settings", "bool", 1],
   "created_by", [  "Creator of this image",      "text"],
-  "hex", [         "Hex file for the microcontroller","binary"],
+  "firmware", [    "Application file for the microcontroller","binary"],
   "savecount", [   "Count of saves on custom file (autoset by system, always 0 on factory files)", "integer"],
   "updated", [     "Timestamp of last update (autoset by system)", "datetime"],
   "created", [     "Timestamp of config generation (autoset by system)", "datetime"],

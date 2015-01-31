@@ -121,6 +121,16 @@ sub add_factory {
     }
     $self->add_web($file,scalar $share_file->slurp_raw);
   }
+  # Add version if versioned
+  if ($publisher->versioned) {
+    $self->set('factory_version',$publisher->versioned);
+    $self->set('factory',1);
+  }
+  # Adding firmware if main.bin exist
+  my $main = path('main.bin');
+  if (-f $main) {
+    $self->set('firmware',scalar $main->slurp_raw);
+  }
   return 1;
 }
 
