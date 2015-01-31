@@ -115,8 +115,10 @@ sub add_factory {
   while(my $share_file = $iter->()) {
     next unless $share_file->is_file;
     my $file = $share_file->relative($share)->stringify;
-    next if $file =~ /^css\//;
-    next if $file =~ /^js\//;
+    if ($publisher->versioned) {
+      next if $file =~ /^css\//;
+      next if $file =~ /^js\//;      
+    }
     $self->add_web($file,scalar $share_file->slurp_raw);
   }
   return 1;
