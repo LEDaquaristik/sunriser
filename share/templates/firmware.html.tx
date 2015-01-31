@@ -1,4 +1,98 @@
-: cascade base { title => "Firmware Auswahl" }
+: cascade base { title => "Firmware Upgrade" }
 : override content -> {
+
+<div id="firmware_progress"></div>
+
+<button id="firmware_button">Upgrade firmware</button>
+
+: }
+: override postjs -> {
+
+<script type="text/javascript">
+
+function download_and_install_firmware(firmware_url,success) {
+
+  var call_options = {
+    type: 'GET',
+    url: firmware_url,
+    contentType: 'application/octet-stream',
+    dataType: 'arraybuffer',
+    processData: false,
+    cache: false,
+    xhr: function () {
+        var xhr = new window.XMLHttpRequest();
+        //Download progress
+        xhr.addEventListener("progress", function (evt) {
+            console.log(evt.lengthComputable);
+            if (evt.lengthComputable) {
+                var percentComplete = evt.loaded / evt.total;
+                console.log(Math.round(percentComplete * 100) + "%");
+            }
+        }, false);
+        return xhr;
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+      console.log(xhr);
+      console.log(ajaxOptions);
+      console.log(thrownError);
+    },
+    beforeSend: function () {
+    },
+    complete: function () {
+    },
+    success: function (bytesarray) {
+      console.log(bytesarray);
+      install_firmware(bytesarray,success);
+    }
+  };
+  $.ajax(call_options);
+}
+
+function install_firmware(bytesarray,success) {
+  var call_options = {
+    type: 'PUT',
+    url: '/firmware',
+    data: bytesarray,
+    contentType: 'application/octet-stream',
+    dataType: 'arraybuffer',
+    processData: false,
+    cache: false,
+    xhr: function () {
+      var xhr = new window.XMLHttpRequest();
+      //Download progress
+      xhr.addEventListener("progress", function (evt) {
+          console.log(evt.lengthComputable);
+          if (evt.lengthComputable) {
+              var percentComplete = evt.loaded / evt.total;
+              console.log(Math.round(percentComplete * 100) + "%");
+          }
+      }, false);
+      return xhr;
+    },
+    error: function(xhr,error,errorthrown){
+      // TODO error handling
+    },
+    beforeSend: function(xhr,settings){
+    },
+    complete: function(xhr,status){
+    },
+    success: function(data,status,xhr){
+      console.log(data);
+      console.log(status);
+      console.log(xhr);
+    },
+  };
+  $.ajax(call_options);
+}
+
+$(function(){
+
+  $('#firmware_button').click(function(){
+    download_and_install_firmware('https://vonbienenstock.de/sunriser.bee',function(){});
+  });
+
+});
+
+</script>
 
 : }

@@ -450,6 +450,9 @@ sub _build_web {
         # else serve file from storage
         # gives back 200 on success and 404 on not found
         return $self->_web_serve_file($file);
+      } elsif ($method eq 'PUT') {
+        my $l = length($req->raw_body);
+        use DDP; p($l);
       }
 
       # can't handle that request, send error
