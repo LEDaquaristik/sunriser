@@ -10,6 +10,12 @@
  * Remember to specify 'processData:false' in the ajax options when attempting to send a blob or arraybuffer -
  * otherwise jquery will try (and fail) to convert the blob or buffer into a query string.
  */
+
+/**
+ *
+ * Patched by Torsten Raudssus <torsten@raudssus.de> for handling progress indicator functions
+ *
+ */
 $.ajaxTransport("+*", function(options, originalOptions, jqXHR){
     // Test for the conditions that mean we can/want to send/receive blobs or arraybuffers - we need XMLHttpRequest
     // level 2 (so feature-detect against window.FormData), feature detect against window.Blob or window.ArrayBuffer,
@@ -42,6 +48,16 @@ $.ajaxTransport("+*", function(options, originalOptions, jqXHR){
                     res[dataType] = xhr.response;
                     completeCallback(xhr.status, xhr.statusText, res, xhr.getAllResponseHeaders());
                 });
+
+                if (options.progress) {
+                    xhr.upload.addEventListener("progress", function(evt) {
+                        options.progress.call(this,evt);
+                    }, false);
+
+                    xhr.addEventListener("progress", function(evt) {
+                        options.progress.call(this,evt);
+                    }, false);                    
+                }
 
                 xhr.open(type, url, async);
                 xhr.responseType = dataType;

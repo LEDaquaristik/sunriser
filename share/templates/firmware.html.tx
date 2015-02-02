@@ -19,17 +19,12 @@ function download_and_install_firmware(firmware_url,success) {
     dataType: 'arraybuffer',
     processData: false,
     cache: false,
-    xhr: function () {
-        var xhr = new window.XMLHttpRequest();
-        //Download progress
-        xhr.addEventListener("progress", function (evt) {
-            console.log(evt);
-            if (evt.lengthComputable) {
-                var percentComplete = evt.loaded / evt.total;
-                console.log(Math.round(percentComplete * 100) + "%");
-            }
-        }, false);
-        return xhr;
+    progress: function(evt) {
+      console.log(evt);
+      if (evt.lengthComputable) {
+        var percentComplete = evt.loaded / evt.total;
+        console.log(percentComplete);
+      }
     },
     error: function (xhr, ajaxOptions, thrownError) {
       console.log(xhr);
@@ -57,17 +52,12 @@ function install_firmware(bytesarray,success) {
     dataType: 'arraybuffer',
     processData: false,
     cache: false,
-    xhr: function () {
-      var xhr = new window.XMLHttpRequest();
-      //Download progress
-      xhr.addEventListener("progress", function (evt) {
-          console.log(evt);
-          if (evt.lengthComputable) {
-              var percentComplete = evt.loaded / evt.total;
-              console.log(Math.round(percentComplete * 100) + "%");
-          }
-      }, false);
-      return xhr;
+    progress: function(evt) {
+      console.log(evt);
+      if (evt.lengthComputable) {
+        var percentComplete = evt.loaded / evt.total;
+        console.log(percentComplete);
+      }
     },
     error: function(xhr,error,errorthrown){
       // TODO error handling
@@ -88,7 +78,7 @@ function install_firmware(bytesarray,success) {
 $(function(){
 
   $('#firmware_button').click(function(){
-    download_and_install_firmware('https://sunriser.vbs.io/sunriser.bee',function(){});
+    download_and_install_firmware('http://sunriser.vbs.io/sunriser.bee',function(){});
   });
 
 });

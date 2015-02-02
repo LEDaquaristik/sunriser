@@ -164,7 +164,7 @@ sub _build_base_vars {
       css/OpenSans-Regular-webfont.css
     )],
     js_files => [qw(
-      js/jquery-1.11.1.min.js
+      js/jquery-1.11.2.js
       js/tmpl.js
       js/moment-with-locales-2.8.4.min.js
       js/snap.svg-0.3.0.min.js
