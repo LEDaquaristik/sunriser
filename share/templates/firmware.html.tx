@@ -23,7 +23,7 @@ function download_and_install_firmware(firmware_url,success) {
         var xhr = new window.XMLHttpRequest();
         //Download progress
         xhr.addEventListener("progress", function (evt) {
-            console.log(evt.lengthComputable);
+            console.log(evt);
             if (evt.lengthComputable) {
                 var percentComplete = evt.loaded / evt.total;
                 console.log(Math.round(percentComplete * 100) + "%");
@@ -61,7 +61,7 @@ function install_firmware(bytesarray,success) {
       var xhr = new window.XMLHttpRequest();
       //Download progress
       xhr.addEventListener("progress", function (evt) {
-          console.log(evt.lengthComputable);
+          console.log(evt);
           if (evt.lengthComputable) {
               var percentComplete = evt.loaded / evt.total;
               console.log(Math.round(percentComplete * 100) + "%");
@@ -88,7 +88,7 @@ function install_firmware(bytesarray,success) {
 $(function(){
 
   $('#firmware_button').click(function(){
-    download_and_install_firmware('https://vonbienenstock.de/sunriser.bee',function(){});
+    download_and_install_firmware('https://sunriser.vbs.io/sunriser.bee',function(){});
   });
 
 });

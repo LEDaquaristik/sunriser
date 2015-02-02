@@ -99,6 +99,7 @@ sub save {
 sub add_factory {
   my ( $self, $publisher, %other ) = @_;
   my %values = ( %{$self->config->get_defaults}, %other );
+  $self->set('factory',1);
   # Add values
   for my $k (sort { $a cmp $b } keys %values) {
     $self->set($k,$values{$k});
@@ -124,12 +125,31 @@ sub add_factory {
   # Add version if versioned
   if ($publisher->versioned) {
     $self->set('factory_version',$publisher->versioned);
-    $self->set('factory',1);
+    my $version = "".$publisher->versioned."";
+    $self->cdb->put_replace('___firmware_description',$values{'model'}." v".$version);
+    $version =~ s/[^\d]//g;
+    $self->cdb->put_replace('___firmware_filename',uc($values{'model_id'}.$version));
+  } else {
+    my $gitv = `git rev-parse HEAD`;
+    chomp($gitv);
+    $self->cdb->put_replace('___firmware_description',$values{'model'}." ".$gitv);
+    $self->cdb->put_replace('___firmware_filename',uc(substr($gitv,0,8)));
   }
+  # Additional raw firmware information
+  my $author = $ENV{SUNRISER_FACTORY_AUTHOR};
+  unless ($author) {
+    my $username = `git config --get user.name`;
+    chomp($username);
+    my $email = `git config --get user.email`;
+    chomp($email);
+    $author = $username.' <'.$email.'>';
+  }
+  $self->cdb->put_replace('___firmware_author',$author);
   # Adding firmware if main.bin exist
   my $main = path('main.bin');
   if (-f $main) {
-    $self->set('firmware',scalar $main->slurp_raw);
+    $self->debug('Adding raw ___firmware');
+    $self->cdb->put_replace('___firmware',scalar $main->slurp_raw);
   }
   return 1;
 }
