@@ -12,6 +12,8 @@ use Path::Tiny;
 use File::ShareDir::ProjectDistDir;
 use SunRiser::Config;
 use JSON::MaybeXS;
+use JavaScript::Minifier qw( minify );
+use CSS::Minifier::XS;
 use Carp qw( croak );
 
 has versioned => (
@@ -118,6 +120,7 @@ sub render_all_css {
   for my $css_file (@{$self->base_vars->{css_files}}) {
     $css .= $share->child($css_file)->slurp;
   }
+  $css = CSS::Minifier::XS::minify($css);
   return $css;
 }
 
@@ -128,6 +131,7 @@ sub render_all_js {
   for my $js_file (@{$self->base_vars->{js_files}}) {
     $js .= $share->child($js_file)->slurp;
   }
+  $js = minify( input => $js );
   return $js;  
 }
 
@@ -158,7 +162,7 @@ sub _build_base_vars {
     versioned => $self->versioned,
     css_files => [qw(
       css/reset.css
-      css/tipr.css
+      css/tipr-1.0.1.css
       css/sunriser.css
       css/font-awesome.css
       css/OpenSans-Regular-webfont.css
@@ -168,8 +172,8 @@ sub _build_base_vars {
       js/tmpl.js
       js/moment-with-locales-2.9.0.js
       js/snap.svg-0.3.0.js
-      js/tipr-1.0.1.min.js
-      js/ipaddr-0.1.6.min.js
+      js/tipr-1.0.1.js
+      js/ipaddr-0.1.6.js
       js/jquery-ajax-blob-arraybuffer.js
       js/msgpack-1.05.js
       js/sunriser.js

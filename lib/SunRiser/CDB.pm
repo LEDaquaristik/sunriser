@@ -154,6 +154,15 @@ sub add_factory {
   return 1;
 }
 
+sub get_firmware_info {
+  my ( $self ) = @_;
+  return {
+    description => $self->cdb->get('___firmware_description'),
+    author      => $self->cdb->get('___firmware_author'),
+    filename    => $self->cdb->get('___firmware_filename'),
+  };
+}
+
 sub msgpack {
   my ( $self, $type, $data ) = @_;
   return $self->_mp->pack(undef) if !defined $data;
