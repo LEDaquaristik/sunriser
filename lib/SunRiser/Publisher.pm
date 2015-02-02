@@ -166,8 +166,8 @@ sub _build_base_vars {
     js_files => [qw(
       js/jquery-1.11.2.js
       js/tmpl.js
-      js/moment-with-locales-2.8.4.min.js
-      js/snap.svg-0.3.0.min.js
+      js/moment-with-locales-2.9.0.js
+      js/snap.svg-0.3.0.js
       js/tipr-1.0.1.min.js
       js/ipaddr-0.1.6.min.js
       js/jquery-ajax-blob-arraybuffer.js
