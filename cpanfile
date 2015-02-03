@@ -18,6 +18,7 @@ requires 'MooX::Role::Logger', '0';
 requires 'Path::Tiny', '0';
 requires 'Plack', '0';
 requires 'Text::Xslate', '0';
+requires 'Time::Zone', '0';
 requires 'Twiggy::Server', '0';
 
 on test => sub {

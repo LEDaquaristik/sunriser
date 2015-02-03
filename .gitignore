@@ -7,3 +7,4 @@ SunRiser-*
 *.swo
 *.swp
 *.bin
+*firmware_images.json*

@@ -1,0 +1,52 @@
+#!/usr/bin/env perl
+# PODNAME: sunriser_imagesfile
+# ABSTRACT: Generate firmware_images.json out of bee files in current directory
+
+$|=1;
+
+use strict;
+use warnings;
+
+use FindBin;
+use lib $FindBin::Dir . "/../lib";
+use SunRiser::CDB;
+use SunRiser::Config;
+use Data::MessagePack;
+use DDP;
+use Path::Tiny;
+use JSON::MaybeXS;
+use Carp qw( croak );
+
+my $filename = shift @ARGV || 'firmware_images.json';
+my $dir = shift @ARGV || '.';
+my $p = path($dir);
+
+my $config = SunRiser::Config->new;
+
+my %images;
+
+my $iter = $p->iterator;
+while (my $file = $iter->()) {
+  next if $file->is_dir;
+  next unless $file =~ /\.bee/;
+  my $cdb = SunRiser::CDB->new( filename => $file, config => $config );
+  my $info = $cdb->get_firmware_info;
+  if ($info) {
+    $images{$file} = $info;
+    $info->{url} = $file->stringify;
+  }
+}
+
+my @imageslist;
+
+for (sort { $images{$b}->{timestamp} <=> $images{$a}->{timestamp} } keys %images) {
+  push @imageslist, $images{$_};
+}
+
+if (%images) {
+  path($filename)->spew(encode_json(\@imageslist));
+} else {
+  croak "No images found";
+}
+
+exit 0;

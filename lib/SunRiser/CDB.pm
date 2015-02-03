@@ -15,6 +15,7 @@ use Data::MessagePack;
 use IO::Compress::Gzip qw( gzip $GzipError );
 use Carp qw( croak );
 use File::ShareDir::ProjectDistDir;
+use Time::Zone;
 
 has config => (
   is => 'ro',
@@ -134,6 +135,7 @@ sub add_factory {
     chomp($gitv);
     $self->cdb->put_replace('___firmware_description',$values{'model'}." ".$gitv);
     $self->cdb->put_replace('___firmware_filename',uc(substr($gitv,0,8)));
+    $self->cdb->put_replace('___firmware_experimental',1);
   }
   # Additional raw firmware information
   my $author = $ENV{SUNRISER_FACTORY_AUTHOR};
@@ -145,6 +147,11 @@ sub add_factory {
     $author = $username.' <'.$email.'>';
   }
   $self->cdb->put_replace('___firmware_author',$author);
+  # Add firmware generation timestamp
+  my $offset_sec = tz_local_offset();
+  my $time = time();
+  my $utc_time = $time + $offset_sec;
+  $self->cdb->put_replace('___firmware_timestamp',$utc_time);
   # Adding firmware if main.bin exist
   my $main = path('main.bin');
   if (-f $main) {
@@ -156,10 +163,13 @@ sub add_factory {
 
 sub get_firmware_info {
   my ( $self ) = @_;
+  return unless $self->cdb->get('___firmware_filename');
   return {
-    description => $self->cdb->get('___firmware_description'),
-    author      => $self->cdb->get('___firmware_author'),
-    filename    => $self->cdb->get('___firmware_filename'),
+    description => $self->cdb->get('___firmware_description') || undef,
+    author      => $self->cdb->get('___firmware_author') || undef,
+    filename    => $self->cdb->get('___firmware_filename') || undef,
+    timestamp   => $self->cdb->get('___firmware_timestamp') || undef,
+    $self->cdb->get('___firmware_experimental') ? ( experimental => 1 ) : (),
   };
 }
 
