@@ -11,9 +11,9 @@
 </label>
 <hr>
 <svg id="dayplanner"></svg>
-
 <hr>
 <div class="form noautoload" id="dayplan" />
+
 
 : }
 : override postjs -> {
@@ -67,31 +67,19 @@ $(function(){
   s.text(30+(sixhours*3), 290, "18h").attr({ "font-size": "14px", fill:"#707070" });
   s.text(20+(sixhours*4), 290, "24h").attr({ "font-size": "14px", fill:"#707070" });
 
-  //Marker
-
-  //var arrow = s.rect(34, 34, 10, 10, 20, 20).attr({fill: "#000", strokeWidth: 2, stroke: "#a1c7e0"});
-  //var marker = arrow.marker(0,0, 10,10, 0,0);
-
-
-  var arrow = s.paper.circle(0, 0, 20);
-  var marker = arrow.marker(0,0, 40,40, 0,0);
-
-
-
   var midnighth =  267;
   var sixh =  10;
   var twelveh =  267;
   var eighteenh =  267;
   var twentyfourh =  267;
   var graph = s.paper.line(700,100,300,150);
-  //var graph = s.paper.polygon(39,267,39,midnighth,39+(sixhours*1),sixh,39+(sixhours*2),twelveh,39+(sixhours*3),eighteenh,39+(sixhours*4),twentyfourh,39+(sixhours*4),267);
+  var graph = s.paper.polygon(39,267,39,midnighth,39+(sixhours*1),sixh,39+(sixhours*2),twelveh,39+(sixhours*3),eighteenh,39+(sixhours*4),twentyfourh,39+(sixhours*4),267);
 
   graph.attr({
     id: 'graph',
     fill: "#bed8ea",
     strokeWidth: 2,
     stroke: "#2980B9",
-    markerEnd: marker
   });
 
   //border
