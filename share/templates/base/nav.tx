@@ -3,15 +3,7 @@
     <a href="/index.html"><i class="fa fa-home fa-2x"></i></a>
   </li>
   <li title="Zeitplanung" class="<: if $nav == 'planner' { 'selected' } :> first-level">
-    <i class="fa fa-clock-o fa-2x"></i>
-    <ul class="second-nav">
-      <h2 class="second-level"></h2>
-      <li class="second-level">
-        <a href="/day.html">
-          <i class="fa fa-clock-o"></i>Tagesplanung
-        </a>
-      </li>
-    </ul>
+    <a href="/day.html"><i class="fa fa-clock-o fa-2x"></i></a>
   </li>
   <li title="Wettersimulation" class="<: if $nav == 'weather' { 'selected' } :> first-level">
     <i class="fa fa-cloud fa-2x"></i>
@@ -61,6 +53,11 @@
       <li class="second-level">
         <a href="/network.html">
           <i class="fa fa-sitemap"></i>Netzwerk
+        </a>
+      </li>
+      <li class="second-level">
+        <a href="/firmware.html">
+          <i class="fa fa-forumbee"></i>Firmware
         </a>
       </li>
     </ul>

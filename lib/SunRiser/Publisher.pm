@@ -164,7 +164,7 @@ sub _build_base_vars {
       css/reset.css
       css/tipr-1.0.1.css
       css/tinytools.progressbar-1.0.2.css
-      css/font-awesome.css
+      css/font-awesome-4.3.0.css
       css/OpenSans-Regular-webfont.css
       css/sunriser.css
     )],
