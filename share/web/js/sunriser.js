@@ -151,6 +151,8 @@ $(function(){
   // Remove all js-remove elements
   $('.js-remove').remove();
 
+  $('.js-hide').hide();
+
   // Init navigation
   $("#menu > li.first-level").each(function(){
     $(this).find('h2.second-level').text($(this).attr('title'));

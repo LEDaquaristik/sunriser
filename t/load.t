@@ -5,9 +5,10 @@ use Test::More;
 
 for (qw(
   SunRiser
-  SunRiser::Simulator
+  SunRiser::CDB
   SunRiser::Config
   SunRiser::Publisher
+  SunRiser::Simulator
 )) {
   use_ok($_);
 }
