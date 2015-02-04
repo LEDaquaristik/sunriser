@@ -7,7 +7,7 @@
 @font-face {
   font-family: 'FontAwesome';
   src:url('../fonts/icomoon.eot?z7sih1');
-  src:url('../fonts/icomoon.eot?#iefixz7sih1') format('embedded-opentype'),
+  src: local('☺'), url('../fonts/icomoon.eot?#iefixz7sih1') format('embedded-opentype'),
   	url('../fonts/icomoon.woff?z7sih1') format('woff'),
   	url('../fonts/icomoon.ttf?z7sih1') format('truetype'),
   	url('../fonts/icomoon.svg?z7sih1#icomoon') format('svg');
