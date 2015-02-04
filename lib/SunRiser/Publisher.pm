@@ -174,7 +174,7 @@ sub _build_base_vars {
       js/moment-with-locales-2.9.0.js
       js/snap.svg-0.3.0.js
       js/tipr-1.0.1.js
-      js/ipaddr-0.1.6.js
+      js/ipaddr-0.1.3.js
       js/jquery-ajax-blob-arraybuffer.js
       js/msgpack-1.05.js
       js/tinytools.progressbar-1.0.2.js

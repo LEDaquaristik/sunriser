@@ -10,7 +10,7 @@
  * http://jquery.com/
  *
  * Includes Sizzle.js
- * http://sizzlejs.com/
+ * <a href="http://sizzlejs.com/">http://sizzlejs.com/</a>
  *
  * Copyright 2005, 2014 jQuery Foundation, Inc. and other contributors
  * Released under the MIT license
@@ -52,7 +52,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 <h2>Frontend | <a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a></h2>
 <hr>
 <pre>
-Font Awesome by Dave Gandy - http://fontawesome.io
+Font Awesome by Dave Gandy - <a href="http://fontawesome.io">http://fontawesome.io</a>
 
 Font License
 
@@ -98,15 +98,84 @@ The use of these trademarks does not indicate endorsement of the trademark holde
 </pre>
 
 <hr>
-<h2>Frontend |  <a href="https://www.flickr.com/photos/s_fox/358214800/">Background Image</a></h2>
+<h2>Frontend | <a href="https://github.com/msgpack/msgpack-javascript">msgpack.js</a></h2>
 <hr>
-<a href="https://www.flickr.com/photos/s_fox/358214800/">
-<img class="img_resp" src="/img/background.jpg" width="500" height="333">
-</a>
 <pre>
-Source: fox_kiyo via Flickr (CC BY-SA 2.0)
-https://www.flickr.com/photos/s_fox/358214800/
+{id:msgpack.js,ver:1.05,license:"MIT",author:"uupaa.js@gmail.com"}
 </pre>
+
+<hr>
+<h2>Frontend | <a href="http://ejohn.org/blog/javascript-micro-templating/">tmpl.js</a></h2>
+<hr>
+<pre>
+// Simple JavaScript Templating
+// John Resig - http://ejohn.org/ - MIT Licensed
+// <a href="http://ejohn.org/blog/javascript-micro-templating/">http://ejohn.org/blog/javascript-micro-templating/</a>
+</pre>
+
+<hr>
+<h2>Frontend | <a href="https://github.com/whitequark/ipaddr.js">ipaddr.js</a></h2>
+<hr>
+<pre>
+Copyright (C) 2011 Peter Zotov &lt;whitequark@whitequark.org&gt;
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+</pre>
+
+<hr>
+<h2>Frontend | <a href="http://meyerweb.com/eric/tools/css/reset/">reset.css</a></h2>
+<hr>
+<pre>
+/*
+   http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+</pre>
+
+<hr>
+<h2>Frontend | <a href="http://www.google.com/fonts/specimen/Open+Sans">Open Sans</a></h2>
+<hr>
+<pre>
+<a href="https://profiles.google.com/107777320916704234605/about">Steve Matteson</a>
+
+<a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License, version 2.0</a>
+
+Open Sans is a humanist sans serif typeface designed by Steve Matteson, Type
+Director of Ascender Corp. This version contains the complete 897 character
+set, which includes the standard ISO Latin 1, Latin CE, Greek and Cyrillic
+character sets. Open Sans was designed with an upright stress, open forms and
+a neutral, yet friendly appearance. It was optimized for print, web, and
+mobile interfaces, and has excellent legibility characteristics in its
+letterforms.
+</pre>
+
+<hr>
+<h2>Frontend | <a href="http://tinytools.codesells.com/ProgressBar">jQuery Tiny Progress Bar</a></h2>
+<hr>
+<pre>
+ProgressBar 1.0.2 - 2014-06-04
+jQuery Tiny Progress Bar
+(c) 2014, <a href="http://tinytools.codesells.com">http://tinytools.codesells.com</a>
+license: http://www.opensource.org/licenses/mit-license.php
+</pre>
+
 <hr>
 <h2>Frontend | <a href="http://www.tipue.com/tipr/">Tipr</a></h2>
 <hr>
@@ -131,6 +200,218 @@ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
 LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+</pre>
+
+<hr>
+<h2>Frontend | <a href="https://www.flickr.com/photos/s_fox/358214800/">Background Image</a></h2>
+<hr>
+<a href="https://www.flickr.com/photos/s_fox/358214800/">
+<img class="img_resp" src="/img/background.jpg" width="500" height="333">
+</a>
+<pre>
+Source: fox_kiyo via Flickr (CC BY-SA 2.0)
+<a href="https://www.flickr.com/photos/s_fox/358214800/">https://www.flickr.com/photos/s_fox/358214800/</a>
+</pre>
+
+<hr>
+<h2>Microcontroller | <a href="https://github.com/camgunz/cmp">CMP</a></h2>
+<hr>
+<pre>
+The MIT License (MIT)
+
+Copyright (c) 2014 Charles Gunyon
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+</pre>
+
+<hr>
+<h2>Microcontroller | <a href="https://github.com/vonBienenstock/tinycdbff">tinycdbff</a></h2>
+<hr>
+<pre>
+tinycdb package by Michael Tokarev, mjt@corpit.ru.
+Public domain.
+
+Patched for Chan FatFs by Torsten Raudssus, &lt;torsten@raudss.us&gt;
+</pre>
+
+<hr>
+<h2>Microcontroller | <a href="http://elm-chan.org/fsw/ff/00index_e.html">ChaN FatFs</a></h2>
+<hr>
+<pre>
+AGREEMENTS
+
+ FatFs module is an open source software to implement FAT file system to
+ small embedded systems. This is a free software and is opened for education,
+ research and commercial developments under license policy of following trems.
+
+  Copyright (C) 2014, ChaN, all right reserved.
+
+ * The FatFs module is a free software and there is NO WARRANTY.
+ * No restriction on use. You can use, modify and redistribute it for
+   personal, non-profit or commercial product UNDER YOUR RESPONSIBILITY.
+ * Redistributions of source code must retain the above copyright notice.
+
+</pre>
+
+<hr>
+<h2>Microcontroller | <a href="http://savannah.nongnu.org/projects/lwip/">lwIP</a></h2>
+<hr>
+<pre>
+/*
+ * Copyright (c) 2001, 2002 Swedish Institute of Computer Science.
+ * All rights reserved. 
+ * 
+ * Redistribution and use in source and binary forms, with or without modification, 
+ * are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 3. The name of the author may not be used to endorse or promote products
+ *    derived from this software without specific prior written permission. 
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED 
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT 
+ * SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, 
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT 
+ * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING 
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY 
+ * OF SUCH DAMAGE.
+ *
+ * This file is part of the lwIP TCP/IP stack.
+ * 
+ * Author: Adam Dunkels &lt;adam@sics.se&gt;
+ *
+ */
+</pre>
+
+<hr>
+<h2>Microcontroller | <a href="http://www.libopencm3.org/">libopencm3</a></h2>
+<hr>
+<pre>
+The libopencm3 code is released under the terms of the GNU Lesser General Public License (LGPL), version 3 or later.
+
+See <a href="https://github.com/libopencm3/libopencm3/blob/master/COPYING.LGPL3">https://github.com/libopencm3/libopencm3/blob/master/COPYING.LGPL3</a>
+</pre>
+
+<hr>
+<h2>Microcontroller | MMC/SDSC/SDHC control module</h2>
+<hr>
+<pre>
+/*-----------------------------------------------------------------------*/
+/* MMC/SDSC/SDHC (in SPI mode) control module for STM32 Version 1.1.6    */
+/* (C) Martin Thomas, 2010 - based on the AVR MMC module (C)ChaN, 2007   */
+/*                                                                       */
+/* This is the libopencm3 version                                        */
+/*-----------------------------------------------------------------------*/
+
+/* Copyright (c) 2010, Martin Thomas, ChaN
+   Copyright (c) 2013 Ken Sarkies
+   All rights reserved.
+
+   Redistribution and use in source and binary forms, with or without
+   modification, are permitted provided that the following conditions are met:
+
+   * Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+   * Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in
+     the documentation and/or other materials provided with the
+     distribution.
+   * Neither the name of the copyright holders nor the names of
+     contributors may be used to endorse or promote products derived
+     from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  POSSIBILITY OF SUCH DAMAGE.
+</pre>
+
+<hr>
+<h2>Microcontroller | <a href="http://git.savannah.gnu.org/cgit/lwip/lwip-contrib.git/tree/apps/sntp">lwIP NTP server</a></h2>
+<hr>
+<pre>
+/*
+ * Redistribution and use in source and binary forms, with or without modification, 
+ * are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 3. The name of the author may not be used to endorse or promote products
+ *    derived from this software without specific prior written permission. 
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED 
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT 
+ * SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, 
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT 
+ * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING 
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY 
+ * OF SUCH DAMAGE.
+ *
+ * This file is part of the lwIP TCP/IP stack.
+ * 
+ * Author: Simon Goldschmidt (lwIP raw API part)
+ */
+</pre>
+
+<hr>
+<h2>Microcontroller | <a href="http://www.sparetimelabs.com/tinyprintf/tinyprintf.php">tiny printf</a></h2>
+<hr>
+<pre>
+/*
+
+Copyright (C) 2004  Kustaa Nyholm
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+*/
 </pre>
 
 : }

@@ -1,10 +1,14 @@
-SunRiser-*
+SunRiser*
 .build
+*.swo
+*.swp
+
 *.cdb
 *.cdb.*
 *.bee
 *.bee.*
-*.swo
-*.swp
 *.bin
+*.log
+*.tar.gz
+
 *firmware_images.json*
