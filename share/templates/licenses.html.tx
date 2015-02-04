@@ -10,7 +10,7 @@
  * http://jquery.com/
  *
  * Includes Sizzle.js
- * http://sizzlejs.com/
+ * <a href="http://sizzlejs.com/">http://sizzlejs.com/</a>
  *
  * Copyright 2005, 2014 jQuery Foundation, Inc. and other contributors
  * Released under the MIT license
@@ -52,7 +52,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 <h2>Frontend | <a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a></h2>
 <hr>
 <pre>
-Font Awesome by Dave Gandy - http://fontawesome.io
+Font Awesome by Dave Gandy - <a href="http://fontawesome.io">http://fontawesome.io</a>
 
 Font License
 
@@ -98,15 +98,83 @@ The use of these trademarks does not indicate endorsement of the trademark holde
 </pre>
 
 <hr>
-<h2>Frontend |  <a href="https://www.flickr.com/photos/s_fox/358214800/">Background Image</a></h2>
+<h2>Frontend | <a href="https://github.com/msgpack/msgpack-javascript">msgpack.js</a></h2>
 <hr>
-<a href="https://www.flickr.com/photos/s_fox/358214800/">
-<img class="img_resp" src="/img/background.jpg" width="500" height="333">
-</a>
 <pre>
-Source: fox_kiyo via Flickr (CC BY-SA 2.0)
-https://www.flickr.com/photos/s_fox/358214800/
+{id:msgpack.js,ver:1.05,license:"MIT",author:"uupaa.js@gmail.com"}
 </pre>
+
+<hr>
+<h2>Frontend | <a href="http://ejohn.org/blog/javascript-micro-templating/">tmpl.js</a></h2>
+<hr>
+<pre>
+// Simple JavaScript Templating
+// John Resig - http://ejohn.org/ - MIT Licensed
+// <a href="http://ejohn.org/blog/javascript-micro-templating/">http://ejohn.org/blog/javascript-micro-templating/</a>
+</pre>
+
+<hr>
+<h2>Frontend | <a href="https://github.com/whitequark/ipaddr.js">ipaddr.js</a></h2>
+<hr>
+<pre>
+Copyright (C) 2011 Peter Zotov &lt;whitequark@whitequark.org&gt;
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+</pre>
+
+<hr>
+<h2>Frontend | <a href="http://meyerweb.com/eric/tools/css/reset/">reset.css</a></h2>
+<hr>
+<pre>
+/**
+* Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
+* http://cssreset.com
+*/
+</pre>
+
+<hr>
+<h2>Frontend | <a href="http://www.google.com/fonts/specimen/Open+Sans">Open Sans</a></h2>
+<hr>
+<pre>
+<a href="https://profiles.google.com/107777320916704234605/about">Steve Matteson</a>
+
+<a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License, version 2.0</a>
+
+Open Sans is a humanist sans serif typeface designed by Steve Matteson, Type
+Director of Ascender Corp. This version contains the complete 897 character
+set, which includes the standard ISO Latin 1, Latin CE, Greek and Cyrillic
+character sets. Open Sans was designed with an upright stress, open forms and
+a neutral, yet friendly appearance. It was optimized for print, web, and
+mobile interfaces, and has excellent legibility characteristics in its
+letterforms.
+</pre>
+
+<hr>
+<h2>Frontend | <a href="http://tinytools.codesells.com/ProgressBar">jQuery Tiny Progress Bar</a></h2>
+<hr>
+<pre>
+ProgressBar 1.0.2 - 2014-06-04
+jQuery Tiny Progress Bar
+(c) 2014, <a href="http://tinytools.codesells.com">http://tinytools.codesells.com</a>
+license: http://www.opensource.org/licenses/mit-license.php
+</pre>
+
 <hr>
 <h2>Frontend | <a href="http://www.tipue.com/tipr/">Tipr</a></h2>
 <hr>
@@ -131,6 +199,17 @@ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
 LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+</pre>
+
+<hr>
+<h2>Frontend | <a href="https://www.flickr.com/photos/s_fox/358214800/">Background Image</a></h2>
+<hr>
+<a href="https://www.flickr.com/photos/s_fox/358214800/">
+<img class="img_resp" src="/img/background.jpg" width="500" height="333">
+</a>
+<pre>
+Source: fox_kiyo via Flickr (CC BY-SA 2.0)
+<a href="https://www.flickr.com/photos/s_fox/358214800/">https://www.flickr.com/photos/s_fox/358214800/</a>
 </pre>
 
 : }
