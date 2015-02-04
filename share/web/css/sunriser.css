@@ -186,9 +186,12 @@ nav{
   color: #a6a9ad;
   text-decoration: none;
 }
-nav .first-level{
+.first-level > a,
+.first-level > i{
   height:70px;
+  width:70px;
   padding-top: 24px;
+  display:block !important
 }
 nav .first-level:last-child{
   position:absolute;
@@ -586,7 +589,6 @@ nav h2{
   .sunriser_datetime {
     float: left;
     padding-top: 12px;
-    opacity: 0.75;
   }
 }
 @media screen and (max-width:500px) {
