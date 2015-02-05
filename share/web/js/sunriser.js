@@ -133,6 +133,12 @@ var sr_forms = {
 };
 
 var sr_config;
+
+var sr_config_main_keys = [
+  'model','model_id','pwm_count','factory_version','language','timezone',
+  'updated','name'
+];
+
 var sr_config_def;
 var sr_config_types = {};
 
@@ -194,20 +200,29 @@ $(function(){
 
 $('body').on('sr_config_def',function(){
 
-  var keys = [
-    'model','model_id','pwm_count','factory_version','language','timezone',
-    'updated','name','showhelp','showexpert'
-  ];
+  if (typeof(Storage) !== "undefined") {
+    var session_sr_config = sessionStorage.getItem('sr_config');
+    if (session_sr_config) {
+      sr_config = JSON.parse(session_sr_config);
+    }
+  }
 
-  sr_request_mpack('POST','/',keys,function(values){
-    $.each(keys,function(i,key){
-      if (typeof values[key] === 'undefined') {
-        values[key] = sr_default(key);
+  if (typeof(sr_config) === "undefined") {
+    sr_request_mpack('POST','/',sr_config_main_keys,function(values){
+      $.each(sr_config_main_keys,function(i,key){
+        if (typeof values[key] === 'undefined') {
+          values[key] = sr_default(key);
+        }
+      });
+      sr_config = values;
+      if (typeof(Storage) !== "undefined") {
+        sessionStorage.setItem('sr_config',JSON.stringify(sr_config));
       }
+      $('body').trigger('sr_config');
     });
-    sr_config = values;
-    $('body').trigger('sr_config');
-  });
+  } else {
+    $('body').trigger('sr_config');    
+  }
 
 });
 
