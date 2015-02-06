@@ -3,6 +3,7 @@
 
   <div id="home_not_configured">
     <div class="warningbloc">
+      <hr></hr>
       <h2 class="willkommen">Willkommen</h2>
       <!--<h2>Ihr Ger&auml;t wurde noch nicht konfiguriert!</h2>-->
       <p class="intro-warning">

@@ -50,16 +50,15 @@ body{
   line-height:1.5em;
   color:#444;
   font-family:'DIN1451', 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  background-color: #0087f7;
   transition-duration:0.2s;
-  /* transform-origin: 50% 400px 0px;
-  background: linear-gradient(270deg, #184c6f, #0f705d);
-  background-size: 600% 600%;
-  -webkit-animation: BackAnim 30s ease infinite;
-  -moz-animation: BackAnim 30s ease infinite;
-  -moz-animation: BackAnim 30s ease infinite;
-  animation: BackAnim 30s ease infinite; */
-  background:url(../img/background.jpg) no-repeat fixed center center / cover #145868;
+  /*background: linear-gradient(270deg, #184c6f, #0f705d);*/
+  /*background:url(../img/background.jpg) no-repeat fixed center center / cover #145868;*/
+  -o-animation: BackAnim 60s ease infinite;
+  -webkit-animation: BackAnim 60s ease infinite;
+  -moz-animation: BackAnim 60s ease infinite;
+  animation: BackAnim 60s linear infinite;
+  background:url("../img/background.jpg") no-repeat fixed center center / 200% 200% #145868;
+  transform-origin: 50% 400px 0px;
 }
 
 @-webkit-keyframes BackAnim {
@@ -74,7 +73,13 @@ body{
 }
 @keyframes BackAnim {
     0%{background-position:0% 50%}
+    12.5%{background-position:16% 83%}
+    25%{background-position:50% 100%}
+    37.5%{background-position:83% 83%}
     50%{background-position:100% 50%}
+    62.5%{background-position:83% 16%}
+    75%{background-position:50% 0%}
+    87.5%{background-position:16% 16%}
     100%{background-position:0% 50%}
 }
 
@@ -572,10 +577,21 @@ nav h2{
   padding: 40px 40px 20px;
   background-color: #ddd;
   margin: -40px -40px 0px -40px;
+  text-align:center
+}
+.warningbloc hr{
+  border-color: #AAA;
+  border-width: 2px 0px 0px;
+  margin-bottom: -9px;
+  width: 400px;
 }
 .willkommen {
-  text-align: center;
   font-size: 40px !important;
+  margin-top: -30px;
+  display: inline-block;
+  text-align: center;
+  background: none repeat scroll 0% 0% #DDD;
+  padding: 0px 10px 10px !important;
 }
 .intro-warning {
   padding: 20px;
@@ -706,7 +722,7 @@ nav h2{
 }
 .screenblocker .screenblocker-saving{
   display:block;
-  background-color:rgba(255,255,255,0.5)
+  background-color:rgba(255,255,255,0.9)
 }
 
 /***  RESPONSIVE  ***/

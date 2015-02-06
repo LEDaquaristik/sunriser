@@ -25,7 +25,7 @@
     </noscript>
     <div class="overlay"></div>
     <div class="screenblocker-saving">
-      <div class="saving"><div class="anim"></div>Saving...</div>
+      <div class="saving"><div class="anim"></div><div class="blocker-text">Loading...</div></div>
     </div>
     <main class="main">
       <header>

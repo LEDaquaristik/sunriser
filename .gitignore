@@ -1,7 +1,11 @@
 SunRiser*
 .build
+*.swn
+*.swm
+*.swm
 *.swo
 *.swp
+*.swq
 
 *.cdb
 *.cdb.*
