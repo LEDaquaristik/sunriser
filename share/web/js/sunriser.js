@@ -351,7 +351,7 @@ function sr_make_form(target,args){
             } else {
               values[k] = parseInt(val);              
             }
-          } else if (type == 'array(time,percent)') {
+          } else if (type == 'array(daymin,percent)') { // 360,0,720,100,1080,100,1200,0 (6 uhr: 0, 12 uhr: 100, 18 uhr: 100, 20 uhr: 0)
             var marker = val.split(",");
             var packvalues = [];
             $.each(marker,function(i,value){
@@ -375,6 +375,7 @@ function sr_make_form(target,args){
         }
       });
       if (!error) {
+        console.log(values);
         sr_request_mpack('PUT','/',values,function(){
           // TODO show success
         });

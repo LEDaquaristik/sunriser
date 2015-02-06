@@ -29,7 +29,7 @@
   "name", [        "Custom visual name of device", "text"],
   "hostname", [    "Hostname for the device",    "text", "sunriser"],
   "pwm#X",       "Main data of PWM X", [
-    "manager", [   "Asinteger manager, 0 = unasinteger, 1 = dayplanner, 2 = event", "integer", 0],
+    "manager", [   "Assigned manager, 0 = unassigned, 1 = dayplanner, 2 = event", "integer", 0],
     "name", [      "Custom name for pwm",        "text"],
     "color", [     "Color definition",           "text"]
   ],
