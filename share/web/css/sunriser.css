@@ -12,6 +12,8 @@
         - content
         - dialogue
       - Login
+      - Intro
+      - ScreenBlocker
     - RESPONSIVE
       - max-width : 900px
       - max-width : 500px
@@ -49,8 +51,9 @@ body{
   color:#444;
   font-family:'DIN1451', 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   background-color: #0087f7;
-  transform-origin: 50% 400px 0px;
-  /* background: linear-gradient(270deg, #184c6f, #0f705d);
+  transition-duration:0.2s;
+  /* transform-origin: 50% 400px 0px;
+  background: linear-gradient(270deg, #184c6f, #0f705d);
   background-size: 600% 600%;
   -webkit-animation: BackAnim 30s ease infinite;
   -moz-animation: BackAnim 30s ease infinite;
@@ -561,6 +564,149 @@ nav h2{
 }
 .login_button:active{
   opacity:0.75;
+}
+
+/** Intro **/
+
+.warningbloc{
+  padding: 40px 40px 20px;
+  background-color: #ddd;
+  margin: -40px -40px 0px -40px;
+}
+.willkommen {
+  text-align: center;
+  font-size: 40px !important;
+}
+.intro-warning {
+  padding: 20px;
+  margin: 1em 0;
+  background-color: rgb(238, 129, 118);
+  color: rgb(255, 255, 255);
+}
+.centerarrow{
+  text-align: center;
+}
+.warningarrow{
+  display: inline-block;
+  border-style: solid;
+  border-width: 25px 35px;
+  border-color: rgb(221, 221, 221) rgb(255, 255, 255) rgb(255, 255, 255);
+}
+.letsgetstarted{
+  margin-bottom: 40px;
+  font-size: 40px !important;
+}
+.buttonbloc{
+  width:100%;
+  display:table
+}
+.bigbutton{
+  width: 31%;
+  display: block;
+  border-bottom: 0px !important;
+  background-color: #68D472;
+  padding: 10px;
+  float:left;
+  color: white !important;
+  text-align:center;
+  transition-duration:0.2s;
+}
+.bigbutton:hover{
+  background-color:#57d68d;
+}
+.bigbutton:active{
+  background-color:#27AE60
+}
+
+.bigbutton:not(:last-child){
+  margin-right:3.5%
+}
+.badge{
+  font-family: DIN1451;
+  font-weight: bold;
+  font-size: 77px;
+  display: inline-block;
+  height: 30px;
+  margin: 50px 0px 30px 0;
+}
+.bigbutton div{
+  padding: 20px 0px;
+}
+/** ScreenBlocker **/
+.screenblocker-saving{
+  display:none;
+  width:100%;
+  height:100%;
+  position:fixed;
+  top:0;
+  left:0px;
+  text-align:center;
+  z-index:10;
+  background-color:rgba(255,255,255,0);
+  transition-duration:0.2s
+}
+.screenblocker-saving .saving{
+  margin-top:20%;
+  font-size:75px;
+  color:#111;
+  z-index:11;
+  padding: 45px 25px 35px 25px;
+  border: 10px solid !important;
+  display: inline-block;
+  position:relative
+}
+.anim{
+  background-color:rgba(0,0,0,0.3);
+  height:100%;
+  position:absolute;
+  width:0px;
+  top:0px;
+  left:0px;
+  -webkit-animation: LoadingAnim 5s ease infinite;
+  -moz-animation: LoadingAnim 5s ease infinite;
+  -moz-animation: LoadingAnim 5s ease infinite;
+  animation: LoadingAnim 5s ease infinite;
+}
+
+@-webkit-keyframes LoadingAnim {
+    0%{
+  	width:0%;
+    }
+    50%{
+  	width:101%;
+	margin-left:0%
+    }
+    100%{
+	margin-left:100%
+    }
+}
+@-moz-keyframes LoadingAnim {
+    0%{
+  	width:0%;
+    }
+    50%{
+  	width:101%;
+	margin-left:0%
+    }
+    100%{
+	margin-left:100%
+    }
+}
+@keyframes LoadingAnim {
+    0%{
+  	width:0%;
+    }
+    50%{
+  	width:101%;
+	margin-left:0%
+    }
+    100%{
+	margin-left:100%
+    }
+}
+.screenblocker .screenblocker-saving{
+  display:block;
+  background-color:rgba(255,255,255,0.5)
 }
 
 /***  RESPONSIVE  ***/
