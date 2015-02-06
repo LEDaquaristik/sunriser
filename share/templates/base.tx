@@ -14,7 +14,7 @@
       <: } :>
     <: } :>
   </head>
-  <body><!--We need to add the class "screenblocker" to the body in order to display the screenblocker... wow-->
+  <body class="screenblocker">
     <noscript>
       <div class="noscript-overlay">
         <section class="noscript-text">
@@ -25,7 +25,7 @@
     </noscript>
     <div class="overlay"></div>
     <div class="screenblocker-saving">
-      <div class="saving"><div class="anim"></div><div class="blocker-text">Loading...</div></div>
+      <div class="saving"><div class="anim"></div><div class="blocker-text">Seite wird noch geladen</div></div>
     </div>
     <main class="main">
       <header>

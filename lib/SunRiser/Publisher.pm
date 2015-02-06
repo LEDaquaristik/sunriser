@@ -178,6 +178,7 @@ sub _build_base_vars {
       js/jquery-ajax-blob-arraybuffer.js
       js/msgpack-1.05.js
       js/tinytools.progressbar-1.0.2.js
+      js/sunriser_forms.js
       js/sunriser.js
     )],
   };
