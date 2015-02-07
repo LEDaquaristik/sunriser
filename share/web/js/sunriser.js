@@ -11,6 +11,8 @@ var sr_config_types = {};
 
 $(function(){
 
+  /* VIP */ window.loaded = true; /* VIP */
+
   $('body').removeClass('screenblocker');
 
   // All external links in new window
@@ -175,9 +177,15 @@ function sr_make_form(target,args){
       args["fields"][i]["name"] = prefix + '#' + old_name;
     }
   }
+  for ( var i = 0; i < args["fields"].length; i++ ) {
+    var old_name = args["fields"][i]["name"];
+    old_name = old_name.replace('weather#setup#X#','weather#setup#' + $('#weather_setup_id').val() + '#');
+    args["fields"][i]["name"] = old_name;
+  }
   var keys = [];
   for ( var i = 0; i < args["fields"].length; i++ ) {
-    keys.push(args["fields"][i]["name"]);
+    var key = args["fields"][i]["name"];
+    keys.push(key);
   }
   sr_request_mpack('POST','/',keys,function(values){
     $.each(args['fields'],function(i,field){
@@ -193,6 +201,8 @@ function sr_make_form(target,args){
     });
     $(target).html(tmpl(template,args));
     $(target).find('form').submit(function(e){
+      $('#blockertext').html('Speichern');
+      $('body').addClass('screenblocker');
       e.preventDefault();
       var values = {};
       var error;
@@ -246,7 +256,7 @@ function sr_make_form(target,args){
       if (!error) {
         console.log(values);
         sr_request_mpack('PUT','/',values,function(){
-          // TODO show success
+          $('body').removeClass('screenblocker');
         });
       }
     });

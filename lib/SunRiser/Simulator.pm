@@ -19,9 +19,11 @@ use HTTP::Date;
 use Plack::Request;
 use POSIX qw( floor );
 use JSON::MaybeXS;
+use Digest::DJB32 qw( djb );
 use File::Temp qw/ tempfile tempdir tmpnam /;
 use bytes;
 use Data::MessagePack;
+use Data::MessagePack::Stream;
 use CDB::TinyCDB;
 use SunRiser::Publisher;
 use SunRiser::CDB;
@@ -60,30 +62,6 @@ option password => (
   default => sub { 'test' },
   doc => 'password for login',
 );
-
-option changesdb => (
-  is => 'ro',
-  format => 's',
-  short => 'c',
-  default => sub { 'changes.cdb' },
-  doc => 'CDB file for changed variable storage',
-);
-
-has changes_cdb => (
-  is => 'lazy',
-  handles => [qw(
-    set
-    save
-  )],
-);
-
-sub _build_changes_cdb {
-  my ( $self ) = @_;
-  return SunRiser::CDB->new(
-    filename => $self->changesdb,
-    config => $self->config,
-  );
-}
 
 option systemdb => (
   is => 'ro',
@@ -131,6 +109,26 @@ sub _build_w {
   return $w;
 }
 
+option configdir => (
+  is => 'ro',
+  format => 's',
+  init_arg => 'config',
+  doc => 'Directory to use for storing local saved config',
+  default => sub { path('config')->stringify },
+);
+
+has c => (
+  is => 'lazy',
+  init_arg => undef,
+);
+
+sub _build_c {
+  my ( $self ) = @_;
+  my $c = path($self->configdir)->absolute->realpath;
+  $c->mkpath;
+  return $c;
+}
+
 has state => (
   is => 'lazy',
   init_arg => undef,
@@ -153,17 +151,41 @@ has cdbs => (
 sub _build_cdbs {
   my ( $self ) = @_;
   return [
-    $self->changes_cdb,
     (reverse @{$self->system_cdbs})
   ];
 }
 
 sub get {
   my ( $self, $key ) = @_;
+  my $val = $self->get_config($key);
+  return $val if defined $val;
   for my $cdb (@{$self->cdbs}) {
     return $cdb->get($key) if $cdb->exists($key);
   }
   return $self->model_info->{$key} if defined $self->model_info->{$key};
+  return undef;
+}
+
+sub get_config {
+  my ( $self, $key ) = @_;
+  my $djb = djb($key);
+  my $unpacker = Data::MessagePack::Stream->new;
+  my $filename = sprintf("%08X.MP",$djb);
+  my $path = path($self->c,$filename);
+  if (-f $path) {
+    my $file = $path->slurp_raw();
+    $unpacker->feed($file);
+    if ($unpacker->next) {
+      my $ckey = $unpacker->data;
+      if ($ckey eq $key) {
+        if ($unpacker->next) {
+          return $unpacker->data;
+        }
+      } else {
+        $self->debug($ckey." in config file is not ".$key."!!!");
+      }
+    }    
+  }
   return undef;
 }
 
@@ -174,6 +196,23 @@ sub exists {
   }
   return 1 if defined $self->model_info->{$key};
   return 0;
+}
+
+sub set {
+  my ( $self, $key, @val ) = @_;
+  my $djb = djb($key);
+  my $filename = sprintf("%08X.MP",$djb);
+  my @data;
+  my $p = path($self->c,$filename)->touch;
+  push @data, $self->_mp->pack($key);
+  if (scalar @val == 1) {
+    push @data, $self->_mp->pack($val[0]);
+  } elsif (scalar @val == 0) {
+    push @data, $self->_mp->pack(undef);
+  } else {
+    croak(__PACKAGE__." Unknown parameter count on ->set");
+  }
+  $p->spew_raw(@data);
 }
 
 sub _web_ok { $_[0]->debug("Sending OK"); [
@@ -397,7 +436,6 @@ sub _build_web {
               $self->debug('Setting key '.$k);
               $self->set($k,$data->{$k});
             }
-            $self->save;
             return $self->_web_ok;
           } elsif ($method eq 'POST') {
             my $body = $req->raw_body;
@@ -405,13 +443,9 @@ sub _build_web {
             my %values;
             $self->debug('Requested keys: '.join(',',@{$data}));
             for my $key (@{$data}) {
-              if ($self->exists($key)) {
-                $self->debug('Getting key '.$key);
-                $values{$key} = $self->get($key);
-              } else {
-                $self->debug('Key '.$key.' not found');                
-              }
+              $values{$key} = $self->get($key);
             }
+            use DDP; p(%values);
             return $self->_web_serve_msgpack(\%values);
           } else {
             return $self->_web_serve_file('index.html');          

@@ -2,6 +2,12 @@
 <html lang="de">
   <head>
     <title><: $title ? $title ~ " | " : "" :>SunRiser von LEDaquaristik.de</title>
+    <script type="text/javascript">
+
+    window.loaded = false;
+    setTimeout(function(){ if (!window.loaded) { window.location.href = window.location.href; }}, 10000);
+
+    </script>
     <!-- META -->
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" />
@@ -15,7 +21,7 @@
     <: } :>
     <style>
 	/** ScreenBlocker **/ 
-	.screenblocker-saving{ 
+	.screenblockertext{ 
 	  display:none; 
 	  width:100%; 
 	  height:100%; 
@@ -27,7 +33,7 @@
 	  background-color:rgba(255,255,255,0); 
 	  transition-duration:0.2s 
 	} 
-	.screenblocker-saving .saving{ 
+	.screenblockertext .blocking{ 
 	  margin-top:20%; 
 	  font-size:75px; 
 	  color:#111; 
@@ -86,7 +92,7 @@
 		margin-left:100% 
 	    } 
 	} 
-	.screenblocker .screenblocker-saving{ 
+	.screenblocker .screenblockertext{ 
 	  display:block; 
 	  background-color:rgba(255,255,255,0.9) 
 	} 
@@ -102,8 +108,8 @@
       </div>
     </noscript>
     <div class="overlay"></div>
-    <div class="screenblocker-saving">
-      <div class="saving"><div class="anim"></div><div class="blocker-text">Seite wird noch geladen</div></div>
+    <div class="screenblockertext">
+      <div class="blocking"><div class="anim"></div><div id="blockertext">Seite wird noch geladen</div></div>
     </div>
     <main class="main">
       <header>
@@ -150,5 +156,6 @@
     <: } :>
     <: include form::std :>
     <: block postjs -> {} :>
+    <input type="hidden" id="weather_setup_id" value="0">
   </body>
 </html>

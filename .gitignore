@@ -15,3 +15,5 @@ SunRiser*
 *.tar.gz
 
 *firmware_images.json*
+
+config/*
