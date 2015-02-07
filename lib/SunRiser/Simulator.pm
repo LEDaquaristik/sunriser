@@ -487,6 +487,7 @@ sub _build_web {
       } elsif ($method eq 'PUT') {
         my $l = length($req->raw_body);
         use DDP; p($l);
+        return $self->_web_ok;
       }
 
       # can't handle that request, send error

@@ -1,12 +1,6 @@
 : cascade base { title => "Firmware Upgrade" }
 : override content -> {
 
-<div id="firmware_progress" class="js-hide">
-  <h2>Lade neue Firmware aus dem Internet...</h2><br/>
-  <div id="progress_download"></div><br/>
-  <h2>Speichere neue Firmware auf SunRiser...</h2><br/>
-  <div id="progress_install"></div>
-</div>
 <div id="firmware_list">
   <h2>Lade aktuelle Liste von Firmware Images...</h2>
   <img class="loader" src="/img/ajaxload.gif">
@@ -17,7 +11,9 @@
 
 <script type="text/javascript">
 
-function download_and_install_firmware(firmware_url,success) {
+function download_and_install_firmware(firmware_url) {
+  $('#blockertext').html('Lade neue Firmware aus dem Internet');
+  $('body').addClass('screenblocker');
   var call_options = {
     type: 'GET',
     url: firmware_url,
@@ -25,23 +21,25 @@ function download_and_install_firmware(firmware_url,success) {
     dataType: 'arraybuffer',
     processData: false,
     cache: false,
-    progress: function(evt) {
-      if (evt.lengthComputable) {
-        var percentComplete = evt.loaded / evt.total;
-        $('#progress_download').changePercent(Math.floor(percentComplete * 100));
-      }
-    },
+    // progress: function(evt) {
+    //   if (evt.lengthComputable) {
+    //     var percentComplete = evt.loaded / evt.total;
+    //     $('#progress_download').changePercent(Math.floor(percentComplete * 100));
+    //   }
+    // },
     error: function (xhr, ajaxOptions, thrownError) {
       // TODO error handling
     },
     success: function (bytesarray) {
-      install_firmware(bytesarray,success);
+      install_firmware(bytesarray);
     }
   };
   $.ajax(call_options);
 }
 
-function install_firmware(bytesarray,success) {
+function install_firmware(bytesarray) {
+  $('#blockertext').html('Sende neue Firmware an SunRiser');
+  $('body').addClass('screenblocker');
   var call_options = {
     type: 'PUT',
     url: '/firmware',
@@ -50,17 +48,20 @@ function install_firmware(bytesarray,success) {
     dataType: 'arraybuffer',
     processData: false,
     cache: false,
-    progress: function(evt) {
-      if (evt.lengthComputable) {
-        var percentComplete = evt.loaded / evt.total;
-        $('#progress_install').changePercent(Math.floor(percentComplete * 100));
-      }
-    },
+    // progress: function(evt) {
+    //   if (evt.lengthComputable) {
+    //     var percentComplete = evt.loaded / evt.total;
+    //     $('#progress_install').changePercent(Math.floor(percentComplete * 100));
+    //   }
+    // },
     error: function(xhr,error,errorthrown){
       // TODO error handling
     },
     success: function(data,status,xhr){
-
+      $('#blockertext').html('<div>Warte auf Neustart</div><div>Bitte das Ger&auml;t NICHT abschalten!!!</div><div>(ca. 1 Min)</div>');
+      setTimeout(function(){
+        window.location.href = window.location.href;
+      }, 60000);
     },
   };
   $.ajax(call_options);
@@ -71,22 +72,12 @@ $(function(){
   var firmware_root = "http://sunriser.vbs.io/";
   var firmware_template = "firmware_tmpl";
 
-  $("#firmware_button").click(function(){
-    download_and_install_firmware("http://sunriser.vbs.io/sunriser.bee",function(){});
-  });
-
   $.getJSON(firmware_root + "firmware_images.json", function(firmwares) {
     $("#firmware_list").html(tmpl(firmware_template,{
       firmwares: firmwares,
     }));
     $(".install_firmware").click(function(){
-      $("#firmware_list").html("");
-      $("#firmware_progress").show();
-      $("#progress_install").progressBar();
-      $("#progress_download").progressBar();
-      download_and_install_firmware(firmware_root + $(this).data("url"),function(){
-        console.log("success");
-      });
+      download_and_install_firmware(firmware_root + $(this).data("url"));
     });
   });
 

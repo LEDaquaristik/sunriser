@@ -163,7 +163,6 @@ sub _build_base_vars {
     css_files => [qw(
       css/reset.css
       css/tipr-1.0.1.css
-      css/tinytools.progressbar-1.0.2.css
       css/icomoon.css
       css/OpenSans-Regular-webfont.css
       css/sunriser.css
@@ -177,7 +176,6 @@ sub _build_base_vars {
       js/ipaddr-0.1.3.js
       js/jquery-ajax-blob-arraybuffer.js
       js/msgpack-1.05.js
-      js/tinytools.progressbar-1.0.2.js
       js/sunriser_forms.js
       js/sunriser.js
     )],
