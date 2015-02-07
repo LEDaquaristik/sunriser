@@ -32,7 +32,7 @@ perl -I$HOME/perl5/lib/perl5 -Mlocal::lib bin/sunriser_simulator
 Microcontroller Software
 ========================
 
-In diesem [Download Verzeichnis](https://sunriser.vbs.io/objs/) finden Sie alle
+In diesem [Download Verzeichnis](http://sunriser.vbs.io/objs/) finden Sie alle
 Archive der Objektdateien, von den bisher veröffentlichen Versionen von der
 SunRiser Microcontroller Software. In jedem Archiv befinden sich Informationen
 um die Microcontroller Software neu zu compilieren, um die 
