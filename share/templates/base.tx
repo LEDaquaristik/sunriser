@@ -13,6 +13,84 @@
         <link href="/<: $css_file :>" type="text/css" rel="stylesheet">        
       <: } :>
     <: } :>
+    <style>
+	/** ScreenBlocker **/ 
+	.screenblocker-saving{ 
+	  display:none; 
+	  width:100%; 
+	  height:100%; 
+	  position:fixed; 
+	  top:0; 
+	  left:0px; 
+	  text-align:center; 
+	  z-index:10; 
+	  background-color:rgba(255,255,255,0); 
+	  transition-duration:0.2s 
+	} 
+	.screenblocker-saving .saving{ 
+	  margin-top:20%; 
+	  font-size:75px; 
+	  color:#111; 
+	  z-index:11; 
+	  padding: 45px 25px 35px 25px; 
+	  border: 10px solid !important; 
+	  display: inline-block; 
+	  position:relative 
+	} 
+	.anim{ 
+	  background-color:rgba(0,0,0,0.3); 
+	  height:100%; 
+	  position:absolute; 
+	  width:0px; 
+	  top:0px; 
+	  left:0px; 
+	  -webkit-animation: LoadingAnim 5s ease infinite; 
+	  -moz-animation: LoadingAnim 5s ease infinite; 
+	  -moz-animation: LoadingAnim 5s ease infinite; 
+	  animation: LoadingAnim 5s ease infinite; 
+	} 
+	 
+	@-webkit-keyframes LoadingAnim { 
+	    0%{ 
+		width:0%; 
+	    } 
+	    50%{ 
+		width:101%; 
+		margin-left:0% 
+	    } 
+	    100%{ 
+		margin-left:100% 
+	    } 
+	} 
+	@-moz-keyframes LoadingAnim { 
+	    0%{ 
+		width:0%; 
+	    } 
+	    50%{ 
+		width:101%; 
+		margin-left:0% 
+	    } 
+	    100%{ 
+		margin-left:100% 
+	    } 
+	} 
+	@keyframes LoadingAnim { 
+	    0%{ 
+		width:0%; 
+	    } 
+	    50%{ 
+		width:101%; 
+		margin-left:0% 
+	    } 
+	    100%{ 
+		margin-left:100% 
+	    } 
+	} 
+	.screenblocker .screenblocker-saving{ 
+	  display:block; 
+	  background-color:rgba(255,255,255,0.9) 
+	} 
+    </style>
   </head>
   <body class="screenblocker">
     <noscript>

@@ -649,6 +649,7 @@ nav h2{
   padding: 20px 0px;
 }
 /** ScreenBlocker **/
+/*
 .screenblocker-saving{
   display:none;
   width:100%;
@@ -723,7 +724,7 @@ nav h2{
 .screenblocker .screenblocker-saving{
   display:block;
   background-color:rgba(255,255,255,0.9)
-}
+}*/
 
 /***  RESPONSIVE  ***/
 
