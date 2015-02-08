@@ -23,7 +23,6 @@ use Digest::DJB32 qw( djb );
 use File::Temp qw/ tempfile tempdir tmpnam /;
 use bytes;
 use Data::MessagePack;
-use Data::MessagePack::Stream;
 use CDB::TinyCDB;
 use SunRiser::Publisher;
 use SunRiser::CDB;
@@ -169,22 +168,19 @@ sub get {
 sub get_config {
   my ( $self, $key ) = @_;
   my $djb = djb($key);
-  my $unpacker = Data::MessagePack::Stream->new;
-  my $filename = sprintf("%08X.MP",$djb);
-  my $path = path($self->c,$filename);
+  my $mpkey = $self->_mp->pack($key);
+  my $filename = sprintf("%08X.MP", $djb);
+  my $path = path($self->c, $filename);
   if (-f $path) {
     my $file = $path->slurp_raw();
-    $unpacker->feed($file);
-    if ($unpacker->next) {
-      my $ckey = $unpacker->data;
-      if ($ckey eq $key) {
-        if ($unpacker->next) {
-          return $unpacker->data;
-        }
-      } else {
-        $self->debug($ckey." in config file is not ".$key."!!!");
-      }
-    }    
+    my $datakey = substr($file, 0, length($mpkey));
+    my $data = substr($file, length($mpkey));
+    my $ckey = $self->_mp->unpack($datakey);
+    if ($ckey eq $key) {
+      return $self->_mp->unpack($data);
+    } else {
+      $self->debug($ckey." in config file is not ".$key."!!!");
+    }
   }
   return undef;
 }

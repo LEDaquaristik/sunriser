@@ -178,9 +178,17 @@ function sr_make_form(target,args){
     }
   }
   for ( var i = 0; i < args["fields"].length; i++ ) {
-    var old_name = args["fields"][i]["name"];
-    old_name = old_name.replace('weather#setup#X#','weather#setup#' + $('#weather_setup_id').val() + '#');
-    args["fields"][i]["name"] = old_name;
+    var name = args["fields"][i]["name"];
+
+    // replacements
+    name = name.replace('weather#setup#X#','weather#setup#' + $('#weather_setup_id').val() + '#');
+    //
+
+    args["fields"][i]["name"] = name;
+
+    if (typeof args["fields"][i]["type"] === 'undefined') {
+      args["fields"][i]["type"] = sr_type(name);
+    }
   }
   var keys = [];
   for ( var i = 0; i < args["fields"].length; i++ ) {
@@ -191,6 +199,20 @@ function sr_make_form(target,args){
     $.each(args['fields'],function(i,field){
       if (values[field['name']] !== null) {
         args['fields'][i]['value'] = values[field['name']];
+      }
+
+      //
+      //     _/_/_/    _/_/_/    _/_/_/_/  _/_/_/      _/_/    _/_/_/    _/_/_/_/
+      //    _/    _/  _/    _/  _/        _/    _/  _/    _/  _/    _/  _/
+      //   _/_/_/    _/_/_/    _/_/_/    _/_/_/    _/_/_/_/  _/_/_/    _/_/_/
+      //  _/        _/    _/  _/        _/        _/    _/  _/    _/  _/
+      // _/        _/    _/  _/_/_/_/  _/        _/    _/  _/    _/  _/_/_/_/
+      //
+
+      if (field['type'] == 'ip4') {
+        if (Object.prototype.toString.call(values[field['name']]) === '[object Array]') {
+          args['fields'][i]['value'] = values[field['name']].join('.');
+        }
       }
       if (typeof field['value'] === 'undefined') {
         var value = sr_default(field['name']);
@@ -209,6 +231,15 @@ function sr_make_form(target,args){
       $.each($(this).serializeArray(),function(i,field){
         values[field.name] = field.value;
       });
+
+      //
+      // _/_/_/_/_/  _/_/_/      _/_/    _/      _/    _/_/_/  _/_/_/_/    _/_/    _/_/_/    _/      _/
+      //    _/      _/    _/  _/    _/  _/_/    _/  _/        _/        _/    _/  _/    _/  _/_/  _/_/
+      //   _/      _/_/_/    _/_/_/_/  _/  _/  _/    _/_/    _/_/_/    _/    _/  _/_/_/    _/  _/  _/
+      //  _/      _/    _/  _/    _/  _/    _/_/        _/  _/        _/    _/  _/    _/  _/      _/
+      // _/      _/    _/  _/    _/  _/      _/  _/_/_/    _/          _/_/    _/    _/  _/      _/
+      //
+
       $.each(args['fields'],function(i,field){
         if (field['type'] == 'checkbox') {
           if (!(field['name'] in values)) {
@@ -218,6 +249,15 @@ function sr_make_form(target,args){
         sr_form_error(field['name']); // clear error
       });
       $.each(values,function(k,val){
+
+        //
+        //   _/      _/    _/_/    _/        _/_/_/  _/_/_/      _/_/    _/_/_/_/_/  _/_/_/_/
+        //  _/      _/  _/    _/  _/          _/    _/    _/  _/    _/      _/      _/
+        // _/      _/  _/_/_/_/  _/          _/    _/    _/  _/_/_/_/      _/      _/_/_/
+        //  _/  _/    _/    _/  _/          _/    _/    _/  _/    _/      _/      _/
+        //   _/      _/    _/  _/_/_/_/  _/_/_/  _/_/_/    _/    _/      _/      _/_/_/_/
+        //
+
         if (val === "") {
           values[k] = undefined;
         } else {
@@ -244,7 +284,11 @@ function sr_make_form(target,args){
               var ipparts = values[k].split(".");
               var ip = [];
               $.each(ipparts,function(i,val){
-                ip.push(parseInt(val));
+                var ip_part = parseInt(val);
+                if (ip_part < 0 || ip_part > 255) {
+                  error = 1; sr_form_error(k,"Du musst eine g&uuml;ltige IPv4 Adresse angeben (z.b. 192.168.0.1).");                  
+                }
+                ip.push(ip_part);
               });
               values[k] = ip;
             } else {
@@ -257,7 +301,11 @@ function sr_make_form(target,args){
         console.log(values);
         sr_request_mpack('PUT','/',values,function(){
           $('body').removeClass('screenblocker');
+          // TODO Successfully saved notice
         });
+      } else {
+        $('body').removeClass('screenblocker');
+        // TODO "there are errors" notice
       }
     });
   });
