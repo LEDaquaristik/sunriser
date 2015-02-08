@@ -1,0 +1,8 @@
+: cascade base { title => "Sicherung", nav => "system" }
+: override content -> {
+
+<h2>
+  <a href="/backup">Backup runterladen</a>
+</h2>
+
+: }

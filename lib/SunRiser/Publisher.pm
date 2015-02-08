@@ -48,9 +48,11 @@ sub _build_publish_files {
   }
   return [qw(
 
+    backup.html
     clouds.html
     contact.html
     day.html
+    firmware.html
     help.html
     index.html
     intro.html
@@ -64,7 +66,7 @@ sub _build_publish_files {
     rain.html
     system.html
     thunderstorm.html
-    firmware.html
+    upgraded.html
 
     notfound.html
 

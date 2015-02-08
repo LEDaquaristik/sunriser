@@ -59,8 +59,9 @@ function install_firmware(bytesarray) {
     },
     success: function(data,status,xhr){
       $('#blockertext').html('<div>Warte auf Neustart</div><div>Bitte das Ger&auml;t NICHT abschalten!!!</div><div>(ca. 1 Min)</div>');
+      // TODO real check for back up
       setTimeout(function(){
-        window.location.href = window.location.href;
+        window.location.href = window.location.href.replace('firmware','upgraded');
       }, 60000);
     },
   };

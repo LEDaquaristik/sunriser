@@ -300,7 +300,6 @@ function sr_make_form(target,args){
       if (!error) {
         console.log(values);
         sr_request_mpack('PUT','/',values,function(){
-          $('body').removeClass('screenblocker');
           // TODO Successfully saved notice
         });
       } else {
@@ -330,12 +329,13 @@ function sr_request_mpack(method,url,data,success) {
     },
     beforeSend: function(xhr,settings){
       if (method == 'PUT') {
-        // TODO activate saving overlay      
+        $('#blockertext').html('Speichern');
+        $('body').addClass('screenblocker');
       }
     },
     complete: function(xhr,status){
       if (method == 'PUT') {
-        // TODO deactivate saving overlay
+        $('body').removeClass('screenblocker');
       }
     },
     success: function(data,status,xhr){
