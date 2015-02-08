@@ -498,6 +498,7 @@ nav h2{
     margin-left:100%
   }
 }
+.failed.pleasewaitanim,
 .finished.pleasewaitanim{
   width:0px;
   height:0px;
@@ -505,6 +506,7 @@ nav h2{
   background-color: transparent;
   border: 2px solid transparent;
 }
+.failed .pleasewaitanimloader,
 .finished .pleasewaitanimloader{
   width:0px;
   height:0px;
@@ -513,6 +515,7 @@ nav h2{
   -moz-animation:none;
   animation: none;
 }
+.failed:before,
 .finished:before{
   content: "✔";
   position: absolute;
@@ -524,6 +527,11 @@ nav h2{
   background-color: #68D472;
   border-radius: 50%;
 }
+.failed:before{
+  content: "✘";
+  background-color: #E74C3C
+}
+
 .sunriser_content select{
   -webkit-appearance: none;
   -moz-appearance: none;
