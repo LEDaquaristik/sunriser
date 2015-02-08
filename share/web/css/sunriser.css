@@ -832,9 +832,12 @@ nav h2{
     top: 50px;
   }
   .sunriser_content {
-    padding: 90px 10px 80px 10px;
+    padding: 60px 10px 80px 10px;
     margin-left:0;
     min-height: inherit;
+  }
+  .warningbloc{
+    margin: -10px -40px 0px;
   }
   .control_center {
     margin-bottom: 0px;
