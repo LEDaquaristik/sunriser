@@ -331,6 +331,9 @@ function sr_make_form(target,args){
 }
 
 function sr_request_mpack(method,url,data,success) {
+  if (method == 'PUT') {
+    $('.pleasewaitanim').addClass('pleasewait');    
+  }
   var mpack = msgpack.pack(data);
   var bytesarray = new Uint8Array(mpack.length);
   for (var i = 0; i < mpack.length; i++) {
@@ -345,7 +348,9 @@ function sr_request_mpack(method,url,data,success) {
     processData: false,
     cache: false,
     error: function(xhr,error,errorthrown){
-      // TODO error handling
+      if (method == 'PUT') {
+        $('.pleasewaitanim').addClass('failed');
+      }
     },
     beforeSend: function(xhr,settings){
       if (method == 'PUT') {
@@ -355,6 +360,7 @@ function sr_request_mpack(method,url,data,success) {
     },
     complete: function(xhr,status){
       if (method == 'PUT') {
+        $('.pleasewaitanim').removeClass('pleasewait');
         $('body').removeClass('screenblocker');
       }
     },
@@ -363,6 +369,9 @@ function sr_request_mpack(method,url,data,success) {
         var bytearray = new Uint8Array(data);
         data = msgpack.unpack(bytearray);
       };
+      if (method == 'PUT') {
+        $('.pleasewaitanim').addClass('finished');
+      }
       if (success) {
         success.call(this,data,status,xhr);
       }
