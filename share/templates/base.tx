@@ -31,15 +31,10 @@
           background-color:rgba(32,39,49,,0);
           transition-duration:0.2s
         }
-        .screenblocker-saving .saving{
+        .screenblockertext .blocking{
           margin:20% 25px 0 25px;
           font-size:50px;
           color:#fff;
-	}
-        .screenblockertext .blocking{
-          margin-top:20%;
-          font-size:75px;
-          color:#111;
           z-index:11;
           line-height:1;
           padding: 45px 25px 35px 25px;
@@ -47,7 +42,7 @@
           display: inline-block;
           position:relative
         }
-        .blocker-text{
+        #blockertext{
           position:relative
         }
         .anim{
@@ -140,6 +135,9 @@
               <: } :>
             </section>
             <aside class="sunriser_dialogue">
+	      <div class="pleasewaitanim">
+	        <div class="pleasewaitanimloader"></div>
+	      </div>
               <a class="help tip" data-tip="Hilfe" href="help.html"><i class="fa fa-question"></i></a>
             </aside>
           <: } :>

@@ -13,7 +13,6 @@
         - dialogue
       - Login
       - Intro
-      - ScreenBlocker
     - RESPONSIVE
       - max-width : 900px
       - max-width : 500px
@@ -259,6 +258,9 @@ nav .selected a{
 }
 .selected .second-level a {
   background-color:#fff;
+  color: #777 !important;
+}
+.second-level .fa {
   color: #a6a9ad !important;
 }
 .first-level .second-nav a:hover{
@@ -394,23 +396,133 @@ nav h2{
 }
 .sunriser_content input[type='submit']{
   background-color:#2980b9;
+  border:none;
   padding:12px;
+  bottom:11px;
+  right:100px;
+  width:120px;
+  position:absolute;
+  font-size: 18px;
+  color: white;
+  border-radius: 2px;
+  z-index:1;
+}
+.sunriser_content input[type='submit']:hover{
+  background-color:#3e8cc0;
+}
+.sunriser_content input[type='submit']:active{
+  background-color:#10679f;
+}
+.pleasewait:before{
+  content:"Please Wait...";
+  position:absolute;
+  color: #999;
+  margin-left: -130px;
+}
+.pleasewaitanim{
+  background-color:white;
+  border: 2px solid #2980b9;
+  padding:9px;
+  width:120px;
+  height:48px;
   bottom:11px;
   right:100px;
   position:absolute;
   font-size: 18px;
   color: white;
   border-radius: 2px;
-  border: none;
   z-index:1;
+  display:none;
 }
-
-
-.sunriser_content input[type='submit']:hover{
-  opacity:0.9;
+.pleasewait.pleasewaitanim{
+  display:block
 }
-.sunriser_content input[type='submit']:active{
-  opacity:0.75;
+.pleasewaitanimloader{
+  background-color:#2980B9;
+  position:absolute;
+  width:0px;
+  top:0px;
+  left:0px;
+  height:100%;
+  -webkit-animation: PleaseWait 5s ease infinite;
+  -o-animation: PleaseWait 5s ease infinite;
+  -moz-animation: PleaseWait 5s ease infinite;
+  animation: PleaseWait 5s ease infinite;
+}
+  
+@-o-keyframes PleaseWait {
+   0%{
+     width:0%;
+   }
+   50%{
+     width:100%;
+     margin-left:0%
+   }
+   100%{
+    margin-left:100%
+  }
+}
+@-webkit-keyframes PleaseWait {
+   0%{
+     width:0%;
+   }
+   50%{
+     width:100%;
+     margin-left:0%
+   }
+   100%{
+    margin-left:100%
+  }
+}
+@-moz-keyframes PleaseWait {
+   0%{
+     width:0%;
+   }
+   50%{
+     width:100%;
+     margin-left:0%
+   }
+   100%{
+    margin-left:100%
+  }
+}
+@keyframes PleaseWait {
+   0%{
+     width:0%;
+   }
+   50%{
+     width:100%;
+     margin-left:0%
+   }
+   100%{
+    margin-left:100%
+  }
+}
+.finished.pleasewaitanim{
+  width:0px;
+  height:0px;
+  display:block;
+  background-color: transparent;
+  border: 2px solid transparent;
+}
+.finished .pleasewaitanimloader{
+  width:0px;
+  height:0px;
+  -webkit-animation:none;
+  -o-animation:none;
+  -moz-animation:none;
+  animation: none;
+}
+.finished:before{
+  content: "✔";
+  position: absolute;
+  color: #fff;
+  top: -40px;
+  z-index: 2;
+  right: -14px;
+  padding: 0px 6px;
+  background-color: #68D472;
+  border-radius: 50%;
 }
 .sunriser_content select{
   -webkit-appearance: none;
@@ -650,10 +762,10 @@ nav h2{
   transition-duration:0.2s;
 }
 .bigbutton:hover{
-  background-color:#57d68d;
+  background-color:#88d48f;
 }
 .bigbutton:active{
-  background-color:#27AE60
+  background-color:#27AE60 
 }
 
 .bigbutton:not(:last-child){
@@ -670,83 +782,6 @@ nav h2{
 .bigbutton div{
   padding: 20px 0px;
 }
-/** ScreenBlocker **/
-/*
-.screenblocker-saving{
-  display:none;
-  width:100%;
-  height:100%;
-  position:fixed;
-  top:0;
-  left:0px;
-  text-align:center;
-  z-index:10;
-  background-color:rgba(255,255,255,0);
-  transition-duration:0.2s
-}
-.screenblocker-saving .saving{
-  margin-top:20%;
-  font-size:75px;
-  color:#111;
-  z-index:11;
-  padding: 45px 25px 35px 25px;
-  border: 10px solid !important;
-  display: inline-block;
-  position:relative
-}
-.anim{
-  background-color:rgba(0,0,0,0.3);
-  height:100%;
-  position:absolute;
-  width:0px;
-  top:0px;
-  left:0px;
-  -webkit-animation: LoadingAnim 5s ease infinite;
-  -moz-animation: LoadingAnim 5s ease infinite;
-  -moz-animation: LoadingAnim 5s ease infinite;
-  animation: LoadingAnim 5s ease infinite;
-}
-
-@-webkit-keyframes LoadingAnim {
-    0%{
-  	width:0%;
-    }
-    50%{
-  	width:101%;
-	margin-left:0%
-    }
-    100%{
-	margin-left:100%
-    }
-}
-@-moz-keyframes LoadingAnim {
-    0%{
-  	width:0%;
-    }
-    50%{
-  	width:101%;
-	margin-left:0%
-    }
-    100%{
-	margin-left:100%
-    }
-}
-@keyframes LoadingAnim {
-    0%{
-  	width:0%;
-    }
-    50%{
-  	width:101%;
-	margin-left:0%
-    }
-    100%{
-	margin-left:100%
-    }
-}
-.screenblocker .screenblocker-saving{
-  display:block;
-  background-color:rgba(255,255,255,0.9)
-}*/
 
 /***  RESPONSIVE  ***/
 
