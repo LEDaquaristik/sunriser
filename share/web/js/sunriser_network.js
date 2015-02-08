@@ -1,7 +1,7 @@
 
 function sr_request_mpack(method,url,data,success) {
   if (method == 'PUT') {
-    $('.pleasewaitanim').addClass('pleasewait');    
+    sr_pleasewait();
   }
   var mpack = msgpack.pack(data);
   var bytesarray = new Uint8Array(mpack.length);
@@ -18,19 +18,18 @@ function sr_request_mpack(method,url,data,success) {
     cache: false,
     error: function(xhr,error,errorthrown){
       if (method == 'PUT') {
-        $('.pleasewaitanim').addClass('failed');
+        sr_failed();
       }
     },
     beforeSend: function(xhr,settings){
       if (method == 'PUT') {
-        $('#blockertext').html('Speichern');
-        $('body').addClass('screenblocker');
+        sr_screenblock('Speichern');
       }
     },
     complete: function(xhr,status){
       if (method == 'PUT') {
-        $('.pleasewaitanim').removeClass('pleasewait');
-        $('body').removeClass('screenblocker');
+        sr_screenunblock();
+        sr_cleanwait();
       }
     },
     success: function(data,status,xhr){
@@ -39,7 +38,7 @@ function sr_request_mpack(method,url,data,success) {
         data = msgpack.unpack(bytearray);
       };
       if (method == 'PUT') {
-        $('.pleasewaitanim').addClass('finished');
+        sr_finished();
       }
       if (success) {
         success.call(this,data,status,xhr);

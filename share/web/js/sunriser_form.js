@@ -24,9 +24,9 @@ function sr_make_form(target,args){
   for ( var i = 0; i < args["fields"].length; i++ ) {
     var name = args["fields"][i]["name"];
 
-    // replacements
+    // v- replacements -
     name = name.replace('weather#setup#X#','weather#setup#' + $('#weather_setup_id').val() + '#');
-    //
+    // ^----------------
 
     args["fields"][i]["name"] = name;
 
@@ -87,8 +87,6 @@ function sr_make_form(target,args){
       }
     });
     $(target).find('form').submit(function(e){
-      $('#blockertext').html('Speichern');
-      $('body').addClass('screenblocker');
       e.preventDefault();
       var values = {};
       var error;

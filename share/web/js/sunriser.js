@@ -13,7 +13,7 @@ $(function(){
 
   /* VIP */ window.loaded = true; /* VIP */
 
-  $('body').removeClass('screenblocker');
+  sr_screenunblock();
 
   // All external links in new window
   $("a[href^='http']").not('.noblank').each(function(){
