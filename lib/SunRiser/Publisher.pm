@@ -178,6 +178,7 @@ sub _build_base_vars {
       js/ipaddr-0.1.3.js
       js/jquery-ajax-blob-arraybuffer.js
       js/msgpack-1.05.js
+      js/sunriser_colors.js
       js/sunriser_forms.js
       js/sunriser.js
     )],
