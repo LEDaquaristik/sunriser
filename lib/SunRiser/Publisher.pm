@@ -169,15 +169,17 @@ sub _build_base_vars {
       css/OpenSans-Regular-webfont.css
       css/sunriser.css
     )],
-    js_files => [qw(
-      js/jquery-1.11.2.js
+    js_files => [
+      $self->versioned ? 'js/moment-2.9.0.min.js' : 'js/moment-2.9.0.js',
+      $self->versioned ? 'js/jquery-1.11.2.min.js' : 'js/jquery-1.11.2.js',
+      $self->versioned ? 'js/snap.svg-0.3.0.min.js' : 'js/snap.svg-0.3.0.js',
+    qw(
       js/tmpl.js
-      js/moment-with-locales-2.9.0.js
-      js/snap.svg-0.3.0.js
       js/tipr-1.0.1.js
       js/ipaddr-0.1.3.js
-      js/jquery-ajax-blob-arraybuffer.js
       js/msgpack-1.05.js
+      js/moment-locale-de.js
+      js/jquery-ajax-blob-arraybuffer.js
       js/sunriser_colors.js
       js/sunriser_forms.js
       js/sunriser.js

@@ -19,8 +19,8 @@
     </div>
     <div class="buttonbloc">
       <a class="bigbutton red" href="/intro.html">
-	<span class="badge">1.</span>
-	<div>Einf&uuml;hrung anschauen</div>
+        <span class="badge">1.</span>
+        <div>Einf&uuml;hrung anschauen</div>
       </a>
       <a class="bigbutton" href="/led.html">
         <span class="badge">2.</span>

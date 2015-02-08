@@ -13,6 +13,9 @@ var sr_forms = {
       name: "hostname", label: "Hostname im Netzwerk"
     },{
       name: "usentp", label: "NTP Server benutzen"
+    }],
+    expert_fields: [{
+      name: "ntpserver", label: "NTP Server"
     },{
       name: "useip4", label: "Feste IPv4 Adresse benutzen"
     },{
@@ -23,9 +26,6 @@ var sr_forms = {
       name: "ip4_gateway", label: "Feste IPv4 Adresse Gateway"
     },{
       name: "ip4_dns", label: "Feste IPv4 Adresse DNS"
-    }],
-    expert_fields: [{
-      name: "ntpserver", label: "NTP Server"
     },{
       name: "ip4_filter", label: "IPv4 Whitelist Filter aktivieren"
     },{
