@@ -13,7 +13,7 @@ var sr_forms = {
     },{
       name: "ip4", label: "Feste IPv4 Adresse"
     },{
-      name: "ip4_subnet", label: "Feste IPv4 Adresse Subnet"
+      name: "ip4_netmask", label: "Feste IPv4 Adresse Netmask"
     },{
       name: "ip4_gateway", label: "Feste IPv4 Adresse Gateway"
     },{
