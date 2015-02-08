@@ -180,8 +180,13 @@ sub _build_base_vars {
       js/msgpack-1.05.js
       js/moment-locale-de.js
       js/jquery-ajax-blob-arraybuffer.js
-      js/sunriser_colors.js
-      js/sunriser_forms.js
+
+      js/sunriser_colors_config.js
+      js/sunriser_forms_config.js
+      js/sunriser_network.js
+      js/sunriser_config.js
+      js/sunriser_form.js
+      js/sunriser_interface.js
       js/sunriser.js
     )],
   };
