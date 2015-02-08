@@ -445,6 +445,7 @@ sub _build_web {
             for my $key (@{$data}) {
               $values{$key} = $self->get($key);
             }
+            $values{'time'} = time();
             use DDP; p(%values);
             return $self->_web_serve_msgpack(\%values);
           } else {
