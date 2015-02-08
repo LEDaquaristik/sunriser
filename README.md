@@ -7,8 +7,8 @@ An dieser Stelle finden Sie alle bisher veröffentlichen OpenSource Teile der
 **SunRiser** Produktreihe von [LEDaquaristik.de](http://www.ledaquaristik.de/).
 
 Bitte beachten Sie das im Open Source Code und den internen Dokumentationen
-alles in Englisch verfasst ist, weil das Team schon jetzt aus Leuten von vielen
-Ländern besteht (wie z.B. Belgien oder Schweiz).
+alles in Englisch verfasst ist, weil die Entwicklung mit Hilfe der
+internationalen Open Source Community voran getrieben wird.
 
 Installation
 ============
@@ -28,3 +28,13 @@ cd sunriser
 ~/perl5/bin/cpanm --local-lib=~/perl5 --installdeps .
 perl -I$HOME/perl5/lib/perl5 -Mlocal::lib bin/sunriser_simulator
 ```
+
+Microcontroller Software
+========================
+
+In diesem [Download Verzeichnis](http://sunriser.vbs.io/objs/) finden Sie alle
+Archive der Objektdateien, von den bisher veröffentlichen Versionen von der
+SunRiser Microcontroller Software. In jedem Archiv befinden sich Informationen
+um die Microcontroller Software neu zu compilieren, um die 
+[LGPL](http://de.wikipedia.org/wiki/GNU_Lesser_General_Public_License)
+lizenzierten Teile (wie [libopencm3](http://libopencm3.org/)) auszutauschen.

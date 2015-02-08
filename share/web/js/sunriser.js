@@ -3,13 +3,15 @@ var sr_config;
 
 var sr_config_main_keys = [
   'model','model_id','pwm_count','factory_version','language','timezone',
-  'updated','name'
+  'updated','name','showexpert'
 ];
 
 var sr_config_def;
 var sr_config_types = {};
 
 $(function(){
+
+  /* VIP */ window.loaded = true; /* VIP */
 
   $('body').removeClass('screenblocker');
 
@@ -175,30 +177,89 @@ function sr_make_form(target,args){
       args["fields"][i]["name"] = prefix + '#' + old_name;
     }
   }
+  for ( var i = 0; i < args["fields"].length; i++ ) {
+    var name = args["fields"][i]["name"];
+
+    // replacements
+    name = name.replace('weather#setup#X#','weather#setup#' + $('#weather_setup_id').val() + '#');
+    //
+
+    args["fields"][i]["name"] = name;
+
+    if (typeof args["fields"][i]["type"] === 'undefined') {
+      args["fields"][i]["type"] = sr_type(name);
+    }
+  }
   var keys = [];
   for ( var i = 0; i < args["fields"].length; i++ ) {
-    keys.push(args["fields"][i]["name"]);
+    var key = args["fields"][i]["name"];
+    keys.push(key);
   }
   sr_request_mpack('POST','/',keys,function(values){
     $.each(args['fields'],function(i,field){
       if (values[field['name']] !== null) {
         args['fields'][i]['value'] = values[field['name']];
       }
+      //
+      //     _/_/_/    _/_/_/    _/_/_/_/  _/_/_/      _/_/    _/_/_/    _/_/_/_/
+      //    _/    _/  _/    _/  _/        _/    _/  _/    _/  _/    _/  _/
+      //   _/_/_/    _/_/_/    _/_/_/    _/_/_/    _/_/_/_/  _/_/_/    _/_/_/
+      //  _/        _/    _/  _/        _/        _/    _/  _/    _/  _/
+      // _/        _/    _/  _/_/_/_/  _/        _/    _/  _/    _/  _/_/_/_/
+      //
       if (typeof field['value'] === 'undefined') {
         var value = sr_default(field['name']);
         if (typeof value !== 'undefined') {
           field['value'] = value;
         }
       }
+
+      if (field['type'] == 'ip4') {
+        if (Object.prototype.toString.call(values[field['name']]) === '[object Array]') {
+          args['fields'][i]['value'] = values[field['name']].join('.');
+        }
+      }
     });
     $(target).html(tmpl(template,args));
+    //
+    //     _/_/_/      _/_/      _/_/_/  _/_/_/_/_/            _/    _/_/_/
+    //    _/    _/  _/    _/  _/            _/                _/  _/
+    //   _/_/_/    _/    _/    _/_/        _/                _/    _/_/
+    //  _/        _/    _/        _/      _/          _/    _/        _/
+    // _/          _/_/    _/_/_/        _/            _/_/    _/_/_/
+    //
+    $.each(args['fields'],function(i,field){
+      var f = $('#' + field['name']);
+
+      if (field['type'] == 'timezone' || field['type'] == 'select') {
+        f.val(values[field['name']]);
+        if (field['type'] == 'timezone') {
+          f.off('change').on('change',function(){
+            var o = f.find('option:selected');
+            $('#nodst').val(o.data('nodst'));
+            $('#gmtoff').val(o.data('gmtoff'));
+          });
+        }
+      }
+    });
     $(target).find('form').submit(function(e){
+      $('#blockertext').html('Speichern');
+      $('body').addClass('screenblocker');
       e.preventDefault();
       var values = {};
       var error;
       $.each($(this).serializeArray(),function(i,field){
         values[field.name] = field.value;
       });
+
+      //
+      // _/_/_/_/_/  _/_/_/      _/_/    _/      _/    _/_/_/  _/_/_/_/    _/_/    _/_/_/    _/      _/
+      //    _/      _/    _/  _/    _/  _/_/    _/  _/        _/        _/    _/  _/    _/  _/_/  _/_/
+      //   _/      _/_/_/    _/_/_/_/  _/  _/  _/    _/_/    _/_/_/    _/    _/  _/_/_/    _/  _/  _/
+      //  _/      _/    _/  _/    _/  _/    _/_/        _/  _/        _/    _/  _/    _/  _/      _/
+      // _/      _/    _/  _/    _/  _/      _/  _/_/_/    _/          _/_/    _/    _/  _/      _/
+      //
+
       $.each(args['fields'],function(i,field){
         if (field['type'] == 'checkbox') {
           if (!(field['name'] in values)) {
@@ -208,6 +269,15 @@ function sr_make_form(target,args){
         sr_form_error(field['name']); // clear error
       });
       $.each(values,function(k,val){
+
+        //
+        //   _/      _/    _/_/    _/        _/_/_/  _/_/_/      _/_/    _/_/_/_/_/  _/_/_/_/
+        //  _/      _/  _/    _/  _/          _/    _/    _/  _/    _/      _/      _/
+        // _/      _/  _/_/_/_/  _/          _/    _/    _/  _/_/_/_/      _/      _/_/_/
+        //  _/  _/    _/    _/  _/          _/    _/    _/  _/    _/      _/      _/
+        //   _/      _/    _/  _/_/_/_/  _/_/_/  _/_/_/    _/    _/      _/      _/_/_/_/
+        //
+
         if (val === "") {
           values[k] = undefined;
         } else {
@@ -234,7 +304,11 @@ function sr_make_form(target,args){
               var ipparts = values[k].split(".");
               var ip = [];
               $.each(ipparts,function(i,val){
-                ip.push(parseInt(val));
+                var ip_part = parseInt(val);
+                if (ip_part < 0 || ip_part > 255) {
+                  error = 1; sr_form_error(k,"Du musst eine g&uuml;ltige IPv4 Adresse angeben (z.b. 192.168.0.1).");                  
+                }
+                ip.push(ip_part);
               });
               values[k] = ip;
             } else {
@@ -246,8 +320,11 @@ function sr_make_form(target,args){
       if (!error) {
         console.log(values);
         sr_request_mpack('PUT','/',values,function(){
-          // TODO show success
+          // TODO Successfully saved notice
         });
+      } else {
+        $('body').removeClass('screenblocker');
+        // TODO "there are errors" notice
       }
     });
   });
@@ -272,12 +349,13 @@ function sr_request_mpack(method,url,data,success) {
     },
     beforeSend: function(xhr,settings){
       if (method == 'PUT') {
-        // TODO activate saving overlay      
+        $('#blockertext').html('Speichern');
+        $('body').addClass('screenblocker');
       }
     },
     complete: function(xhr,status){
       if (method == 'PUT') {
-        // TODO deactivate saving overlay
+        $('body').removeClass('screenblocker');
       }
     },
     success: function(data,status,xhr){

@@ -1,31 +1,37 @@
 <script type="text/html" id="form_std_tmpl">
-
 <% if (formtitle) { %>
     <h2 class="form_title"><%=formtitle %></h2>
 <% } %>
 <form method="POST">
+  <% for ( var i = 0; i < fields.length; i++ ) { %>
+    <% if (fields[i].type == 'hidden') { %>
+      <: include form::hidden :>
+    <% } %>
+  <% } %>
   <table>
   <% for ( var i = 0; i < fields.length; i++ ) { %>
-    <tr class="table_separation">
-      <td<% if (typeof fields[i].desc !== 'undefined') { %> class="tip" data-tip="<%=fields[i].desc %>"<% } %>>
-        <%=fields[i].label %>:
-      </td>
-      <td>
-        <% if (fields[i].type == 'checkbox') { %>
-          <: include form::checkbox :>
-        <% } else if (fields[i].type ==  'timezone') { %>
-          <: include form::timezone :>
-        <% } else if (fields[i].type ==  'password') { %>
-          <: include form::password :>
-        <% } else { %>
-          <: include form::text :>
-        <% } %>
-      <td>
-    </tr>
-    <tr id="<%=fields[i].name%>_error">
-      <td colspan="2">
-      </td>
-    </tr>
+    <% if (fields[i].type != 'hidden') { %>
+      <tr class="table_separation">
+        <td<% if (typeof fields[i].desc !== 'undefined') { %> class="tip" data-tip="<%=fields[i].desc %>"<% } %>>
+          <%=fields[i].label %>:
+        </td>
+        <td>
+          <% if (fields[i].type == 'bool') { %>
+            <: include form::checkbox :>
+          <% } else if (fields[i].type ==  'timezone') { %>
+            <: include form::timezone :>
+          <% } else if (fields[i].type ==  'password') { %>
+            <: include form::password :>
+          <% } else { %>
+            <: include form::text :>
+          <% } %>
+        <td>
+      </tr>
+      <tr id="<%=fields[i].name%>_error">
+        <td colspan="2">
+        </td>
+      </tr>
+    <% } %>
   <% } %>
   <tr>
     <td colspan="2">

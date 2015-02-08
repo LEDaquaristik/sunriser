@@ -1,9 +1,10 @@
 
 requires 'AnyEvent', '0';
-requires 'CDB::TinyCDB' , '0';
+requires 'CDB::TinyCDB', '0';
 requires 'CSS::Minifier::XS', '0';
-requires 'Data::MessagePack' , '0';
-requires 'Data::Printer' , '0';
+requires 'Data::MessagePack', '0';
+requires 'Data::Printer', '0';
+requires 'Digest::DJB32', '0';
 requires 'File::Copy::Recursive', '0';
 requires 'File::ShareDir::ProjectDistDir', '0';
 requires 'File::Temp', '0';

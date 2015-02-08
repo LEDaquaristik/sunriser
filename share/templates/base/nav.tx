@@ -35,11 +35,11 @@
     <i class="fa fa-gears fa-2x"></i>
     <ul class="second-nav">
       <h2 class="second-level"></h2>
-      <li class="second-level">
+      <!-- TODO <li class="second-level">
         <a href="/password.html">
           <i class="fa fa-key"></i>Passwort &auml;ndern
         </a>
-      </li>
+      </li> -->
       <li class="second-level">
         <a href="/led.html">
           <i class="fa fa-lightbulb-o fa-2x"></i>LED
@@ -53,6 +53,11 @@
       <li class="second-level">
         <a href="/network.html">
           <i class="fa fa-sitemap"></i>Netzwerk
+        </a>
+      </li>
+      <li class="second-level">
+        <a href="/backup.html">
+          <i class="fa fa-gear"></i>Sicherung
         </a>
       </li>
       <li class="second-level">
