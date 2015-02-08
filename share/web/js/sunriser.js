@@ -3,7 +3,7 @@ var sr_config;
 
 var sr_config_main_keys = [
   'model','model_id','pwm_count','factory_version','language','timezone',
-  'updated','name'
+  'updated','name','showexpert'
 ];
 
 var sr_config_def;
@@ -200,7 +200,6 @@ function sr_make_form(target,args){
       if (values[field['name']] !== null) {
         args['fields'][i]['value'] = values[field['name']];
       }
-
       //
       //     _/_/_/    _/_/_/    _/_/_/_/  _/_/_/      _/_/    _/_/_/    _/_/_/_/
       //    _/    _/  _/    _/  _/        _/    _/  _/    _/  _/    _/  _/
@@ -208,20 +207,41 @@ function sr_make_form(target,args){
       //  _/        _/    _/  _/        _/        _/    _/  _/    _/  _/
       // _/        _/    _/  _/_/_/_/  _/        _/    _/  _/    _/  _/_/_/_/
       //
-
-      if (field['type'] == 'ip4') {
-        if (Object.prototype.toString.call(values[field['name']]) === '[object Array]') {
-          args['fields'][i]['value'] = values[field['name']].join('.');
-        }
-      }
       if (typeof field['value'] === 'undefined') {
         var value = sr_default(field['name']);
         if (typeof value !== 'undefined') {
           field['value'] = value;
         }
       }
+
+      if (field['type'] == 'ip4') {
+        if (Object.prototype.toString.call(values[field['name']]) === '[object Array]') {
+          args['fields'][i]['value'] = values[field['name']].join('.');
+        }
+      }
     });
     $(target).html(tmpl(template,args));
+    //
+    //     _/_/_/      _/_/      _/_/_/  _/_/_/_/_/            _/    _/_/_/
+    //    _/    _/  _/    _/  _/            _/                _/  _/
+    //   _/_/_/    _/    _/    _/_/        _/                _/    _/_/
+    //  _/        _/    _/        _/      _/          _/    _/        _/
+    // _/          _/_/    _/_/_/        _/            _/_/    _/_/_/
+    //
+    $.each(args['fields'],function(i,field){
+      var f = $('#' + field['name']);
+
+      if (field['type'] == 'timezone' || field['type'] == 'select') {
+        f.val(values[field['name']]);
+        if (field['type'] == 'timezone') {
+          f.off('change').on('change',function(){
+            var o = f.find('option:selected');
+            $('#nodst').val(o.data('nodst'));
+            $('#gmtoff').val(o.data('gmtoff'));
+          });
+        }
+      }
+    });
     $(target).find('form').submit(function(e){
       $('#blockertext').html('Speichern');
       $('body').addClass('screenblocker');

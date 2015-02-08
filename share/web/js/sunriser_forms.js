@@ -1,15 +1,20 @@
 
 var sr_forms = {
+  //
+  //     _/      _/  _/_/_/_/  _/_/_/_/_/  _/          _/    _/_/    _/_/_/    _/    _/
+  //    _/_/    _/  _/            _/      _/          _/  _/    _/  _/    _/  _/  _/
+  //   _/  _/  _/  _/_/_/        _/      _/    _/    _/  _/    _/  _/_/_/    _/_/
+  //  _/    _/_/  _/            _/        _/  _/  _/    _/    _/  _/    _/  _/  _/
+  // _/      _/  _/_/_/_/      _/          _/  _/        _/_/    _/    _/  _/    _/
+  //
   network: {
     formtitle: "Netzwerk Einstellungen",
     fields: [{
       name: "hostname", label: "Hostname im Netzwerk"
     },{
-      name: "usentp", label: "NTP Server benutzen", type: "checkbox"
+      name: "usentp", label: "NTP Server benutzen"
     },{
-      name: "ntpserver", label: "NTP Server"
-    },{
-      name: "useip4", label: "Feste IPv4 Adresse benutzen", type: "checkbox"
+      name: "useip4", label: "Feste IPv4 Adresse benutzen"
     },{
       name: "ip4", label: "Feste IPv4 Adresse"
     },{
@@ -18,27 +23,46 @@ var sr_forms = {
       name: "ip4_gateway", label: "Feste IPv4 Adresse Gateway"
     },{
       name: "ip4_dns", label: "Feste IPv4 Adresse DNS"
+    }],
+    expert_fields: [{
+      name: "ntpserver", label: "NTP Server"
     },{
-      name: "ip4_filter", label: "IPv4 Whitelist Filter aktivieren",
-      type: "checkbox"
+      name: "ip4_filter", label: "IPv4 Whitelist Filter aktivieren"
     },{
       name: "ip4_whitelist", label: "IPv4 Whitelist"
     },{
       name: "webport", label: "Webserver Port"
     }]
   },
+  //
+  //       _/_/_/  _/      _/    _/_/_/  _/_/_/_/_/  _/_/_/_/  _/      _/
+  //    _/          _/  _/    _/            _/      _/        _/_/  _/_/
+  //     _/_/        _/        _/_/        _/      _/_/_/    _/  _/  _/
+  //        _/      _/            _/      _/      _/        _/      _/
+  // _/_/_/        _/      _/_/_/        _/      _/_/_/_/  _/      _/
+  //
   system: {
     formtitle: "System Einstellungen",
     fields: [{
-      name: "name", label: "Angezeigter Name des Systems", desc: "Test"
+      name: "timezone", label: "Zeitzone", type: "timezone"
     },{
+      name: "showexpert", label: "Experten Funktionen aktivieren"
+    },{
+      name: "nodst", type: "hidden"
+    },{
+      name: "gmtoff", type: "hidden"
+    }],
+    expert_fields: [{
       name: "indexfile", label: "Startseite nach Anmeldung"
-    // },{
-    //   name: "timezone", label: "Zeitzone", type: "timezone"
-    },{
-      name: "nodst", label: "Ignoriere Sommerzeit", type: "checkbox"
     }]
   },
+  //
+  //     _/_/_/      _/_/      _/_/_/    _/_/_/  _/          _/    _/_/    _/_/_/    _/_/_/
+  //    _/    _/  _/    _/  _/        _/        _/          _/  _/    _/  _/    _/  _/    _/
+  //   _/_/_/    _/_/_/_/    _/_/      _/_/    _/    _/    _/  _/    _/  _/_/_/    _/    _/
+  //  _/        _/    _/        _/        _/    _/  _/  _/    _/    _/  _/    _/  _/    _/
+  // _/        _/    _/  _/_/_/    _/_/_/        _/  _/        _/_/    _/    _/  _/_/_/
+  //
   password: {
     formtitle: "Passwort &auml;ndern",
     no_values: 1,
@@ -50,11 +74,18 @@ var sr_forms = {
       name: "newpassword2", label: "Neues Passwort wiederholen", type: "password"
     }]
   },
+  //
+  // _/_/_/_/_/  _/    _/  _/    _/  _/      _/  _/_/_/    _/_/_/_/  _/_/_/
+  //    _/      _/    _/  _/    _/  _/_/    _/  _/    _/  _/        _/    _/
+  //   _/      _/_/_/_/  _/    _/  _/  _/  _/  _/    _/  _/_/_/    _/_/_/
+  //  _/      _/    _/  _/    _/  _/    _/_/  _/    _/  _/        _/    _/
+  // _/      _/    _/    _/_/    _/      _/  _/_/_/    _/_/_/_/  _/    _/
+  //
   thunderstorm: {
     formtitle: "Gewitter Simulation",
     prefix: "weather#setup#X#thunder",
     fields: [{
-      name: "activated", label: "Simuliere Gewitter", type: "checkbox"
+      name: "activated", label: "Simuliere Gewitter"
     },{
       name: "daymax", label: "Maximale Anzahl von Gewittern pro Tag"
     },{
@@ -62,45 +93,60 @@ var sr_forms = {
     },{
       name: "maxlength", label: "Maximale L&auml;nge eines Gewitters in Sekunden"
     },{
-      name: "balancelength", label: "Anzahl der Faktoren f&uuml;r die Berechnung der Gewitterl&auml;nge"
-    },{
       name: "mindist", label: "Minimaler Abstand zwischen den Blitzen"
     },{
       name: "maxdist", label: "Maximaler Abstand zwischen den Blitzen"
-    },{
-      name: "balancedist", label: "Anzahl der Faktoren f&uuml;r die Berechnung des Abstands zwischen den Blitzen"
     },{
       name: "fadepercent", label: "Prozentualer Anteil f&uuml;r Ein/Ausblendung des Gewitters"
     },{
       name: "daychance", label: "Wahrscheinlichkeit eines Gewitters pro maximale Anzahl von Gewittern am Tag"
     },{
+      name: "weekdays", label: "Nur an diesen Wochentagen gibt es Gewitter (sonst jeden Tag)"
+    }],
+    expert_fields: [{
       name: "darkness", label: "Prozentzahl der Dunkelheit die ein Gewitter erzeugt"
     },{
-      name: "weekdays", label: "Nur an diesen Wochentagen gibt es Gewitter (sonst jeden Tag)"
+      name: "balancelength", label: "Anzahl der Faktoren f&uuml;r die Berechnung der Gewitterl&auml;nge"
+    },{
+      name: "balancedist", label: "Anzahl der Faktoren f&uuml;r die Berechnung des Abstands zwischen den Blitzen"
     }]
   },
+  //
+  //     _/      _/    _/_/      _/_/    _/      _/
+  //    _/_/  _/_/  _/    _/  _/    _/  _/_/    _/
+  //   _/  _/  _/  _/    _/  _/    _/  _/  _/  _/
+  //  _/      _/  _/    _/  _/    _/  _/    _/_/
+  // _/      _/    _/_/      _/_/    _/      _/
+  //
   moon: {
     formtitle: "Mondphasen Simulation",
     prefix: "weather#setup#X#moonphase",
     fields: [{
-      name: "activated", label: "Simuliere Mondphasen nach Realit&auml;t", type: "checkbox"
+      name: "activated", label: "Simuliere Mondphasen nach Realit&auml;t"
     },{
       name: "starttime", label: "Fr&uuml;hster Mondaufgang"
     },{
       name: "endtime", label: "Sp&auml;tester Monduntergang"
     },{
-      name: "maximum", label: "Intensit&auml;t des Monds"
+      name: "maximum", label: "Intensit&auml;t des Mondes"
     },{
       name: "deferral", label: "Abstand in Tagen zum echten Mondphasen Zyklus"
     },{
       name: "weekdays", label: "Nur an diesen Wochentagen gibt es Mondphasen (sonst jeden Tag)"
     }]    
   },
+  //
+  //      _/_/_/  _/          _/_/    _/    _/  _/_/_/      _/_/_/
+  //   _/        _/        _/    _/  _/    _/  _/    _/  _/
+  //  _/        _/        _/    _/  _/    _/  _/    _/    _/_/
+  // _/        _/        _/    _/  _/    _/  _/    _/        _/
+  //  _/_/_/  _/_/_/_/    _/_/      _/_/    _/_/_/    _/_/_/
+  //
   clouds: {
     formtitle: "Wolken Simulation",
     prefix: "weather#setup#X#clouds",
     fields: [{
-      name: "activated", label: "Simuliere Wolken", type: "checkbox"
+      name: "activated", label: "Simuliere Wolken"
     },{
       name: "cloudminlength", label: "Minimum L&auml;nge einer Wolke in Sekunden"
     },{
@@ -115,17 +161,24 @@ var sr_forms = {
       name: "weekdays", label: "Nur an diesen Wochentagen gibt es Mondphasen (sonst jeden Tag)"
     }]
   },
+  //
+  //     _/_/_/      _/_/    _/_/_/  _/      _/
+  //    _/    _/  _/    _/    _/    _/_/    _/
+  //   _/_/_/    _/_/_/_/    _/    _/  _/  _/
+  //  _/    _/  _/    _/    _/    _/    _/_/
+  // _/    _/  _/    _/  _/_/_/  _/      _/
+  //
   rain: {
     formtitle: "Regen Simulation",
     prefix: "weather#setup#X#rain",
     fields: [{
-      name: "activated", label: "Simuliere Regen", type: "checkbox"
+      name: "activated", label: "Simuliere Regen"
     },{
       name: "rainchance", label: "Wahrscheinlichkeit eines Regentages"
     },{
       name: "raindarkness", label: "Maximale Prozentzahl an Dunkelheit die ein Regen haben kann"
     },{
-      name: "rainwithclouds", label: "Wolken k&ouml;nnen die Regentage &uuml;ber das maximum dunkler machen", type: "checkbox"
+      name: "rainwithclouds", label: "Wolken k&ouml;nnen die Regentage &uuml;ber das maximum dunkler machen"
     },{
       name: "weekdays", label: "Nur an diesen Wochentagen gibt es Mondphasen (sonst jeden Tag)"
     }]
