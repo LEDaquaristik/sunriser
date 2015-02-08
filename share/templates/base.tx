@@ -24,21 +24,25 @@
 	  left:0px; 
 	  text-align:center; 
 	  z-index:10; 
-	  background-color:rgba(255,255,255,0); 
+	  background-color:rgba(32,39,49,,0); 
 	  transition-duration:0.2s 
 	} 
 	.screenblocker-saving .saving{ 
-	  margin-top:20%; 
-	  font-size:75px; 
-	  color:#111; 
+	  margin:20% 25px 0 25px; 
+	  font-size:50px; 
+	  color:#fff; 
 	  z-index:11; 
+	  line-height:1;
 	  padding: 45px 25px 35px 25px; 
 	  border: 10px solid !important; 
 	  display: inline-block; 
 	  position:relative 
 	} 
+	.blocker-text{
+	  position:relative
+	}
 	.anim{ 
-	  background-color:rgba(0,0,0,0.3); 
+	  background-color:rgba(0,0,0,0.4); 
 	  height:100%; 
 	  position:absolute; 
 	  width:0px; 
@@ -55,7 +59,7 @@
 		width:0%; 
 	    } 
 	    50%{ 
-		width:101%; 
+		width:100%; 
 		margin-left:0% 
 	    } 
 	    100%{ 
@@ -67,7 +71,7 @@
 		width:0%; 
 	    } 
 	    50%{ 
-		width:101%; 
+		width:100%; 
 		margin-left:0% 
 	    } 
 	    100%{ 
@@ -79,7 +83,7 @@
 		width:0%; 
 	    } 
 	    50%{ 
-		width:101%; 
+		width:100%; 
 		margin-left:0% 
 	    } 
 	    100%{ 
@@ -88,7 +92,7 @@
 	} 
 	.screenblocker .screenblocker-saving{ 
 	  display:block; 
-	  background-color:rgba(255,255,255,0.9) 
+	  background-color:rgba(32,39,49,0.9) 
 	} 
     </style>
   </head>

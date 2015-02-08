@@ -53,22 +53,44 @@ body{
   transition-duration:0.2s;
   /*background: linear-gradient(270deg, #184c6f, #0f705d);*/
   /*background:url(../img/background.jpg) no-repeat fixed center center / cover #145868;*/
-  -o-animation: BackAnim 60s ease infinite;
-  -webkit-animation: BackAnim 60s ease infinite;
-  -moz-animation: BackAnim 60s ease infinite;
-  animation: BackAnim 60s linear infinite;
+  -o-animation: BackAnim 175s ease infinite;
+  -webkit-animation: BackAnim 175s ease infinite;
+  -moz-animation: BackAnim 175s ease infinite;
+  animation: BackAnim 175s linear infinite;
   background:url("../img/background.jpg") no-repeat fixed center center / 200% 200% #145868;
   transform-origin: 50% 400px 0px;
 }
-
+@-o-keyframes BackAnim {
+    0%{background-position:0% 50%}
+    12.5%{background-position:16% 83%}
+    25%{background-position:50% 100%}
+    37.5%{background-position:83% 83%}
+    50%{background-position:100% 50%}
+    62.5%{background-position:83% 16%}
+    75%{background-position:50% 0%}
+    87.5%{background-position:16% 16%}
+    100%{background-position:0% 50%}
+}
 @-webkit-keyframes BackAnim {
     0%{background-position:0% 50%}
+    12.5%{background-position:16% 83%}
+    25%{background-position:50% 100%}
+    37.5%{background-position:83% 83%}
     50%{background-position:100% 50%}
+    62.5%{background-position:83% 16%}
+    75%{background-position:50% 0%}
+    87.5%{background-position:16% 16%}
     100%{background-position:0% 50%}
 }
 @-moz-keyframes BackAnim {
     0%{background-position:0% 50%}
+    12.5%{background-position:16% 83%}
+    25%{background-position:50% 100%}
+    37.5%{background-position:83% 83%}
     50%{background-position:100% 50%}
+    62.5%{background-position:83% 16%}
+    75%{background-position:50% 0%}
+    87.5%{background-position:16% 16%}
     100%{background-position:0% 50%}
 }
 @keyframes BackAnim {
@@ -767,8 +789,11 @@ nav h2{
       height: 50px;
       font-size:12px;
   }
-  nav .first-level {
+  nav .first-level > i,
+  nav .first-level > a {
+      padding-top:0;
       height: 50px;
+      padding-top:12px;
       width:50px;
       display: inline-block;
   }
@@ -778,7 +803,6 @@ nav h2{
   }
   nav .first-level {
       float: left;
-      padding-top:12px;
   }
   .second-nav{
     top:50px;
@@ -798,7 +822,7 @@ nav h2{
   }
   .first-level.toggle::before {
     border-color: transparent transparent #FFF transparent;
-    margin: 21px 0px 0px -3px;
+    margin: 30px 0px 0px -10px;
     left:auto
   }
   .noscript-text{
@@ -808,7 +832,7 @@ nav h2{
     top: 50px;
   }
   .sunriser_content {
-    padding: 60px 10px 80px 10px;
+    padding: 90px 10px 80px 10px;
     margin-left:0;
     min-height: inherit;
   }
