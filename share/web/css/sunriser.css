@@ -11,6 +11,7 @@
         - NoScript
         - content
         - dialogue
+        - Hilfe
       - Login
       - Intro
     - RESPONSIVE
@@ -185,7 +186,8 @@ header{
   height: auto;
   margin-bottom:100px;
   position:relative;
-  display: table;
+  /*display: table;*/
+  overflow: hidden;
 }
 .control_center > .sunriser_content{
   background-color: white;
@@ -517,19 +519,21 @@ nav h2{
 }
 .failed:before,
 .finished:before{
-  content: "✔";
+  content: "";
   position: absolute;
   color: #fff;
   top: -40px;
   z-index: 2;
   right: -14px;
-  padding: 0px 6px;
+  padding: 0px 4px 0 5px;
   background-color: #68D472;
   border-radius: 50%;
+  font-family:icomoon
 }
 .failed:before{
-  content: "✘";
-  background-color: #E74C3C
+  content: "";
+  background-color: #E74C3C;
+  padding: 0px 6px 1px 7px;
 }
 
 .sunriser_content select{
@@ -664,6 +668,80 @@ nav h2{
 
 #graph{
   opacity:0.5
+}
+
+/**  Hilfe  **/
+
+.hilfe-sidebar{
+  position: absolute;
+  top: 0;
+  background: #F00;
+  max-width: 400px;
+  width: 100%;
+  bottom: 0;
+  right: 0;
+  z-index: 3;
+  background-color: #ECF0F1; 
+  transition-duration:0.2s;
+  margin-right:-400px;
+}
+.hilfe-sidebar.open-sidebar{
+  margin-right:0px;
+}
+.hilfe-title{
+  height: 70px;
+  border-bottom: 1px solid #ccc;
+  font-size: 30px;
+  padding: 28px;
+}
+.hilfe-content{
+  padding: 28px;
+  height: calc( 100% - 140px);
+  overflow-y: scroll;
+}
+.hilfe-more-close{
+  background-color: #ECF0F1; 
+  height: 70px;
+  bottom: 0;
+  position: sticky;
+  border-top: 1px solid #ccc;
+  width: 100%;
+  font-family:icomoon;
+}
+.hilfe-more{
+  background-color: #2980B9;
+  width: 120px;
+  font-size: 18px;
+  color: white;
+  border-radius: 2px;
+  text-decoration: none;
+  height: 46px;
+  bottom: 12px;
+  position: absolute;
+  left: 12px;
+  padding: 9px 12px 13px;
+}
+.hilfe-more:hover{
+  background-color:#3e8cc0;
+}
+.hilfe-more:active{
+  background-color:#10679f;
+}
+.hilfe-close{
+  position: absolute;
+  right: 30px;
+  bottom: 19px;
+  width: 31px;
+  height: 31px;
+  padding: 2px 0 0 11px;
+  background-color: #bbb;
+  border-radius: 50%;
+  text-decoration: none;
+  color: #777;
+}
+.hilfe-close:hover{
+  color: #555;
+}
 }
 
 /** Login **/

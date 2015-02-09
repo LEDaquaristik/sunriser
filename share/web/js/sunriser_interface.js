@@ -23,3 +23,6 @@ function sr_failed() {
 function sr_finished() {
   $('.pleasewaitanim').removeClass('pleasewait').removeClass('failed').addClass('finished');    
 }
+function sr_finished() {
+  $('.pleasewaitanim').removeClass('pleasewait').removeClass('failed').addClass('finished');    
+}

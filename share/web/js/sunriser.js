@@ -45,6 +45,16 @@ $(function(){
     }
   });
 
+  // Open and close help sidebar
+  $(".help").click(function(){
+    $(".hilfe-sidebar").addClass("open-sidebar"); 
+    return false; 
+  });
+  $(".hilfe-close").click(function(){
+    $(".hilfe-sidebar").removeClass("open-sidebar"); 
+    return false; 
+  });
+
   $(".form").each(function(){
     $(this).html('<img class="loader" src="/img/ajaxload.gif">');
   });
