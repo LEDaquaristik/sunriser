@@ -350,6 +350,24 @@ sub _web_time {
   return $self->_web_serve_msgpack($perl_time);
 }
 
+sub _web_firmware_mp {
+  my ( $self ) = @_;
+  my $firmware_mp = path('firmware.mp');
+  if (-f $firmware_mp) {
+    $self->debug('Sending firmware.mp');
+    open my $fh, "<:raw", $firmware_mp or return $self->_web_forbidden;
+    my @stat = stat $firmware_mp;
+    Plack::Util::set_io_path($fh, Cwd::realpath($firmware_mp));
+    return [ 200, [
+      'Content-Type' => 'application/x-msgpack',
+      'Content-Length' => $stat[7],
+      'Last-Modified'  => HTTP::Date::time2str( $stat[9] ),
+    ], $fh ];
+  }
+  $self->debug('No firmware.mp found!');
+  return $self->_web_servererror;
+}
+
 has config => (
   is => 'lazy',
 );
@@ -477,6 +495,8 @@ sub _build_web {
           return $self->_web_state;
         } elsif ($uri =~ /^\/time/) {
           return $self->_web_time;
+        } elsif ($uri =~ /^\/firmware\.mp/) {
+          return $self->_web_firmware_mp;
         }
         # else serve file from storage
         # gives back 200 on success and 404 on not found

@@ -114,24 +114,5 @@ $('body').on('sr_config',function(){
     sr_make_form(this,sr_forms[id]);
   });
 
-  $("#dayplan").each(function(){
-
-    var fields = [];
-    for (i = 1; i <= sr_config['pwm_count']; i++) { 
-      fields.push({
-        name: "marker#" + i,
-        label: "Tagesverlauf LED #" + i,
-        type: "marker"
-      });
-    }
-
-    sr_make_form(this,{
-      formtitle: "Tagesplannung",
-      prefix: "dayplanner",
-      fields: fields
-    });
-
-  });
-
 });
 

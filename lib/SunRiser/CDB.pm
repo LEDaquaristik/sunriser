@@ -195,11 +195,13 @@ sub add_web {
   my ( $self, $f, $content ) = @_;
   my $base_key = 'web#'.$f;
   my $length = length($content);
+  use DDP; 
   my $base_debug = 'Adding '.$f.' with '.$length.' bytes';
   if ($length > 256) {
     $self->debug($base_debug.' (gzipped)');
-    my $gzipped;
-    gzip(\$content,\$gzipped) or croak("gzip failed: $GzipError");
+    my $gzipped = "";
+    utf8::encode($content);
+    gzip(\$content,\$gzipped, BinModeIn => 1) or croak("gzip failed: $GzipError");
     $self->set($base_key.'#bytes',$length);
     $self->set($base_key.'#gzip',1);
     $self->set($base_key.'#content',$gzipped);

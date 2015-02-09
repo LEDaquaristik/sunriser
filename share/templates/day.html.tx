@@ -20,7 +20,24 @@
 
 <script type="text/javascript">
 
-$(function(){
+// First execute stuff when the form is loaded
+$('body').on('sr_config',function(){
+
+  $("#dayplan").each(function(){
+    var fields = [];
+    for (i = 1; i <= sr_config['pwm_count']; i++) { 
+      fields.push({
+        name: "marker#" + i,
+        label: "Tagesverlauf LED #" + i,
+        type: "marker"
+      });
+    }
+    sr_make_form(this,{
+      formtitle: "Tagesplannung",
+      prefix: "dayplanner",
+      fields: fields
+    });
+  });
 
   'use strict';
 

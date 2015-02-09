@@ -86,7 +86,7 @@ sub publish_to {
   for my $filename (@files) {
     my $file = path($dir,$filename);
     $file->parent->mkpath unless -d $file->parent;
-    $file->spew_utf8($self->render($filename));
+    $file->spew_raw($self->render($filename));
   }
 }
 
@@ -184,6 +184,7 @@ sub _build_base_vars {
 
       js/sunriser_colors_config.js
       js/sunriser_forms_config.js
+      js/sunriser_firmware.js
       js/sunriser_network.js
       js/sunriser_config.js
       js/sunriser_form.js

@@ -11,7 +11,6 @@ function sr_request_mpack(method,url,data,success) {
   var call_options = {
     type: method,
     url: url,
-    data: bytesarray,
     contentType: 'application/x-msgpack',
     dataType: 'arraybuffer',
     processData: false,
@@ -45,5 +44,8 @@ function sr_request_mpack(method,url,data,success) {
       }
     },
   };
+  if (typeof data !== 'undefined') {
+    call_options.data = bytesarray;
+  }
   $.ajax(call_options);
 }
