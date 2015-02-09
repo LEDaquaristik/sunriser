@@ -12,6 +12,7 @@
         - content
         - dialogue
         - Hilfe
+        - DayPicker
       - Login
       - Intro
     - RESPONSIVE
@@ -733,7 +734,7 @@ nav h2{
   bottom: 19px;
   width: 31px;
   height: 31px;
-  padding: 2px 0 0 11px;
+  padding: 2px 0 0 8px;
   background-color: #bbb;
   border-radius: 50%;
   text-decoration: none;
@@ -742,6 +743,38 @@ nav h2{
 .hilfe-close:hover{
   color: #555;
 }
+/**  DayPicker  **/
+.daypicker{
+  border:2px solid #CCD7F2;
+  display:inline-block;
+  border-radius:3px;
+  font-size:16px
+}
+.daypicker .day{
+  display:inline-block;
+  border-right:2px solid #CCD7F2;
+  position:relative
+}
+.daypicker .day:last-child{
+  border-right:0px solid transparent;
+}
+.daypicker .day label{
+  display:block;
+  width: 35px;
+  text-align: center;
+  height: 30px;
+  margin: 2px 2px 2px -2px;
+  border-radius:3px
+}
+.daypicker .monday label{
+  margin: 2px;
+}
+.daypicker input[type="checkbox"]{
+  display:none;
+}
+.daypicker input[type="checkbox"]:checked + label{
+  background-color:#68D472;
+  color:white
 }
 
 /** Login **/

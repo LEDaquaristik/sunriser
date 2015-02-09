@@ -149,7 +149,7 @@
                 </p>
               </div>
               <div class="hilfe-more-close">
-                <a href="#" class="hilfe-more">Learn More.</a><a href="#" class="hilfe-close"></a>
+                <!--<a href="#" class="hilfe-more">Learn More.</a>--><a href="#" class="hilfe-close"></a>
               </div>
             </div>
           <: } :>
