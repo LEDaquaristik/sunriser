@@ -1,33 +1,37 @@
 <script type="text/html" id="form_std_tmpl">
-<% if (formtitle) { %>
-    <h2 class="form_title"><%=formtitle %></h2>
+<% if (title) { %>
+    <h2 class="form_title"><%=title %></h2>
 <% } %>
 <form method="POST">
-  <% for ( var i = 0; i < fields.length; i++ ) { %>
-    <% if (fields[i].type == 'hidden') { %>
+  <% for ( var i = 0; i < fields.length; i++ ) { var field = fields[i]; %>
+    <% if (field.pre) { %>
       <: include form::hidden :>
     <% } %>
   <% } %>
   <table>
-  <% for ( var i = 0; i < fields.length; i++ ) { %>
-    <% if (fields[i].type != 'hidden') { %>
+  <% for ( var i = 0; i < fields.length; i++ ) { var field = fields[i]; %>
+    <% if (!field.pre) { %>
       <tr class="table_separation">
-        <td<% if (typeof fields[i].desc !== 'undefined') { %> class="tip" data-tip="<%=fields[i].desc %>"<% } %>>
-          <%=fields[i].label %>:
+        <td<% if (field.desc) { %> class="tip" data-tip="<%=field.desc %>"<% } %>>
+          <%=field.label %>:
         </td>
         <td>
-          <% if (fields[i].type == 'bool') { %>
+          <% if (field.template == 'checkbox') { %>
             <: include form::checkbox :>
-          <% } else if (fields[i].type ==  'timezone') { %>
+          <% } else if (field.template == 'timezone') { %>
             <: include form::timezone :>
-          <% } else if (fields[i].type ==  'password') { %>
+          <% } else if (field.template == 'password') { %>
             <: include form::password :>
-          <% } else { %>
+          <% } else if (field.template == 'weekday') { %>
+            <: include form::weekday :>
+          <% } else if (field.template == 'text') { %>
             <: include form::text :>
+          <% } else { %>
+            Template <%=field.template%> unbekannt
           <% } %>
         <td>
       </tr>
-      <tr id="<%=fields[i].name%>_error">
+      <tr id="<%=field.name%>_error">
         <td colspan="2">
         </td>
       </tr>

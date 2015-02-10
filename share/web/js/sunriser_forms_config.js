@@ -8,7 +8,7 @@ var sr_forms = {
   // _/      _/  _/_/_/_/      _/          _/  _/        _/_/    _/    _/  _/    _/
   //
   network: {
-    formtitle: "Netzwerk Einstellungen",
+    title: "Netzwerk Einstellungen",
     fields: [{
       name: "hostname", label: "Hostname im Netzwerk"
     },{
@@ -42,7 +42,7 @@ var sr_forms = {
   // _/_/_/        _/      _/_/_/        _/      _/_/_/_/  _/      _/
   //
   system: {
-    formtitle: "System Einstellungen",
+    title: "System Einstellungen",
     fields: [{
       name: "timezone", label: "Zeitzone", type: "timezone"
     },{
@@ -64,7 +64,7 @@ var sr_forms = {
   // _/        _/    _/  _/_/_/    _/_/_/        _/  _/        _/_/    _/    _/  _/_/_/
   //
   password: {
-    formtitle: "Passwort &auml;ndern",
+    title: "Passwort &auml;ndern",
     no_values: 1,
     fields: [{
       name: "oldpassword", label: "Aktuelles Passwort", type: "password"
@@ -82,7 +82,7 @@ var sr_forms = {
   // _/      _/    _/    _/_/    _/      _/  _/_/_/    _/_/_/_/  _/    _/
   //
   thunderstorm: {
-    formtitle: "Gewitter Simulation",
+    title: "Gewitter Simulation",
     prefix: "weather#setup#X#thunder",
     fields: [{
       name: "activated", label: "Simuliere Gewitter"
@@ -119,7 +119,7 @@ var sr_forms = {
   // _/      _/    _/_/      _/_/    _/      _/
   //
   moon: {
-    formtitle: "Mondphasen Simulation",
+    title: "Mondphasen Simulation",
     prefix: "weather#setup#X#moonphase",
     fields: [{
       name: "activated", label: "Simuliere Mondphasen nach Realit&auml;t"
@@ -143,7 +143,7 @@ var sr_forms = {
   //  _/_/_/  _/_/_/_/    _/_/      _/_/    _/_/_/    _/_/_/
   //
   clouds: {
-    formtitle: "Wolken Simulation",
+    title: "Wolken Simulation",
     prefix: "weather#setup#X#clouds",
     fields: [{
       name: "activated", label: "Simuliere Wolken"
@@ -169,7 +169,7 @@ var sr_forms = {
   // _/    _/  _/    _/  _/_/_/  _/      _/
   //
   rain: {
-    formtitle: "Regen Simulation",
+    title: "Regen Simulation",
     prefix: "weather#setup#X#rain",
     fields: [{
       name: "activated", label: "Simuliere Regen"

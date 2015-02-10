@@ -111,7 +111,7 @@ $('body').on('sr_config',function(){
 
   $(".form").not( ".noautoload" ).each(function(){
     var id = $(this).attr('id');
-    sr_make_form(this,sr_forms[id]);
+    var form = new SrForm(this,sr_forms[id]);
   });
 
 });

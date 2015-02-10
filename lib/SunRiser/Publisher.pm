@@ -170,24 +170,28 @@ sub _build_base_vars {
       css/sunriser.css
     )],
     js_files => [
-      $self->versioned ? 'js/moment-2.9.0.min.js' : 'js/moment-2.9.0.js',
       $self->versioned ? 'js/jquery-1.11.2.min.js' : 'js/jquery-1.11.2.js',
+      $self->versioned ? 'js/moment-2.9.0.min.js' : 'js/moment-2.9.0.js',
       $self->versioned ? 'js/snap.svg-0.3.0.min.js' : 'js/snap.svg-0.3.0.js',
     qw(
       js/tmpl.js
+      js/class.js
+      js/msgpack-1.05-patched.js
+      js/console-emulation.js
+      js/moment-locale-de.js
       js/tipr-1.0.1.js
       js/ipaddr-0.1.3.js
-      js/msgpack-1.05.js
-      js/moment-locale-de.js
       js/jquery-ajax-blob-arraybuffer.js
-      js/console-emulation.js
 
       js/sunriser_colors_config.js
       js/sunriser_forms_config.js
+
+      js/sunriser_SrForm.js
+      js/sunriser_SrField.js
+
       js/sunriser_firmware.js
       js/sunriser_network.js
       js/sunriser_config.js
-      js/sunriser_form.js
       js/sunriser_interface.js
       js/sunriser.js
     )],

@@ -243,6 +243,7 @@ sub _web_servererror { $_[0]->debug("Nothing todo, sending Internal Server Error
 
 sub _web_serve_msgpack {
   my ( $self, $data, @headers ) = @_;
+  use DDP; p($data);
   my $msgpack = $self->_mp->pack($data);
   return [ 200, [
     'Content-Type' => 'application/x-msgpack',

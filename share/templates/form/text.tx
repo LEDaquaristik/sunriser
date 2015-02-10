@@ -1,1 +1,1 @@
-<input class="<: include form::sr_type :>" type="text" <: include form::idname :> value="<%=fields[i].value%>">
+<input type="text" <: include form::idname :> value="<%=field.value%>">

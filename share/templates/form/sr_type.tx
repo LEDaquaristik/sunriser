@@ -1,1 +1,1 @@
-sr_type_<%=fields[i].type.replace('(','_').replace(')','_')%>
+sr_type_<%=field.type.replace('(','_').replace(')','_')%>
