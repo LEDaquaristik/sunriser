@@ -15,32 +15,42 @@ function sr_request_mpack(method,url,data,success) {
     dataType: 'arraybuffer',
     processData: false,
     cache: false,
-    error: function(xhr,error,errorthrown){
+    error: function(xhr,error,errorthrown) {
       if (method == 'PUT') {
         sr_failed();
       }
+      // TODO remove debugging
+      console.log(method + ' ' + url);
+      console.log(data);
+      console.log('Errored: ' + error);
+      // TODO remove debugging
     },
-    beforeSend: function(xhr,settings){
+    beforeSend: function(xhr,settings) {
       if (method == 'PUT') {
         sr_screenblock('Speichern');
       }
     },
-    complete: function(xhr,status){
+    complete: function(xhr,status) {
       if (method == 'PUT') {
         sr_screenunblock();
         sr_cleanwait();
       }
     },
-    success: function(data,status,xhr){
+    success: function(result,status,xhr) {
       if (xhr.getResponseHeader('content-type') == 'application/x-msgpack') {
-        var bytearray = new Uint8Array(data);
-        data = msgpack.unpack(bytearray);
+        var bytearray = new Uint8Array(result);
+        result = msgpack.unpack(bytearray);
       };
       if (method == 'PUT') {
         sr_finished();
       }
+      // TODO remove debugging
+      console.log(method + ' ' + url);
+      console.log(data);
+      console.log(result);
+      // TODO remove debugging
       if (success) {
-        success.call(this,data,status,xhr);
+        success.call(this,result,status,xhr);
       }
     },
   };
