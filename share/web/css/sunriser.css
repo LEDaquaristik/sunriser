@@ -189,6 +189,7 @@ header{
   position:relative;
   /*display: table;*/
   overflow: hidden;
+  min-height:300px;
 }
 .control_center > .sunriser_content{
   background-color: white;
