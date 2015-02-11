@@ -767,6 +767,7 @@ nav h2{
   font-size:16px;
   height: 36px;
   width: 290px;
+  float:right
 }
 .daypicker .day{
   display:inline-block;

@@ -5,7 +5,7 @@
 /* FONT PATH
  * -------------------------- */
 @font-face {
-  font-family: 'FontAwesome';
+  font-family: 'IcoMoon';
   src:url('../fonts/icomoon.eot?z7sih1');
   src: local('☺'), url('../fonts/icomoon.eot?#iefixz7sih1') format('embedded-opentype'),
   	url('../fonts/icomoon.woff?z7sih1') format('woff'),
@@ -16,7 +16,7 @@
 }
 .fa {
   display: inline-block;
-  font: normal normal normal 14px/1 FontAwesome;
+  font: normal normal normal 14px/1 IcoMoon;
   font-size: inherit;
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
@@ -1801,4 +1801,8 @@
 }
 .fa-medium:before {
   content: "\f23a";
+}
+/*Custom fonts*/
+.fa-pluie:before {
+  content: "\f0c3";
 }
