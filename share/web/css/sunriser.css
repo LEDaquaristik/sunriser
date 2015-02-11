@@ -527,7 +527,8 @@ nav h2{
   top: -40px;
   z-index: 2;
   right: -14px;
-  padding: 0px 4px 0 5px;
+  padding: 0px 5px;
+  font-size : 17px;
   background-color: #68D472;
   border-radius: 50%;
   font-family:icomoon
@@ -535,7 +536,7 @@ nav h2{
 .failed:before{
   content: "";
   background-color: #E74C3C;
-  padding: 0px 6px 1px 7px;
+  padding: 0px 7px 1px 7px;
 }
 
 .sunriser_content select{
@@ -562,6 +563,18 @@ nav h2{
   transform: rotate(45deg);
   right: 19px;
   top: 9px;
+}
+/*TimePicker*/
+.doublepoints{
+  color: #CCD7E2;
+  font-weight: bold;
+  display: inline;
+}
+.timepicker{
+  padding: 5px;
+  display: inline-block;
+  border: 2px solid rgb(204, 215, 226);
+  border-radius: 3px;
 }
 
 /*checkbox styling*/
@@ -634,7 +647,8 @@ nav h2{
   margin-bottom: 20px;
 }
 .sunriser_content td{
-  vertical-align:middle
+  vertical-align:middle;
+  padding-right:10px;
 }
 
 /**  dialogue  **/
@@ -655,7 +669,7 @@ nav h2{
   background-color: #ddd;
   width: 31px;
   height: 31px;
-  padding: 4px 0px 0px 10px;
+  padding: 6px 0px 0px 10px;
   font-size: 18px;
   text-decoration: none;
   color: #95989b !important;
@@ -735,10 +749,11 @@ nav h2{
   bottom: 19px;
   width: 31px;
   height: 31px;
-  padding: 2px 0 0 8px;
+  padding: 1px 0 0 9px;
   background-color: #bbb;
   border-radius: 50%;
   text-decoration: none;
+  font-size:17px;
   color: #777;
 }
 .hilfe-close:hover{
@@ -749,7 +764,9 @@ nav h2{
   border:2px solid #CCD7F2;
   display:inline-block;
   border-radius:3px;
-  font-size:16px
+  font-size:16px;
+  height: 36px;
+  width: 290px;
 }
 .daypicker .day{
   display:inline-block;
@@ -905,6 +922,26 @@ nav h2{
 
 /***  RESPONSIVE  ***/
 
+@media screen and (max-width:1100px) {
+  .daypicker{
+    border:0px solid transparent;
+    height: auto;
+    width: 137px;
+    margin: 10px 0;
+    float:right
+  }
+  .daypicker .day{
+    border: 2px solid #CCD7F2;
+    border-radius: 3px;
+    margin-bottom: 3px;
+  }
+  .daypicker .day:last-child{
+    border-right:2px solid #CCD7F2;
+  }
+  .daypicker .day label{
+    margin: 2px;
+  }
+}
 @media screen and (max-width:900px) {
   .main{
     padding:0 10px;
