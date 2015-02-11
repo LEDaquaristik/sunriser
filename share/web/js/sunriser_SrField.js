@@ -120,6 +120,10 @@ var SrField_CSV = SrField_Text.extend({
 
   comma: ',',
 
+  joined_value: function() {
+    return this.value.join(this.comma);
+  },
+
   transform: function() {
     var value = this.html_value();
     if (typeof value === 'string') {
@@ -161,7 +165,28 @@ var SrField_IP = SrField_CSV.extend({
 
 var SrField_Weekday = SrField_CSV.extend({
 
-  template: 'weekday'
+  template: 'weekday',
+
+  initjs: function(){
+    var self = this;
+    var daypicker = $('#' + self.id + '_daypicker');
+    var checkboxes = daypicker.find('input[type=checkbox]');
+    $.each(checkboxes,function(i,el){
+      var checkbox = $(el);
+      if ($.inArray(parseInt(checkbox.val()),self.value) != -1) {
+        checkbox.prop('checked',true);
+      }
+      checkbox.change(function(){
+        var days = new Array();
+        $.each(checkboxes,function(i,checkbox){
+          if ($(checkbox).prop('checked')) {
+            days.push($(checkbox).val());
+          }
+        });
+        self.html_field().val(days.join(self.comma));
+      });
+    });
+  }
 
 });
 

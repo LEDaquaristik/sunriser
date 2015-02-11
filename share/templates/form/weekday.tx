@@ -1,4 +1,4 @@
-<div class="daypicker" id="<%=field.name%>_daypicker">
+<div class="daypicker" id="<%=field.id%>_daypicker">
   <div class="monday day">
     <input type="checkbox" id="monday-check" value="0"></input>
     <label for="monday-check">MO</label>
@@ -28,4 +28,4 @@
     <label for="sunday-check">SO</label>
   </div>
 </div>
-<: include form::hidden :>
+<input type="hidden" <: include form::idname :> value="<%=field.joined_value()%>">
