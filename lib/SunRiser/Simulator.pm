@@ -22,6 +22,7 @@ use JSON::MaybeXS;
 use Digest::DJB32 qw( djb );
 use File::Temp qw/ tempfile tempdir tmpnam /;
 use bytes;
+use Carp qw( croak );
 use Data::MessagePack;
 use CDB::TinyCDB;
 use SunRiser::Publisher;
@@ -173,8 +174,10 @@ sub get_config {
   my $path = path($self->c, $filename);
   if (-f $path) {
     my $file = $path->slurp_raw();
-    my $datakey = substr($file, 0, length($mpkey));
-    my $data = substr($file, length($mpkey));
+    my $datakey = substr($file, 0, length($mpkey) + 1);
+    use Data::Coloured qw( pc ); pc($datakey); print "\n";
+    my $data = substr($file, length($mpkey) + 1);
+    use Data::Coloured qw( pc ); pc($data); print "\n";
     my $ckey = $self->_mp->unpack($datakey);
     if ($ckey eq $key) {
       return $self->_mp->unpack($data);
@@ -243,7 +246,6 @@ sub _web_servererror { $_[0]->debug("Nothing todo, sending Internal Server Error
 
 sub _web_serve_msgpack {
   my ( $self, $data, @headers ) = @_;
-  use DDP; p($data);
   my $msgpack = $self->_mp->pack($data);
   return [ 200, [
     'Content-Type' => 'application/x-msgpack',
@@ -353,20 +355,23 @@ sub _web_time {
 
 sub _web_firmware_mp {
   my ( $self ) = @_;
-  my $firmware_mp = path('firmware.mp');
-  if (-f $firmware_mp) {
-    $self->debug('Sending firmware.mp');
-    open my $fh, "<:raw", $firmware_mp or return $self->_web_forbidden;
-    my @stat = stat $firmware_mp;
-    Plack::Util::set_io_path($fh, Cwd::realpath($firmware_mp));
-    return [ 200, [
-      'Content-Type' => 'application/x-msgpack',
-      'Content-Length' => $stat[7],
-      'Last-Modified'  => HTTP::Date::time2str( $stat[9] ),
-    ], $fh ];
+  $self->debug('Sending firmware.mp');
+  if ($self->has_systemdb) {
+    # $self->cdb->put_replace('___firmware_description',$values{'model'}." v".$version);
+    # $self->cdb->put_replace('___firmware_filename',uc($values{'model_id'}.$version));
+    # $self->cdb->put_replace('___firmware_experimental',1);
+    # $self->cdb->put_replace('___firmware_author',$author);
+    # $self->cdb->put_replace('___firmware_timestamp',$utc_time);
+    croak "TODO";
+  } else {
+    return $self->_web_serve_msgpack({
+      description => 'SunRiser Simulator',
+      filename => 'SIMULATO',
+      experimental => 1,
+      author => 'You',
+      timestamp => time(),
+    });
   }
-  $self->debug('No firmware.mp found!');
-  return $self->_web_servererror;
 }
 
 has config => (
