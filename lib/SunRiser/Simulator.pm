@@ -174,10 +174,8 @@ sub get_config {
   my $path = path($self->c, $filename);
   if (-f $path) {
     my $file = $path->slurp_raw();
-    my $datakey = substr($file, 0, length($mpkey) + 1);
-    use Data::Coloured qw( pc ); pc($datakey); print "\n";
-    my $data = substr($file, length($mpkey) + 1);
-    use Data::Coloured qw( pc ); pc($data); print "\n";
+    my $datakey = substr($file, 0, length($mpkey));
+    my $data = substr($file, length($mpkey));
     my $ckey = $self->_mp->unpack($datakey);
     if ($ckey eq $key) {
       return $self->_mp->unpack($data);
