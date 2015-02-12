@@ -36,10 +36,10 @@ $('body').on('sr_config',function(){
 
 <% for ( var i = 0; i < firmwares.length; i++ ) { %>
   <div class="firmware">
-    <div class="firmware_description"><b><%=firmwares[i].description%></b></div>
+    <div class="firmware_description"><b><i class="fa fa-forumbee"></i>    <%=firmwares[i].description%></b></div>
     <div class="firmware_timestamp" data-timestamp="<%=firmwares[i].timestamp%>"></div>
     <button class="install_firmware" data-url="<%=firmwares[i].url%>">
-      Installiere Firmware <%=firmwares[i].filename%>
+      ⬇ Installiere Firmware <%=firmwares[i].filename%>
     </button>
   </div>
 <% } %>

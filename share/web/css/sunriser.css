@@ -13,6 +13,7 @@
         - dialogue
         - Hilfe
         - DayPicker
+        - Firmeware
       - Login
       - Intro
     - RESPONSIVE
@@ -256,7 +257,7 @@ nav .selected a{
                   Have to check if something better exists */
 }
 .first-level .second-nav li a{
-  padding: 14px 2em 0 2em;
+  padding: 14px 50px 0 2em;
   height:50px;
   display: block;
 }
@@ -277,7 +278,7 @@ nav .selected a{
 nav h2{
   text-transform:uppercase;
   color:#777;
-  padding:24px 0 0 1em;
+  padding:24px 0 0 24px;
   height:71px;
 }
 .first-level:hover:not(.toggle) > i{
@@ -765,7 +766,7 @@ nav h2{
   display:inline-block;
   border-radius:3px;
   font-size:16px;
-  height: 36px;
+  height: 38px;
   width: 290px;
   float:right
 }
@@ -794,6 +795,36 @@ nav h2{
 .daypicker input[type="checkbox"]:checked + label{
   background-color:#68D472;
   color:white
+}
+/**  Firmeware  **/
+.firmware{
+  border-bottom: 1px solid #eee;
+  padding: 10px 0;
+  display: table;
+  width: 100%;
+}
+.firmware:last-child{
+  border-bottom: 0px solid transparent;
+}
+.firmware_description{
+  float: left;
+  padding-top: 10px;
+}
+.install_firmware{
+  height: 50px;
+  width: auto;
+  border: medium none;
+  background-color: rgb(104, 212, 114);
+  text-align: left;
+  font-size: 18px;
+  color: white;
+  float:right
+}
+.install_firmware:hover{
+  background-color:#88d48f;
+}
+.install_firmware:active{
+  background-color:#27AE60 
 }
 
 /** Login **/
