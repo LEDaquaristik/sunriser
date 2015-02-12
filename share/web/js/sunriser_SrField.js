@@ -33,7 +33,9 @@ var SrField = Class.extend({
 
   init: function(config_param) {
     var config = {}; $.extend(config,config_param);
-    this.id = config.name.replace(/#/g,'_');
+    if (typeof config.name !== 'undefined') {
+      this.id = config.name.replace(/#/g,'_');      
+    }
     this.class = config.type.replace(/\(/g,'_').replace(/\)/g,'_');
     $.extend(this,config);
   },
@@ -170,7 +172,9 @@ var SrField_IP = SrField_CSV.extend({
   validate: function() {
     if (this.value.length == 4) {
       $.each(this.value,function(i,val){
-        if (val < 0 || val > 255) {
+        if (isNaN(val)) {
+          this.error_ip();
+        } else if (val < 0 || val > 255) {
           this.error_ip();
         }
       });

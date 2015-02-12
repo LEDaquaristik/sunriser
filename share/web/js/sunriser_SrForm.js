@@ -13,22 +13,31 @@ var SrForm = Class.extend({
     var self = this;
     var config = {}; $.extend(config,config_param);
     var fields = config.fields; delete config.fields;
+    console.log(config.expert_fields);
+    console.log(sr_config.showexpert);
+    if (typeof config.expert_fields !== 'undefined' && sr_config.showexpert) {
+      fields.push.apply(fields, config.expert_fields);
+    }
     self.target = target;
     self.fields = new Array();
     $.each(fields,function(i,field){
-      if (typeof config.prefix !== 'undefined') {
-        field.name = config.prefix + '#' + field.name;
+      if (typeof field.name !== 'undefined') {
+        if (typeof config.prefix !== 'undefined') {
+          field.name = config.prefix + '#' + field.name;
+        }
+        // Weather setup replacement
+        field.name = field.name.replace('weather#setup#X#','weather#setup#' + $('#weather_setup_id').val() + '#');
+        // -------------------------        
       }
-      // Weather setup replacement
-      field.name = field.name.replace('weather#setup#X#','weather#setup#' + $('#weather_setup_id').val() + '#');
       self.fields.push(self.get_field(field));
     });
     $.extend(this,config);
     sr_request_mpack('POST','/',self.keys(),function(values){
       $.each(self.fields,function(i,field){
-        field.val(values[field.name]);
+        if (typeof field.name !== 'undefined') {
+          field.val(values[field.name]);
+        }
       });
-      console.log(self);
       self.render();
     });
   },
@@ -60,17 +69,27 @@ var SrForm = Class.extend({
     $.each(self.fields,function(i,field){
       field.transform.call(field);
       if (!field.has_errors()) {
-        field.validate.call(field);        
+        field.validate.call(field);
       }
       if (field.has_errors()) {
         self.error = true;
       } else {
-        values[field.name] = field.value;
+        if (typeof field.name !== 'undefined') {
+          values[field.name] = field.value;
+        }
       }
     });
     if (!self.error) {
       sr_request_mpack('PUT','/',values,function(){
-        // TODO Successfully saved notice
+        var reload = false;
+        $.each(values,function(key,val){
+          if (key == 'showexpert' && sr_config[key] != val) { reload = true; }
+          sr_config[key] = val;
+          sr_storage_update();
+        });
+        if (reload) {
+          window.location.href = window.location.href;
+        }
       });
     }
   },
@@ -82,6 +101,8 @@ var SrForm = Class.extend({
     switch(field.type) {
       case 'array(weekday)':
         return new SrField_Weekday(field);
+      case 'hidden':
+        return new SrField_Hidden(field);
       case 'time':
         return new SrField_Time(field);
       case 'bool':
@@ -104,7 +125,9 @@ var SrForm = Class.extend({
   keys: function() {
     var keys = [];
     $.each(this.fields,function(i,field){
-      keys.push(field.name);
+      if (typeof field.name !== 'undefined') {
+        keys.push(field.name);        
+      }
     });
     return keys;
   }

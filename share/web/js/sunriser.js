@@ -96,9 +96,7 @@ $('body').on('sr_config_def',function(){
         }
       });
       sr_config = values;
-      if (typeof(Storage) !== "undefined") {
-        sessionStorage.setItem('sr_config',JSON.stringify(sr_config));
-      }
+      sr_storage_update();
       $('body').trigger('sr_config');
     });
   } else {

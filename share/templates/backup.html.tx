@@ -2,7 +2,7 @@
 : override content -> {
 
 <h2>
-  <a href="/backup">Backup runterladen</a>
+  <a href="/backup">Konfiguration runterladen</a>
 </h2>
 
 : }

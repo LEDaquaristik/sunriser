@@ -13,12 +13,12 @@ $('body').on('sr_config',function(){
 
   $("#led").each(function(){
     var fields = new Array();
-    var options = new Array({
+    var color_options = new Array({
       value: undefined,
       label: 'Nicht benutzt'
     });
     $.each(sr_colors,function(i,color){
-      options.push({
+      color_options.push({
         value: color.id,
         label: color.name,
         backgroundcolor: color.color
@@ -29,7 +29,7 @@ $('body').on('sr_config',function(){
         name: "pwm#" + i + "#color",
         label: "Farbe LED #" + i,
         type: "select",
-        options: options,
+        options: color_options,
         initjs: function(){
           var select = this.html_field();
           select.css('background-color',select.find('option:selected').css('background-color'));
@@ -38,7 +38,25 @@ $('body').on('sr_config',function(){
           });
         }
       });
+      fields.push({
+        id: "pwm_" + i + "_dayplan",
+        label: "LED #" + i + " f&uuml;r Tagesplanung",
+        type: "bool"
+      });
+      fields.push({
+        id: "pwm_" + i + "_weather",
+        label: "LED #" + i + " f&uuml;r Wettersimulation",
+        type: "bool"
+      });
+      fields.push({
+        name: "pwm#" + i + "#manager",
+        type: "hidden"
+      });
     }
+    fields.push({
+      name: "weather#setup#0#pwms",
+      type: "hidden"
+    });
     var form = new SrForm(this,{
       title: "LED Farben einstellen",
       fields: fields

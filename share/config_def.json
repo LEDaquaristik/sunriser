@@ -54,7 +54,7 @@
     "setups", [    "List of activated setup ids",   "array(integer)"],
     "setup#X",     "Weather simulation setup X", [
       "name", [    "Custom name for weather setup", "text"],
-      "pwms", [    "Identification of pwms effected", "array(text)"],
+      "pwms", [    "Identification of pwms effected", "array(integer)"],
       "thunder", "Thunderstorm setup", [
         "activated", ["Produce thunderstorms", "bool", 0],
         "nightonly", ["Thunderstorm only if dayplanner sets pwm to 0", "bool", 0],
