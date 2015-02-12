@@ -10,6 +10,7 @@ var SrField = Class.extend({
   required: false,
   pre: false,
   validator: undefined,
+  data: undefined,
 
   html_field: function(){
     return $('#' + this.id);
@@ -36,7 +37,7 @@ var SrField = Class.extend({
     if (typeof config.name !== 'undefined') {
       this.id = config.name.replace(/#/g,'_');      
     }
-    this.class = config.type.replace(/\(/g,'_').replace(/\)/g,'_');
+    this.type_class = 'sr_type_' + config.type.replace(/\(/g,'_').replace(/\)/g,'_');
     $.extend(this,config);
   },
 

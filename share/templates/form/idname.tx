@@ -1,1 +1,1 @@
-id="<%=field.id%>" name="<%=field.name%>" class="sr_form_field <%=field.class%>"
+id="<%=field.id%>" name="<%=field.name%>" class="sr_form_field <%=field.type_class%> <%=field.class%>"

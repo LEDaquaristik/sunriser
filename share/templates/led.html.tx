@@ -25,14 +25,16 @@ $('body').on('sr_config',function(){
         backgroundcolor: color.color
       });
     });
-    for (i = 1; i <= sr_config['pwm_count']; i++) { 
+    for (i = 1; i <= sr_config['pwm_count']; i++) {
       fields.push({
         name: "pwm#" + i + "#color",
         label: "Farbe LED #" + i,
         type: "select",
+        data: { pwm_id: i },
         options: color_options,
         initjs: function(){
           var select = this.html_field();
+          // firefox doesnt like this, why?
           select.css('background-color',select.find('option:selected').css('background-color'));
           select.change(function(){
             select.css('background-color',select.find('option:selected').css('background-color'));
@@ -42,12 +44,38 @@ $('body').on('sr_config',function(){
       fields.push({
         id: "pwm_" + i + "_dayplan",
         label: "LED #" + i + " f&uuml;r Tagesplanung",
-        type: "bool"
+        type: "bool",
+        data: { pwm_id: i },
+        initjs: function(){
+          var pwm = this.data.pwm_id;
+          var checkbox = this.html_field();
+          if ($("#pwm_" + pwm + "_manager").val() == 1) {
+            checkbox.prop("checked",true);
+          }
+          checkbox.change(function(){
+            $('#pwm_' + pwm + '_manager').val(checkbox.prop('checked') ? 1 : 0);
+          });
+        }
       });
       fields.push({
         id: "pwm_" + i + "_weather",
         label: "LED #" + i + " f&uuml;r Wettersimulation",
-        type: "bool"
+        type: "bool",
+        data: { pwm_id: i },
+        initjs: function(){
+          var pwm = this.data.pwm_id;
+          var checkbox = this.html_field();
+          checkbox.change(function(){
+            var weather_pwms = new Array();
+            for (j = 1; j <= sr_config["pwm_count"]; j++) {
+              var cur = $("#pwm_" + j + "_weather");
+              if (cur.prop("checked")) {
+                weather_pwms.push(j);
+              }
+            }
+            $('#weather_setup_0_pwms').val(weather_pwms.join(","));
+          });
+        }
       });
       fields.push({
         name: "pwm#" + i + "#manager",
@@ -56,7 +84,14 @@ $('body').on('sr_config',function(){
     }
     fields.push({
       name: "weather#setup#0#pwms",
-      type: "hidden"
+      pre: true,
+      initjs: function(){
+        for (j = 1; j <= sr_config['pwm_count']; j++) {
+          if ($.inArray(j,this.value) !== -1) {
+            $("#pwm_" + j + "_weather").prop("checked",true);
+          }
+        }
+      }
     });
     var form = new SrForm(this,{
       title: "LED Farben einstellen",

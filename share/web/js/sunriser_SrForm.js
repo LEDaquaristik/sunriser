@@ -53,8 +53,13 @@ var SrForm = Class.extend({
     var self = this;
     $(self.target).html(tmpl(self.template,self));
     $.each(self.fields,function(i,field){
-      field.prepare.call(field);
-      field.initjs.call(field);
+      if (typeof field.data !== 'undefined') {
+        $.each(field.data,function(key,val){
+          field.html_field().data(key,val);
+        });
+      }
+      field.prepare();
+      field.initjs();
     });
     $(self.target).find('form').submit(function(e){
       e.preventDefault();
@@ -115,6 +120,8 @@ var SrForm = Class.extend({
         return new SrField_IP(field);
       case 'bool':
         return new SrField_Checkbox(field);
+      case 'array(integer)':
+        return new SrField_CSV(field);
       case 'integer':
         return new SrField_Integer(field);
       default:
