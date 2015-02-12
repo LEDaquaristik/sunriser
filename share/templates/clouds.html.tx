@@ -1,6 +1,6 @@
 : cascade base { title => 'Wolken', nav => 'weather' }
 : override content -> {
 
-<div class="form" id="clouds" />
+<div class="form" id="clouds"></div>
 
 : }

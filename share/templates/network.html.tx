@@ -1,6 +1,6 @@
 : cascade base { title => 'Netzwerk Einstellungen', nav => 'setup' }
 : override content -> {
 
-<div class="form" id="network" />
+<div class="form" id="network"></div>
 
 : }

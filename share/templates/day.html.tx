@@ -12,7 +12,7 @@
 <hr>
 <svg id="dayplanner"></svg>
 <hr>
-<div class="form noautoload" id="dayplan" />
+<div class="form noautoload" id="dayplan"></div>
 
 
 : }

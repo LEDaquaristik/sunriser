@@ -1,6 +1,6 @@
 : cascade base { title => "System Einstellungen", nav => "setup" }
 : override content -> {
 
-<div class="form" id="system" />
+<div class="form" id="system"></div>
 
 : }

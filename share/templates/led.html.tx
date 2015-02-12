@@ -1,7 +1,7 @@
 : cascade base { title => "LED konfigurieren", nav => "setup" }
 : override content -> {
 
-<div class="form noautoload" id="led" />
+<div class="form noautoload" id="led"></div>
 
 : }
 : override postjs -> {
@@ -15,7 +15,8 @@ $('body').on('sr_config',function(){
     var fields = new Array();
     var color_options = new Array({
       value: undefined,
-      label: 'Nicht benutzt'
+      label: 'Nicht benutzt',
+      backgroundcolor: '#ffffff'
     });
     $.each(sr_colors,function(i,color){
       color_options.push({
