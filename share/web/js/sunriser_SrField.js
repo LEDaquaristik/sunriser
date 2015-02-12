@@ -7,6 +7,7 @@ var SrField = Class.extend({
   desc: undefined,
   type: undefined,
   template: undefined,
+  required: false,
   pre: false,
   validator: undefined,
 
@@ -59,6 +60,10 @@ var SrField = Class.extend({
     this.error_field().append('<div class="error">' + text + '</div>');
   },
 
+  error_required: function() {
+    this.error("Dieses Feld muss ausgef&uuml;llt werden.")
+  },
+
   reset: function() {
     this.errors = undefined;
   }
@@ -72,7 +77,15 @@ var SrField_Text = SrField.extend({
   transform: function() {
     var value = this.html_value();
     if (typeof value === 'string') {
-      this.value = value;
+      if (value.length == 0) {
+        if (this.required) {
+          this.error_required();
+        } else {
+          this.value = undefined;          
+        }
+      } else {
+        this.value = value;
+      }
     } else {
       this.error("Unbekannter Fehler (kein String)");
     }
@@ -84,10 +97,14 @@ var SrField_Integer = SrField_Text.extend({
 
   transform: function() {
     var value = this.html_value();
-    if (isNaN(value)) {
-      this.error("Hier muss eine Zahl angegeben werden.");
+    if (value.length == 0 && !this.required) {
+      this.value = undefined;
     } else {
-      this.value = parseInt(value);
+      if (isNaN(value)) {
+        this.error("Hier muss eine Zahl angegeben werden.");
+      } else {
+        this.value = parseInt(value);
+      }
     }
   }
 
@@ -121,6 +138,9 @@ var SrField_CSV = SrField_Text.extend({
   comma: ',',
 
   joined_value: function() {
+    if (typeof this.value === 'undefined') {
+      return "";
+    }
     return this.value.join(this.comma);
   },
 
@@ -185,6 +205,33 @@ var SrField_Weekday = SrField_CSV.extend({
         });
         self.html_field().val(days.join(self.comma));
       });
+    });
+  }
+
+});
+
+var SrField_Time = SrField_Integer.extend({
+
+  template: 'time',
+
+  initjs: function(){
+    var self = this;
+    var hour = $('#' + self.id + '_hour');
+    var minutes = $('#' + self.id + '_minutes');
+    var inuse = $('#' + self.id + '_inuse');
+    if (typeof self.value !== 'undefined') {
+      hour.val(Math.floor(self.value / 60));
+      minutes.val(self.value % 60);
+      inuse.prop('checked',true);
+    }
+    $(hour).add(minutes).change(function(){
+      inuse.prop('checked',true);
+    }).add(inuse).change(function(){
+      if (inuse.prop('checked')) {
+        self.html_field().val(parseInt(hour.val()) * 60 + parseInt(minutes.val()));
+      } else {
+        self.html_field().val(undefined);
+      }
     });
   }
 

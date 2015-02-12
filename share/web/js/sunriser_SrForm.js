@@ -82,6 +82,8 @@ var SrForm = Class.extend({
     switch(field.type) {
       case 'array(weekday)':
         return new SrField_Weekday(field);
+      case 'time':
+        return new SrField_Time(field);
       case 'bool':
         return new SrField_Checkbox(field);
       case 'select':

@@ -26,6 +26,8 @@
             <: include form::weekday :>
           <% } else if (field.template == 'text') { %>
             <: include form::text :>
+          <% } else if (field.template == 'time') { %>
+            <: include form::time :>
           <% } else { %>
             Template <%=field.template%> unbekannt
           <% } %>

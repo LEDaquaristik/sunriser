@@ -45,7 +45,7 @@
     "deleted", [   "(TODO) File is deleted",            "bool"]
   ],
   "dayplanner",    "Day planner configuration", [
-    "marker#X", [ "Control markers for PWM X (time and percent)", "array(daymin,percent)"],
+    "marker#X", [ "Control markers for PWM X (time and percent)", "array(time,percent)"],
     "randomdeferralmax", ["Maximum random deferral (in minuten)", "integer", 0],
     "deferral", ["Fixed deferral (in minuten)", "integer", 0]
   ],
@@ -68,14 +68,14 @@
         "fadepercent", ["Percentage of thunderstorm which is fade in and fade out (less thunders, lower light intensity, while fade)", "integer", 60],
         "daychance", ["Percentage for a thunderstorm to happen (Tried per day in daymax amount)", "integer", 10],
         "darkness", ["Percentage of darkness to apply", "integer", 25],
-        "fixedtimes", ["Fixed times for thunderstorms (daychance still applies, daymax tries still added)", "repeated(daymin)"],
+        "fixedtimes", ["Fixed times for thunderstorms (daychance still applies, daymax tries still added)", "repeated(time)"],
         "deferralmax", ["Maximum random deferral (in seconds)", "integer", 0],
         "weekdays", ["Apply thunderstorms to given weekdays (else always)", "array(weekday)"]
       ],
       "moonphase", "Moonphase setup", [
         "activated", ["Show moonphase based on reality", "bool", 0],
-        "starttime", ["Most early start at this time", "daymin"],
-        "endtime", ["Always end at least at this time", "daymin"],
+        "starttime", ["Most early start at this time", "time"],
+        "endtime", ["Always end at least at this time", "time"],
         "maximum", ["Intensity of moon in percent (can be over 100%)", "integer", 100],
         "deferral", ["Deferral against real moon phase (in minutes)", "integer", 0],
         "weekdays", ["Apply moon to given weekdays (else every day)", "array(weekday)"]
