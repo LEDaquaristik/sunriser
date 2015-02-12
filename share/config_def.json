@@ -46,8 +46,8 @@
   ],
   "dayplanner",    "Day planner configuration", [
     "marker#X", [ "Control markers for PWM X (time and percent)", "array(time,percent)"],
-    "randomdeferralmax", ["Maximum random deferral (in minuten)", "integer", 0],
-    "deferral", ["Fixed deferral (in minuten)", "integer", 0]
+    "randomdeferralmax", ["Maximum random deferral (in minutes)", "integer", 0],
+    "deferral", ["Fixed deferral (in minutes)", "integer", 0]
   ],
   "weather",       "Weather simulation configuration", [
     "last_setup_id", ["Holding the last id used for new setup", "integer", 0],

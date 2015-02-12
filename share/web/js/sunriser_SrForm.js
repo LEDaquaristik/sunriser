@@ -6,6 +6,7 @@ var SrForm = Class.extend({
   prefix: undefined,
   title: undefined,
   no_values: false,
+  loaded: undefined,
 
   error: false,
 
@@ -13,8 +14,6 @@ var SrForm = Class.extend({
     var self = this;
     var config = {}; $.extend(config,config_param);
     var fields = config.fields; delete config.fields;
-    console.log(config.expert_fields);
-    console.log(sr_config.showexpert);
     if (typeof config.expert_fields !== 'undefined' && sr_config.showexpert) {
       fields.push.apply(fields, config.expert_fields);
     }
@@ -66,6 +65,9 @@ var SrForm = Class.extend({
       self.reset();
       self.submit();
     });
+    if (typeof self.loaded === 'function') {
+      self.loaded();
+    }
   },
 
   submit: function() {
@@ -122,6 +124,8 @@ var SrForm = Class.extend({
         return new SrField_Checkbox(field);
       case 'array(integer)':
         return new SrField_CSV(field);
+      case 'array(time,percent)':
+        return new SrField_CSV(field);      
       case 'integer':
         return new SrField_Integer(field);
       default:

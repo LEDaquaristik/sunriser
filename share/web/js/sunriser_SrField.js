@@ -252,7 +252,13 @@ var SrField_Time = SrField_Integer.extend({
 var SrField_Select = SrField.extend({
 
   template: 'select',
-  options: undefined
+  options: undefined,
+
+  initjs: function(){
+    if (typeof this.value !== 'undefined') {
+      this.html_field().val(this.value);      
+    }
+  }
 
 });
 

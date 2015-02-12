@@ -1,15 +1,9 @@
 : cascade base { title => "Tagesplanung", nav => "planner" }
 : override content -> {
 
-<label class="select_style">
-  <select>
-    <option value="pwm1">PWM1</option>
-    <option value="pwm2">PWM2</option>
-    <option value="pwm3">PWM3</option>
-    <option value="pwm4">PWM4</option>
-  </select>
-</label>
-<hr>
+<div id="pwmpicker">
+  <img class="loader" src="/img/ajaxload.gif">
+</div>
 <svg id="dayplanner"></svg>
 <hr>
 <div class="form noautoload" id="dayplan"></div>
@@ -23,90 +17,129 @@
 // First execute stuff when the form is loaded
 $('body').on('sr_config',function(){
 
-  $("#dayplan").each(function(){
-    var fields = [];
-    for (i = 1; i <= sr_config['pwm_count']; i++) { 
+  var dayplanner_pwms = new Array();
+  var keys = new Array();
+
+  for (i = 1; i <= sr_config["pwm_count"]; i++) { 
+    keys.push('pwm#' + i + '#manager');
+  }
+
+  sr_request_mpack('POST','/',keys,function(values){
+    for (i = 1; i <= sr_config["pwm_count"]; i++) { 
+      var key = 'pwm#' + i + '#manager';
+      if (values[key] == 1) {
+        dayplanner_pwms.push(i);
+      }
+    }
+    if (!dayplanner_pwms.length) {
+      window.location.href = window.location.href.replace("day.html","led.html");
+    } else {
+      var fields = new Array();
+      $.each(dayplanner_pwms,function(i,pwm){
+        fields.push({
+          name: "marker#" + pwm,
+          pre: true
+        });
+      });
       fields.push({
-        name: "marker#" + i,
-        label: "Tagesverlauf LED #" + i,
-        type: "marker"
+        name: "randomdeferralmax",
+        label: "Maximale zuf&auml;llige Abweichung in Minuten"
+      },{
+        name: "deferral",
+        label: "Feste Abweichung in Minuten"
+      });
+      var form = new SrForm($('#dayplan'),{
+        title: "Tagesplanung",
+        prefix: "dayplanner",
+        fields: fields
       });
     }
-    sr_make_form(this,{
-      formtitle: "Tagesplannung",
-      prefix: "dayplanner",
-      fields: fields
-    });
   });
 
-  'use strict';
+  // $("#dayplan").each(function(){
+  //   var fields = [];
+  //   for (i = 1; i <= sr_config["pwm_count"]; i++) { 
+  //     fields.push({
+  //       name: "marker#" + i,
+  //       label: "Tagesverlauf LED #" + i,
+  //       type: "marker"
+  //     });
+  //   }
+  //   sr_make_form(this,{
+  //     formtitle: "Tagesplannung",
+  //     prefix: "dayplanner",
+  //     fields: fields
+  //   });
+  // });
 
-  var s = Snap('#dayplanner');
-  var width = $('#dayplanner').width() - 2;
+  // 'use strict';
 
-  //box and lines
-  s.attr({
-    viewBox: "0 0 950 300",
-  });
+  // var s = Snap('#dayplanner');
+  // var width = $('#dayplanner').width() - 2;
 
-  var sixhours = ( (width - 35) - 8 ) / 4;
-  var sixoclock = s.paper.line(39+sixhours,12,39+sixhours,266).attr({
-    strokeWidth: 1,
-    stroke: "#ebebeb"
-  });
-  var twelveoclock = s.paper.line(39+(sixhours*2),12,39+(sixhours*2),266).attr({
-    strokeWidth: 1,
-    stroke: "#ebebeb"
-  });
-  var eighteenoclock = s.paper.line(39+(sixhours*3),12,39+(sixhours*3),266).attr({
-    strokeWidth: 1,
-    stroke: "#ebebeb"
-  });
+  // //box and lines
+  // s.attr({
+  //   viewBox: "0 0 950 300",
+  // });
 
-  var lines = [];
-  for (var i = 1; i < 10; i++) {
-    lines.push(s.paper.line(
-      35,14+(25*i),width,14+(25*i)
-    ).attr({ strokeWidth: 1, stroke: "#ebebeb" }));
-  }
+  // var sixhours = ( (width - 35) - 8 ) / 4;
+  // var sixoclock = s.paper.line(39+sixhours,12,39+sixhours,266).attr({
+  //   strokeWidth: 1,
+  //   stroke: "#ebebeb"
+  // });
+  // var twelveoclock = s.paper.line(39+(sixhours*2),12,39+(sixhours*2),266).attr({
+  //   strokeWidth: 1,
+  //   stroke: "#ebebeb"
+  // });
+  // var eighteenoclock = s.paper.line(39+(sixhours*3),12,39+(sixhours*3),266).attr({
+  //   strokeWidth: 1,
+  //   stroke: "#ebebeb"
+  // });
 
-  //percent text
-  for (var i = 1; i < 10; i++) {
-    s.text(7, 16 + 25 * i, 100-10*i).attr({ "font-size": "14px", fill:"#707070" });
-  }
-  s.text(0, 16, "100").attr({ "font-size": "14px", fill:"#707070" });
-  s.text(15, 268, "  0").attr({ "font-size": "14px", fill:"#707070" });
+  // var lines = [];
+  // for (var i = 1; i < 10; i++) {
+  //   lines.push(s.paper.line(
+  //     35,14+(25*i),width,14+(25*i)
+  //   ).attr({ strokeWidth: 1, stroke: "#ebebeb" }));
+  // }
 
-  //time text
-  s.text(25, 290, "0h").attr({ "font-size": "14px", fill:"#707070" });
-  s.text(30+(sixhours*1), 290, "6h").attr({ "font-size": "14px", fill:"#707070" });
-  s.text(30+(sixhours*2), 290, "12h").attr({ "font-size": "14px", fill:"#707070" });
-  s.text(30+(sixhours*3), 290, "18h").attr({ "font-size": "14px", fill:"#707070" });
-  s.text(20+(sixhours*4), 290, "24h").attr({ "font-size": "14px", fill:"#707070" });
+  // //percent text
+  // for (var i = 1; i < 10; i++) {
+  //   s.text(7, 16 + 25 * i, 100-10*i).attr({ "font-size": "14px", fill:"#707070" });
+  // }
+  // s.text(0, 16, "100").attr({ "font-size": "14px", fill:"#707070" });
+  // s.text(15, 268, "  0").attr({ "font-size": "14px", fill:"#707070" });
 
-  var midnighth =  267;
-  var sixh =  10;
-  var twelveh =  267;
-  var eighteenh =  267;
-  var twentyfourh =  267;
-  var graph = s.paper.line(700,100,300,150);
-  var graph = s.paper.polygon(39,267,39,midnighth,39+(sixhours*1),sixh,39+(sixhours*2),twelveh,39+(sixhours*3),eighteenh,39+(sixhours*4),twentyfourh,39+(sixhours*4),267);
+  // //time text
+  // s.text(25, 290, "0h").attr({ "font-size": "14px", fill:"#707070" });
+  // s.text(30+(sixhours*1), 290, "6h").attr({ "font-size": "14px", fill:"#707070" });
+  // s.text(30+(sixhours*2), 290, "12h").attr({ "font-size": "14px", fill:"#707070" });
+  // s.text(30+(sixhours*3), 290, "18h").attr({ "font-size": "14px", fill:"#707070" });
+  // s.text(20+(sixhours*4), 290, "24h").attr({ "font-size": "14px", fill:"#707070" });
 
-  graph.attr({
-    id: 'graph',
-    fill: "#bed8ea",
-    strokeWidth: 2,
-    stroke: "#2980B9",
-  });
+  // var midnighth =  267;
+  // var sixh =  10;
+  // var twelveh =  267;
+  // var eighteenh =  267;
+  // var twentyfourh =  267;
+  // var graph = s.paper.line(700,100,300,150);
+  // var graph = s.paper.polygon(39,267,39,midnighth,39+(sixhours*1),sixh,39+(sixhours*2),twelveh,39+(sixhours*3),eighteenh,39+(sixhours*4),twentyfourh,39+(sixhours*4),267);
 
-  //border
+  // graph.attr({
+  //   id: 'graph',
+  //   fill: "#bed8ea",
+  //   strokeWidth: 2,
+  //   stroke: "#2980B9",
+  // });
 
-  var border = s.rect(35,11,width - 35,256);
-  border.attr({
-    fill: "none",
-    strokeWidth: 1,
-    stroke: "#cdcdcd"
-  });
+  // //border
+
+  // var border = s.rect(35,11,width - 35,256);
+  // border.attr({
+  //   fill: "none",
+  //   strokeWidth: 1,
+  //   stroke: "#cdcdcd"
+  // });
 
 //  //graph buttons
 //  
