@@ -39,4 +39,8 @@ var sr_colors = [{
   "id": "465nm",
   "name": "ROYAL BLUE 465nm",
   "color": "#007bff"
+},{
+  "id": "custom",
+  "name": "Andere Farbe",
+  "color": "#ffff00"
 }];

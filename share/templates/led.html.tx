@@ -1,6 +1,52 @@
 : cascade base { title => "LED konfigurieren", nav => "setup" }
 : override content -> {
 
+<div class="form noautoload" id="led" />
 
+: }
+: override postjs -> {
+
+<script type="text/javascript">
+
+// First execute stuff when the form is loaded
+$('body').on('sr_config',function(){
+
+  $("#led").each(function(){
+    var fields = new Array();
+    var options = new Array({
+      value: undefined,
+      label: 'Nicht benutzt'
+    });
+    $.each(sr_colors,function(i,color){
+      options.push({
+        value: color.id,
+        label: color.name,
+        backgroundcolor: color.color
+      });
+    });
+    for (i = 1; i <= sr_config['pwm_count']; i++) { 
+      fields.push({
+        name: "pwm#" + i + "#color",
+        label: "Farbe LED #" + i,
+        type: "select",
+        options: options,
+        initjs: function(){
+          var select = this.html_field();
+          select.css('background-color',select.find('option:selected').css('background-color'));
+          select.change(function(){
+            select.css('background-color',select.find('option:selected').css('background-color'));
+          });
+        }
+      });
+    }
+    var form = new SrForm(this,{
+      title: "LED Farben einstellen",
+      fields: fields
+    });
+  });
+
+});
+
+</script>
 
 : }

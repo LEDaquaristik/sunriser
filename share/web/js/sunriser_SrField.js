@@ -168,16 +168,14 @@ var SrField_IP = SrField_CSV.extend({
   },
 
   validate: function() {
-    var wrong = false;
     if (this.value.length == 4) {
       $.each(this.value,function(i,val){
         if (val < 0 || val > 255) {
-          wrong = true;
+          this.error_ip();
         }
       });
-    }
-    if (wrong) {
-      this.error_ip();      
+    } else {
+      this.error_ip();
     }
   }
 
@@ -214,6 +212,15 @@ var SrField_Time = SrField_Integer.extend({
 
   template: 'time',
 
+  validate: function(){
+    this._super();
+    if (!this.has_errors()) {
+      if (this.value < 0 || this.value > 1440) {
+        this.error("Unbekannter Fehler (Wert nicht zwischen 0 und 1440)");
+      }
+    }
+  },
+
   initjs: function(){
     var self = this;
     var hour = $('#' + self.id + '_hour');
@@ -239,7 +246,8 @@ var SrField_Time = SrField_Integer.extend({
 
 var SrField_Select = SrField.extend({
 
-  template: 'select'
+  template: 'select',
+  options: undefined
 
 });
 

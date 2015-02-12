@@ -1,0 +1,9 @@
+<% if (field.options) { var options = field.options; %>
+
+  <select <: include form::idname :>>
+    <% for ( var j = 0; j < options.length; j++ ) { var option = options[j]; %>
+      <option style="<% if (option.backgroundcolor) { %>background-color:<%=option.backgroundcolor%>;<% } %>" value="<%=option.value%>"<% if (field.value == option.value) { %> selected="selected"<% } %>><%=option.label%></option>
+    <% } %>
+  </select>
+
+<% } %>

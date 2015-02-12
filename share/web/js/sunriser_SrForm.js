@@ -24,11 +24,11 @@ var SrForm = Class.extend({
       self.fields.push(self.get_field(field));
     });
     $.extend(this,config);
-
     sr_request_mpack('POST','/',self.keys(),function(values){
       $.each(self.fields,function(i,field){
         field.val(values[field.name]);
       });
+      console.log(self);
       self.render();
     });
   },
