@@ -1,9 +1,7 @@
 : cascade base { title => "Tagesplanung", nav => "planner" }
 : override content -> {
 
-<div id="pwmpicker">
-  <img class="loader" src="/img/ajaxload.gif">
-</div>
+<div id="pwmpicker"></div>
 <svg id="dayplanner"></svg>
 <hr>
 <div class="form noautoload" id="dayplan"></div>
@@ -18,7 +16,7 @@ $('body').on('sr_config',function(){
 
   var dayplanner_pwms = new Array();
   var keys = new Array();
-
+  
   for (i = 1; i <= sr_config["pwm_count"]; i++) { 
     keys.push('pwm#' + i + '#manager');
   }
@@ -52,6 +50,10 @@ $('body').on('sr_config',function(){
         prefix: "dayplanner",
         fields: fields
       });
+
+      var s = Snap('#dayplanner');
+      sr_day_makegrid(s);
+
     }
   });
 
@@ -277,6 +279,103 @@ $('body').on('sr_config',function(){
 //  });
 
 });
+
+function sr_day_makegrid(s){
+  
+  var dataLength = 4;
+  var maxValue = 100;
+  var minValue = 0;
+  
+  console.log($('#dayplanner').height());
+  
+  // Creates the vertical lines in the graph
+  for (var i=0; i<dataLength; i++) {
+    var x = i*100;
+    var xLine = s.line(x, minValue-10, x, maxValue+10).attr({
+      stroke: "#ccc",
+      strokeWidth: 0.25
+    });
+  }
+  
+  // Creates the horizontal lines in the graph
+  var w = dataLength*100;
+  var delimiter = 50;
+  var values = (maxValue+10)-(minValue-10);
+  var offset = ((maxValue+10)%delimiter);
+  for (var i=values; i > 0; i--){
+    if ((i-offset) % delimiter === 0){ // Change where lines appear by changing the delimiter (10 for every 10 units, 50 for 50, etc.)
+      var yLine = s.line(0, i, w, i).attr({
+        stroke: '#ccc',
+        strokeWidth: 0.25
+      });
+    }
+  }
+
+}
+
+  // function convertToPath(points){
+  //   var path = '';
+    
+  //   for (var i=0; i<points.length; i++){
+  //     var x = i*100;
+  //     var y = -points[i]+$('#svgLine').height(); // Convert points to how we like to view graphs
+  //     if (i===0){
+  //       path += 'M'+x+','+y+' R';
+  //     }
+  //     else if (i===points.length-1){
+  //       path += x+','+y;
+  //     }
+  //     else {
+  //       path += x+','+y+',';
+  //     }
+  //   }
+  //   return path;
+  // }
+ 
+  // function makePath(data, color){
+  //   var pathString = convertToPath(data);
+  //   var graphHeight = $('#svgLine').height();
+  //   var fillString = pathString+' V'+graphHeight+' H0 Z';
+    
+  //   function getDefaultPath(isFill){
+  //     var defaultPathString = 'M0,'+graphHeight+' H';
+      
+      
+  //     for (var i=0; i<data.length; i++) {
+  //       if (i!==0){ 
+  //         defaultPathString += i*100+' ';
+  //       }
+  //     }
+      
+  //     if(isFill){
+  //       defaultPathString += 'V'+graphHeight+' H0 Z';
+  //     }
+  //     return defaultPathString;
+  //   }
+    
+  //   var path = s.path(getDefaultPath()).attr({
+  //     stroke: color,
+  //     strokeWidth: 2,
+  //     fill: 'transparent'
+  //   });
+  
+  //   var fill = s.path(getDefaultPath(true)).attr({
+  //     fill: color,
+  //     fillOpacity: 0.25    
+  //   });
+  
+  //   path.animate({ path: pathString },500);
+  //   fill.animate({ path: fillString },500);
+    
+  // }
+  
+  // makePath(points1, 'red');
+  // makePath(points2, 'blue');
+  
+  // $('#add-green').on('click', function(){
+  //   makePath(points3,'green');
+  // });
+  
 
 </script>
 

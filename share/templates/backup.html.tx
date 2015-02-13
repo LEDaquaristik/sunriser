@@ -1,4 +1,4 @@
-: cascade base { title => "Sicherung", nav => "system" }
+: cascade base { title => "Sicherung", nav => "system", no_form => 1 }
 : override content -> {
 
 <h2>

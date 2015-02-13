@@ -1,4 +1,4 @@
-: cascade base { title => 'Einloggen' }
+: cascade base { title => 'Einloggen', no_form => 1 }
 : override page -> {
 
 <form class="login" method="POST" action="/">

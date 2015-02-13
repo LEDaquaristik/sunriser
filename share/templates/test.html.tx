@@ -1,4 +1,4 @@
-: cascade base { title => "Funktionstest" }
+: cascade base { title => "Funktionstest", no_form => 1 }
 : override content -> {
 
 

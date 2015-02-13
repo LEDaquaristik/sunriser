@@ -1,4 +1,4 @@
-: cascade base { title => "Firmware Upgrade" }
+: cascade base { title => "Firmware Upgrade", no_form => 1 }
 : override content -> {
 
 <div id="firmware_list">

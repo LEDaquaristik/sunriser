@@ -1,1 +1,1 @@
-: cascade base { title => r('Nicht gefunden') }
+: cascade base { title => r('Nicht gefunden'), no_form => 1 }

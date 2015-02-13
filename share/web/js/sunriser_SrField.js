@@ -35,9 +35,9 @@ var SrField = Class.extend({
   init: function(config_param) {
     var config = {}; $.extend(config,config_param);
     if (typeof config.name !== 'undefined') {
-      this.id = config.name.replace(/#/g,'_');      
+      this.id = config.name.replace(/#/g,'_');
     }
-    this.type_class = 'sr_type_' + config.type.replace(/\(/g,'_').replace(/\)/g,'_');
+    this.type_class = 'sr_type_' + config.type.replace(/\(/g,'_').replace(/\)/g,'_').replace(/,/g,'_').replace(/^_/,'').replace(/_$/,'');
     $.extend(this,config);
   },
 

@@ -164,8 +164,10 @@
         <script src="/<: $js_file :>" type="text/javascript"></script>
       <: } :>
     <: } :>
-    <: include form::std :>
-      <: block postjs -> {} :>
+    <: if !$no_form { :>
+      <: include form::std :>
+    <: } :>
+    <: block postjs -> {} :>
     <input type="hidden" id="weather_setup_id" value="0">
   </body>
 </html>

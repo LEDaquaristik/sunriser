@@ -1,4 +1,4 @@
-: cascade base { title => "Open Source Lizenzen", nav => "info" }
+: cascade base { title => "Open Source Lizenzen", nav => "info", no_form => 1 }
 : override content -> {
 
 <hr>
@@ -58,24 +58,31 @@ Font License
 
 Applies to all desktop and webfont files in the following directory: font-awesome/fonts/.
 License: SIL OFL 1.1
-URL: http://scripts.sil.org/OFL
+URL: <a href="http://scripts.sil.org/OFL">http://scripts.sil.org/OFL</a>
 
 Code License
 
 Applies to all CSS and LESS files in the following directories: font-awesome/css/, font-awesome/less/, and font-awesome/scss/.
 License: MIT License
-URL: http://opensource.org/licenses/mit-license.html
+URL: <a href="http://opensource.org/licenses/mit-license.html">http://opensource.org/licenses/mit-license.html</a>
 
 Documentation License
 
 Applies to all Font Awesome project files that are not a part of the Font or Code licenses.
 License: CC BY 3.0
-URL: http://creativecommons.org/licenses/by/3.0/
+URL: <a href="http://creativecommons.org/licenses/by/3.0/">http://creativecommons.org/licenses/by/3.0/</a>
 
 Brand Icons
 
 All brand icons are trademarks of their respective owners.
 The use of these trademarks does not indicate endorsement of the trademark holder by Font Awesome, nor vice versa.
+</pre>
+
+<hr>
+<h2>Frontend | <a href="http://www.1001fonts.com/alte-din-1451-mittelschrift-font.html">Alte DIN 1451 Mittelschrift Font Family</a></h2>
+<hr>
+<pre>
+Alte DIN 1451 Mittelschrift font family is licensed under the <a href="http://scripts.sil.org/OFL">SIL Open Font License (OFL)</a>
 </pre>
 
 <hr>
@@ -88,7 +95,7 @@ The use of these trademarks does not indicate endorsement of the trademark holde
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // 
-// http://www.apache.org/licenses/LICENSE-2.0
+// <a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a>
 // 
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -109,7 +116,7 @@ The use of these trademarks does not indicate endorsement of the trademark holde
 <hr>
 <pre>
 // Simple JavaScript Templating
-// John Resig - http://ejohn.org/ - MIT Licensed
+// John Resig - <a href="http://ejohn.org/">http://ejohn.org/</a> - MIT Licensed
 // <a href="http://ejohn.org/blog/javascript-micro-templating/">http://ejohn.org/blog/javascript-micro-templating/</a>
 </pre>
 
