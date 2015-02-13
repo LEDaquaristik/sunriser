@@ -6,12 +6,15 @@ var sr_config_main_keys = [
   'updated','name','showexpert'
 ];
 
+var current_time;
 var sr_config_def;
 var sr_config_types = {};
 
 $(function(){
 
   /* VIP */ window.loaded = true; /* VIP */
+
+  moment.locale('de');
 
   sr_screenunblock();
 
@@ -113,4 +116,3 @@ $('body').on('sr_config',function(){
   });
 
 });
-

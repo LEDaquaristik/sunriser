@@ -8,7 +8,6 @@
 <hr>
 <div class="form noautoload" id="dayplan"></div>
 
-
 : }
 : override postjs -> {
 

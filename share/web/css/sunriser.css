@@ -615,14 +615,14 @@ nav h2{
   transition-duration: 0.2s;
 }
 .sunriser_content .checkbox_switch::after{
-  content:"OFF";
+  content:"AUS";
   position: absolute;
   right:20px;
   z-index:1;
   top:2px
 }
 .sunriser_content input[type="checkbox"]:checked + .checkbox_switch::after{
-  content:"ON";
+  content:"AN";
   left:20px;
 }
 .sunriser_content input[type="checkbox"]:checked + .checkbox_switch::before{

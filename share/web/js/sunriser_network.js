@@ -40,6 +40,10 @@ function sr_request_mpack(method,url,data,success) {
       if (xhr.getResponseHeader('content-type') == 'application/x-msgpack') {
         var bytearray = new Uint8Array(result);
         result = msgpack.unpack(bytearray);
+        if (typeof result.time !== 'undefined' && typeof current_time === 'undefined') {
+          current_time = result.time;
+          update_time();
+        }
       };
       if (method == 'PUT') {
         sr_finished();
@@ -58,4 +62,13 @@ function sr_request_mpack(method,url,data,success) {
     call_options.data = bytesarray;
   }
   $.ajax(call_options);
+}
+
+function update_time() {
+  setTimeout(function(){
+    update_time();
+  }, 1000);
+  var m = moment(current_time * 1000);
+  $('#sunriser_datetime').text(m.format('LLL.ss'));
+  current_time += 1;
 }
