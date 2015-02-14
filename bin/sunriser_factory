@@ -24,4 +24,4 @@ my $cdb = SunRiser::CDB->new(
   filename => $filename, config => $config
 );
 $cdb->add_factory($publisher, %{SunRiser->model_info('sr8')});
-exit $cdb->save ? 0 : 1;
+exit ( $cdb->save ? 0 : 1 );
