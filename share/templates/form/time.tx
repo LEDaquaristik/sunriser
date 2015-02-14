@@ -1,5 +1,8 @@
 <div class="timepicker">
-  <input type="checkbox" id="<%=field.id%>_inuse" value="1"></input>
+  <div class="timebox">
+    <input type="checkbox" id="<%=field.id%>_inuse" value="1"></input>
+    <label for="<%=field.id%>_inuse"></label>
+  </div>
   <label class="select_style"> 
     <select id="<%=field.id%>_hour"> 
       <option value="1">1</option> 

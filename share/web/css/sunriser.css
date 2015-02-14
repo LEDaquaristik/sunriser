@@ -576,8 +576,53 @@ nav h2{
   display: inline-block;
   border: 2px solid rgb(204, 215, 226);
   border-radius: 3px;
+  float:right
 }
-
+.timebox{
+  display: block;
+  width: 34px;
+  height: 34px;
+  border: 2px solid #fff;
+  box-shadow: 2px 0 0 rgb(204, 215, 226),
+              0px 2px 0 rgb(204, 215, 226),
+             -2px 0 0 rgb(204, 215, 226),
+              0 -2px 0 rgb(204, 215, 226);
+  border-radius: 3px;
+  float: left;
+  margin: 2px 14px 0px 2px;
+  overflow:hidden
+}
+.timebox input[type="checkbox"]{
+  display:none
+}
+.timebox label {
+  background-color:#68D472;
+  width: 30px;
+  height: 60px;
+  display: block;
+  border-top: 30px solid rgb(204, 215, 226);
+  transition-duration:0.2s;
+  position:relative
+}
+.timebox label:after {
+  content:"";
+  font-family:"icomoon";
+  color:white;
+  bottom: 2px;
+  right: 6px;
+  position: absolute;
+}
+.timebox label:before {
+  content: "";
+  font-family:"icomoon";
+  color:white;
+  top: -29px;
+  right: 8px;
+  position: absolute;
+}
+.timebox input[type="checkbox"]:checked + label{
+  margin-top:-30px;
+}
 /*checkbox styling*/
 .sunriser_content  .checkbox input[type="checkbox"]{
   height: 100%;
