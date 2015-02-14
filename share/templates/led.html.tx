@@ -79,7 +79,7 @@ $('body').on('sr_config',function(){
       });
       fields.push({
         name: "pwm#" + i + "#manager",
-        type: "hidden"
+        pre: true
       });
     }
     fields.push({
