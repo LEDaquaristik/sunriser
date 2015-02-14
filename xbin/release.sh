@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set +e
+set -e
 
 VERSION=$1
 RELEASE_FILE=$2
