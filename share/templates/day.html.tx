@@ -35,7 +35,8 @@ $('body').on('sr_config',function(){
       $.each(dayplanner_pwms,function(i,pwm){
         fields.push({
           name: "marker#" + pwm,
-          pre: true
+          // pre: true
+          label: "led " + pwm
         });
       });
       fields.push({
