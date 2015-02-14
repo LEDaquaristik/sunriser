@@ -48,9 +48,9 @@ var sr_forms = {
     },{
       name: "showexpert", label: "Experten Funktionen aktivieren"
     },{
-      name: "nodst", type: "hidden"
+      name: "nodst", pre: true
     },{
-      name: "gmtoff", type: "hidden"
+      name: "gmtoff", pre: true
     }],
     expert_fields: [{
       name: "indexfile", label: "Startseite nach Anmeldung"

@@ -96,20 +96,22 @@ var SrField_Text = SrField.extend({
 
 });
 
-var SrField_Integer = SrField_Text.extend({
-
-  transform: function() {
-    var value = this.html_value();
-    if (value.length == 0 && !this.required) {
-      this.value = undefined;
+var SrField_Integer_Transform = function() {
+  var value = this.html_value();
+  if (value.length == 0 && !this.required) {
+    this.value = undefined;
+  } else {
+    if (isNaN(value)) {
+      this.error("Hier muss eine Zahl angegeben werden.");
     } else {
-      if (isNaN(value)) {
-        this.error("Hier muss eine Zahl angegeben werden.");
-      } else {
-        this.value = parseInt(value);
-      }
+      this.value = parseInt(value);
     }
   }
+};
+
+var SrField_Integer = SrField_Text.extend({
+
+  transform: SrField_Integer_Transform
 
 });
 
@@ -131,7 +133,11 @@ var SrField_Checkbox = SrField.extend({
   template: 'checkbox',
 
   transform: function() {
-    this.value = this.html_field().prop("checked") ? true : false;
+    if (this.pre) {
+      this.value = this.html_value() ? true : false;
+    } else {
+      this.value = this.html_field().prop("checked") ? true : false;
+    }
   }
 
 });
@@ -264,6 +270,7 @@ var SrField_Select = SrField.extend({
 
 var SrField_Timezone = SrField_Select.extend({
 
-  template: 'timezone'
+  template: 'timezone',
+  transform: SrField_Integer_Transform
 
 });
