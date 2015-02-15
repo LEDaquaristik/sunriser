@@ -36,6 +36,7 @@ $('body').on('sr_config',function(){
           var select = this.html_field();
           // firefox doesnt like this, why?
           //select.css('background-color',select.find('option:selected').css('background-color'));
+	  //this.style.backgroundColor=this.options[this.selectedIndex].style.backgroundColor;
           select.change(function(){
             //select.css('background-color',select.find('option:selected').css('background-color'));
 	    this.style.backgroundColor=this.options[this.selectedIndex].style.backgroundColor;

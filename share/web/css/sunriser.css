@@ -549,6 +549,9 @@ nav h2{
   border-radius: 3px;
   float:right
 }
+.timepicker select{
+  float:none
+}
 
 .sunriser_content .select_style{
   position:relative
@@ -965,7 +968,7 @@ nav h2{
 
 .warningbloc{
   padding: 40px 40px 20px;
-  background-color: #ddd;
+  background-color: #CCD7E2;
   margin: -40px -40px 0px -40px;
   text-align:center
 }
@@ -980,7 +983,7 @@ nav h2{
   margin-top: -30px;
   display: inline-block;
   text-align: center;
-  background: none repeat scroll 0% 0% #DDD;
+  background: none repeat scroll 0% 0% #CCD7E2;
   padding: 0px 10px 10px !important;
 }
 .intro-warning {
@@ -996,7 +999,7 @@ nav h2{
   display: inline-block;
   border-style: solid;
   border-width: 25px 35px;
-  border-color: rgb(221, 221, 221) rgb(255, 255, 255) rgb(255, 255, 255);
+  border-color: #CCD7E2 rgb(255, 255, 255) rgb(255, 255, 255);
 }
 .letsgetstarted{
   margin-bottom: 40px;
