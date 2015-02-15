@@ -43,6 +43,8 @@ function sr_request_mpack(method,url,data,success) {
         if (typeof result.time !== 'undefined' && typeof current_time === 'undefined') {
           current_time = result.time;
           update_time();
+        } else if (typeof result.time !== 'undefined') {
+          current_time = result.time;
         }
       };
       if (method == 'PUT') {
@@ -51,7 +53,7 @@ function sr_request_mpack(method,url,data,success) {
       // TODO remove debugging
       console.log(method + ' ' + url);
       console.log(data);
-      // console.log(result);
+      //console.log(result);
       // TODO remove debugging
       if (success) {
         success.call(this,result,status,xhr);

@@ -139,7 +139,7 @@ sub _build_state {
   my $pwms = $self->model_info->{pwm_count};
   return {
     # PWM name is a number but must be treated like a string
-    pwms => [ map { $_."", 0 } 1..$pwms ]
+    pwms => { map { $_, 100 } 1..$pwms }
   };
 }
 
@@ -346,7 +346,9 @@ sub _web_serve_file {
 sub _web_state {
   my ( $self ) = @_;
   $self->debug('Sending state');
-  return $self->_web_serve_msgpack($self->state); 
+  my $state = { time => $self->get_time(), %{$self->state} };
+  use DDP; p($state);
+  return $self->_web_serve_msgpack($state);
 }
 
 sub get_time {

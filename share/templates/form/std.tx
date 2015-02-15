@@ -37,16 +37,18 @@
           <% } %>
         <td>
       </tr>
-      <tr id="<%=field.name%>_error">
-        <td colspan="2">
+      <tr>
+        <td colspan="2" id="<%=field.name%>_error">
         </td>
       </tr>
     <% } %>
   <% } %>
-  <tr>
-    <td colspan="2">
-      <input type="submit" value="<%=formsubmit %>">
-    </td>
-  </tr>
+  <% if (!no_submit) { %>
+    <tr>
+      <td colspan="2">
+        <input type="submit" value="<%=formsubmit %>">
+      </td>
+    </tr>
+  <% } %>
 </form>
 </script>

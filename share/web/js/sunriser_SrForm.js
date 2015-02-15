@@ -7,6 +7,7 @@ var SrForm = Class.extend({
   title: undefined,
   no_values: false,
   loaded: undefined,
+  no_submit: false,
 
   error: false,
 

@@ -113,7 +113,17 @@ var SrField_Integer = SrField_Text.extend({
 
   min: undefined,
   max: undefined,
+  float_digits: 0,
+  percent_sign: false,
   transform: SrField_Integer_Transform,
+  display_value: function(val){
+    var value = typeof val !== 'undefined' ? ( val ) : ( this.value || 0 );
+    value = value / Math.pow(10,this.float_digits);
+    if (this.percent_sign) {
+      value = value + " %";
+    }
+    return value;
+  },
   initjs: function(){
     var self = this;
     var html_field = self.html_field();
@@ -149,7 +159,7 @@ var SrField_Integer = SrField_Text.extend({
       function sliderSetValue(factor) {
         var val = Math.round(self.min + ( ( self.max - self.min ) * factor ));
         html_field.val(val);
-        $('#' + self.id + '_value').html(val);
+        $('#' + self.id + '_value').html(self.display_value(val));
       }
       function sliderMoveHandler(e) {
         j=i;

@@ -1,12 +1,51 @@
-: cascade base { title => "Funktionstest", nav => "setup", no_form => 1 }
+: cascade base { title => "Funktionstest", nav => "info" }
 : override content -> {
 
-<div class="slider">
-  <div class="slide-control-group">
-    <input style="display: none;" readonly="readonly" min="1" max="10" value="0" class="sliders" data-control-group="homepage" type="number">
-  </div>
-  <div id="restuaPoints">0%</div>
-</div>
+<div class="form noautoload" id="test"></div>
 
+: }
+: override postjs -> {
+
+<script type="text/javascript">
+
+// First execute stuff when the form is loaded
+$('body').on('sr_config',function(){
+
+  sr_request_mpack('GET','/state',undefined,function(values){
+    $("#test").each(function(){
+      var fields = new Array();
+      // var color_options = new Array({
+      //   value: undefined,
+      //   label: 'Nicht benutzt',
+      //   backgroundcolor: '#ffffff'
+      // });
+      // $.each(sr_colors,function(i,color){
+      //   color_options.push({
+      //     value: color.id,
+      //     label: color.name,
+      //     backgroundcolor: color.color
+      //   });
+      // });
+      for (i = 1; i <= sr_config['pwm_count']; i++) {
+        fields.push({
+          id: "pwm_direct_" + i,
+          label: "Wert LED #" + i,
+          type: "integer",
+          template: "slider",
+          value: values.pwms[i],
+          min: 0, max: 1000, percent_sign: true, float_digits: 1
+        });
+      }
+      var form = new SrForm(this,{
+        title: "Funktionstest",
+        no_submit: true,
+        fields: fields
+      });
+    });
+  });
+
+});
+
+</script>
 
 : }
