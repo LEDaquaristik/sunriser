@@ -127,32 +127,43 @@ var SrField_Integer = SrField_Text.extend({
       htm = '<div class="slide-control"><div class="slide-control-button" data-control-group="'+control+'"></div></div>';
       html_field.after(htm).attr('readonly', true).css('display', "none");
 
-      // dragging example
       var sliders  = html_field.next();
       var button = sliders.find('.slide-control-button');
-      var startOffset, holderOffset, sliderWidth, handleWidth;
-          
+      var startOffset, holderOffset, handleWidth;
+      var sliderWidth = sliders.width();
+
+      var range = self.max - self.min;
+      var value = html_field.val();
+      button.css({
+        left: ( sliderWidth * ( ( value - self.min ) / ( self.max - self.min ) ) )
+      });
+
       button.on('mousedown', function(e) {
         e.preventDefault(); 
         holderOffset = sliders.offset().left;
         startOffset = button.offset().left - holderOffset;
         sliderWidth = sliders.width();
-        $(document).on('mousemove', moveHandler);
-        $(document).on('mouseup', stopHandler);                
+        $(document).on('mousemove', sliderMoveHandler);
+        $(document).on('mouseup', sliderStopHandler);
       });
-      function moveHandler(e) {
+      function sliderSetValue(factor) {
+        var val = Math.round(self.min + ( ( self.max - self.min ) * factor ));
+        html_field.val(val);
+        $('#' + self.id + '_value').html(val);
+      }
+      function sliderMoveHandler(e) {
         j=i;
         var posX = e.pageX - holderOffset;
-        posX = Math.min(Math.max(0, posX), sliderWidth-4);
+        posX = Math.min(Math.max(0, posX), sliderWidth);
         i = button.offset().left - 88;
-        $('#' + self.id + '_value').html(Math.round((posX/sliderWidth)));
+        sliderSetValue(posX / sliderWidth);
         button.css({
           left: posX
         });
       }
-      function stopHandler() {
-        $(document).off('mousemove', moveHandler);
-        $(document).off('mouseup', stopHandler);
+      function sliderStopHandler() {
+        $(document).off('mousemove', sliderMoveHandler);
+        $(document).off('mouseup', sliderStopHandler);
       }     
     }
   }

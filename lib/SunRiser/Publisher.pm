@@ -56,7 +56,6 @@ sub _build_publish_files {
     help.html
     index.html
     intro.html
-    sysinfo.html
     led.html
     licenses.html
     login.html

@@ -47,7 +47,7 @@ $('body').on('sr_config',function(){
       },{
         name: "deferral",
         template: "slider",
-        min: 0, max: 1440,
+        min: -1440, max: 1440,
         label: "Feste Abweichung in Minuten"
       });
       var form = new SrForm($('#dayplan'),{

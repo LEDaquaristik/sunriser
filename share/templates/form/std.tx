@@ -49,10 +49,4 @@
     </td>
   </tr>
 </form>
-<div class="slider">
-  <div class="slide-control-group">
-    <input style="display: none;" readonly="readonly" min="1" max="10" value="0" class="sliders" data-control-group="homepage" type="number">
-  </div>
-  <div id="restuaPoints">0%</div>
-</div>
 </script>

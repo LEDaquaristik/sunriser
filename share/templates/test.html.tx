@@ -1,4 +1,4 @@
-: cascade base { title => "Funktionstest", no_form => 1 }
+: cascade base { title => "Funktionstest", nav => "setup", no_form => 1 }
 : override content -> {
 
 <div class="slider">

@@ -87,8 +87,8 @@
         </a>
       </li>
       <li class="second-level">
-        <a href="/sysinfo.html">
-          <i class="fa fa-info-circle"></i>Systeminformationen
+        <a href="/test.html">
+          <i class="fa fa-info-circle"></i>Funktionstests
         </a>
       </li>
     </ul>
