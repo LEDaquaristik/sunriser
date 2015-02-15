@@ -87,28 +87,37 @@ var sr_forms = {
     fields: [{
       name: "activated", label: "Simuliere Gewitter"
     },{
-      name: "daymax", label: "Maximale Anzahl von Gewittern pro Tag"
+      name: "daymax", label: "Maximale Anzahl von Gewittern pro Tag",
+      template: "slider", min: 1, max: 24
     },{
-      name: "minlength", label: "Minimum L&auml;nge eines Gewitters in Sekunden"
+      name: "minlength", label: "Minimum L&auml;nge eines Gewitters in Sekunden",
+      template: "slider", min: 120, max: 600
     },{
-      name: "maxlength", label: "Maximale L&auml;nge eines Gewitters in Sekunden"
+      name: "maxlength", label: "Maximale L&auml;nge eines Gewitters in Sekunden",
+      template: "slider", min: 240, max: 1200
     },{
-      name: "mindist", label: "Minimaler Abstand zwischen den Blitzen"
+      name: "mindist", label: "Minimaler Abstand zwischen den Blitzen in Sekunden",
+      template: "slider", min: 1, max: 60
     },{
-      name: "maxdist", label: "Maximaler Abstand zwischen den Blitzen"
+      name: "maxdist", label: "Maximaler Abstand zwischen den Blitzen",
+      template: "slider", min: 10, max: 300
+    // },{
+    //   name: "fadepercent", label: "Prozentualer Anteil f&uuml;r Ein/Ausblendung des Gewitters"
     },{
-      name: "fadepercent", label: "Prozentualer Anteil f&uuml;r Ein/Ausblendung des Gewitters"
-    },{
-      name: "daychance", label: "Wahrscheinlichkeit eines Gewitters pro maximale Anzahl von Gewittern am Tag"
+      name: "daychance", label: "Wahrscheinlichkeit eines Gewitters pro maximale Anzahl von Gewittern am Tag",
+      template: "slider", min: 1, max: 100
     },{
       name: "weekdays", label: "Nur an diesen Wochentagen gibt es Gewitter (sonst jeden Tag)"
     }],
     expert_fields: [{
-      name: "darkness", label: "Prozentzahl der Dunkelheit die ein Gewitter erzeugt"
+      name: "darkness", label: "Prozentzahl der Dunkelheit die ein Gewitter erzeugt",
+      template: "slider", min: 1, max: 100
     },{
-      name: "balancelength", label: "Anzahl der Faktoren f&uuml;r die Berechnung der Gewitterl&auml;nge"
+      name: "balancelength", label: "Anzahl der Faktoren f&uuml;r die Berechnung der Gewitterl&auml;nge",
+      template: "slider", min: 1, max: 5
     },{
-      name: "balancedist", label: "Anzahl der Faktoren f&uuml;r die Berechnung des Abstands zwischen den Blitzen"
+      name: "balancedist", label: "Anzahl der Faktoren f&uuml;r die Berechnung des Abstands zwischen den Blitzen",
+      template: "slider", min: 1, max: 5
     }]
   },
   //
@@ -128,9 +137,11 @@ var sr_forms = {
     },{
       name: "endtime", label: "Sp&auml;tester Monduntergang"
     },{
-      name: "maximum", label: "Intensit&auml;t des Mondes"
+      name: "maximum", label: "Maximale Intensit&auml;t des Mondes",
+      template: "slider", min: 0, max: 100
     },{
-      name: "deferral", label: "Abstand in Tagen zum echten Mondphasen Zyklus"
+      name: "deferral", label: "Abstand in Tagen zum echten Mondphasen Zyklus",
+      template: "slider", min: -31, max: 31
     },{
       name: "weekdays", label: "Nur an diesen Wochentagen gibt es Mondphasen (sonst jeden Tag)"
     }]    
@@ -148,17 +159,23 @@ var sr_forms = {
     fields: [{
       name: "activated", label: "Simuliere Wolken"
     },{
-      name: "cloudminlength", label: "Minimum L&auml;nge einer Wolke in Sekunden"
-    },{
-      name: "cloudmaxlength", label: "Maximale L&auml;nge einer Wolke in Sekunden"
-    },{
-      name: "cloudbalancelength", label: "Anzahl der Faktoren f&uuml;r die Berechnung der Wolkenl&auml;nge"
-    },{
-      name: "cloudchance", label: "Wahrscheinlichkeit einer Wolke pro Minute"
-    },{
-      name: "clouddarkness", label: "Prozentzahl der Dunkelheit die ein Gewitter erzeugt"
+      name: "cloudchance", label: "Wahrscheinlichkeit einer Wolke pro Minute",
+      template: "slider", min: 0, max: 100
     },{
       name: "weekdays", label: "Nur an diesen Wochentagen gibt es Mondphasen (sonst jeden Tag)"
+    }],
+    expert_fields: [{
+      name: "clouddarkness", label: "Prozentzahl der Dunkelheit die ein Gewitter erzeugt",
+      template: "slider", min: 0, max: 100
+    },{
+      name: "cloudminlength", label: "Minimum L&auml;nge einer Wolke in Sekunden",
+      template: "slider", min: 1, max: 30
+    },{
+      name: "cloudmaxlength", label: "Maximale L&auml;nge einer Wolke in Sekunden",
+      template: "slider", min: 5, max: 60
+    },{
+      name: "cloudbalancelength", label: "Anzahl der Faktoren f&uuml;r die Berechnung der Wolkenl&auml;nge",
+      template: "slider", min: 1, max: 5
     }]
   },
   //
@@ -174,9 +191,11 @@ var sr_forms = {
     fields: [{
       name: "activated", label: "Simuliere Regen"
     },{
-      name: "rainchance", label: "Wahrscheinlichkeit eines Regentages"
+      name: "rainchance", label: "Wahrscheinlichkeit eines Regentages",
+      template: "slider", min: 0, max: 100
     },{
-      name: "raindarkness", label: "Maximale Prozentzahl an Dunkelheit die ein Regen haben kann"
+      name: "raindarkness", label: "Maximale Prozentzahl an Dunkelheit die ein Regen haben kann",
+      template: "slider", min: 0, max: 100
     },{
       name: "rainwithclouds", label: "Wolken k&ouml;nnen die Regentage &uuml;ber das maximum dunkler machen"
     },{
