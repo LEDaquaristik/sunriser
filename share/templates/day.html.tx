@@ -41,9 +41,13 @@ $('body').on('sr_config',function(){
       });
       fields.push({
         name: "randomdeferralmax",
+        template: "slider",
+        min: 0, max: 1440,
         label: "Maximale zuf&auml;llige Abweichung in Minuten"
       },{
         name: "deferral",
+        template: "slider",
+        min: 0, max: 1440,
         label: "Feste Abweichung in Minuten"
       });
       var form = new SrForm($('#dayplan'),{

@@ -26,6 +26,8 @@
             <: include form::weekday :>
           <% } else if (field.template == 'text') { %>
             <: include form::text :>
+          <% } else if (field.template == 'slider') { %>
+            <: include form::slider :>
           <% } else if (field.template == 'time') { %>
             <: include form::time :>
           <% } else if (field.template == 'select') { %>

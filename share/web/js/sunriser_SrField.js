@@ -111,6 +111,8 @@ var SrField_Integer_Transform = function() {
 
 var SrField_Integer = SrField_Text.extend({
 
+  min: undefined,
+  max: undefined,
   transform: SrField_Integer_Transform
 
 });
