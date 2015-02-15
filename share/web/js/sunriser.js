@@ -58,6 +58,7 @@ $(function(){
     return false; 
   });
 
+  //
   $(".form").each(function(){
     $(this).html('<img class="loader" src="/img/ajaxload.gif">');
   });
@@ -116,3 +117,49 @@ $('body').on('sr_config',function(){
   });
 
 });
+
+// Slider
+// This script was stolen here : http://voidcanvas.com/jquery-slider-without-using-jquery-ui-plugin/ 
+$(function(){
+  var i = 0;
+  var j = 0;
+
+  $('.sliders').each(function() {
+    control = $(this).attr('data-control-group')
+    htm = '<div class="slide-control">'+
+        '<div class="slide-control-button" data-control-group="'+control+'"></div>'+
+        '</div>';
+    $(this).after(htm).attr('readonly', true).css('display', "none");
+
+    // dragging example
+    var sliders  = $(this).next();
+    var button = sliders.find('.slide-control-button');
+    var startOffset, holderOffset, sliderWidth, handleWidth;
+        
+    button.on('mousedown', function(e) {
+       e.preventDefault(); 
+        holderOffset = sliders.offset().left;
+        startOffset = button.offset().left - holderOffset;
+        sliderWidth = sliders.width();
+        $(document).on('mousemove', moveHandler);
+        $(document).on('mouseup', stopHandler);                
+    });
+    function moveHandler(e) {
+	j=i;
+	var posX = e.pageX - holderOffset;
+	posX = Math.min(Math.max(0, posX), sliderWidth-4);
+	i = button.offset().left - 88;
+        $('#restuaPoints').html(Math.round((posX/sliderWidth)*100)+'%');
+
+        button.css({
+	  left: posX
+	});
+    }
+    function stopHandler() {
+        $(document).off('mousemove', moveHandler);
+        $(document).off('mouseup', stopHandler);
+    }     
+});
+});
+
+

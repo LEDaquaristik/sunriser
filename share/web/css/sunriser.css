@@ -14,6 +14,7 @@
         - Hilfe
         - DayPicker
         - Firmeware
+        - Sliders
       - Login
       - Intro
     - RESPONSIVE
@@ -173,8 +174,7 @@ header{
   color:white;
   text-decoration:none;
 }
-.sunriser_datetime{
-  text-align:right;
+#sunriser_datetime{
   font-size:24px;
   color:white;
   float:right;
@@ -188,13 +188,13 @@ header{
   height: auto;
   margin-bottom:100px;
   position:relative;
-  /*display: table;*/
   overflow: hidden;
   min-height:300px;
 }
 .control_center > .sunriser_content{
   background-color: white;
 }
+
 /*Navigation*/
 
 nav{
@@ -872,6 +872,36 @@ nav h2{
   background-color:#27AE60 
 }
 
+/** Sliders **/
+
+.slide-control {
+  width: auto;
+  height: 9px;
+  position: relative;
+  background-color: #c9c9c9;
+  border-radius:4px;
+  margin: 0 40px 0 70px;
+  display: block;
+  overflow: visible;
+}
+.slide-control-button {
+  position: absolute;
+  z-index: 3;
+  width: 17px;
+  height: 17px;
+  left: 0;
+  top: -4px;
+  border-radius:8px;
+  border:2px solid white;
+  background-color: #1ca8dd;
+}
+.slider{
+  position:relative;
+}
+#restuaPoints{
+  position:absolute;
+  top:-10px
+}
 /** Login **/
 
 .login{
@@ -1031,14 +1061,14 @@ nav h2{
   .sunriser{
     width:100%
   }
-  .sunriser_datetime {
+  #sunriser_datetime {
     float: left;
     padding-top: 12px;
   }
 }
 @media screen and (max-width:500px) {
 
-  .sunriser_datetime {
+  #sunriser_datetime {
     display:none
   }
   body{

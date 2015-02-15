@@ -119,7 +119,7 @@
             <h1 class="sunriser">
               <a href="/">SunRiser 8</a><: $title ? " | " ~ $title : "" :>
             </h1>
-            <div style="float:right" class="sunriser" id="sunriser_datetime"></div>
+            <div class="sunriser" id="sunriser_datetime"></div>
           <: } :>
         </header>
         <div class="page control_center">
