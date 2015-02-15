@@ -138,6 +138,7 @@ sub _build_state {
   my ( $self ) = @_;
   my $pwms = $self->model_info->{pwm_count};
   return {
+    pwmloop_stopped => 0,
     # PWM name is a number but must be treated like a string
     pwms => { map { $_, 100 } 1..$pwms }
   };
@@ -510,8 +511,6 @@ sub _build_web {
         my ( $file ) = $uri =~ m/^\/([^\?]*)/;
         if ($uri =~ /^\/state/) {
           return $self->_web_state;
-        } elsif ($uri =~ /^\/time/) {
-          return $self->_web_time;
         } elsif ($uri =~ /^\/firmware\.mp/) {
           return $self->_web_firmware_mp;
         }
