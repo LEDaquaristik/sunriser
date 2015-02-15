@@ -65,10 +65,12 @@ function sr_request_mpack(method,url,data,success) {
 }
 
 function update_time() {
+  var dt_field = $('#sunriser_datetime');
   setTimeout(function(){
     update_time();
   }, 1000);
   var m = moment(current_time * 1000);
-  $('#sunriser_datetime').text(m.format('LLL.ss'));
+  m.zone(0);
+  dt_field.text(m.format('LLL.ss'));
   current_time += 1;
 }

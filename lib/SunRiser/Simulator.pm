@@ -159,8 +159,13 @@ sub get {
   my ( $self, $key ) = @_;
   my $val = $self->get_config($key);
   return $val if defined $val;
-  for my $cdb (@{$self->cdbs}) {
-    return $cdb->get($key) if $cdb->exists($key);
+  if ($self->has_systemdb) {
+    for my $cdb (@{$self->cdbs}) {
+      return $cdb->get($key) if $cdb->exists($key);
+    }    
+  } else {
+    my $default = $self->config->default($key);
+    return $default if defined $default;
   }
   return $self->model_info->{$key} if defined $self->model_info->{$key};
   return undef;
@@ -344,11 +349,17 @@ sub _web_state {
   return $self->_web_serve_msgpack($self->state); 
 }
 
+sub get_time {
+  my ( $self ) = @_;
+  my $time = time; # gmt timestamp
+  my $gmtoff = $self->get('gmtoff');
+  return $time + ( $gmtoff * 60 ); # gmtoff
+}
+
 sub _web_time {
   my ( $self ) = @_;
   $self->debug('Sending time');
-  my $perl_time = time; # timestamp
-  return $self->_web_serve_msgpack($perl_time);
+  return $self->_web_serve_msgpack($self->get_time());
 }
 
 sub _web_firmware_mp {
@@ -463,7 +474,7 @@ sub _build_web {
             for my $key (@{$data}) {
               $values{$key} = $self->get($key);
             }
-            $values{'time'} = time();
+            $values{'time'} = $self->get_time();
             use DDP; p(%values);
             return $self->_web_serve_msgpack(\%values);
           } else {
