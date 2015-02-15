@@ -140,7 +140,7 @@ sub _build_state {
   return {
     pwmloop_stopped => 0,
     # PWM name is a number but must be treated like a string
-    pwms => { map { $_, 100 } 1..$pwms }
+    pwms => { map { $_."", 100 } 1..$pwms }
   };
 }
 
