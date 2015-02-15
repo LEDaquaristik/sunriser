@@ -1,6 +1,6 @@
 <div class="slider">
   <div class="slide-control-group">
-    <input style="display: none;" readonly="readonly" min="<%=field.min%>" max="<%=field.max%>" value="<%=field.value%>" class="sliders" data-control-group="homepage" type="number" <: include form::idname :>>
+    <input style="display: none;" readonly="readonly" min="<%=field.min%>" max="<%=field.max%>" value="<%=field.value%>" class="sliders" data-control-group="<%=field.id%>_dcg" type="number" <: include form::idname :>>
   </div>
   <div id="<%=field.id%>_value"><%=field.value%></div>
 </div>

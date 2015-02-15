@@ -51,7 +51,7 @@ function sr_request_mpack(method,url,data,success) {
       // TODO remove debugging
       console.log(method + ' ' + url);
       console.log(data);
-      console.log(result);
+      // console.log(result);
       // TODO remove debugging
       if (success) {
         success.call(this,result,status,xhr);
@@ -70,7 +70,7 @@ function update_time() {
     update_time();
   }, 1000);
   var m = moment(current_time * 1000);
-  m.zone(0);
+  m.utcOffset(0);
   dt_field.text(m.format('LLL.ss'));
   current_time += 1;
 }

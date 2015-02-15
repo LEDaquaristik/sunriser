@@ -113,9 +113,53 @@ var SrField_Integer = SrField_Text.extend({
 
   min: undefined,
   max: undefined,
-  transform: SrField_Integer_Transform
+  transform: SrField_Integer_Transform,
+  initjs: function(){
+    var self = this;
+    var html_field = self.html_field();
+
+    // This script was stolen here : http://voidcanvas.com/jquery-slider-without-using-jquery-ui-plugin/ 
+    if (html_field.hasClass('sliders')) {
+      var i = 0;
+      var j = 0;
+      html_field = self.html_field();
+      control = html_field.data('control-group');
+      htm = '<div class="slide-control"><div class="slide-control-button" data-control-group="'+control+'"></div></div>';
+      html_field.after(htm).attr('readonly', true).css('display', "none");
+
+      // dragging example
+      var sliders  = html_field.next();
+      var button = sliders.find('.slide-control-button');
+      var startOffset, holderOffset, sliderWidth, handleWidth;
+          
+      button.on('mousedown', function(e) {
+        e.preventDefault(); 
+        holderOffset = sliders.offset().left;
+        startOffset = button.offset().left - holderOffset;
+        sliderWidth = sliders.width();
+        $(document).on('mousemove', moveHandler);
+        $(document).on('mouseup', stopHandler);                
+      });
+      function moveHandler(e) {
+        j=i;
+        var posX = e.pageX - holderOffset;
+        posX = Math.min(Math.max(0, posX), sliderWidth-4);
+        i = button.offset().left - 88;
+        $('#' + self.id + '_value').html(Math.round((posX/sliderWidth)));
+        button.css({
+          left: posX
+        });
+      }
+      function stopHandler() {
+        $(document).off('mousemove', moveHandler);
+        $(document).off('mouseup', stopHandler);
+      }     
+    }
+  }
 
 });
+
+
 
 var SrField_Password = SrField_Text.extend({
 
