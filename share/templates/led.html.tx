@@ -35,9 +35,10 @@ $('body').on('sr_config',function(){
         initjs: function(){
           var select = this.html_field();
           // firefox doesnt like this, why?
-          select.css('background-color',select.find('option:selected').css('background-color'));
+          //select.css('background-color',select.find('option:selected').css('background-color'));
           select.change(function(){
-            select.css('background-color',select.find('option:selected').css('background-color'));
+            //select.css('background-color',select.find('option:selected').css('background-color'));
+	    this.style.backgroundColor=this.options[this.selectedIndex].style.backgroundColor;
           });
         }
       });

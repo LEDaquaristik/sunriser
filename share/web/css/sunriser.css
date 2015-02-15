@@ -547,6 +547,7 @@ nav h2{
   border: 2px solid #ccd7e2;
   padding: 8px 30px 8px 8px;
   border-radius: 3px;
+  float:right
 }
 
 .sunriser_content .select_style{
@@ -574,9 +575,10 @@ nav h2{
 .timepicker{
   padding: 5px;
   display: inline-block;
-  border: 2px solid rgb(204, 215, 226);
+  border: 2px solid #EFF3F6;
   border-radius: 3px;
-  float:right
+  float:right;
+  min-width: 211px;
 }
 .timebox{
   display: block;
