@@ -878,9 +878,10 @@ nav h2{
   width: auto;
   height: 9px;
   position: relative;
-  background-color: #c9c9c9;
+  background-color: transparent;
+  border:2px solid #CCD7E2;
   border-radius:4px;
-  margin: 0 40px 0 70px;
+  margin: 0 0 0 50px;
   display: block;
   overflow: visible;
 }
@@ -890,15 +891,24 @@ nav h2{
   width: 17px;
   height: 17px;
   left: 0;
-  top: -4px;
+  top: -6px;
   border-radius:8px;
   border:2px solid white;
-  background-color: #1ca8dd;
+  background-color: #2980B9;
+}
+.fillslide{
+  height:5px;
+  position:absolute;
+  left:0;
+  display:block;
+  background-color: #CCD7E2;
+  /*background-color: #e9f2f8;
+  border-radius: 4px;*/
 }
 .slider{
   position:relative;
 }
-#restuaPoints{
+.slider_value{
   position:absolute;
   top:-10px
 }

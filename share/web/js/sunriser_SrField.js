@@ -134,11 +134,12 @@ var SrField_Integer = SrField_Text.extend({
       var j = 0;
       html_field = self.html_field();
       control = html_field.data('control-group');
-      htm = '<div class="slide-control"><div class="slide-control-button" data-control-group="'+control+'"></div></div>';
+      htm = '<div class="slide-control"><div class="fillslide"></div><div class="slide-control-button" data-control-group="'+control+'"></div></div>';
       html_field.after(htm).attr('readonly', true).css('display', "none");
 
       var sliders  = html_field.next();
       var button = sliders.find('.slide-control-button');
+      var fill_slid = sliders.find('.fillslide');
       var startOffset, holderOffset, handleWidth;
       var sliderWidth = sliders.width();
 
@@ -146,6 +147,9 @@ var SrField_Integer = SrField_Text.extend({
       var value = html_field.val();
       button.css({
         left: ( sliderWidth * ( ( value - self.min ) / ( self.max - self.min ) ) )
+      });
+      fill_slid.css({
+        width: ( sliderWidth * ( ( value - self.min ) / ( self.max - self.min ) ) + 4 )
       });
 
       button.on('mousedown', function(e) {
@@ -170,6 +174,9 @@ var SrField_Integer = SrField_Text.extend({
         button.css({
           left: posX
         });
+	fill_slid.css({
+          width: posX + 4
+	});
       }
       function sliderStopHandler() {
         $(document).off('mousemove', sliderMoveHandler);
