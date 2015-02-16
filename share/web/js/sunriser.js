@@ -3,7 +3,7 @@ var sr_config;
 
 var sr_config_main_keys = [
   'model','model_id','pwm_count','factory_version','language','timezone',
-  'updated','name','showexpert'
+  'updated','name','showexpert','nohelp'
 ];
 
 var current_time;
@@ -97,7 +97,7 @@ $('body').on('sr_config_def',function(){
     }
   }
 
-  if (typeof(sr_config) === "undefined") {
+  if (typeof(sr_config) === "undefined" || typeof(sr_config.pwm_count) == "undefined") {
     sr_request_mpack('POST','/',sr_config_main_keys,function(values){
       $.each(sr_config_main_keys,function(i,key){
         if (typeof values[key] === 'undefined') {

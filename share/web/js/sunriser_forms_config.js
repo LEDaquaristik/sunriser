@@ -48,6 +48,8 @@ var sr_forms = {
     },{
       name: "showexpert", label: "Experten Funktionen aktivieren"
     },{
+      name: "nohelp", label: "Keine Hilfe anzeigen"
+    },{
       name: "nodst", pre: true
     },{
       name: "gmtoff", pre: true

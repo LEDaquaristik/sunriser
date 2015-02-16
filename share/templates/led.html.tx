@@ -25,6 +25,7 @@ $('body').on('sr_config',function(){
         backgroundcolor: color.color
       });
     });
+
     for (i = 1; i <= sr_config['pwm_count']; i++) {
       fields.push({
         name: "pwm#" + i + "#color",
@@ -34,12 +35,25 @@ $('body').on('sr_config',function(){
         options: color_options,
         initjs: function(){
           var select = this.html_field();
-          // firefox doesnt like this, why?
-          //select.css('background-color',select.find('option:selected').css('background-color'));
-	  //this.style.backgroundColor=this.options[this.selectedIndex].style.backgroundColor;
+          select.find('option').each(function(){
+            if ($(this).prop('selected')) {
+              $.each(color_options,function(i,color){
+                if (select.val() == color.value) {
+                  select.css('background-color',color.backgroundcolor);
+                }
+              });
+            }
+          });
           select.change(function(){
-            //select.css('background-color',select.find('option:selected').css('background-color'));
-	    this.style.backgroundColor=this.options[this.selectedIndex].style.backgroundColor;
+            select.find('option').each(function(){
+              if ($(this).prop('selected')) {
+                $.each(color_options,function(i,color){
+                  if (select.val() == color.value) {
+                    select.css('background-color',color.backgroundcolor);
+                  }
+                });
+              }
+            });
           });
         }
       });
