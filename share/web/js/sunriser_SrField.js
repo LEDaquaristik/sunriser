@@ -219,6 +219,7 @@ var SrField_Checkbox = SrField.extend({
 var SrField_CSV = SrField_Text.extend({
 
   comma: ',',
+  transform_value: function(value) { return value; },
 
   joined_value: function() {
     if (typeof this.value === 'undefined') {
@@ -228,15 +229,20 @@ var SrField_CSV = SrField_Text.extend({
   },
 
   transform: function() {
-    var value = this.html_value();
+    var self = this;
+    var value = self.html_value();
     if (typeof value === 'string') {
       if (value.length) {
-        this.value = value.split(this.comma);
+        var arr = [];
+        $.each(value.split(self.comma),function(i,val){
+          arr.push(self.transform_value(val));
+        });
+        self.value = arr;
       } else {
-        this.value = [];
+        self.value = [];
       }
     } else {
-      this.error("Unbekannter Fehler (kein String)");
+      self.error("Unbekannter Fehler (kein String)");
     }
   }
 

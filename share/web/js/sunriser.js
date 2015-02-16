@@ -116,6 +116,8 @@ $('body').on('sr_config_def',function(){
 
 $('body').on('sr_config',function(){
 
+  console.log(sr_config);
+
   $(".form").not(".noautoload").each(function(){
     var id = $(this).attr('id');
     var form = new SrForm(this,sr_forms[id]);
