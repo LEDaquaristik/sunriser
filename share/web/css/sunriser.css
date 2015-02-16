@@ -333,17 +333,17 @@ nav h2{
   position: fixed;
   background-color: rgba(0,0,0,0.75);
   height: 100%;
-  z-index: 10;
+  z-index: 11;
   width: 100%;
 }
 .noscript-text{
   max-width: 500px;
-  margin: -200px 0 0 -250px;
+  margin: -250px 0 0 -250px;
   left: 50%;
   top: 50%;
   background-color: #FFF;
   position: fixed;
-  max-height: 250px;
+  max-height: 500px;
   padding: 50px;
 }
 .noscript-text h2{
@@ -1073,6 +1073,33 @@ nav h2{
 }
 .bigbutton div{
   padding: 20px 0px;
+}
+.funk_test_bloc{
+  padding-top: 40px;
+}
+a.funk_test{
+  color: #fff;
+  border:none;
+  background-color: #2980B9;
+  display: inline-block;
+  width: 100%;
+}
+.funk_test div{
+  margin: 20px;
+  float: left;
+  font-size: 28px;
+}
+.badge_test{
+  float: left;
+  border-right: 2px solid white;
+  padding: 20px;
+  font-size: 40px;
+}
+.funk_test_bloc hr{
+  border-color: #AAA;
+  border-width: 2px 0px 0px;
+  width: 100px;
+  margin:0 auto 40px auto
 }
 
 /***  RESPONSIVE  ***/

@@ -31,6 +31,13 @@
         <div>Tagesplanung einstellen</div>
       </a>
     </div>
+    <div class="funk_test_bloc">
+      <hr>
+      <a class="funk_test" href="/test.html">
+        <span class="badge_test">+</span>
+        <div>Funktionstest</div>
+      </a>
+    </div>
   </div>
 
 : }
