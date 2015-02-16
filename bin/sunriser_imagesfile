@@ -17,7 +17,7 @@ use Path::Tiny;
 use JSON::MaybeXS;
 use Carp qw( croak );
 
-my $filename = shift @ARGV || 'firmware_images.json';
+my $filename = shift @ARGV || 'sunriser_firmware_images.json';
 my $dir = shift @ARGV || '.';
 my $p = path($dir);
 

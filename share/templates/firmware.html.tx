@@ -19,7 +19,7 @@ $('body').on('sr_config',function(){
     var firmware_root = "http://sunriser.vbs.io/";
     var firmware_template = "firmware_tmpl";
 
-    $.getJSON(firmware_root + "firmware_images.json?" + (new Date().getTime()), function(firmwares) {
+    $.getJSON(firmware_root + "sunriser_firmware_images.json?" + (new Date().getTime()), function(firmwares) {
       $("#firmware_list").html(tmpl(firmware_template,{
         firmwares: firmwares,
       }));
