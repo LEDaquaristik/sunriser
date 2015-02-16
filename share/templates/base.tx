@@ -130,6 +130,7 @@
               <: } :>
             </nav>
             <section class="sunriser_content">
+	      <div class="helparea"><div class="helpareaclose"></div>This is another help area</div>
               <: block content -> { :>
                 Diese Seite wurde nicht gefunden!
               <: } :>

@@ -57,6 +57,11 @@ $(function(){
     $(".hilfe-sidebar").removeClass("open-sidebar"); 
     return false; 
   });
+  // Close yellow helparea
+  $(".helpareaclose").click(function(){
+    $(".helparea").addClass("closethehelparea"); 
+    return false; 
+  });
 
   //
   $(".form").each(function(){
