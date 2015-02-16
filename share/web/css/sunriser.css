@@ -1080,9 +1080,15 @@ nav h2{
 a.funk_test{
   color: #fff;
   border:none;
-  background-color: #2980B9;
+  background-color: #5399c7;
   display: inline-block;
   width: 100%;
+}
+a.funk_test:hover{
+  background-color: #7eb2d5;
+}
+a.funk_test:active{
+  background-color: #2980B9;
 }
 .funk_test div{
   margin: 20px;
