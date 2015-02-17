@@ -34,12 +34,14 @@ $('body').on('sr_config',function(){
           type: "integer",
           template: "slider",
           value: values.pwms[i],
+          data: { pwm_id: i },
           min: 0, max: 1000,
           custom_init: function(){
+            var pwm = this.data.pwm_id;
             var html_field = this.html_field();
             html_field.change(function(){
               var data = { pwms: {} };
-              data.pwms[pwm_key] = parseInt(html_field.val());
+              data.pwms[pwm] = parseInt(html_field.val());
               //sr_screenblock();
               sr_request_mpack('PUT','/state',data,function(){
                 //sr_screenunblock();
