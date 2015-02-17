@@ -553,7 +553,6 @@ nav h2{
 .oldtimepicker select{
   float:none
 }
-
 .sunriser_content .select_style{
   position:relative
 }
@@ -571,12 +570,6 @@ nav h2{
   top: 9px;
 }
 /*TimePicker*/
-
-.doublepoints{
-  color: #CCD7E2;
-  font-weight: bold;
-  display: inline;
-}
 .oldtimepicker{
   padding: 5px;
   display: inline-block;
@@ -584,6 +577,11 @@ nav h2{
   border-radius: 3px;
   float:right;
   min-width: 211px;
+}
+.doublepoints{
+  color: #CCD7E2;
+  font-weight: bold;
+  display: inline;
 }
 .timebox{
   display: block;
@@ -631,49 +629,49 @@ nav h2{
   margin-top:-30px;
 }
 /*TimePicker Better one*/
-.timepicker{
-  position:relative;
-  width:130px;
-  float:right
-}
-.timepicker input{
-  width: 80px !important;
-  text-align: center;
-}
-.timepickertable{
-  opacity: 0;
-  transform: translate3d(0,-100px,0) scale3d(0,0,0);
-  position:absolute;
-  background: white;
-  right:0;
-  width: auto !important;
-  border: 2px solid #ccc;
-  border-radius: 3px;
-  box-shadow: 0px 0px 3px rgba(0,0,0,0.2);
-  margin-top: 10px;
-  padding: 20px;
-  transition-duration:0.2s
-}
-.timepickertable.bunny{
-  opacity: 1;
-  transform: translate3d(0,0,0) scale3d(1,1,1);
-}
-.timepickerdiv{
-  float: right;
-}
-.timepicker tbody{
-  border-top:1px solid #ccc;
-  border-left:1px solid #ccc;
-}
-.timepicker td,
-.timepicker th{
-  border-bottom:1px solid #ccc;
-  border-right:1px solid #ccc;
-  text-align:center;
-  padding-right: 0px !important;
-  min-width: 30px !important;
-  font-size: 14px;
-}
+//.timepicker{
+//  position:relative;
+//  width:130px;
+//  float:right
+//}
+//.timepicker input{
+//  width: 80px !important;
+//  text-align: center;
+//}
+//.timepickertable{
+//  opacity: 0;
+//  transform: translate3d(0,-100px,0) scale3d(0,0,0);
+//  position:absolute;
+//  background: white;
+//  right:0;
+//  width: auto !important;
+//  border: 2px solid #ccc;
+//  border-radius: 3px;
+//  box-shadow: 0px 0px 3px rgba(0,0,0,0.2);
+//  margin-top: 10px;
+//  padding: 20px;
+//  transition-duration:0.2s
+//}
+//.timepickertable.bunny{
+//  opacity: 1;
+//  transform: translate3d(0,0,0) scale3d(1,1,1);
+//}
+//.timepickerdiv{
+//  float: right;
+//}
+//.timepicker tbody{
+//  border-top:1px solid #ccc;
+//  border-left:1px solid #ccc;
+//}
+//.timepicker td,
+//.timepicker th{
+//  border-bottom:1px solid #ccc;
+//  border-right:1px solid #ccc;
+//  text-align:center;
+//  padding-right: 0px !important;
+//  min-width: 30px !important;
+//  font-size: 14px;
+//}
 
 
 /*checkbox styling*/
