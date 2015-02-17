@@ -24,6 +24,7 @@ function sr_request_mpack(method,url,data,success) {
       console.log(data);
       console.log('Errored: ' + error);
       // TODO remove debugging
+      // window.location.href = window.location.href;
     },
     beforeSend: function(xhr,settings) {
       if (method == 'PUT') {

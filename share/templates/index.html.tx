@@ -1,4 +1,5 @@
 : cascade base { title => "Status", nav => "home", no_form => 1 }
+: override help -> {}
 : override content -> {
 
   <div id="home_not_configured">
