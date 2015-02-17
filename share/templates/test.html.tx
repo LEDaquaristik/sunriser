@@ -27,13 +27,25 @@ $('body').on('sr_config',function(){
       //   });
       // });
       for (i = 1; i <= sr_config['pwm_count']; i++) {
+        var pwm_key = "" + i;
         fields.push({
           id: "pwm_direct_" + i,
           label: "Wert LED #" + i,
           type: "integer",
           template: "slider",
           value: values.pwms[i],
-          min: 0, max: 1000, percent_sign: true, float_digits: 1
+          min: 0, max: 1000,
+          custom_init: function(){
+            var html_field = this.html_field();
+            html_field.change(function(){
+              var data = { pwms: {} };
+              data.pwms[pwm_key] = parseInt(html_field.val());
+              //sr_screenblock();
+              sr_request_mpack('PUT','/state',data,function(){
+                //sr_screenunblock();
+              });
+            });
+          }
         });
       }
       var form = new SrForm(this,{

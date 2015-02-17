@@ -456,7 +456,6 @@ sub _build_web {
         $logged_in = 1;
       }
 
-
       if ($uri eq '/') {
         # if logged in serve index.html
         if ($logged_in) {
@@ -518,9 +517,16 @@ sub _build_web {
         # gives back 200 on success and 404 on not found
         return $self->_web_serve_file($file);
       } elsif ($method eq 'PUT') {
-        my $l = length($req->raw_body);
-        use DDP; p($l);
-        return $self->_web_ok;
+        if ($uri =~ /^\/state/) {
+          my $body = $req->raw_body;
+          my $data = $self->_mp->unpack($body);
+          use DDP; p($data);
+          return $self->_web_ok;
+        } else {
+          my $l = length($req->raw_body);
+          use DDP; p($l);
+          return $self->_web_ok;
+        }
       }
 
       # can't handle that request, send error

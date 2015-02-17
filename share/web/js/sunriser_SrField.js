@@ -11,6 +11,7 @@ var SrField = Class.extend({
   pre: false,
   validator: undefined,
   data: undefined,
+  custom_init: function(){},
 
   html_field: function(){
     return $('#' + this.id);
@@ -174,11 +175,12 @@ var SrField_Integer = SrField_Text.extend({
         button.css({
           left: posX
         });
-	fill_slid.css({
+      	fill_slid.css({
           width: posX + 4
-	});
+      	});
       }
       function sliderStopHandler() {
+        html_field.trigger('change');
         $(document).off('mousemove', sliderMoveHandler);
         $(document).off('mouseup', sliderStopHandler);
       }     
