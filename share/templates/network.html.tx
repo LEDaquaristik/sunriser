@@ -1,4 +1,7 @@
 : cascade base { title => 'Netzwerk Einstellungen', nav => 'setup' }
+: override help -> {
+  <div class="helparea"><div class="helpareaclose"></div>This is another help area</div>
+: }
 : override content -> {
 
 <div class="form" id="network"></div>
