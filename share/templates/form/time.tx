@@ -1,4 +1,4 @@
-<div class="timepicker">
+<div class="oldtimepicker">
   <div class="timebox">
     <input type="checkbox" id="<%=field.id%>_inuse" value="1"></input>
     <label for="<%=field.id%>_inuse"></label>

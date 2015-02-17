@@ -10,6 +10,10 @@ var current_time;
 var sr_config_def;
 var sr_config_types = {};
 
+//timepicker vars
+var hours,
+min = null;
+
 $(function(){
 
   /* VIP */ window.loaded = true; /* VIP */
@@ -85,6 +89,44 @@ $(function(){
       $('body').trigger('sr_config_def');
     });
   }
+
+  // Js Timepicker : very 'inspired' by http://codepen.io/ElmahdiMahmoud/pen/Injdq
+  
+  $(document).on('click', '.hrs', function () {
+      hours = $(this).html();
+      setDate();
+      return false;
+  });
+  
+  $(document).on('click', '.minutes', function () {
+      min = $(this).html();
+      setDate();
+      return false;
+  });
+  
+  function setDate() {
+  
+      if (hours) {
+          if (min) {
+              $('#timepicker input').val(hours + ':' + min);
+          } else {
+              $('#timepicker input').val(hours + ':00');
+          }
+      } else {
+          if (min) {
+              $('#timepicker input').val('00:' + min);
+          } else {
+              $('#timepicker input').val();
+          }
+      }
+  }
+  $(document).on('click', 'div.timepickerdiv input', function (e) {
+      e.stopPropagation();
+      $(this).parent().find('table.timepickertable').addClass("bunny");
+  });
+  $(document).on('click', function () {
+      $('table.timepickertable').removeClass("bunny");
+  });
 
 });
 
