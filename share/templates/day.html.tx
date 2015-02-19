@@ -3,13 +3,91 @@
 
 <div id="pwmpicker"></div>
 <svg id="dayplanner"></svg>
-<hr>
 <div class="form noautoload" id="dayplan"></div>
 
 : }
 : override postjs -> {
 
 <script type="text/javascript">
+
+var day_selector = '#dayplanner';
+
+var alldaymin  = 1440;
+var gridZeroX  = 0;
+var gridZeroY  = 0;
+var gridSize   = 4;
+var maxValue   = 100;
+var minValue   = 0;
+var timeScale  = 5;
+var maxTime    = alldaymin / timeScale;
+var minTime    = 0;
+var paths      = {};
+var scale      = 1;
+
+var SrMarker = Class.extend({
+
+  daymin: undefined,
+  percent: undefined,
+
+  init: function(daymin,percent) {
+    this.daymin = daymin;
+    this.percent = percent;
+  }
+
+});
+
+var SrPath = Class.extend({
+
+  markers: undefined,
+  size: undefined,
+  pwm: undefined,
+  color: '#000',
+  lines: [],
+  circles: [],
+
+  init: function(pwm,markers) {
+    this.pwm      = pwm;
+    this.markers  = markers;
+    this.size     = markers.length;
+    var color_id = $('#pwm_' + pwm + '_color').val();
+    if (sr_color[color_id]) {
+      this.color = sr_color[color_id].color;
+    }
+  },
+
+  all_points: function() {
+    var self = this;
+    var points = [];
+    var first_time = self.markers[0].daymin;
+    var first_value = self.markers[0].percent;
+    var last_id = self.size - 1;
+    var last_time = self.markers[last_id].daymin;
+    var last_value = self.markers[last_id].percent;
+    points.push({
+      time: Math.ceil(( 0 - ( alldaymin - last_time ) ) / timeScale),
+      value: last_value,
+      marker: last_id
+    });
+    for (i = 0; i < self.size; i++) { 
+      points.push({
+        time: Math.ceil(self.markers[i].daymin / timeScale),
+        value: self.markers[i].percent,
+        marker: i
+      });
+    }
+    points.push({
+      time: Math.ceil(( alldaymin + first_time ) / timeScale),
+      value: first_value,
+      marker: 0
+    });
+    return points;
+  }
+
+});
+
+var paper      = Snap(day_selector);
+var grid_group = paper.g();
+var path_group = paper.g();
 
 // First execute stuff when the form is loaded
 $('body').on('sr_config',function(){
@@ -32,356 +110,153 @@ $('body').on('sr_config',function(){
       window.location.href = window.location.href.replace("day.html","led.html");
     } else {
       var fields = new Array();
+      var expert_fields = new Array();
       $.each(dayplanner_pwms,function(i,pwm){
         fields.push({
-          name: "marker#" + pwm,
+          name: "dayplanner#marker#" + pwm,
           transform_value: function(value) { return parseInt(value); },
           // pre: true
           label: "led " + pwm
         });
+        fields.push({
+          name: "pwm#" + pwm + "#color",
+          // pre: true
+          label: "led " + pwm + " color"
+        });
       });
-      fields.push({
-        name: "randomdeferralmax",
+      expert_fields.push({
+        name: "dayplanner#randomdeferralmax",
         template: "slider",
         min: 0, max: 1440,
         label: "Maximale zuf&auml;llige Abweichung in Minuten"
       },{
-        name: "deferral",
+        name: "dayplanner#deferral",
         template: "slider",
         min: -1440, max: 1440,
         label: "Feste Abweichung in Minuten"
       });
       var form = new SrForm($('#dayplan'),{
-        title: "Tagesplanung",
-        prefix: "dayplanner",
-        fields: fields
+        title: undefined,
+        fields: fields,
+        expert_fields: expert_fields,
+        loaded: function(){
+          var markers = {};
+          $.each(this.values(),function(k,v){
+            var matches;
+            if (matches = k.match(/^dayplanner#marker#(\d+)$/)) {
+              var pwm = matches[1];
+              markers[pwm] = [];
+              for (var i = 0; i < v.length; i++, i++) {
+                markers[pwm].push(new SrMarker(v[i],v[i+1]));
+              }
+            }
+          });
+          sr_dayplanner_load(markers);
+        }
       });
-
-      var s = Snap('#dayplanner');
-      sr_day_makegrid(s);
 
     }
   });
 
-  // $("#dayplan").each(function(){
-  //   var fields = [];
-  //   for (i = 1; i <= sr_config["pwm_count"]; i++) { 
-  //     fields.push({
-  //       name: "marker#" + i,
-  //       label: "Tagesverlauf LED #" + i,
-  //       type: "marker"
-  //     });
-  //   }
-  //   sr_make_form(this,{
-  //     formtitle: "Tagesplannung",
-  //     prefix: "dayplanner",
-  //     fields: fields
-  //   });
-  // });
-
-  // 'use strict';
-
-  // var s = Snap('#dayplanner');
-  // var width = $('#dayplanner').width() - 2;
-
-  // //box and lines
-  // s.attr({
-  //   viewBox: "0 0 950 300",
-  // });
-
-  // var sixhours = ( (width - 35) - 8 ) / 4;
-  // var sixoclock = s.paper.line(39+sixhours,12,39+sixhours,266).attr({
-  //   strokeWidth: 1,
-  //   stroke: "#ebebeb"
-  // });
-  // var twelveoclock = s.paper.line(39+(sixhours*2),12,39+(sixhours*2),266).attr({
-  //   strokeWidth: 1,
-  //   stroke: "#ebebeb"
-  // });
-  // var eighteenoclock = s.paper.line(39+(sixhours*3),12,39+(sixhours*3),266).attr({
-  //   strokeWidth: 1,
-  //   stroke: "#ebebeb"
-  // });
-
-  // var lines = [];
-  // for (var i = 1; i < 10; i++) {
-  //   lines.push(s.paper.line(
-  //     35,14+(25*i),width,14+(25*i)
-  //   ).attr({ strokeWidth: 1, stroke: "#ebebeb" }));
-  // }
-
-  // //percent text
-  // for (var i = 1; i < 10; i++) {
-  //   s.text(7, 16 + 25 * i, 100-10*i).attr({ "font-size": "14px", fill:"#707070" });
-  // }
-  // s.text(0, 16, "100").attr({ "font-size": "14px", fill:"#707070" });
-  // s.text(15, 268, "  0").attr({ "font-size": "14px", fill:"#707070" });
-
-  // //time text
-  // s.text(25, 290, "0h").attr({ "font-size": "14px", fill:"#707070" });
-  // s.text(30+(sixhours*1), 290, "6h").attr({ "font-size": "14px", fill:"#707070" });
-  // s.text(30+(sixhours*2), 290, "12h").attr({ "font-size": "14px", fill:"#707070" });
-  // s.text(30+(sixhours*3), 290, "18h").attr({ "font-size": "14px", fill:"#707070" });
-  // s.text(20+(sixhours*4), 290, "24h").attr({ "font-size": "14px", fill:"#707070" });
-
-  // var midnighth =  267;
-  // var sixh =  10;
-  // var twelveh =  267;
-  // var eighteenh =  267;
-  // var twentyfourh =  267;
-  // var graph = s.paper.line(700,100,300,150);
-  // var graph = s.paper.polygon(39,267,39,midnighth,39+(sixhours*1),sixh,39+(sixhours*2),twelveh,39+(sixhours*3),eighteenh,39+(sixhours*4),twentyfourh,39+(sixhours*4),267);
-
-  // graph.attr({
-  //   id: 'graph',
-  //   fill: "#bed8ea",
-  //   strokeWidth: 2,
-  //   stroke: "#2980B9",
-  // });
-
-  // //border
-
-  // var border = s.rect(35,11,width - 35,256);
-  // border.attr({
-  //   fill: "none",
-  //   strokeWidth: 1,
-  //   stroke: "#cdcdcd"
-  // });
-
-//  //graph buttons
-//  
-//  var buttonMidnight = s.rect(34, midnighth - 5, 10, 10, 20, 20);
-//  var buttonSix = s.rect(34+(sixhours), sixh - 5, 10, 10, 20, 20);
-//  var buttonTwelve = s.rect(34+(sixhours*2), twelveh - 5, 10, 10, 20, 20);
-//  var buttonEighteen = s.rect(34+(sixhours*3), eighteenh - 5, 10, 10, 20, 20);
-//  var buttonTwentyfour = s.rect(34+(sixhours*4), twentyfourh - 5, 10, 10, 20, 20);
-//
-//  buttonTwentyfour.attr({
-//    fill: "#ffffff",
-//    strokeWidth: 2,
-//    stroke: "#a1c7e0"
-//  });
-//
-//  var orig0 = {
-//      x: 34,
-//      y: 262
-//  };
-//  var orig6 = {
-//      x: 34+(sixhours),
-//      y: 262
-//  };
-//  var orig12 = {
-//      x: 34+(sixhours*2),
-//      y: 262
-//  };
-//  var orig18 = {
-//      x: 34+(sixhours*3),
-//      y: 262
-//  };
-//  var orig24 = {
-//      x: 34+(sixhours*4),
-//      y: 262
-//  };
-//
-//  buttonMidnight.drag(
-//    function (dx, dy, x, y, e) {
-//        var xSnap = Snap.snapTo(34,34);
-//        var ySnap = Snap.snapTo(1, orig0.y + dy, 100000000);
-//        this.attr({
-//            x: xSnap,
-//            y: ySnap + 10
-//        });
-//    },
-//    function (x, y, e) {
-//        orig0.x = e.toElement.x.baseVal.value;
-//        orig0.y = e.toElement.y.baseVal.value;
-//    }
-//  );
-//  buttonSix.drag(
-//    function (dx, dy, x, y, e) {
-//        var xSnap = Snap.snapTo(34+sixhours,34+sixhours);
-//        var ySnap = Snap.snapTo(1, orig6.y + dy, 100000000);
-//        this.attr({
-//            x: xSnap,
-//            y: ySnap + 10
-//        });
-//    },
-//    function (x, y, e) {
-//        orig6.x = e.toElement.x.baseVal.value;
-//        orig6.y = e.toElement.y.baseVal.value;
-//    }
-//  );
-//  buttonTwelve.drag(
-//    function (dx, dy, x, y, e) {
-//        var xSnap = Snap.snapTo(34+(sixhours*2),34+(sixhours*2));
-//        var ySnap = Snap.snapTo(1, orig12.y + dy, 100000000);
-//        this.attr({
-//            x: xSnap,
-//            y: ySnap + 10
-//        });
-//    },
-//    function (x, y, e) {
-//        orig12.x = e.toElement.x.baseVal.value;
-//        orig12.y = e.toElement.y.baseVal.value;
-//    }
-//  );
-//  buttonEighteen.drag(
-//    function (dx, dy, x, y, e) {
-//        var xSnap = Snap.snapTo(34+(sixhours*3),34+(sixhours*3));
-//        var ySnap = Snap.snapTo(1, orig18.y + dy, 100000000);
-//        this.attr({
-//            x: xSnap,
-//            y: ySnap + 10
-//        });
-//    },
-//    function (x, y, e) {
-//        orig18.x = e.toElement.x.baseVal.value;
-//        orig18.y = e.toElement.y.baseVal.value;
-//    }
-//  );
-//  buttonTwentyfour.drag(
-//    function (dx, dy, x, y, e) {
-//        var xSnap = Snap.snapTo(34+(sixhours*4),34+(sixhours*4));
-//        var ySnap = Snap.snapTo(1, orig24.y + dy, 100000000);
-//        this.attr({
-//            x: xSnap,
-//            y: ySnap + 10
-//        });
-//    },
-//    function (x, y, e) {
-//        orig24.x = e.toElement.x.baseVal.value;
-//        orig24.y = e.toElement.y.baseVal.value;
-//    },
-//    function (twentyfourh) {
-//	twentyfourh = 40	
-//    }
-//  );
-//
-// // var midnighth =  37;
-// // var sixh =  10;
-// // var twelveh =  67;
-// // var eighteenh =  267;
-// // var twentyfourh =  267;
-//
-//  buttonSix.attr({
-//    fill: "#ffffff",
-//    strokeWidth: 2,
-//    stroke: "#a1c7e0"
-//  });
-//  buttonTwelve.attr({
-//    fill: "#ffffff",
-//    strokeWidth: 2,
-//    stroke: "#a1c7e0"
-//  });
-//  buttonEighteen.attr({
-//    fill: "#ffffff",
-//    strokeWidth: 2,
-//    stroke: "#a1c7e0"
-//  });
-//  buttonMidnight.attr({
-//    fill: "#ffffff",
-//    strokeWidth: 2,
-//    stroke: "#a1c7e0"
-//  });
-
 });
 
-function sr_day_makegrid(s){
-  
-  var dataLength = 4;
-  var maxValue = 100;
-  var minValue = 0;
-  
-  console.log($('#dayplanner').height());
-  
-  // Creates the vertical lines in the graph
-  for (var i=0; i<dataLength; i++) {
-    var x = i*100;
-    var xLine = s.line(x, minValue-10, x, maxValue+10).attr({
-      stroke: "#ccc",
-      strokeWidth: 0.25
-    });
-  }
-  
-  // Creates the horizontal lines in the graph
-  var w = dataLength*100;
-  var delimiter = 50;
-  var values = (maxValue+10)-(minValue-10);
-  var offset = ((maxValue+10)%delimiter);
-  for (var i=values; i > 0; i--){
-    if ((i-offset) % delimiter === 0){ // Change where lines appear by changing the delimiter (10 for every 10 units, 50 for 50, etc.)
-      var yLine = s.line(0, i, w, i).attr({
-        stroke: '#ccc',
-        strokeWidth: 0.25
-      });
-    }
-  }
-
+function sr_day_scale() {
+  var curWidth = $(day_selector).width();
+  scale = maxTime / curWidth;
+  var matrix = new Snap.Matrix();
+  matrix.scale(1/scale);
+  grid_group.transform(matrix);
+  path_group.transform(matrix);
+  $(day_selector).css({ height: Math.ceil(grid_group.getBBox().height) });
 }
 
-  // function convertToPath(points){
-  //   var path = '';
-    
-  //   for (var i=0; i<points.length; i++){
-  //     var x = i*100;
-  //     var y = -points[i]+$('#svgLine').height(); // Convert points to how we like to view graphs
-  //     if (i===0){
-  //       path += 'M'+x+','+y+' R';
-  //     }
-  //     else if (i===points.length-1){
-  //       path += x+','+y;
-  //     }
-  //     else {
-  //       path += x+','+y+',';
-  //     }
-  //   }
-  //   return path;
-  // }
- 
-  // function makePath(data, color){
-  //   var pathString = convertToPath(data);
-  //   var graphHeight = $('#svgLine').height();
-  //   var fillString = pathString+' V'+graphHeight+' H0 Z';
-    
-  //   function getDefaultPath(isFill){
-  //     var defaultPathString = 'M0,'+graphHeight+' H';
-      
-      
-  //     for (var i=0; i<data.length; i++) {
-  //       if (i!==0){ 
-  //         defaultPathString += i*100+' ';
-  //       }
-  //     }
-      
-  //     if(isFill){
-  //       defaultPathString += 'V'+graphHeight+' H0 Z';
-  //     }
-  //     return defaultPathString;
-  //   }
-    
-  //   var path = s.path(getDefaultPath()).attr({
-  //     stroke: color,
-  //     strokeWidth: 2,
-  //     fill: 'transparent'
-  //   });
-  
-  //   var fill = s.path(getDefaultPath(true)).attr({
-  //     fill: color,
-  //     fillOpacity: 0.25    
-  //   });
-  
-  //   path.animate({ path: pathString },500);
-  //   fill.animate({ path: fillString },500);
-    
-  // }
-  
-  // makePath(points1, 'red');
-  // makePath(points2, 'blue');
-  
-  // $('#add-green').on('click', function(){
-  //   makePath(points3,'green');
-  // });
-  
+function sr_dayplanner_load(pwm_markers){
+
+  $(window).resize(function() {
+    sr_day_scale();
+  });
+
+  for (var i = 0; i <= gridSize; i++) {
+    var x = i * ((maxTime - minTime) / gridSize);
+    var xLine = paper.line(gridZeroX + x, gridZeroY + minValue, gridZeroX + x, gridZeroY + maxValue).attr({
+      stroke: "#ccc",
+      class: "gridline"
+    });
+    grid_group.add(xLine);
+  }
+
+  // Creates the vertical lines in the graph
+  for (var i = 0; i <= gridSize; i++) {
+    var y = i * ((maxValue - minValue) / gridSize);
+    var yLine = paper.line(gridZeroX + minTime, gridZeroY + y, gridZeroX + maxTime, gridZeroY + y).attr({
+      stroke: "#ccc",
+      class: "gridline"
+    });
+    grid_group.add(yLine);
+  }
+
+  $.each(pwm_markers,function(pwm,markers){
+    paths[pwm] = new SrPath(pwm,markers);
+  });
+
+  $.each(paths,function(pwm,path){
+    var points = path.all_points();
+    for (var i = 0; i <= path.size; i++) {
+      var line = paper.line(
+        gridZeroX + points[i].time, gridZeroY + ( maxValue - points[i].value ),
+        gridZeroX + points[i+1].time, gridZeroY + ( maxValue - points[i+1].value )
+      ).attr({
+        stroke: path.color,
+        class: "dayline"
+      });
+      console.log(line);
+      path_group.add(line);
+      path.lines.push(line);
+      if (i > 0) {
+        var preline = path.lines[i-1];
+        var preline_x = preline.attr('x1');
+        var preline_y = preline.attr('y1');
+        var line_x = line.attr('x2');
+        var line_y = line.attr('y2');
+        console.log(preline_x,preline_y,line_x,line_y);
+        var time = points[i].time;
+        var value = points[i].value;
+        var mins = time * timeScale;
+        var hour = Math.floor( mins / 60);
+        var min = mins - ( hour * 60 );
+        var x = gridZeroX + time;
+        var y = gridZeroY + ( maxValue - value );
+        var circle = paper.circle(x,y,2).attr({
+          fill: path.color,
+          class: "daycircle",
+          title: hour + ":" + ( min < 10 ? "0" : "" ) + min + " " + value + "%"
+        });
+        circle.data('preline',preline);
+        circle.data('line',line);
+        var moveFunc = function (dx, dy, posx, posy) {
+          var newx = x + ( dx * scale );
+          var newy = y + ( dy * scale );
+          this.data('preline').attr({ "x2": newx, "y2": newy });
+          this.data('line').attr({ "x1": newx, "y1": newy });
+          this.attr({ cx: newx , cy: newy });
+        };
+        circle.drag( moveFunc,
+                  function(){
+                      console.log("Move started");
+                  },
+                  function(){
+                      console.log("Move stopped");
+                  }
+          );
+        path_group.add(circle);
+        path.circles.push(circle);
+      }
+    }
+  });
+
+  sr_day_scale();
+
+}
 
 </script>
 

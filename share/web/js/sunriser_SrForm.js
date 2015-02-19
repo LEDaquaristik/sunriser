@@ -143,6 +143,16 @@ var SrForm = Class.extend({
       }
     });
     return keys;
+  },
+
+  values: function() {
+    var values = {};
+    $.each(this.fields,function(i,field){
+      if (typeof field.value !== 'undefined') {
+        values[field.name] = field.value;
+      }
+    });
+    return values;
   }
 
 });

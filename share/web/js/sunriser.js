@@ -9,6 +9,7 @@ var sr_config_main_keys = [
 var current_time;
 var sr_config_def;
 var sr_config_types = {};
+var sr_color = {};
 
 //timepicker vars
 var hours,
@@ -131,6 +132,10 @@ $(function(){
 });
 
 $('body').on('sr_config_def',function(){
+
+  $.each(sr_colors,function(i,color){
+    sr_color[color.id] = color;
+  });
 
   if (typeof(Storage) !== "undefined") {
     var session_sr_config = sessionStorage.getItem('sr_config');
