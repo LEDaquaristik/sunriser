@@ -10,19 +10,77 @@
 
 <script type="text/javascript">
 
-var day_selector = '#dayplanner';
+var SrDayplanner = Class.extend({
 
-var alldaymin  = 1440;
-var gridZeroX  = 0;
-var gridZeroY  = 0;
-var gridSize   = 4;
-var maxValue   = 100;
-var minValue   = 0;
-var timeScale  = 5;
-var maxTime    = alldaymin / timeScale;
-var minTime    = 0;
-var paths      = {};
-var scale      = 1;
+  alldaymin:    1440,
+  zeroX:        0,
+  zeroY:        0,
+  gridSize:     4,
+  maxValue:     100,
+  minValue:     0,
+  timeScale:    5,
+  maxTime:      undefined,
+  minTime:      0,
+  paths:        {},
+
+  jq:           undefined,
+  paper:        undefined,
+  grid_group:   undefined,
+  path_group:   undefined,
+  currScale:    undefined,
+  matrix:       undefined,
+
+  init: function(selector,pwm_markers){
+    var self = this;
+    self.maxTime = self.alldaymin / self.timeScale;
+    self.jq = $(selector);
+    self.paper = Snap(selector);
+    self.grid_group = self.paper.g();
+    self.path_group = self.paper.g();
+    self.matrix = new Snap.Matrix();
+    self.make_grid();
+    $.each(pwm_markers,function(pwm,markers){
+      self.paths[pwm] = new SrPath(self,pwm,markers);
+    });
+    $(window).resize(function() {
+      self.scale();
+    });
+    self.scale();
+  },
+
+  make_grid: function(){
+    var self = this;
+
+    for (var i = 0; i <= self.gridSize; i++) {
+      var x = i * ((self.maxTime - self.minTime) / self.gridSize);
+      var xLine = self.paper.line(self.zeroX + x, self.zeroY + self.minValue, self.zeroX + x, self.zeroY + self.maxValue).attr({
+        stroke: "#ccc",
+        class: "gridline"
+      });
+      self.grid_group.add(xLine);
+    }
+
+    for (var i = 0; i <= self.gridSize; i++) {
+      var y = i * ((self.maxValue - self.minValue) / self.gridSize);
+      var yLine = self.paper.line(self.zeroX + self.minTime, self.zeroY + y, self.zeroX + self.maxTime, self.zeroY + y).attr({
+        stroke: "#ccc",
+        class: "gridline"
+      });
+      self.grid_group.add(yLine);
+    }
+  },
+
+  scale: function(){
+    var self = this;
+    var curWidth = self.jq.width();
+    self.currScale = self.maxTime / curWidth;
+    self.matrix.scale(1 / self.currScale);
+    self.grid_group.transform(self.matrix);
+    self.path_group.transform(self.matrix);
+    self.jq.css({ height: Math.ceil(self.grid_group.getBBox().height) });
+  }
+
+});
 
 var SrMarker = Class.extend({
 
@@ -41,17 +99,76 @@ var SrPath = Class.extend({
   markers: undefined,
   size: undefined,
   pwm: undefined,
+  dp: undefined,
   color: '#000',
   lines: [],
   circles: [],
 
-  init: function(pwm,markers) {
+  init: function(dp,pwm,markers) {
+    this.dp       = dp;
     this.pwm      = pwm;
     this.markers  = markers;
     this.size     = markers.length;
     var color_id = $('#pwm_' + pwm + '_color').val();
     if (sr_color[color_id]) {
       this.color = sr_color[color_id].color;
+    }
+    this.init_svg();
+  },
+
+  init_svg: function() {
+    var self = this;
+    var pwm = self.pwm;
+    var points = self.all_points();
+    for (var i = 0; i <= self.size; i++) {
+      var line = self.dp.paper.line(
+        self.dp.zeroX + points[i].time, self.dp.zeroY + ( self.dp.maxValue - points[i].value ),
+        self.dp.zeroX + points[i+1].time, self.dp.zeroY + ( self.dp.maxValue - points[i+1].value )
+      ).attr({
+        stroke: self.color,
+        class: "dayline"
+      });
+      self.dp.path_group.add(line);
+      self.lines.push(line);
+      if (i > 0) {
+        var preline = self.lines[i-1];
+        // var preline_x = preline.attr('x1');
+        // var preline_y = preline.attr('y1');
+        // var line_x = line.attr('x2');
+        // var line_y = line.attr('y2');
+        var time = points[i].time;
+        var value = points[i].value;
+        var mins = time * self.dp.timeScale;
+        var hour = Math.floor( mins / 60);
+        var min = mins - ( hour * 60 );
+        var x = self.dp.zeroX + time;
+        var y = self.dp.zeroY + ( self.dp.maxValue - value );
+        var circle = self.dp.paper.circle(x,y,2).attr({
+          fill: self.color,
+          class: "daycircle",
+          title: hour + ":" + ( min < 10 ? "0" : "" ) + min + " " + value + "%"
+        });
+        circle.data('preline',preline);
+        circle.data('line',line);
+        var moveFunc = function (dx, dy, posx, posy) {
+          console.log(this);
+          var newx = x + ( dx * self.dp.currScale );
+          var newy = y + ( dy * self.dp.currScale );
+          // this.data('preline').attr({ "x1": newx, "y1": newy });
+          // this.data('line').attr({ "x2": newx, "y2": newy });
+          circle.attr({ cx: newx , cy: newy });
+        };
+        circle.drag( moveFunc,
+                  function(){
+                      console.log("Move started");
+                  },
+                  function(){
+                      console.log("Move stopped");
+                  }
+          );
+        self.dp.path_group.add(circle);
+        self.circles.push(circle);
+      }
     }
   },
 
@@ -64,19 +181,19 @@ var SrPath = Class.extend({
     var last_time = self.markers[last_id].daymin;
     var last_value = self.markers[last_id].percent;
     points.push({
-      time: Math.ceil(( 0 - ( alldaymin - last_time ) ) / timeScale),
+      time: Math.ceil(( 0 - ( self.dp.alldaymin - last_time ) ) / self.dp.timeScale),
       value: last_value,
       marker: last_id
     });
     for (i = 0; i < self.size; i++) { 
       points.push({
-        time: Math.ceil(self.markers[i].daymin / timeScale),
+        time: Math.ceil(self.markers[i].daymin / self.dp.timeScale),
         value: self.markers[i].percent,
         marker: i
       });
     }
     points.push({
-      time: Math.ceil(( alldaymin + first_time ) / timeScale),
+      time: Math.ceil(( self.dp.alldaymin + first_time ) / self.dp.timeScale),
       value: first_value,
       marker: 0
     });
@@ -85,9 +202,8 @@ var SrPath = Class.extend({
 
 });
 
-var paper      = Snap(day_selector);
-var grid_group = paper.g();
-var path_group = paper.g();
+var day_selector = '#dayplanner';
+var dayplanner_obj;
 
 // First execute stuff when the form is loaded
 $('body').on('sr_config',function(){
@@ -151,7 +267,7 @@ $('body').on('sr_config',function(){
               }
             }
           });
-          sr_dayplanner_load(markers);
+          dayplanner_obj = new SrDayplanner(day_selector,markers);
         }
       });
 
@@ -159,104 +275,6 @@ $('body').on('sr_config',function(){
   });
 
 });
-
-function sr_day_scale() {
-  var curWidth = $(day_selector).width();
-  scale = maxTime / curWidth;
-  var matrix = new Snap.Matrix();
-  matrix.scale(1/scale);
-  grid_group.transform(matrix);
-  path_group.transform(matrix);
-  $(day_selector).css({ height: Math.ceil(grid_group.getBBox().height) });
-}
-
-function sr_dayplanner_load(pwm_markers){
-
-  $(window).resize(function() {
-    sr_day_scale();
-  });
-
-  for (var i = 0; i <= gridSize; i++) {
-    var x = i * ((maxTime - minTime) / gridSize);
-    var xLine = paper.line(gridZeroX + x, gridZeroY + minValue, gridZeroX + x, gridZeroY + maxValue).attr({
-      stroke: "#ccc",
-      class: "gridline"
-    });
-    grid_group.add(xLine);
-  }
-
-  // Creates the vertical lines in the graph
-  for (var i = 0; i <= gridSize; i++) {
-    var y = i * ((maxValue - minValue) / gridSize);
-    var yLine = paper.line(gridZeroX + minTime, gridZeroY + y, gridZeroX + maxTime, gridZeroY + y).attr({
-      stroke: "#ccc",
-      class: "gridline"
-    });
-    grid_group.add(yLine);
-  }
-
-  $.each(pwm_markers,function(pwm,markers){
-    paths[pwm] = new SrPath(pwm,markers);
-  });
-
-  $.each(paths,function(pwm,path){
-    var points = path.all_points();
-    for (var i = 0; i <= path.size; i++) {
-      var line = paper.line(
-        gridZeroX + points[i].time, gridZeroY + ( maxValue - points[i].value ),
-        gridZeroX + points[i+1].time, gridZeroY + ( maxValue - points[i+1].value )
-      ).attr({
-        stroke: path.color,
-        class: "dayline"
-      });
-      console.log(line);
-      path_group.add(line);
-      path.lines.push(line);
-      if (i > 0) {
-        var preline = path.lines[i-1];
-        var preline_x = preline.attr('x1');
-        var preline_y = preline.attr('y1');
-        var line_x = line.attr('x2');
-        var line_y = line.attr('y2');
-        console.log(preline_x,preline_y,line_x,line_y);
-        var time = points[i].time;
-        var value = points[i].value;
-        var mins = time * timeScale;
-        var hour = Math.floor( mins / 60);
-        var min = mins - ( hour * 60 );
-        var x = gridZeroX + time;
-        var y = gridZeroY + ( maxValue - value );
-        var circle = paper.circle(x,y,2).attr({
-          fill: path.color,
-          class: "daycircle",
-          title: hour + ":" + ( min < 10 ? "0" : "" ) + min + " " + value + "%"
-        });
-        circle.data('preline',preline);
-        circle.data('line',line);
-        var moveFunc = function (dx, dy, posx, posy) {
-          var newx = x + ( dx * scale );
-          var newy = y + ( dy * scale );
-          this.data('preline').attr({ "x2": newx, "y2": newy });
-          this.data('line').attr({ "x1": newx, "y1": newy });
-          this.attr({ cx: newx , cy: newy });
-        };
-        circle.drag( moveFunc,
-                  function(){
-                      console.log("Move started");
-                  },
-                  function(){
-                      console.log("Move stopped");
-                  }
-          );
-        path_group.add(circle);
-        path.circles.push(circle);
-      }
-    }
-  });
-
-  sr_day_scale();
-
-}
 
 </script>
 
