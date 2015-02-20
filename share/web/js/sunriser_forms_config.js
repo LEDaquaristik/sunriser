@@ -55,6 +55,8 @@ var sr_forms = {
       name: "gmtoff", pre: true
     }],
     expert_fields: [{
+      name: "nofinder", label: "SunRiser Finder deaktivieren"
+    },{
       name: "indexfile", label: "Startseite nach Anmeldung"
     }]
   },

@@ -14,6 +14,7 @@
   "useip4", [      "Used fixed IPv4 instead of DHCP", "bool", 0],
   "nohelp", [      "Don't show help",            "bool", 0],
   "showexpert", [  "Show expert form fields",    "bool", 0],
+  "nofinder", [    "SunRiser Finder deaktivieren", "bool", 0],
   "ip4", [         "Set fixed IPv4",             "ip4"],
   "ip4_netmask", [ "IPv4 Netmask",               "ip4"],
   "ip4_gateway", [ "IPv4 Gateway",               "ip4"],

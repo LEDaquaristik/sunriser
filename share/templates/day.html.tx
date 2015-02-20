@@ -37,7 +37,6 @@ var SrDayplanner = Class.extend({
     self.paper = Snap(selector);
     self.grid_group = self.paper.g();
     self.path_group = self.paper.g();
-    self.matrix = new Snap.Matrix();
     self.make_grid();
     $.each(pwm_markers,function(pwm,markers){
       self.paths[pwm] = new SrPath(self,pwm,markers);
@@ -73,6 +72,13 @@ var SrDayplanner = Class.extend({
   scale: function(){
     var self = this;
     var curWidth = self.jq.width();
+    if (self.matrix) {
+      var invert = self.matrix.invert();
+      self.grid_group.transform(invert);
+      self.path_group.transform(invert);
+    } else {
+      self.matrix = new Snap.Matrix();
+    }
     self.currScale = self.maxTime / curWidth;
     self.matrix.scale(1 / self.currScale);
     self.grid_group.transform(self.matrix);
@@ -120,22 +126,10 @@ var SrPath = Class.extend({
     var self = this;
     var pwm = self.pwm;
     var points = self.all_points();
-    for (var i = 0; i <= self.size; i++) {
-      var line = self.dp.paper.line(
-        self.dp.zeroX + points[i].time, self.dp.zeroY + ( self.dp.maxValue - points[i].value ),
-        self.dp.zeroX + points[i+1].time, self.dp.zeroY + ( self.dp.maxValue - points[i+1].value )
-      ).attr({
-        stroke: self.color,
-        class: "dayline"
-      });
-      self.dp.path_group.add(line);
-      self.lines.push(line);
-      if (i > 0) {
-        var preline = self.lines[i-1];
-        // var preline_x = preline.attr('x1');
-        // var preline_y = preline.attr('y1');
-        // var line_x = line.attr('x2');
-        // var line_y = line.attr('y2');
+    var path_points = [];
+    for (var i = 0; i <= self.size + 1; i++) {
+      path_points.push([ self.dp.zeroX + points[i].time, self.dp.zeroY + ( self.dp.maxValue - points[i].value ) ].join(" "));
+      if (i > 0 && i <= self.size) {
         var time = points[i].time;
         var value = points[i].value;
         var mins = time * self.dp.timeScale;
@@ -143,33 +137,43 @@ var SrPath = Class.extend({
         var min = mins - ( hour * 60 );
         var x = self.dp.zeroX + time;
         var y = self.dp.zeroY + ( self.dp.maxValue - value );
+        var title = hour + ":" + ( min < 10 ? "0" : "" ) + min + " " + value + "%";
         var circle = self.dp.paper.circle(x,y,2).attr({
           fill: self.color,
+          'fill-opacity': 1,
           class: "daycircle",
-          title: hour + ":" + ( min < 10 ? "0" : "" ) + min + " " + value + "%"
+          title: title,
+          point_id: i,
         });
-        circle.data('preline',preline);
-        circle.data('line',line);
-        var moveFunc = function (dx, dy, posx, posy) {
-          console.log(this);
-          var newx = x + ( dx * self.dp.currScale );
-          var newy = y + ( dy * self.dp.currScale );
-          // this.data('preline').attr({ "x1": newx, "y1": newy });
-          // this.data('line').attr({ "x2": newx, "y2": newy });
-          circle.attr({ cx: newx , cy: newy });
-        };
-        circle.drag( moveFunc,
-                  function(){
-                      console.log("Move started");
-                  },
-                  function(){
-                      console.log("Move stopped");
-                  }
-          );
+        var snap_title = Snap.parse("<title>" + title + "</title>");
+        circle.append(snap_title);
+        circle.drag(function (dx, dy, posx, posy) {
+          var moveSelf = this;
+          console.log(posx,posy);
+          // var newx = x + ( dx * self.dp.currScale );
+          // var newy = y + ( dy * self.dp.currScale );
+          // moveSelf.attr({ cx: newx , cy: newy });
+        }, function(){
+          console.log("Move started");
+        }, function(){
+          console.log("Move stopped");
+        });
         self.dp.path_group.add(circle);
         self.circles.push(circle);
       }
     }
+    var path = self.dp.paper.path(
+      "M " + ( self.dp.zeroX + points[0].time ) + " " + ( self.dp.zeroY + self.dp.maxValue ) + " " +
+      "L " + path_points.join(",") + ", " + ( self.dp.zeroX + points[self.size+1].time ) + " " + ( self.dp.zeroY + self.dp.maxValue ) + "Z"
+    ).attr({
+      fill: self.color,
+      'fill-opacity': 0.3
+    });
+    self.dp.path_group.add(path);
+    $.each(self.circles,function(i,circles){
+      path.appendTo(circle);
+      path.prependTo(self.dp.grid_group);
+    });
   },
 
   all_points: function() {
