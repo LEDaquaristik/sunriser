@@ -11,7 +11,7 @@
 <script type="text/html" id="pwmpicker_tmpl">
 
 <% $.each(paths,function(i,path){ %>
-  <div style="float:left;margin:10px" class="pwmpicker" id="pwmpicker_<%=path.pwm%>">
+  <div style="float:left;padding:5px;margin:3px;border:1px solid black" class="pwmpicker" id="pwmpicker_<%=path.pwm%>">
     LED #<%=path.pwm%>
   </div>
 <% }); %>
@@ -154,6 +154,7 @@ var SrPath = Class.extend({
       this.color = sr_color[color_id].color;
     }
     this.update_markers(markers);
+    this.update_circles();
   },
 
   get_color: function() {
@@ -170,7 +171,7 @@ var SrPath = Class.extend({
     } else {
       this.editmode = false;
     }
-    this.update_svg();
+    this.update_circles();
   },
 
   add_marker: function(daymin,percent) {
@@ -180,7 +181,7 @@ var SrPath = Class.extend({
   update_markers: function(markers) {
     this.markers  = markers;
     this.size     = markers.length;
-    this.update_svg();
+    this.update_path();
   },
 
   update_form: function() {
@@ -192,94 +193,140 @@ var SrPath = Class.extend({
     $('#dayplanner_marker_' + self.pwm).val(values.join(','));
   },
 
-  update_svg: function() {
+  update_circles: function() {
     var self = this;
     var pwm = self.pwm;
-    if (typeof self.path !== 'undefined') {
-      self.path.remove();
-    }
     $.each(self.circles,function(i,circle){
       circle.remove();
     });
     self.circles = [];
     var points = self.all_points();
+    for (var i = 1; i <= self.size; i++) {
+      var time = points[i].time;
+      var value = points[i].value;
+      var mins = self.markers[i-1].daymin;
+      var hour = Math.floor( mins / 60);
+      var min = mins - ( hour * 60 );
+      var x = self.dp.zeroX + time;
+      var y = self.dp.zeroY + ( self.dp.maxValue - value );
+      var title = "PWM #" + pwm + "\n" + hour + ":" + ( min < 10 ? "0" : "" ) + min + " " + value + "%";
+      var id = btoa(Math.random()).substring(0,8);
+      var circle = self.dp.paper.circle(x,y,3).attr({
+        fill: ( self.editmode ? '#8f8' : self.get_color() ),
+        'fill-opacity': 1,
+        class: "daycircle",
+        title: title,
+        point_id: i,
+        id: id
+      });
+      circle.append(Snap.parse("<title>" + title + "</title>"));
+      if (self.editmode) {
+        $(circle.node).data('circle',circle);
+        circle.dragger = {
+          prev_marker: ( i > 1 ? self.markers[i-2] : undefined ),
+          next_marker: ( i < self.size ? self.markers[i] : undefined ),
+          marker: self.markers[i-1],
+          orig_x: undefined,
+          orig_y: undefined,
+          orig_daymin: undefined,
+          orig_percent: undefined,
+          move: function (event) {
+            var x_diff   = event.pageX - this.dragger.orig_x;
+            var y_diff   = this.dragger.orig_y - event.pageY;
+            var time     = x_diff * self.dp.currScale * self.dp.timeScale;
+            var value    = y_diff * self.dp.currScale;
+            value        = ( value > 0 ? Math.ceil(value) : Math.floor(value) );
+            time         = ( time  > 0 ? Math.ceil(time)+1  : Math.floor(time)-1  );
+            var newtime  = this.dragger.orig_daymin + time;
+            var newvalue = this.dragger.orig_percent + value;
+            if (newvalue > self.dp.maxValue) {
+              newvalue = self.dp.maxValue;
+            } else if (newvalue < 0) {
+              newvalue = 0;
+            }
+            if (newtime > self.dp.alldaymin) {
+              newtime = self.dp.alldaymin;
+            } else if (newtime < 0) {
+              newtime = 0;
+            }
+            if (typeof this.dragger.prev_marker !== 'undefined') {
+              if (newtime <= this.dragger.prev_marker.daymin) {
+                newtime = this.dragger.prev_marker.daymin + 1;
+              }
+            }
+            if (typeof this.dragger.next_marker !== 'undefined') {
+              if (newtime >= this.dragger.next_marker.daymin) {
+                newtime = this.dragger.next_marker.daymin - 1;
+              }
+            }
+            this.dragger.marker.daymin  = newtime;
+            this.dragger.marker.percent = newvalue;
+            var new_x_diff = ( newtime - this.dragger.orig_daymin ) / self.dp.timeScale;
+            var new_y_diff = ( newvalue - this.dragger.orig_percent );
+            this.attr('cx',this.dragger.circle_x + new_x_diff);
+            this.attr('cy',this.dragger.circle_y - new_y_diff);
+            self.update_path();
+          },
+          start: function(ev) {
+            this.dragger.circle_x     = parseInt(this.attr('cx'));
+            this.dragger.circle_y     = parseInt(this.attr('cy'));
+            this.dragger.orig_x       = ev.pageX;
+            this.dragger.orig_y       = ev.pageY;
+            this.dragger.orig_daymin  = this.dragger.marker.daymin;
+            this.dragger.orig_percent = this.dragger.marker.percent;
+          },
+          stop: function(ev) {
+            self.update_form();
+            self.update_circles();
+          }
+        };
+        interact('#' + circle.attr('id')).draggable({
+          // enable inertial throwing
+          // inertia: true,
+          // keep the element within the area of it's parent
+          // restrict: {
+          //   restriction: "parent",
+          //   endOnly: true,
+          //   elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+          // },
+          // call this function on every dragmove event
+          onmove: function (event) {
+            console.log("move",event);
+            var target = event.target;
+            var circle = $(target).data('circle');
+            circle.dragger.move.call(circle,event);
+          },
+          onstart: function (event) {
+            console.log("start",event);
+            var target = event.target;
+            var circle = $(target).data('circle');
+            circle.dragger.start.call(circle,event);
+          },
+          onend: function (event) {
+            console.log("end",event);
+            var target = event.target;
+            var circle = $(target).data('circle');
+            circle.dragger.stop.call(circle,event);
+          }
+        });
+        // circle.drag(circle.dragger.move,circle.dragger.start,circle.dragger.stop);
+      }
+      self.dp.path_group.add(circle);
+      self.circles.push(circle);
+    }
+    self.update_path();
+  },
+
+  update_path: function() {
+    var self = this;
+    var pwm = self.pwm;
+    if (typeof self.path !== 'undefined') {
+      self.path.remove();
+    }
+    var points = self.all_points();
     var path_points = [];
     for (var i = 0; i <= self.size + 1; i++) {
       path_points.push([ self.dp.zeroX + points[i].time, self.dp.zeroY + ( self.dp.maxValue - points[i].value ) ].join(" "));
-      if (i > 0 && i <= self.size) {
-        var time = points[i].time;
-        var value = points[i].value;
-        var mins = self.markers[i-1].daymin;
-        var hour = Math.floor( mins / 60);
-        var min = mins - ( hour * 60 );
-        var x = self.dp.zeroX + time;
-        var y = self.dp.zeroY + ( self.dp.maxValue - value );
-        var title = "PWM #" + pwm + "\n" + hour + ":" + ( min < 10 ? "0" : "" ) + min + " " + value + "%";
-        var circle = self.dp.paper.circle(x,y,3).attr({
-          fill: ( self.editmode ? '#8f8' : self.get_color() ),
-          'fill-opacity': 1,
-          class: "daycircle",
-          title: title,
-          point_id: i,
-        });
-        circle.append(Snap.parse("<title>" + title + "</title>"));
-        if (self.editmode) {        
-          circle.dragger = {
-            prev_marker: ( i > 1 ? self.markers[i-2] : undefined ),
-            next_marker: ( i < self.size ? self.markers[i] : undefined ),
-            marker: self.markers[i-1],
-            orig_x: undefined,
-            orig_y: undefined,
-            orig_daymin: undefined,
-            orig_percent: undefined,
-            move: function (dx, dy, posx, posy) {
-              //console.log(dx, dy, posx, posy);
-              var time     = (posx - this.dragger.orig_x) * self.dp.currScale * self.dp.timeScale;
-              var value    = ( (this.dragger.orig_y - posy) * self.dp.currScale );
-              value        = ( value > 0 ? Math.ceil(value) : Math.floor(value) );
-              time         = ( time  > 0 ? Math.ceil(time)+1  : Math.floor(time)-1  );
-              var newtime  = this.dragger.orig_daymin + time;
-              var newvalue = this.dragger.orig_percent + value;
-              if (newvalue > self.dp.maxValue) {
-                newvalue = self.dp.maxValue;
-              } else if (newvalue < 0) {
-                newvalue = 0;
-              }
-              if (newtime > self.dp.alldaymin) {
-                newtime = self.dp.alldaymin;
-              } else if (newtime < 0) {
-                newtime = 0;
-              }
-              if (typeof this.dragger.prev_marker !== 'undefined') {
-                if (newtime <= this.dragger.prev_marker.daymin) {
-                  newtime = this.dragger.prev_marker.daymin + 1;
-                }
-              }
-              if (typeof this.dragger.next_marker !== 'undefined') {
-                if (newtime >= this.dragger.next_marker.daymin) {
-                  newtime = this.dragger.next_marker.daymin - 1;
-                }
-              }
-              this.dragger.marker.daymin  = newtime;
-              this.dragger.marker.percent = newvalue;
-              self.update_svg();
-            },
-            start: function(posx,posy,ev) {
-              // console.log(posx,posy,ev);
-              this.dragger.orig_x = posx;
-              this.dragger.orig_y = posy;
-              this.dragger.orig_daymin  = this.dragger.marker.daymin;
-              this.dragger.orig_percent = this.dragger.marker.percent;
-            },
-            stop: function(ev) {
-              self.update_form();
-            }
-          };
-          circle.drag(circle.dragger.move,circle.dragger.start,circle.dragger.stop);
-        }
-        self.dp.path_group.add(circle);
-        self.circles.push(circle);
-      }
     }
     self.path = self.dp.paper.path(
       "M " + ( self.dp.zeroX + points[0].time ) + " " + ( self.dp.zeroY + self.dp.maxValue ) + " " +
@@ -290,10 +337,10 @@ var SrPath = Class.extend({
       stroke: self.get_color(),
     });
     self.dp.path_group.add(self.path);
-    $.each(self.circles,function(i,circles){
+    $.each(self.circles,function(i,circle){
       self.path.appendTo(circle);
-      self.path.prependTo(self.dp.grid_group);
     });
+    self.path.prependTo(self.dp.grid_group);
   },
 
   all_points: function() {
@@ -329,7 +376,6 @@ var SrPath = Class.extend({
 // First execute stuff when the form is loaded
 $('body').on('sr_config',function(){
 
-  var dayplanner_pwms = new Array();
   var keys = new Array();
   
   for (i = 1; i <= sr_config["pwm_count"]; i++) { 
@@ -337,6 +383,7 @@ $('body').on('sr_config',function(){
   }
 
   sr_request_mpack('POST','/',keys,function(values){
+    var dayplanner_pwms = new Array();
     for (i = 1; i <= sr_config["pwm_count"]; i++) { 
       var key = 'pwm#' + i + '#manager';
       if (values[key] == 1) {
@@ -344,7 +391,7 @@ $('body').on('sr_config',function(){
       }
     }
     if (!dayplanner_pwms.length) {
-      window.location.href = window.location.href.replace("day.html","led.html");
+      // window.location.href = window.location.href.replace("day.html","led.html");
     } else {
       var fields = new Array();
       var expert_fields = new Array();

@@ -165,7 +165,6 @@ sub _build_base_vars {
     css_files => [qw(
       css/reset.css
       css/tipr-1.0.1.css
-      css/tipsy-1.0.0a.css
       css/icomoon.css
       css/OpenSans-Regular-webfont.css
       css/sunriser.css
@@ -174,6 +173,7 @@ sub _build_base_vars {
       $self->versioned ? 'js/jquery-1.11.2.min.js' : 'js/jquery-1.11.2.js',
       $self->versioned ? 'js/moment-2.9.0.min.js' : 'js/moment-2.9.0.js',
       $self->versioned ? 'js/snap.svg-0.3.0.min.js' : 'js/snap.svg-0.3.0.js',
+      $self->versioned ? 'js/interact-1.2.3.min.js' : 'js/interact-1.2.3.js',
     qw(
       js/tmpl.js
       js/class.js
@@ -181,7 +181,6 @@ sub _build_base_vars {
       js/console-emulation.js
       js/moment-locale-de.js
       js/tipr-1.0.1.js
-      js/tipsy-1.0.0a.js
       js/ipaddr-0.1.3.js
       js/jquery-ajax-blob-arraybuffer.js
 
