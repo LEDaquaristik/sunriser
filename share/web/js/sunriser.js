@@ -163,7 +163,7 @@ $('body').on('sr_config_def',function(){
 
 $('body').on('sr_config',function(){
 
-  console.log(sr_config);
+  //console.log(sr_config);
 
   $(".form").not(".noautoload").each(function(){
     var id = $(this).attr('id');

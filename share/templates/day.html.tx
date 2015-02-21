@@ -8,43 +8,77 @@
 : }
 : override postjs -> {
 
+<script type="text/html" id="pwmpicker_tmpl">
+
+<% $.each(paths,function(i,path){ %>
+  <div style="float:left;margin:10px" class="pwmpicker" id="pwmpicker_<%=path.pwm%>">
+    LED #<%=path.pwm%>
+  </div>
+<% }); %>
+
+</script>
 <script type="text/javascript">
+
+var dayplanner_obj;
 
 var SrDayplanner = Class.extend({
 
-  alldaymin:    1440,
-  zeroX:        0,
-  zeroY:        0,
-  gridSize:     4,
-  maxValue:     100,
-  minValue:     0,
-  timeScale:    5,
-  maxTime:      undefined,
-  minTime:      0,
-  paths:        {},
+  alldaymin:       1440,
+  zeroX:           0,
+  zeroY:           0,
+  gridSize:        4,
+  maxValue:        100,
+  minValue:        0,
+  timeScale:       5,
+  maxTime:         undefined,
+  minTime:         0,
+  paths:           {},
 
-  jq:           undefined,
-  paper:        undefined,
-  grid_group:   undefined,
-  path_group:   undefined,
-  currScale:    undefined,
-  matrix:       undefined,
+  jq:              undefined,
+  paper:           undefined,
+  grid_group:      undefined,
+  path_group:      undefined,
+  currScale:       undefined,
+  matrix:          undefined,
+  current_edit:    undefined,
 
-  init: function(selector,pwm_markers){
+  init: function(pwm_markers){
     var self = this;
     self.maxTime = self.alldaymin / self.timeScale;
-    self.jq = $(selector);
-    self.paper = Snap(selector);
+    self.jq = $('#dayplanner');
+    self.paper = Snap('#dayplanner');
     self.grid_group = self.paper.g();
     self.path_group = self.paper.g();
     self.make_grid();
     $.each(pwm_markers,function(pwm,markers){
       self.paths[pwm] = new SrPath(self,pwm,markers);
     });
+    self.init_picker();
     $(window).resize(function() {
       self.scale();
     });
     self.scale();
+  },
+
+  init_picker: function(){
+    var self = this;
+    $('#pwmpicker').html(tmpl('pwmpicker_tmpl',self));
+    $.each(self.paths,function(pwm,path){
+      $('#pwmpicker_' + pwm).click(function(){
+        $.each(self.paths,function(curr_pwm,curr_path){
+          curr_path.edit(0);
+        });
+        $('.pwmpicker').css('background-color','#fff');
+        if (self.current_edit == pwm) {
+          self.current_edit = undefined;
+        } else {
+          $(this).css('background-color','#0f0');
+          self.current_edit = pwm;
+          self.paths[pwm].edit(1);
+        }
+      });
+    });
+
   },
 
   make_grid: function(){
@@ -107,6 +141,7 @@ var SrPath = Class.extend({
   pwm: undefined,
   dp: undefined,
   path: undefined,
+  editmode: false,
   color: '#000',
   lines: [],
   circles: [],
@@ -114,12 +149,37 @@ var SrPath = Class.extend({
   init: function(dp,pwm,markers) {
     this.dp       = dp;
     this.pwm      = pwm;
-    this.markers  = markers;
-    this.size     = markers.length;
     var color_id = $('#pwm_' + pwm + '_color').val();
     if (sr_color[color_id]) {
       this.color = sr_color[color_id].color;
     }
+    this.update_markers(markers);
+  },
+
+  get_color: function() {
+    if (this.editmode) {
+      return '#0f0';
+    } else {
+      return this.color;
+    }
+  },
+
+  edit: function(start) {
+    if (start) {
+      this.editmode = true;
+    } else {
+      this.editmode = false;
+    }
+    this.update_svg();
+  },
+
+  add_marker: function(daymin,percent) {
+
+  },
+
+  update_markers: function(markers) {
+    this.markers  = markers;
+    this.size     = markers.length;
     this.update_svg();
   },
 
@@ -155,64 +215,68 @@ var SrPath = Class.extend({
         var x = self.dp.zeroX + time;
         var y = self.dp.zeroY + ( self.dp.maxValue - value );
         var title = "PWM #" + pwm + "\n" + hour + ":" + ( min < 10 ? "0" : "" ) + min + " " + value + "%";
-        var circle = self.dp.paper.circle(x,y,2).attr({
-          fill: self.color,
+        var circle = self.dp.paper.circle(x,y,3).attr({
+          fill: ( self.editmode ? '#8f8' : self.get_color() ),
           'fill-opacity': 1,
           class: "daycircle",
           title: title,
           point_id: i,
         });
         circle.append(Snap.parse("<title>" + title + "</title>"));
-        circle.dragger = {
-          prev_marker: ( i > 1 ? self.markers[i-2] : undefined ),
-          next_marker: ( i < self.size ? self.markers[i] : undefined ),
-          marker: self.markers[i-1],
-          orig_x: undefined,
-          orig_y: undefined,
-          orig_daymin: undefined,
-          orig_percent: undefined,
-          move: function (dx, dy, posx, posy) {
-            var time     = (posx - this.dragger.orig_x) * self.dp.currScale * self.dp.timeScale;
-            var value    = ( (this.dragger.orig_y - posy) * self.dp.currScale );
-            value        = ( value > 0 ? Math.ceil(value) : Math.floor(value) );
-            time         = ( time  > 0 ? Math.ceil(time)+1  : Math.floor(time)-1  );
-            var newtime  = this.dragger.orig_daymin + time;
-            var newvalue = this.dragger.orig_percent + value;
-            if (newvalue > self.dp.maxValue) {
-              newvalue = self.dp.maxValue;
-            } else if (newvalue < 0) {
-              newvalue = 0;
-            }
-            if (newtime > self.dp.alldaymin) {
-              newtime = self.dp.alldaymin;
-            } else if (newtime < 0) {
-              newtime = 0;
-            }
-            if (typeof this.dragger.prev_marker !== 'undefined') {
-              if (newtime <= this.dragger.prev_marker.daymin) {
-                newtime = this.dragger.prev_marker.daymin + 1;
+        if (self.editmode) {        
+          circle.dragger = {
+            prev_marker: ( i > 1 ? self.markers[i-2] : undefined ),
+            next_marker: ( i < self.size ? self.markers[i] : undefined ),
+            marker: self.markers[i-1],
+            orig_x: undefined,
+            orig_y: undefined,
+            orig_daymin: undefined,
+            orig_percent: undefined,
+            move: function (dx, dy, posx, posy) {
+              //console.log(dx, dy, posx, posy);
+              var time     = (posx - this.dragger.orig_x) * self.dp.currScale * self.dp.timeScale;
+              var value    = ( (this.dragger.orig_y - posy) * self.dp.currScale );
+              value        = ( value > 0 ? Math.ceil(value) : Math.floor(value) );
+              time         = ( time  > 0 ? Math.ceil(time)+1  : Math.floor(time)-1  );
+              var newtime  = this.dragger.orig_daymin + time;
+              var newvalue = this.dragger.orig_percent + value;
+              if (newvalue > self.dp.maxValue) {
+                newvalue = self.dp.maxValue;
+              } else if (newvalue < 0) {
+                newvalue = 0;
               }
-            }
-            if (typeof this.dragger.next_marker !== 'undefined') {
-              if (newtime >= this.dragger.next_marker.daymin) {
-                newtime = this.dragger.next_marker.daymin - 1;
+              if (newtime > self.dp.alldaymin) {
+                newtime = self.dp.alldaymin;
+              } else if (newtime < 0) {
+                newtime = 0;
               }
+              if (typeof this.dragger.prev_marker !== 'undefined') {
+                if (newtime <= this.dragger.prev_marker.daymin) {
+                  newtime = this.dragger.prev_marker.daymin + 1;
+                }
+              }
+              if (typeof this.dragger.next_marker !== 'undefined') {
+                if (newtime >= this.dragger.next_marker.daymin) {
+                  newtime = this.dragger.next_marker.daymin - 1;
+                }
+              }
+              this.dragger.marker.daymin  = newtime;
+              this.dragger.marker.percent = newvalue;
+              self.update_svg();
+            },
+            start: function(posx,posy,ev) {
+              // console.log(posx,posy,ev);
+              this.dragger.orig_x = posx;
+              this.dragger.orig_y = posy;
+              this.dragger.orig_daymin  = this.dragger.marker.daymin;
+              this.dragger.orig_percent = this.dragger.marker.percent;
+            },
+            stop: function(ev) {
+              self.update_form();
             }
-            this.dragger.marker.daymin  = newtime;
-            this.dragger.marker.percent = newvalue;
-            self.update_svg();
-          },
-          start: function(posx,posy,ev) {
-            this.dragger.orig_x = posx;
-            this.dragger.orig_y = posy;
-            this.dragger.orig_daymin  = this.dragger.marker.daymin;
-            this.dragger.orig_percent = this.dragger.marker.percent;
-          },
-          stop: function(ev) {
-            self.update_form();
-          }
-        };
-        circle.drag(circle.dragger.move,circle.dragger.start,circle.dragger.stop);
+          };
+          circle.drag(circle.dragger.move,circle.dragger.start,circle.dragger.stop);
+        }
         self.dp.path_group.add(circle);
         self.circles.push(circle);
       }
@@ -221,8 +285,9 @@ var SrPath = Class.extend({
       "M " + ( self.dp.zeroX + points[0].time ) + " " + ( self.dp.zeroY + self.dp.maxValue ) + " " +
       "L " + path_points.join(",") + ", " + ( self.dp.zeroX + points[self.size+1].time ) + " " + ( self.dp.zeroY + self.dp.maxValue ) + "Z"
     ).attr({
-      fill: self.color,
-      'fill-opacity': 0.3
+      fill: self.get_color(),
+      'fill-opacity': 0.3,
+      stroke: self.get_color(),
     });
     self.dp.path_group.add(self.path);
     $.each(self.circles,function(i,circles){
@@ -261,9 +326,6 @@ var SrPath = Class.extend({
 
 });
 
-var day_selector = '#dayplanner';
-var dayplanner_obj;
-
 // First execute stuff when the form is loaded
 $('body').on('sr_config',function(){
 
@@ -290,13 +352,12 @@ $('body').on('sr_config',function(){
         fields.push({
           name: "dayplanner#marker#" + pwm,
           transform_value: function(value) { return parseInt(value); },
-          pre: true
-          //label: "led " + pwm
+          // pre: true
+          label: "led " + pwm
         });
         fields.push({
           name: "pwm#" + pwm + "#color",
           pre: true
-          //label: "led " + pwm + " color"
         });
       });
       expert_fields.push({
@@ -326,7 +387,7 @@ $('body').on('sr_config',function(){
               }
             }
           });
-          dayplanner_obj = new SrDayplanner(day_selector,markers);
+          dayplanner_obj = new SrDayplanner(markers);
         }
       });
 
