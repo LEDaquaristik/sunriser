@@ -57,10 +57,12 @@ body{
   transition-duration:0.2s;
   /*background: linear-gradient(270deg, #184c6f, #0f705d);*/
   /*background:url(../img/background.jpg) no-repeat fixed center center / cover #145868;*/
-  -o-animation: BackAnim 175s ease infinite;
-  -webkit-animation: BackAnim 175s ease infinite;
-  -moz-animation: BackAnim 175s ease infinite;
-  animation: BackAnim 175s linear infinite;
+  /* for now deactivated ---------------------------
+    -o-animation: BackAnim 175s ease infinite;
+    -webkit-animation: BackAnim 175s ease infinite;
+    -moz-animation: BackAnim 175s ease infinite;
+    animation: BackAnim 175s linear infinite;
+  -------------------------------------------------- */  
   background:url("../img/background.jpg") no-repeat fixed center center / 200% 200% #145868;
   transform-origin: 50% 400px 0px;
 }

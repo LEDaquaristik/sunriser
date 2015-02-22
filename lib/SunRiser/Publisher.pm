@@ -64,6 +64,7 @@ sub _build_publish_files {
     password.html
     rain.html
     system.html
+    sysinfo.html
     test.html
     thunderstorm.html
     upgraded.html

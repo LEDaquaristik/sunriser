@@ -29,6 +29,12 @@ use SunRiser::Publisher;
 use SunRiser::CDB;
 use SunRiser;
 
+has versioned => (
+  is => 'lazy',
+);
+
+sub _build_versioned { $SunRiser::VERSION || $ENV{V} || 0 }
+
 option model => (
   is => 'ro',
   format => 's',
@@ -382,8 +388,18 @@ sub _web_firmware_mp {
       experimental => 1,
       author => 'You',
       timestamp => time(),
+      version => ( $self->versioned || '112233445566778899SIMULA' ),
     });
   }
+}
+
+sub _web_bootload_mp {
+  my ( $self ) = @_;
+  $self->debug('Sending bootload.mp');
+  return $self->_web_serve_msgpack({
+    version => '112233445566778899SIMULA',
+    mac => [1,2,3,4,5,6]
+  });
 }
 
 has config => (
@@ -512,6 +528,8 @@ sub _build_web {
           return $self->_web_state;
         } elsif ($uri =~ /^\/firmware\.mp/) {
           return $self->_web_firmware_mp;
+        } elsif ($uri =~ /^\/bootload\.mp/) {
+          return $self->_web_bootload_mp;
         }
         # else serve file from storage
         # gives back 200 on success and 404 on not found

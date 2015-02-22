@@ -1,0 +1,65 @@
+: cascade base { title => "System Informationen", nav => "info" }
+: override content -> {
+
+<h2>System Informationen</h2>
+<hr><br>
+<div id="sysinfo"><img class="loader" src="/img/ajaxload.gif"></div>
+<br><hr>
+
+: }
+: override postjs -> {
+
+<script type="text/html" id="sysinfo_tmpl">
+
+<table>
+  <% $.each(info,function(k,v){ %>
+    <tr>
+      <th style="text-align:left"><%=k%></th><td><%=v%></td>
+    </tr>
+  <% }); %>
+</table>
+
+</script>
+<script type="text/javascript">
+
+var firmware_info = undefined;
+var bootloader_info = undefined;
+
+function sr_sysinfo_done() {
+  if (firmware_info && bootloader_info) {
+    var bootloader_m = moment(firmware_info.timestamp * 1000);
+    bootloader_m.utcOffset(0);
+    var info = {
+      "SunRiser Modell": sr_config.model + " (" + sr_config.model_id + ")",
+      "Bootloader Version": bootloader_info.version,
+      "Firmware Version": firmware_info.version,
+      "Firmware Dateiname": firmware_info.filename,
+      "Firmware Beschreibung": firmware_info.description,
+      "Firmware Zeitstempel": bootloader_m.format('LLL.ss'),
+      "Firmware Autor": firmware_info.author,
+      "Experimentelle Firmware": firmware_info.experimental ? "Ja" : "Nein",
+      "Netzwerk MAC Adresse": bootloader_info.mac.map(function(m){
+        var h = m.toString(16); return h.length == 1 ? '0' + h : h;
+      }).join(":")
+    };
+    $('#sysinfo').html(tmpl('sysinfo_tmpl',{ info: info }));
+  }
+}
+
+// First execute stuff when the form is loaded
+$('body').on('sr_config',function(){
+
+  sr_request_mpack('GET','/firmware.mp',undefined,function(values){
+    firmware_info = values;
+    sr_sysinfo_done();
+  });
+  sr_request_mpack('GET','/bootload.mp',undefined,function(values){
+    bootloader_info = values;
+    sr_sysinfo_done();
+  });
+
+});
+
+</script>
+
+: }

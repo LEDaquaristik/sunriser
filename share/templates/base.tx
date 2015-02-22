@@ -130,8 +130,8 @@
               <: } :>
             </nav>
             <section class="sunriser_content">
-              <: block help -> { :>
-                <div class="helparea"><div class="helpareaclose"></div>Beispiel Direkt Hilfsbereich</div>
+              <: if $help { :>
+                <div class="helparea"><div class="helpareaclose"></div><: $help :></div>
               <: } :>
               <: block content -> { :>
                 Diese Seite wurde nicht gefunden!

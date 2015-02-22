@@ -61,6 +61,11 @@
         </a>
       </li>
       <li class="second-level">
+        <a href="/test.html">
+          <i class="fa fa-info-circle"></i>Funktionstest
+        </a>
+      </li>
+      <li class="second-level">
         <a href="/firmware.html">
           <i class="fa fa-forumbee"></i>Firmware
         </a>
@@ -87,8 +92,8 @@
         </a>
       </li>
       <li class="second-level">
-        <a href="/test.html">
-          <i class="fa fa-info-circle"></i>Funktionstests
+        <a href="/sysinfo.html">
+          <i class="fa fa-info-circle"></i>System Informationen
         </a>
       </li>
     </ul>
