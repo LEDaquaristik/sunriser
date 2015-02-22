@@ -466,11 +466,11 @@ sub _build_web {
       # get cookie
       my $cookie = $req->headers->header('Cookie');
 
-      my $logged_in = 0;
+      my $logged_in = 1; # real device is also not caring yet
       # checking if cookie contains sid=$anysessionid stored in EPROM
-      if ($cookie && $cookie =~ /sid=$sessionid/) {
-        $logged_in = 1;
-      }
+      # if ($cookie && $cookie =~ /sid=$sessionid/) {
+      #   $logged_in = 1;
+      # }
 
       if ($uri eq '/') {
         # if logged in serve index.html
