@@ -288,15 +288,6 @@ var SrPath = Class.extend({
             }
           };
           interact('#' + circle.attr('id')).draggable({
-            // enable inertial throwing
-            // inertia: true,
-            // keep the element within the area of it's parent
-            // restrict: {
-            //   restriction: "parent",
-            //   endOnly: true,
-            //   elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
-            // },
-            // call this function on every dragmove event
             onmove: function (event) {
               var circle = $(event.target).data('circle');
               circle.dragger.move.call(circle,event);
@@ -310,7 +301,6 @@ var SrPath = Class.extend({
               circle.dragger.stop.call(circle,event);
             }
           });
-          // circle.drag(circle.dragger.move,circle.dragger.start,circle.dragger.stop);
         }
         self.dp.path_group.add(circle);
         self.circles.push(circle);
@@ -398,7 +388,7 @@ $('body').on('sr_config',function(){
       }
     }
     if (!dayplanner_pwms.length) {
-      // window.location.href = window.location.href.replace("day.html","led.html");
+      window.location.href = window.location.href.replace("day.html","led.html");
     } else {
       var fields = new Array();
       var expert_fields = new Array();
