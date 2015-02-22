@@ -1,0 +1,21 @@
+
+#pwmpicker {
+  padding: 10px;
+  height: 65px;
+}
+
+#pathedit {
+  padding: 10px;
+  height: 65px;
+}
+
+.pathedit:hover { 
+  background-color: #0f0;
+}
+
+.daybox {
+  padding: 5px;
+  margin: 3px;
+  border: 1px solid black;
+  cursor: pointer;
+}

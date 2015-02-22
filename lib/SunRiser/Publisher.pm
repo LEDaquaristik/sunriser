@@ -53,7 +53,6 @@ sub _build_publish_files {
     contact.html
     day.html
     firmware.html
-    help.html
     index.html
     intro.html
     led.html
@@ -169,6 +168,7 @@ sub _build_base_vars {
       css/icomoon.css
       css/OpenSans-Regular-webfont.css
       css/sunriser.css
+      css/sunriser_dayplanner.css
     )],
     js_files => [
       $self->versioned ? 'js/jquery-1.11.2.min.js' : 'js/jquery-1.11.2.js',

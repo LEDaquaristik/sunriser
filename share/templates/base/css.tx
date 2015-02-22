@@ -1,0 +1,82 @@
+<style>
+  /** ScreenBlocker **/
+  .screenblockertext{
+    display:none;
+    width:100%;
+    height:100%;
+    position:fixed;
+    top:0;
+    left:0px;
+    text-align:center;
+    z-index:10;
+    background-color:rgba(32,39,49,,0);
+    transition-duration:0.2s
+  }
+  .screenblockertext .blocking{
+    margin:20% 25px 0 25px;
+    font-size:50px;
+    color:#fff;
+    z-index:11;
+    line-height:1;
+    padding: 45px 25px 35px 25px;
+    border: 10px solid !important;
+    display: inline-block;
+    position:relative
+  }
+  #blockertext{
+    position:relative
+  }
+  .anim{
+    background-color:rgba(0,0,0,0.4);
+    height:100%;
+    position:absolute;
+    width:0px;
+    top:0px;
+    left:0px;
+    -webkit-animation: LoadingAnim 5s ease infinite;
+    -moz-animation: LoadingAnim 5s ease infinite;
+    -moz-animation: LoadingAnim 5s ease infinite;
+    animation: LoadingAnim 5s ease infinite;
+  }
+
+  @-webkit-keyframes LoadingAnim {
+      0%{
+          width:0%;
+      }
+      50%{
+          width:100%;
+          margin-left:0%
+      }
+      100%{
+          margin-left:100%
+      }
+  }
+  @-moz-keyframes LoadingAnim {
+      0%{
+          width:0%;
+      }
+      50%{
+          width:100%;
+          margin-left:0%
+      }
+      100%{
+          margin-left:100%
+      }
+  }
+  @keyframes LoadingAnim {
+      0%{
+          width:0%;
+      }
+      50%{
+          width:100%;
+          margin-left:0%
+      }
+      100%{
+          margin-left:100%
+      }
+  }
+  .screenblocker .screenblockertext{
+    display:block;
+    background-color:rgba(32,39,49,0.9)
+  }
+</style>

@@ -12,7 +12,7 @@
 <script type="text/html" id="pwmpicker_tmpl">
 
 <% $.each(paths,function(i,path){ %>
-  <div style="float:left;padding:5px;margin:3px;border:1px solid black" class="pwmpicker" id="pwmpicker_<%=path.pwm%>">
+  <div style="float:left" class="daybox pwmpicker" id="pwmpicker_<%=path.pwm%>">
     LED #<%=path.pwm%>
   </div>
 <% }); %>
@@ -20,12 +20,36 @@
 </script>
 <script type="text/html" id="pathedit_tmpl">
 
-
+<% if (!(markers.length > 0 && markers[0].daymin == 0)) { %>
+  <div style="float:left" class="daybox pathedit pathedit_add" data-pos="0" data-pwm="<%=pwm%>" id="pathedit_<%=pwm%>_add_0">
+    &nbsp;+&nbsp;
+  </div>
+<% } %>
+<% $.each(markers,function(i,marker){ %>
+  <div style="float:left" class="daybox pathedit pathedit_edit" data-pos="<%=i%>" data-pwm="<%=pwm%>" id="pathedit_<%=pwm%>_edit_<%=i%>">
+    <%=marker.title()%>
+  </div>
+  <% if (!(i == ( markers.length - 1 ) && markers[i].daymin >= dp.alldaymin - 1) && !(markers[i+1] && markers[i+1].daymin == markers[i].daymin + 1 )) { %>
+    <div style="float:left" class="daybox pathedit pathedit_add" data-pos="<%=i+1%>" data-pwm="<%=pwm%>" id="pathedit_<%=pwm%>_add_<%=i+1%>">
+      &nbsp;+&nbsp;
+    </div>
+  <% } %>
+<% }); %>
 
 </script>
 <script type="text/javascript">
 
 var dayplanner_obj;
+
+//
+//       _/_/_/            _/_/_/                                  _/
+//    _/        _/  _/_/  _/    _/    _/_/_/  _/    _/  _/_/_/    _/    _/_/_/  _/_/_/    _/_/_/      _/_/    _/  _/_/
+//     _/_/    _/_/      _/    _/  _/    _/  _/    _/  _/    _/  _/  _/    _/  _/    _/  _/    _/  _/_/_/_/  _/_/
+//        _/  _/        _/    _/  _/    _/  _/    _/  _/    _/  _/  _/    _/  _/    _/  _/    _/  _/        _/
+// _/_/_/    _/        _/_/_/      _/_/_/    _/_/_/  _/_/_/    _/    _/_/_/  _/    _/  _/    _/    _/_/_/  _/
+//                                              _/  _/
+//                                         _/_/    _/
+//
 
 var SrDayplanner = Class.extend({
 
@@ -50,7 +74,7 @@ var SrDayplanner = Class.extend({
 
   init: function(pwm_markers){
     var self = this;
-    self.maxTime = self.alldaymin / self.timeScale;
+    self.maxTime = ( self.alldaymin - 1 ) / self.timeScale;
     self.jq = $('#dayplanner');
     self.paper = Snap('#dayplanner');
     self.grid_group = self.paper.g();
@@ -75,6 +99,7 @@ var SrDayplanner = Class.extend({
           curr_path.edit(0);
         });
         $('.pwmpicker').css('background-color','#fff');
+        $('#pathedit').html("");
         if (self.current_edit == pwm) {
           self.current_edit = undefined;
         } else {
@@ -87,27 +112,43 @@ var SrDayplanner = Class.extend({
 
   },
 
+//
+//      _/_/_/            _/        _/
+//   _/        _/  _/_/        _/_/_/
+//  _/  _/_/  _/_/      _/  _/    _/
+// _/    _/  _/        _/  _/    _/
+//  _/_/_/  _/        _/    _/_/_/
+//
+
   make_grid: function(){
     var self = this;
-
+    var attrs = {
+      stroke: "#ccc",
+      "stroke-width": "0.5px",
+      "strole-linecap": "round",
+      "stroke-dasharray": "1,1",
+      class: "gridline"
+    };
     for (var i = 0; i <= self.gridSize; i++) {
       var x = i * ((self.maxTime - self.minTime) / self.gridSize);
-      var xLine = self.paper.line(self.zeroX + x, self.zeroY + self.minValue, self.zeroX + x, self.zeroY + self.maxValue).attr({
-        stroke: "#ccc",
-        class: "gridline"
-      });
+      var xLine = self.paper.line(self.zeroX + x, self.zeroY + self.minValue, self.zeroX + x, self.zeroY + self.maxValue).attr(attrs);
       self.grid_group.add(xLine);
     }
 
     for (var i = 0; i <= self.gridSize; i++) {
       var y = i * ((self.maxValue - self.minValue) / self.gridSize);
-      var yLine = self.paper.line(self.zeroX + self.minTime, self.zeroY + y, self.zeroX + self.maxTime, self.zeroY + y).attr({
-        stroke: "#ccc",
-        class: "gridline"
-      });
+      var yLine = self.paper.line(self.zeroX + self.minTime, self.zeroY + y, self.zeroX + self.maxTime, self.zeroY + y).attr(attrs);
       self.grid_group.add(yLine);
     }
   },
+
+//
+//       _/_/_/                      _/
+//    _/          _/_/_/    _/_/_/  _/    _/_/
+//     _/_/    _/        _/    _/  _/  _/_/_/_/
+//        _/  _/        _/    _/  _/  _/
+// _/_/_/      _/_/_/    _/_/_/  _/    _/_/_/
+//
 
   scale: function(){
     var self = this;
@@ -128,6 +169,14 @@ var SrDayplanner = Class.extend({
 
 });
 
+//
+//       _/_/_/            _/      _/                      _/
+//    _/        _/  _/_/  _/_/  _/_/    _/_/_/  _/  _/_/  _/  _/      _/_/    _/  _/_/
+//     _/_/    _/_/      _/  _/  _/  _/    _/  _/_/      _/_/      _/_/_/_/  _/_/
+//        _/  _/        _/      _/  _/    _/  _/        _/  _/    _/        _/
+// _/_/_/    _/        _/      _/    _/_/_/  _/        _/    _/    _/_/_/  _/
+//
+
 var SrMarker = Class.extend({
 
   daymin: undefined,
@@ -136,9 +185,24 @@ var SrMarker = Class.extend({
   init: function(daymin,percent) {
     this.daymin = daymin;
     this.percent = percent;
+  },
+
+  title: function() {
+    var hour = Math.floor( this.daymin / 60);
+    var min = this.daymin - ( hour * 60 );
+    if (hour == 24) { hour = 0 }; // shouldn't happen anymore, but better lets be safe
+    return "" + hour + ":" + ( min < 10 ? "0" : "" ) + min + " " + this.percent + "%";    
   }
 
 });
+
+//
+//       _/_/_/            _/_/_/                _/      _/
+//    _/        _/  _/_/  _/    _/    _/_/_/  _/_/_/_/  _/_/_/
+//     _/_/    _/_/      _/_/_/    _/    _/    _/      _/    _/
+//        _/  _/        _/        _/    _/    _/      _/    _/
+// _/_/_/    _/        _/          _/_/_/      _/_/  _/    _/
+//
 
 var SrPath = Class.extend({
 
@@ -159,7 +223,8 @@ var SrPath = Class.extend({
     if (sr_color[color_id]) {
       this.color = sr_color[color_id].color;
     }
-    this.update_markers(markers);
+    this.markers  = markers;
+    this.size     = markers.length;
     this.update_circles();
   },
 
@@ -181,13 +246,27 @@ var SrPath = Class.extend({
   },
 
   add_marker: function(daymin,percent) {
-
-  },
-
-  update_markers: function(markers) {
-    this.markers  = markers;
-    this.size     = markers.length;
-    this.update_path();
+    var self = this;
+    if (self.size) {
+      for (var i = 0; i < self.size; i++) {
+        if (i == 0 && daymin < self.markers[i].daymin) {
+          self.markers.splice(i,0,new SrMarker(daymin,percent));
+          break;
+        } else if (self.markers[i+1]) {
+          if (daymin > self.markers[i].daymin && daymin < self.markers[i+1].daymin) {
+            self.markers.splice(i+1,0,new SrMarker(daymin,percent));
+            break;
+          }
+        } else { // daymin >= self.markers[i] && !self.markers[i+1]
+          self.markers.push(new SrMarker(daymin,percent));
+          break;
+        }
+      }      
+    } else {
+      self.markers.push(new SrMarker(daymin,percent));
+    }
+    self.size = self.markers.length;
+    self.update_circles();
   },
 
   update_form: function() {
@@ -199,6 +278,16 @@ var SrPath = Class.extend({
     $('#dayplanner_marker_' + self.pwm).val(values.join(','));
   },
 
+//
+//    _/    _/                  _/            _/_/_/  _/                      _/
+//   _/    _/  _/_/_/      _/_/_/          _/            _/  _/_/    _/_/_/  _/    _/_/      _/_/_/
+//  _/    _/  _/    _/  _/    _/          _/        _/  _/_/      _/        _/  _/_/_/_/  _/_/
+// _/    _/  _/    _/  _/    _/          _/        _/  _/        _/        _/  _/            _/_/
+//  _/_/    _/_/_/      _/_/_/  _/        _/_/_/  _/  _/          _/_/_/  _/    _/_/_/  _/_/_/
+//         _/
+//        _/
+//
+
   update_circles: function() {
     var self = this;
     var pwm = self.pwm;
@@ -207,16 +296,13 @@ var SrPath = Class.extend({
     });
     self.circles = [];
     var points = self.all_points();
-    if (points.length) {    
+    if (points.length) {
       for (var i = 1; i <= self.size; i++) {
         var time = points[i].time;
         var value = points[i].value;
-        var mins = self.markers[i-1].daymin;
-        var hour = Math.floor( mins / 60);
-        var min = mins - ( hour * 60 );
+        var title = self.markers[i-1].title();
         var x = self.dp.zeroX + time;
         var y = self.dp.zeroY + ( self.dp.maxValue - value );
-        var title = "PWM #" + pwm + "\n" + hour + ":" + ( min < 10 ? "0" : "" ) + min + " " + value + "%";
         var id = btoa(Math.random()).substring(0,8);
         var circle = self.dp.paper.circle(x,y,3).attr({
           fill: ( self.editmode ? '#8f8' : self.get_color() ),
@@ -226,7 +312,8 @@ var SrPath = Class.extend({
           point_id: i,
           id: id
         });
-        circle.append(Snap.parse("<title>" + title + "</title>"));
+        $(circle.node).data('title',title);
+        circle.append(Snap.parse("<title>" + "PWM #" + pwm + "\n" + title + "</title>"));
         if (self.editmode) {
           $(circle.node).data('circle',circle);
           circle.dragger = {
@@ -251,8 +338,8 @@ var SrPath = Class.extend({
               } else if (newvalue < 0) {
                 newvalue = 0;
               }
-              if (newtime > self.dp.alldaymin) {
-                newtime = self.dp.alldaymin;
+              if (newtime > (self.dp.alldaymin - 1)) {
+                newtime = self.dp.alldaymin - 1;
               } else if (newtime < 0) {
                 newtime = 0;
               }
@@ -283,7 +370,6 @@ var SrPath = Class.extend({
               this.dragger.orig_percent = this.dragger.marker.percent;
             },
             stop: function(ev) {
-              self.update_form();
               self.update_circles();
             }
           };
@@ -305,15 +391,66 @@ var SrPath = Class.extend({
         self.dp.path_group.add(circle);
         self.circles.push(circle);
       }
-      self.update_path();
     }
+    self.update_path();
+    self.update_form();
   },
+
+//
+//     _/_/_/                _/      _/                        _/  _/    _/
+//    _/    _/    _/_/_/  _/_/_/_/  _/_/_/      _/_/      _/_/_/      _/_/_/_/
+//   _/_/_/    _/    _/    _/      _/    _/  _/_/_/_/  _/    _/  _/    _/
+//  _/        _/    _/    _/      _/    _/  _/        _/    _/  _/    _/
+// _/          _/_/_/      _/_/  _/    _/    _/_/_/    _/_/_/  _/      _/_/
+//
+
+  set_pathedit: function() {
+    var self = this;
+    $('#pathedit').html(tmpl('pathedit_tmpl',self));
+    $('.pathedit_add').click(function(){
+      var pos = $(this).data('pos');
+      if (self.size == 0) {
+        self.add_marker(self.dp.alldaymin / 2, self.dp.maxValue / 2);
+      } else if (self.size == 1) {
+        self.add_marker(
+          pos == 0 ? Math.ceil(self.markers[0].daymin / 2) : ( self.markers[0].daymin + Math.floor((self.dp.alldaymin - self.markers[0].daymin) / 2) ),
+          self.markers[0].percent
+        );
+      } else {
+        var prev_marker = pos == 0 ? self.markers[self.size - 1] : self.markers[pos - 1];
+        var next_marker = pos == self.size ? self.markers[0] : self.markers[pos];
+        var new_percent = Math.round((next_marker.percent + prev_marker.percent) / 2);
+        var new_time;
+        if (pos == 0) {
+          new_time = Math.floor(next_marker.daymin / 2);
+        } else if (pos == self.size) {
+          new_time = prev_marker.daymin + Math.ceil((self.dp.alldaymin - prev_marker.daymin) / 2);
+        } else {
+          new_time = prev_marker.daymin + Math.ceil((next_marker.daymin - prev_marker.daymin) / 2);
+        }
+        self.add_marker(new_time,new_percent);
+      }
+    });
+  },
+
+//
+//    _/    _/                  _/          _/_/_/                _/      _/
+//   _/    _/  _/_/_/      _/_/_/          _/    _/    _/_/_/  _/_/_/_/  _/_/_/
+//  _/    _/  _/    _/  _/    _/          _/_/_/    _/    _/    _/      _/    _/
+// _/    _/  _/    _/  _/    _/          _/        _/    _/    _/      _/    _/
+//  _/_/    _/_/_/      _/_/_/  _/      _/          _/_/_/      _/_/  _/    _/
+//         _/
+//        _/
+//
 
   update_path: function() {
     var self = this;
     var pwm = self.pwm;
     if (typeof self.path !== 'undefined') {
       self.path.remove();
+    }
+    if (self.editmode) {
+      self.set_pathedit();
     }
     var points = self.all_points();
     if (points.length) {
@@ -349,7 +486,7 @@ var SrPath = Class.extend({
     var last_time = self.markers[last_id].daymin;
     var last_value = self.markers[last_id].percent;
     points.push({
-      time: Math.ceil(( 0 - ( self.dp.alldaymin - last_time ) ) / self.dp.timeScale),
+      time: Math.ceil(( 0 - ( self.dp.alldaymin - 1 - last_time ) ) / self.dp.timeScale),
       value: last_value,
       marker: last_id
     });
@@ -361,7 +498,7 @@ var SrPath = Class.extend({
       });
     }
     points.push({
-      time: Math.ceil(( self.dp.alldaymin + first_time ) / self.dp.timeScale),
+      time: Math.ceil(( self.dp.alldaymin - 1 + first_time ) / self.dp.timeScale),
       value: first_value,
       marker: 0
     });
@@ -396,8 +533,7 @@ $('body').on('sr_config',function(){
         fields.push({
           name: "dayplanner#marker#" + pwm,
           transform_value: function(value) { return parseInt(value); },
-          // pre: true
-          label: "led " + pwm
+          pre: true
         });
         fields.push({
           name: "pwm#" + pwm + "#color",
