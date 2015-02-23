@@ -27,15 +27,18 @@ var bootloader_info = undefined;
 
 function sr_sysinfo_done() {
   if (firmware_info && bootloader_info) {
-    var bootloader_m = moment(firmware_info.timestamp * 1000);
+    var bootloader_m = moment(bootloader_info.timestamp * 1000);
     bootloader_m.utcOffset(0);
+    var firmware_m = moment(firmware_info.timestamp * 1000);
+    firmware_m.utcOffset(0);
     var info = {
       "SunRiser Modell": sr_config.model + " (" + sr_config.model_id + ")",
       "Bootloader Version": bootloader_info.version,
+      "Bootloader Zeitstempel": bootloader_m.format('LLL.ss'),
       "Firmware Version": firmware_info.version,
       "Firmware Dateiname": firmware_info.filename,
       "Firmware Beschreibung": firmware_info.description,
-      "Firmware Zeitstempel": bootloader_m.format('LLL.ss'),
+      "Firmware Zeitstempel": firmware_m.format('LLL.ss'),
       "Firmware Autor": firmware_info.author,
       "Experimentelle Firmware": firmware_info.experimental ? "Ja" : "Nein",
       "Netzwerk MAC Adresse": bootloader_info.mac.map(function(m){

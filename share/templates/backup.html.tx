@@ -1,8 +1,16 @@
 : cascade base { title => "Sicherung", nav => "system", no_form => 1 }
 : override content -> {
 
-<h2>
-  <a href="/backup">Konfiguration runterladen</a>
-</h2>
+<div class="buttonbloc">
+  <a class="bigbutton" href="/backup">
+    <div>Konfiguration runterladen</div>
+  </a>
+  <div style="cursor:pointer" class="bigbutton">
+    <div>Konfiguration zur&uuml;ckspielen</div>
+  </div>
+  <a class="bigbutton" href="/factorybackup">
+    <div>Factory-Reset Sicherung runterladen</div>
+  </a>
+</div>
 
 : }

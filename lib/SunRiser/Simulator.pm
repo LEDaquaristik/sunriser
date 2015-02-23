@@ -398,6 +398,7 @@ sub _web_bootload_mp {
   $self->debug('Sending bootload.mp');
   return $self->_web_serve_msgpack({
     version => '112233445566778899SIMULA',
+    timestamp => $self->get_time(),
     mac => [1,2,3,4,5,6]
   });
 }

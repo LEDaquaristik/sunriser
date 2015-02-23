@@ -569,11 +569,11 @@ $('body').on('sr_config',function(){
         expert_fields: expert_fields,
         loaded: function(){
           var markers = {};
-          $.each(this.values(),function(k,v){
-            var matches;
-            if (matches = k.match(/^dayplanner#marker#(\d+)$/)) {
-              var pwm = matches[1];
-              markers[pwm] = [];
+          var values = this.values();
+          $.each(dayplanner_pwms,function(i,pwm){
+            markers[pwm] = [];
+            v = values["dayplanner#marker#" + pwm];
+            if (v) {
               for (var i = 0; i < v.length; i++, i++) {
                 markers[pwm].push(new SrMarker(v[i],v[i+1]));
               }
