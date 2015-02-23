@@ -103,7 +103,7 @@ var SrDayplanner = Class.extend({
         if (self.current_edit == pwm) {
           self.current_edit = undefined;
         } else {
-          $(this).css('background-color','#0f0');
+          $(this).css('background-color','#CCD7E2');
           self.current_edit = pwm;
           self.paths[pwm].edit(1);
         }
@@ -228,7 +228,7 @@ var SrPath = Class.extend({
 
   get_color: function() {
     if (this.editmode) {
-      return '#0f0';
+      return '#2980B9';
     } else {
       return this.color;
     }
@@ -309,8 +309,10 @@ var SrPath = Class.extend({
         var x = self.dp.zeroX + time;
         var y = self.dp.zeroY + ( self.dp.maxValue - value );
         var id = btoa(Math.random()).substring(0,8);
-        var circle = self.dp.paper.circle(x,y,3).attr({
-          fill: ( self.editmode ? '#8f8' : self.get_color() ),
+        var circle = self.dp.paper.circle(x,y,2).attr({
+          fill: ( self.editmode ? '#fff' : self.get_color() ),
+          stroke: ( self.editmode ? '#2980B9' : self.get_color() ),
+          "stroke-width": "0.5px",
           'fill-opacity': 1,
           class: "daycircle",
           title: title,
@@ -477,6 +479,7 @@ var SrPath = Class.extend({
         fill: self.get_color(),
         'fill-opacity': 0.3,
         stroke: self.get_color(),
+        "stroke-width": "0.5px",
       });
       self.dp.path_group.add(self.path);
       $.each(self.circles,function(i,circle){
