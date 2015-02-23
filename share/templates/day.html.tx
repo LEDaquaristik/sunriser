@@ -153,12 +153,10 @@ var SrDayplanner = Class.extend({
   scale: function(){
     var self = this;
     var curWidth = self.jq.width();
-    if (self.matrix) {
-      var invert = self.matrix.invert();
-      self.grid_group.transform(invert);
-      self.path_group.transform(invert);
-    } else {
+    if (!self.matrix) {
       self.matrix = new Snap.Matrix();
+    } else {
+      self.matrix.scale(self.currScale);      
     }
     self.currScale = self.maxTime / curWidth;
     self.matrix.scale(1 / self.currScale);
