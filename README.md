@@ -20,8 +20,8 @@ Installation
 
 Um mit der Umgebung zu arbeiten um z.B. uns Korrekturen zu schicken für das HTML
 welche Sie vorher direkt selber testen können, wird ein bisschen Erfahrung mit
-git und der englischen Sprache vorausgesetzt. Ein Linux Betriebssystem und
-Erfahrung mit diesem sind auch notwendig.
+[git](http://de.wikipedia.org/wiki/Git) und der englischen Sprache vorausgesetzt.
+Ein Linux Betriebssystem und Erfahrung mit diesem sind auch notwendig.
 
 Sie können den Simulator und die Umgebung mit folgenden Anweisungen einrichten
 (neben git und curl wird auch ein C compiler benötigt):
