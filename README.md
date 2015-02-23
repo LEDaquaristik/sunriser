@@ -10,6 +10,11 @@ Bitte beachten Sie das im Open Source Code und den internen Dokumentationen
 alles in Englisch verfasst ist, weil die Entwicklung mit Hilfe der
 internationalen Open Source Community voran getrieben wird.
 
+Jeglicher Source Code und Konfigurationsdateien veröffentlicht im Rahmen des
+SunRiser Projekts sind [GPL](http://www.gnu.org/licenses/gpl-3.0) lizensiert,
+soweit nicht anders angegeben. Alle weiteren Dateien (wie z.B. Grafiken)
+fallen unter [Creative Commons Attribution 4.0 International](http://creativecommons.org/licenses/by/4.0/).
+
 Installation
 ============
 
