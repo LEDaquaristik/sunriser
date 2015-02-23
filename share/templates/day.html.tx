@@ -1,4 +1,4 @@
-: cascade base { title => "Tagesplanung", nav => "planner" }
+: cascade base { title => "Tagesplanung", nav => "planner", help => r("Hier k&ouml;nnen Sie den Tagesverlauf Ihrer LEDs einfach per Klick einstellen. W&auml;hlen Sie zuerst oben die einzustellende LED aus, und f&uuml;gen Sie dann &uuml;ber die Plus Zeichen unten neue Punkte hinzu. Diese k&ouml;nnen Sie dann im Graphen nach belieben verschieben. Um einen Punkt zu entfernen, dr&uuml;cken einfach auf die Uhrzeit/Prozent Angabe dieses Punktes neben den Plus Zeichen.") }
 : override content -> {
 
 <div id="pwmpicker"></div>
@@ -245,6 +245,13 @@ var SrPath = Class.extend({
     this.update_circles();
   },
 
+  delete_marker: function(i) {
+    var self = this;
+    self.markers.splice(i,1);
+    self.size = self.markers.length;
+    self.update_circles();
+  },
+
   add_marker: function(daymin,percent) {
     var self = this;
     if (self.size) {
@@ -407,6 +414,13 @@ var SrPath = Class.extend({
   set_pathedit: function() {
     var self = this;
     $('#pathedit').html(tmpl('pathedit_tmpl',self));
+    $('.pathedit_edit').click(function(){
+      var pos = $(this).data('pos');
+      var marker = self.markers[pos];
+      if (confirm("Wollen Sie " + marker.title() + " entfernen?") == true) {
+        self.delete_marker(pos);
+      }
+    });
     $('.pathedit_add').click(function(){
       var pos = $(this).data('pos');
       if (self.size == 0) {
