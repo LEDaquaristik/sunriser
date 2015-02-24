@@ -1,12 +1,12 @@
-
 #pwmpicker {
   padding: 10px 0;
   height: 65px;
 }
 
 #pathedit {
-  padding: 10px 0;
+  padding-top: 10px;
   height: 65px;
+  display:table
 }
 
 .pathedit:hover { 
@@ -15,8 +15,19 @@
 
 .daybox {
   padding: 5px;
-  margin-right: 10px;
+  margin: 0 10px 10px 0;
   border:2px solid #CCD7E2;
   border-radius:3px;
   cursor: pointer;
+}
+.countbar{
+  font-size:16px
+}
+.counttime{
+  display:block;
+  float:left;
+  width:25%;
+}
+.countend{
+  float:right
 }

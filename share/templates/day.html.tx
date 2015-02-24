@@ -3,6 +3,12 @@
 
 <div id="pwmpicker"></div>
 <svg id="dayplanner"></svg>
+<div class="countbar">
+  <div class="counttime">0h</div>
+  <div class="counttime">6h</div>
+  <div class="counttime">12h</div>
+  <div class="counttime">18h<div class="countend">0h</div></div>
+</div>
 <div id="pathedit"></div>
 <div class="form noautoload" id="dayplan"></div>
 
