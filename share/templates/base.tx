@@ -43,7 +43,7 @@
             </nav>
             <section class="sunriser_content">
               <: if $help { :>
-                <div class="helparea"><div class="helpareaclose"></div><: $help :></div>
+                <div class="helparea"><div class="helpareaclose"></div><: $help :></div>
               <: } :>
               <: block content -> { :>
                 Diese Seite wurde nicht gefunden!
@@ -64,7 +64,7 @@
                 </p>
               </div>
               <div class="hilfe-more-close">
-                <!--<a href="#" class="hilfe-more">Learn More.</a>--><a href="#" class="hilfe-close"></a>
+                <!--<a href="#" class="hilfe-more">Learn More.</a>--><a href="#" class="hilfe-close"></a>
               </div>
             </div>
           <: } :>
