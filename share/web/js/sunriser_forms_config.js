@@ -56,8 +56,8 @@ var sr_forms = {
     }],
     expert_fields: [{
       name: "nofinder", label: "SunRiser Finder deaktivieren"
-    },{
-      name: "indexfile", label: "Startseite nach Anmeldung"
+    // },{
+    //   name: "indexfile", label: "Startseite nach Anmeldung"
     }]
   },
   //
