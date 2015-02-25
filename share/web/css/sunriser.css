@@ -949,10 +949,17 @@ nav h2{
   font-size: 18px;
   color: white;
   float: right;
+  transition-duration:0.2s
 }
 
 .installed_firmware{
-  background-color: rgb(255, 0, 0);
+  background-color: #E74C3C;
+}
+.installed_firmware:hover{
+  background-color: #e95d4f;
+}
+.installed_firmware:active{
+  background-color: #C0392B;
 }
 
 .install_firmware:hover{
@@ -963,7 +970,7 @@ nav h2{
 }
 .firmdown:before{
   content:"⬇";
-  padding-right:1em;
+  padding-right:7px;
 } 
 /** Sliders **/
 
