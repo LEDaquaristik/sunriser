@@ -89,19 +89,19 @@ Alte DIN 1451 Mittelschrift font family is licensed under the <a href="http://sc
 <h2>Frontend | <a href="http://snapsvg.io/">Snap.svg</a></h2>
 <hr>
 <pre>
-// Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
-// 
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// 
-// <a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a>
-// 
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+<a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a>
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 </pre>
 
 <hr>
@@ -137,16 +137,27 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 <h2>Frontend | <a href="https://github.com/msgpack/msgpack-javascript">msgpack.js</a></h2>
 <hr>
 <pre>
-{id:msgpack.js,ver:1.05,license:"MIT",author:"uupaa.js@gmail.com"}
+msgpack.js v1.05
+MIT Licensed
+Author: uupaa.js@gmail.com
 </pre>
 
 <hr>
 <h2>Frontend | <a href="http://ejohn.org/blog/javascript-micro-templating/">tmpl.js</a></h2>
 <hr>
 <pre>
-// Simple JavaScript Templating
-// John Resig - <a href="http://ejohn.org/">http://ejohn.org/</a> - MIT Licensed
-// <a href="http://ejohn.org/blog/javascript-micro-templating/">http://ejohn.org/blog/javascript-micro-templating/</a>
+Simple JavaScript Templating
+John Resig - <a href="http://ejohn.org/">http://ejohn.org/</a> - MIT Licensed
+<a href="http://ejohn.org/blog/javascript-micro-templating/">http://ejohn.org/blog/javascript-micro-templating/</a>
+</pre>
+
+<hr>
+<h2>Frontend | <a href="http://ejohn.org/blog/simple-javascript-inheritance/">class.js</a></h2>
+<hr>
+<pre>
+Simple JavaScript Inheritance
+John Resig - <a href="http://ejohn.org/">http://ejohn.org/</a> - MIT Licensed
+<a href="http://ejohn.org/blog/simple-javascript-inheritance/">http://ejohn.org/blog/simple-javascript-inheritance/</a>
 </pre>
 
 <hr>
@@ -178,11 +189,9 @@ THE SOFTWARE.
 <h2>Frontend | <a href="http://meyerweb.com/eric/tools/css/reset/">reset.css</a></h2>
 <hr>
 <pre>
-/*
-   http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
-*/
+http://meyerweb.com/eric/tools/css/reset/ 
+v2.0 | 20110126
+License: none (public domain)
 </pre>
 
 <hr>
@@ -419,8 +428,6 @@ See <a href="https://github.com/libopencm3/libopencm3/blob/master/COPYING.LGPL3"
 <h2>Microcontroller | <a href="http://www.sparetimelabs.com/tinyprintf/tinyprintf.php">tiny printf</a></h2>
 <hr>
 <pre>
-/*
-
 Copyright (C) 2004  Kustaa Nyholm
 
 This library is free software; you can redistribute it and/or
@@ -436,8 +443,6 @@ Lesser General Public License for more details.
 You should have received a copy of the GNU Lesser General Public
 License along with this library; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-
-*/
 </pre>
 
 : }
