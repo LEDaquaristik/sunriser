@@ -1280,3 +1280,22 @@ a.funk_test:active{
     right:60px;
   }
 }
+
+/**       Backup         **/
+
+.backupbutton {
+  height: 200px;
+  vertical-align: middle;
+}
+
+#backup_restore {
+  cursor: pointer;
+}
+
+/**   Hidden File upload   **/
+
+.hiddenfileupload {
+  width: 0px;
+  height: 0px;
+  overflow: hidden;
+}

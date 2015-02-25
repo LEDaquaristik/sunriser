@@ -1,16 +1,74 @@
-: cascade base { title => "Sicherung", nav => "system", no_form => 1 }
+: cascade base { title => "Sicherung", nav => "system", no_form => 1, help => "" }
 : override content -> {
 
-<div class="buttonbloc">
-  <a class="bigbutton" href="/backup">
+<div class="buttonbloc backupbuttons">
+  <a class="bigbutton backupbutton" href="/backup">
     <div>Konfiguration runterladen</div>
   </a>
-  <div style="cursor:pointer" class="bigbutton">
-    <div>Konfiguration zur&uuml;ckspielen</div>
+  <div id="backup_restore" class="bigbutton backupbutton">
+    <div>Konfiguration wieder herstellen (Einfach .mp Datei hier hineinziehen oder anklicken f&uuml;r Dateimanager)</div>
   </div>
-  <a class="bigbutton" href="/factorybackup">
+  <a class="bigbutton backupbutton" href="/factorybackup">
     <div>Factory-Reset Sicherung runterladen</div>
   </a>
 </div>
+<div class="backup_info">
+</div>
+
+<input type="file" class="hiddenfileupload" id="backup_fileupload" />
+
+: }
+: override postjs -> {
+
+<script type="text/javascript">
+
+var backup_reader = new FileReader();
+backup_reader.onload = function(e){
+  console.log(backup_reader.result);
+  var bytearray = new Uint8Array(backup_reader.result);
+  result = msgpack.unpack(bytearray);
+  console.log(result);
+};
+
+function use_backup_file(file) {
+  console.log(file);
+  backup_reader.readAsArrayBuffer(file);
+}
+
+function too_many_files() {
+  alert('Bitte nur eine Datei hochladen!');
+}
+
+// Setup the dnd listeners.
+$('#backup_restore').on('dragover',function(e){
+  e.stopPropagation();
+  e.preventDefault();
+  e.originalEvent.dataTransfer.dropEffect = 'copy';
+}).on('drop',function(e){
+  e.stopPropagation();
+  e.preventDefault();
+  var files = e.originalEvent.dataTransfer.files; // FileList object.
+  if (files.length == 1) {
+    use_backup_file(files[0]);
+  } else if (files.length == 0) {
+    // do nothing
+  } else {
+    too_many_files();
+  }
+}).click(function(){
+  $('#backup_fileupload').trigger('click');
+});
+
+$('#backup_fileupload').change(function(){
+  if (this.files.length == 1) {
+    use_backup_file(this.files[0]);
+  } else if (this.files.length == 0) {
+    // do nothing
+  } else {
+    too_many_files();
+  }
+});
+
+</script>
 
 : }
