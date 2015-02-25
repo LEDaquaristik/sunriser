@@ -15,10 +15,17 @@ use Data::MessagePack;
 use DDP;
 use Path::Tiny;
 use JSON::MaybeXS;
+use File::ShareDir::ProjectDistDir;
+use File::Copy;
 use Carp qw( croak );
 
 my $dir = shift @ARGV || '.';
 my $p = path($dir);
+
+my $share = path(dist_dir('SunRiser'));
+
+copy($share->child('master/index.html'),path($dir)->child('index.html')) or die "Copy failed: $!";
+copy($share->child('web/js/jquery-1.11.2.min.js'),path($dir)->child('jquery-1.11.2.min.js')) or die "Copy failed: $!";
 
 my $config = SunRiser::Config->new;
 
