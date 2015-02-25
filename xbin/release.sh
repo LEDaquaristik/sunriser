@@ -41,7 +41,7 @@ scp $OBJS_FILE     $TARGET:~/htdocs/objs/
 scp $FIRMWARE_FILE $TARGET:~/htdocs/
 scp $RELEASE_FILE  $TARGET:~/
 echo "Install distribution, upgrade images file..."
-ssh $TARGET        "cpanm $RELEASE_FILE; cd htdocs; sunriser_imagesfile"
+ssh $TARGET        "cpanm $RELEASE_FILE; cd htdocs; sunriser_generatemaster"
 
 echo "Release of v$VERSION done..."
 

@@ -17,7 +17,6 @@ use Path::Tiny;
 use JSON::MaybeXS;
 use Carp qw( croak );
 
-my $filename = shift @ARGV || 'sunriser_firmware_images.json';
 my $dir = shift @ARGV || '.';
 my $p = path($dir);
 
@@ -44,7 +43,7 @@ for (sort { $images{$b}->{timestamp} <=> $images{$a}->{timestamp} } keys %images
 }
 
 if (%images) {
-  path($filename)->spew(encode_json(\@imageslist));
+  path('sunriser_firmware_images.json')->spew(encode_json(\@imageslist));
 } else {
   croak "No images found";
 }
