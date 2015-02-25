@@ -64,7 +64,6 @@
 
 <script type="text/javascript">
 
-$('#home_configured').hide();
 $('#home_not_configured').hide();
 $('#index_functions').hide();
 

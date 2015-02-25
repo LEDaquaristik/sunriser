@@ -4,16 +4,9 @@
  */
 /* FONT PATH
  * -------------------------- */
-@font-face {
-  font-family: 'IcoMoon';
-  src:url('../fonts/icomoon.eot?z7sih1');
-  src: local('☺'), url('../fonts/icomoon.eot?#iefixz7sih1') format('embedded-opentype'),
-  	url('../fonts/icomoon.woff?z7sih1') format('woff'),
-  	url('../fonts/icomoon.ttf?z7sih1') format('truetype'),
-  	url('../fonts/icomoon.svg?z7sih1#icomoon') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
+
+/* @font-face now in templates/base/css */
+
 .fa {
   display: inline-block;
   font: normal normal normal 14px/1 IcoMoon;
