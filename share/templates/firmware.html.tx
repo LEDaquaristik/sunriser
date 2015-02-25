@@ -45,7 +45,7 @@ $('body').on('sr_config',function(){
       <i class="fa fa-forumbee"></i><%=firmwares[i].description%></b>
     </div>
     <div class="firmware_timestamp" data-timestamp="<%=firmwares[i].timestamp%>"></div>
-    <% if (firmware_info.filename === firmwares[i].filename && firmware_info.timestamp === firmwares[i].timestamp) { %>
+    <% if (firmware_info.filename == firmwares[i].filename && firmware_info.timestamp == firmwares[i].timestamp) { %>
       <button class="firmware_button installed_firmware">
         Firmware <%=firmwares[i].filename%> bereits installiert
       </button>
