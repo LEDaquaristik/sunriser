@@ -1,4 +1,4 @@
-: cascade base { title => "Kontaktinformationen", nav => "info" }
+: cascade base { title => "Kontaktinformationen", nav => "info", no_bighelp => 1 }
 : override content -> {
 
 

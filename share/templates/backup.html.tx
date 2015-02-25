@@ -1,4 +1,4 @@
-: cascade base { title => "Sicherung", nav => "system", no_form => 1, help => "" }
+: cascade base { title => "Sicherung", nav => "system", no_form => 1, no_bighelp => 1, help => mark_raw("Hier stehen die Funktionen zur Sicherung und Wiederherstellung Ihrer Konfiguration vom SunRiser zur Verf&uuml;gung. 'Konfiguration runterladen' &ouml;ffnet Ihren Dateimanager um den Zielort f&uuml;r die Sicherungsdatei auszuw&uuml;hlen. Der vorgegebene Dateiname hat automatisch einen aktuellen Zeitstempel.<br><br> &Uuml;ber 'Konfiguration wieder herstellen' k&ouml;nnen Sie dann diese Datei jederzeit wieder auf den SunRiser einspielen. Die Sicherungsdatei kann von dem Dateimanager Ihres Systems einfach dort hinein gezogen werden, oder Sie klicken einfach auf das Feld um es im Dateimanager auszuw&auml;hlen.<br><br> Falls Sie gerade ein 'Factory-Reset' durchgef&uuml;hrt haben, k&ouml;nnen Sie &uuml;ber 'Factory-Reset Sicherung runterladen' die alte Konfiguration als Sicherungsdatei herunterladen. Diese k&ouml;nnen Sie dann, wie eine gew&ouml;hnliche Sicherungsdatei, wieder in den SunRiser einspielen. ") }
 : override content -> {
 
 <div class="buttonbloc backupbuttons">
@@ -24,14 +24,44 @@
 
 var backup_reader = new FileReader();
 backup_reader.onload = function(e){
-  console.log(backup_reader.result);
-  var bytearray = new Uint8Array(backup_reader.result);
-  result = msgpack.unpack(bytearray);
-  console.log(result);
+  var bytesarray = new Uint8Array(backup_reader.result);
+  result = msgpack.unpack(bytesarray);
+  var ok = 1;
+  if (typeof result === 'object') {
+    $.each(result,function(k,v){
+      var type = sr_type(k);
+      if (typeof type === 'undefined') {
+        ok = 0;
+      }
+    });
+  } else {
+    ok = 0;
+  }
+  if (ok) {
+    sr_screenblock('Sende Sicherungsdatei an SunRiser');
+    var call_options = {
+      type: 'PUT',
+      url: '/restore',
+      data: bytesarray,
+      contentType: 'application/octet-stream',
+      dataType: 'arraybuffer',
+      processData: false,
+      cache: false,
+      error: function(xhr,error,errorthrown){
+        // TODO error handling
+      },
+      success: function(data,status,xhr){
+        sr_screenblock('<div>Warte auf Neustart</div><div>Bitte das Ger&auml;t NICHT abschalten!!!</div>');
+        // TODO real check for back up
+      },
+    };
+    $.ajax(call_options);    
+  } else {
+    alert("Ung" + unescape("%FC") + "ltige Sicherungsdatei!");
+  }
 };
 
 function use_backup_file(file) {
-  console.log(file);
   backup_reader.readAsArrayBuffer(file);
 }
 

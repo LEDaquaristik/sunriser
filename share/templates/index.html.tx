@@ -1,4 +1,4 @@
-: cascade base { title => "Status", nav => "home", no_form => 1 }
+: cascade base { title => "Startseite", nav => "home", no_form => 1, no_bighelp => 1 }
 : override content -> {
 
   <div id="home_not_configured">
@@ -31,13 +31,75 @@
         <div>Tagesplanung einstellen</div>
       </a>
     </div>
-    <div class="funk_test_bloc">
-      <hr>
-      <a class="funk_test" href="/test.html">
-        <span class="badge_test">+</span>
-        <div>Funktionstest</div>
-      </a>
-    </div>
   </div>
+
+  <div id="home_configured">
+    <a class="index_function" href="/led.html">
+      <span class="index_function_badge">+</span>
+      <div>LED einstellen</div>
+    </a>
+    <a class="index_function" href="/day.html">
+      <span class="index_function_badge">+</span>
+      <div>Tagesplanung</div>
+    </a>
+    <a class="index_function" href="/backup.html">
+      <span class="index_function_badge">+</span>
+      <div>Sicherung</div>
+    </a>
+    <a class="index_function" href="/firmware.html">
+      <span class="index_function_badge">+</span>
+      <div>Firmware aktualisieren</div>
+    </a>
+  </div>
+
+  <div class="index_functions">
+    <a class="index_function" href="/test.html">
+      <span class="index_function_badge">+</span>
+      <div>Funktionstest</div>
+    </a>
+  </div>
+
+: }
+: override postjs -> {
+
+<script type="text/javascript">
+
+$('#home_configured').hide();
+
+// First execute stuff when the form is loaded
+$('body').on('sr_config',function(){
+
+  var config_check_keys = ["weather#setup#0#pwms"];
+
+  for (i = 1; i <= sr_config['pwm_count']; i++) {
+    config_check_keys.push("pwm#" + i + "#manager");
+    config_check_keys.push("dayplanner#marker#" + i);
+  }
+
+  sr_request_mpack('POST','/',config_check_keys,function(values){
+    var managed = 0;
+    var configured = 0;
+    for (i = 1; i <= sr_config['pwm_count']; i++) {
+      if (values["pwm#" + i + "#manager"] > 0) {
+        managed = 1;
+        var marker = values["dayplanner#marker#" + i];
+        if (marker && marker.length > 0) {
+          configured = 1;
+        }
+      }
+    }
+    var weather = values["weather#setup#0#pwms"];
+    if (!managed && weather && weather.length > 0) {
+      configured = 1;
+    }
+    if (configured) {
+      $('#home_not_configured').hide();
+      $('#home_configured').show();
+    }
+  });
+
+});
+
+</script>
 
 : }

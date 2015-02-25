@@ -943,7 +943,8 @@ nav h2{
   float: left;
   padding-top: 10px;
 }
-.install_firmware{
+
+.firmware_button {
   height: 50px;
   width: auto;
   border: medium none;
@@ -951,8 +952,13 @@ nav h2{
   text-align: left;
   font-size: 18px;
   color: white;
-  float:right
+  float: right;
 }
+
+.installed_firmware{
+  background-color: rgb(255, 0, 0);
+}
+
 .install_firmware:hover{
   background-color:#88d48f;
 }
@@ -1124,39 +1130,46 @@ nav h2{
 .bigbutton div{
   padding: 20px 0px;
 }
-.funk_test_bloc{
-  padding-top: 40px;
+
+.index_functions hr{
+  border-color: #AAA;
+  border-width: 2px 0px 0px;
+  width: 100px;
+  margin:0 auto 40px auto
 }
-a.funk_test{
+
+a.index_function {
   color: #fff;
   border:none;
   background-color: #5399c7;
   display: inline-block;
   width: 100%;
-  transition-duration:0.2s
+  transition-duration: 0.2s;
 }
-a.funk_test:hover{
+
+a.index_function:hover {
   background-color: #69a6ce;
 }
-a.funk_test:active{
+
+a.index_function:active {
   background-color: #2980B9;
 }
-.funk_test div{
-  margin: 20px;
-  float: left;
-  font-size: 28px;
-}
-.badge_test{
+
+.index_function_badge {
   float: left;
   border-right: 2px solid white;
   padding: 20px;
   font-size: 40px;
 }
-.funk_test_bloc hr{
-  border-color: #AAA;
-  border-width: 2px 0px 0px;
-  width: 100px;
-  margin:0 auto 40px auto
+
+.index_function div {
+  margin: 20px;
+  float: left;
+  font-size: 28px;
+}
+
+#home_not_configured {
+  padding-bottom: 40px;
 }
 
 /***  RESPONSIVE  ***/

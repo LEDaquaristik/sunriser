@@ -1,4 +1,4 @@
-: cascade base { title => "Hilfe", no_form => 1 }
+: cascade base { title => "Hilfe", no_form => 1, no_bighelp => 1 }
 : override content -> {
 
 <h2><a href="/intro.html">Einf&uuml;hrung anschauen</a></h2>

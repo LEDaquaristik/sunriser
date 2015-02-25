@@ -1,4 +1,4 @@
-: cascade base { title => r('Einf&uuml;hrung'), no_form => 1 }
+: cascade base { title => r('Einf&uuml;hrung'), no_form => 1, no_bighelp => 1 }
 : override page -> {
 
 <!-- gallery style intro with cool fade -->

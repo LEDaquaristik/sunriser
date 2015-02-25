@@ -1,6 +1,6 @@
 <ul id="menu">
   <li title="Status" class="back_home <: if $nav == 'home' { 'selected' } :> first-level">
-    <a href="/index.html"><i class="fa fa-home fa-2x"></i></a>
+    <a href="/"><i class="fa fa-home fa-2x"></i></a>
   </li>
   <li title="Zeitplanung" class="<: if $nav == 'planner' { 'selected' } :> first-level">
     <a href="/day.html"><i class="fa fa-clock-o fa-2x"></i></a>
@@ -51,11 +51,6 @@
         </a>
       </li>
       <li class="second-level">
-        <a href="/network.html">
-          <i class="fa fa-sitemap"></i>Netzwerk
-        </a>
-      </li>
-      <li class="second-level">
         <a href="/backup.html">
           <i class="fa fa-medkit"></i>Sicherung
         </a>
@@ -63,6 +58,11 @@
       <li class="second-level">
         <a href="/test.html">
           <i class="fa fa-info-circle"></i>Funktionstest
+        </a>
+      </li>
+      <li class="second-level">
+        <a href="/network.html">
+          <i class="fa fa-sitemap"></i>Netzwerk
         </a>
       </li>
       <li class="second-level">
@@ -99,8 +99,8 @@
     </ul>
   </li>
   <li title="Abmelden" class="logout first-level">
-    <a href="/logout">
+<!--     <a href="/logout">
       <i class="fa fa-power-off fa-2x"></i>
-    </a>
+    </a> -->
   </li>
 </ul>

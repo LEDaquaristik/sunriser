@@ -1,4 +1,4 @@
-: cascade base { title => "Firmware erneuert", nav => "system", no_form => 1 }
+: cascade base { title => "Firmware erneuert", nav => "system", no_form => 1, no_bighelp => 1 }
 : override content -> {
 
 <h2>Die Firmware wurde erfolgreich erneuert!</h2>

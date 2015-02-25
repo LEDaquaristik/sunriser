@@ -69,7 +69,6 @@
         "balancedist", ["Amount of random numbers used to reach the distance between thunder", "integer", 1],
         "fadepercent", ["Percentage of thunderstorm which is fade in and fade out (less thunders, lower light intensity, while fade)", "integer", 60],
         "daychance", ["Percentage for a thunderstorm to happen (Tried per day in daymax amount)", "integer", 10],
-        "darkness", ["Percentage of darkness to apply", "integer", 25],
         "fixedtimes", ["Fixed times for thunderstorms (daychance still applies, daymax tries still added)", "repeated(time)"],
         "deferralmax", ["Maximum random deferral (in seconds)", "integer", 0],
         "weekdays", ["Apply thunderstorms to given weekdays (else always)", "array(weekday)"]
@@ -88,15 +87,12 @@
         "cloudminlength", ["Minimum amount of time a cloud takes (in seconds)", "integer", 5],
         "cloudmaxlength", ["Maximum amount of time a cloud takes (in seconds)", "integer", 30],
         "cloudbalancelength", ["Amount of random numbers used to reach the amount of time a cloud takes", "integer", 2],
-        "clouddarkness", ["Maximum percentage of darkness to apply on cloud", "integer", 25],
         "cloudchance", ["Chance that a cloud comes up per minute", "integer", 5],
         "weekdays", ["Weekdays who may have rain (else every day)", "array(weekday)"]
       ],
       "rain", "Rain setup", [
         "activated", ["Make rainy days", "bool", 0],
         "rainchance", ["Chance that the day is rainy (with clouds activated, also day with clouds automatically)", "integer", 10],
-        "raindarkness", ["Maximum percentage of darkness to apply on raindays", "integer", 20],
-        "rainwithclouds", ["Clouds add up over maximum darkness of rain", "bool", 0],
         "weekdays", ["Weekdays who may have rain (else every day)", "array(weekday)"]
       ]
     ]

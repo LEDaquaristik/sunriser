@@ -1,4 +1,4 @@
-: cascade base { title => "Funktionstest", nav => "setup" }
+: cascade base { title => "Funktionstest", nav => "setup", no_bighelp => 1, help => mark_raw("Der Funktionstest erlaubt kurzfristig jegliche Steuerung abzuschalten f&uuml;r eine Minute um einen bestimmten Wert zu setzen. Bitte beachten Sie, das Sie hier den direkten rohen Wert ohne Gamma Korrektur einstellen, dies bedeutet, das 500 hier nicht die gleiche Helligkeit ist wie 50% auf unserer Tagesplanung. Eine Minute nachdem Sie das letzte mal einen der Regler hier benutzt haben wird automatisch das regul&auml;re Programm wieder gestartet. LEDs die nicht Teil der Steuerung sind bleiben auf dem gesetzten Wert, bis zum Neustart.") }
 : override content -> {
 
 <div class="form noautoload" id="test"></div>

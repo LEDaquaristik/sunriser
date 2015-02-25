@@ -114,9 +114,6 @@ var sr_forms = {
       name: "weekdays", label: "Nur an diesen Wochentagen gibt es Gewitter (sonst jeden Tag)"
     }],
     expert_fields: [{
-      name: "darkness", label: "Prozentzahl der Dunkelheit die ein Gewitter erzeugt",
-      template: "slider", min: 1, max: 100
-    },{
       name: "balancelength", label: "Anzahl der Faktoren f&uuml;r die Berechnung der Gewitterl&auml;nge",
       template: "slider", min: 1, max: 5
     },{
@@ -166,12 +163,9 @@ var sr_forms = {
       name: "cloudchance", label: "Wahrscheinlichkeit einer Wolke pro Minute",
       template: "slider", min: 0, max: 100
     },{
-      name: "weekdays", label: "Nur an diesen Wochentagen gibt es Mondphasen (sonst jeden Tag)"
+      name: "weekdays", label: "Nur an diesen Wochentagen gibt es Wolken (sonst jeden Tag)"
     }],
     expert_fields: [{
-      name: "clouddarkness", label: "Prozentzahl der Dunkelheit die ein Gewitter erzeugt",
-      template: "slider", min: 0, max: 100
-    },{
       name: "cloudminlength", label: "Minimum L&auml;nge einer Wolke in Sekunden",
       template: "slider", min: 1, max: 30
     },{
@@ -198,12 +192,7 @@ var sr_forms = {
       name: "rainchance", label: "Wahrscheinlichkeit eines Regentages",
       template: "slider", min: 0, max: 100
     },{
-      name: "raindarkness", label: "Maximale Prozentzahl an Dunkelheit die ein Regen haben kann",
-      template: "slider", min: 0, max: 100
-    },{
-      name: "rainwithclouds", label: "Wolken k&ouml;nnen die Regentage &uuml;ber das maximum dunkler machen"
-    },{
-      name: "weekdays", label: "Nur an diesen Wochentagen gibt es Mondphasen (sonst jeden Tag)"
+      name: "weekdays", label: "Nur an diesen Wochentagen gibt es Regen (sonst jeden Tag)"
     }]
   }
 };

@@ -1,20 +1,23 @@
-: cascade base { title => "Tagesplanung", nav => "planner", help => r("Hier k&ouml;nnen Sie den Tagesverlauf Ihrer LEDs einfach per Klick einstellen. W&auml;hlen Sie zuerst oben die einzustellende LED aus, und f&uuml;gen Sie dann &uuml;ber die Plus Zeichen unten neue Punkte hinzu. Diese k&ouml;nnen Sie dann im Graphen nach belieben verschieben. Um einen Punkt zu entfernen, dr&uuml;cken einfach auf die Uhrzeit/Prozent Angabe dieses Punktes neben den Plus Zeichen.") }
+: cascade base { title => "Tagesplanung", nav => "planner", help => r("Hier k&ouml;nnen Sie den Tagesverlauf Ihrer LEDs einfach per Klick einstellen. W&auml;hlen Sie zuerst oben die einzustellende LED aus, und f&uuml;gen Sie dann &uuml;ber die Plus Zeichen unten neue Punkte hinzu. Diese k&ouml;nnen Sie dann im Graphen nach belieben verschieben. Um einen Punkt zu entfernen, dr&uuml;cken Sie einfach auf die Uhrzeit/Prozent Angabe dieses Punktes unten neben den Plus Zeichen.") }
 : override content -> {
 
 <div id="pwmpicker"></div>
 <svg id="dayplanner"></svg>
-<div class="countbar">
-  <div class="counttime countfirst">0h</div>
-  <div class="counttime countmiddle">6h</div>
-  <div class="counttime countmiddle">12h</div>
-  <div class="counttime">18h<div class="countend">0h</div></div>
-</div>
+<div id="day_countbar"></div>
 <div id="pathedit"></div>
 <div class="form noautoload" id="dayplan"></div>
 
 : }
 : override postjs -> {
 
+<script type="text/html" id="countbar_tmpl">
+  <div class="countbar">
+    <div class="counttime countfirst">0h</div>
+    <div class="counttime countmiddle">6h</div>
+    <div class="counttime countmiddle">12h</div>
+    <div class="counttime">18h<div class="countend">0h</div></div>
+  </div>
+</script>
 <script type="text/html" id="pwmpicker_tmpl">
 
 <% $.each(paths,function(i,path){ %>
@@ -146,6 +149,7 @@ var SrDayplanner = Class.extend({
       var yLine = self.paper.line(self.zeroX + self.minTime, self.zeroY + y, self.zeroX + self.maxTime, self.zeroY + y).attr(attrs);
       self.grid_group.add(yLine);
     }
+    $('#day_countbar').html(tmpl('countbar_tmpl',self));
   },
 
 //

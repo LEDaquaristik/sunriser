@@ -52,6 +52,7 @@ sub _build_publish_files {
     clouds.html
     contact.html
     day.html
+    expert.html
     firmware.html
     index.html
     intro.html

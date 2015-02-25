@@ -1,4 +1,4 @@
-: cascade base { title => "Firmware Upgrade", no_form => 1 }
+: cascade base { title => "Firmware aktualisieren", no_form => 1, no_bighelp => 1, help => mark_raw("Hier k&ouml;nnen Sie die so genannte Firmware vom SunRiser auf den neusten Stand bringen. Die Firmware beinhaltet alles was den SunRiser ausmacht, die Software und die Webseiten wie diese hier. Einfach auf 'Installiere Firmware' klicken und Ihr Browser &uuml;bernimmt den Rest, dieser l&auml;dt aus dem Internet die gew&uuml;nschte Firmware runter, sendet diese an Ihren SunRiser, welcher dann ungef&auml;hr eine Minute braucht um diese zu installieren und wieder hochzufahren.<br><br>Falls Ihr SunRiser nach dem Firmware Upgrade nicht wieder seine gewohnte Funktion aufnimmt, versuchen Sie zuerst einfach auf den Reset Knopf zu dr&uuml;cken, und falls dies erfolglos ist, die Stromversorgung einmal trennen und wieder zu verbinden. Falls alle Versuche scheitern m&uuml;ssen Sie einen 'Factory-Reset' bei Ihrem SunRiser durchf&uuml;hren, durch dr&uuml;cken des Reset Knopfs in den ersten 5 Sekunden nachdem der SunRiser frisch mit der Stromversorgung verbunden ist. Dies dauert dann auch eine Minute und sollte in allen F&auml;llen wieder ein funktionst&uuml;chtiges Ger&auml;t hervorbringen. Achten Sie darauf das nach einem 'Factory-Reset' die gesamte Konfiguration danach nicht mehr aktiv ist. Diese muss dann &uuml;ber <a href='/backup.html'>Sicherung</a> wieder hergestellt werden.<br><br>Bitte w&auml;hrend dieser Zeit nicht den SunRiser abschalten.") }
 : override content -> {
 
 <div id="firmware_list">
@@ -11,10 +11,12 @@
 
 <script type="text/javascript">
 
+var firmware_info;
+
 $('body').on('sr_config',function(){
 
   sr_request_mpack('GET','/firmware.mp',undefined,function(values){
-    console.log(values);
+    firmware_info = values;
 
     var firmware_root = "http://sunriser.vbs.io/";
     var firmware_template = "firmware_tmpl";
@@ -23,6 +25,9 @@ $('body').on('sr_config',function(){
       $("#firmware_list").html(tmpl(firmware_template,{
         firmwares: firmwares,
       }));
+      if (!sr_config.showexpert) {
+        $('.old_firmware').hide();
+      }
       $(".install_firmware").click(function(){
         download_and_install_firmware(firmware_root + $(this).data("url"));
       });
@@ -35,12 +40,24 @@ $('body').on('sr_config',function(){
 <script type="text/html" id="firmware_tmpl">
 
 <% for ( var i = 0; i < firmwares.length; i++ ) { %>
-  <div class="firmware">
-    <div class="firmware_description"><b><i class="fa fa-forumbee"></i>    <%=firmwares[i].description%></b></div>
+  <div class="firmware<% if (i > 0) { %> old_firmware<% } %>">
+    <div class="firmware_description"><b>
+      <i class="fa fa-forumbee"></i><%=firmwares[i].description%></b>
+    </div>
     <div class="firmware_timestamp" data-timestamp="<%=firmwares[i].timestamp%>"></div>
-    <button class="install_firmware" data-url="<%=firmwares[i].url%>">
-      ⬇ Installiere Firmware <%=firmwares[i].filename%>
-    </button>
+    <% if (firmware_info.filename === firmwares[i].filename && firmware_info.timestamp === firmwares[i].timestamp) { %>
+      <button class="firmware_button installed_firmware">
+        Firmware <%=firmwares[i].filename%> bereits installiert
+      </button>
+    <% } else if (i != 0 && firmware_info.timestamp > firmwares[i].timestamp) { %>
+      <button class="firmware_button install_firmware old_firmware" data-url="<%=firmwares[i].url%>">
+        ⬇ Installiere veraltete Firmware <%=firmwares[i].filename%>
+      </button>
+    <% } else { %>
+      <button class="firmware_button install_firmware" data-url="<%=firmwares[i].url%>">
+        ⬇ Installiere<% if (i == 0) { %> aktuelle<% } %> Firmware <%=firmwares[i].filename%>
+      </button>
+    <% } %>
   </div>
 <% } %>
 
