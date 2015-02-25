@@ -525,7 +525,7 @@ nav h2{
 }
 .failed:before,
 .finished:before{
-  content: "";
+  content: "\f00c";
   position: absolute;
   color: #fff;
   top: -40px;
@@ -535,10 +535,10 @@ nav h2{
   font-size : 17px;
   background-color: #68D472;
   border-radius: 50%;
-  font-family:icomoon
+  font-family:"IcoMoon"
 }
 .failed:before{
-  content: "";
+  content: "\f00d";
   background-color: #E74C3C;
   padding: 0px 7px 1px 7px;
 }
