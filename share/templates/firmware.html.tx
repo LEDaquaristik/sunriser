@@ -51,11 +51,11 @@ $('body').on('sr_config',function(){
       </button>
     <% } else if (i != 0 && firmware_info.timestamp > firmwares[i].timestamp) { %>
       <button class="firmware_button install_firmware old_firmware" data-url="<%=firmwares[i].url%>">
-        ⬇ Installiere veraltete Firmware <%=firmwares[i].filename%>
+        <i class="firmdown"></i>Installiere veraltete Firmware <%=firmwares[i].filename%>
       </button>
     <% } else { %>
       <button class="firmware_button install_firmware" data-url="<%=firmwares[i].url%>">
-        ⬇ Installiere<% if (i == 0) { %> aktuelle<% } %> Firmware <%=firmwares[i].filename%>
+        <i class="firmdown"></i>Installiere<% if (i == 0) { %> aktuelle<% } %> Firmware <%=firmwares[i].filename%>
       </button>
     <% } %>
   </div>

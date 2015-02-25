@@ -1806,3 +1806,15 @@
 .fa-pluie:before {
   content: "\f0c3";
 }
+.hilfe-close:before,
+.helpareaclose:before{
+  display: inline-block;
+  font: normal normal normal 14px IcoMoon;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transform: translate(0, 0);
+  
+  content:"\f00d";
+}

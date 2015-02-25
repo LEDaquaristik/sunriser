@@ -884,10 +884,6 @@ nav h2{
   color:rgba(0,0,0,0.2);
   cursor:pointer;
 }
-.hilfe-close:before,
-.helpareaclose:before{
-  content:"";
-}
 .helpareaclose:hover{
   background-color:rgba(0,0,0,0.4);
   color:rgba(0,0,0,0.4);
@@ -965,7 +961,10 @@ nav h2{
 .install_firmware:active{
   background-color:#27AE60 
 }
-
+.firmdown:before{
+  content:"⬇";
+  padding-right:1em;
+} 
 /** Sliders **/
 
 .slide-control {
