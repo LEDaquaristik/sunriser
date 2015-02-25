@@ -238,7 +238,7 @@ var SrPath = Class.extend({
 
   get_color: function() {
     if (this.editmode) {
-      return '#2980B9';
+      return '#68D472';
     } else {
       return this.color;
     }
@@ -321,7 +321,7 @@ var SrPath = Class.extend({
         var id = btoa(Math.random()).substring(0,8);
         var circle = self.dp.paper.circle(x,y,2).attr({
           fill: ( self.editmode ? '#fff' : self.get_color() ),
-          stroke: ( self.editmode ? '#2980B9' : self.get_color() ),
+          stroke: ( self.editmode ? '#68D472' : self.get_color() ),
           "stroke-width": "0.5px",
           'fill-opacity': 1,
           class: "daycircle",
