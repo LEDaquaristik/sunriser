@@ -973,6 +973,8 @@ nav h2{
   content:"⬇";
   padding-right:7px;
 } 
+/*Firmeware Upgrade*/
+
 .upgraded{
   text-align:center;
   margin-top:70px
@@ -992,6 +994,7 @@ nav h2{
   font-size: 30px;
   cursor:default;
 }
+
 /** Sliders **/
 
 .slide-control {
