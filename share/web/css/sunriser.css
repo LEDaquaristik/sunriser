@@ -1,6 +1,3 @@
-
-
-
 /* Summary
     - FONT
     - GLOBAL
@@ -979,7 +976,7 @@ nav h2{
 /*Firmeware Upgrade*/
 
 .upgraded{
-  margin-top:70px
+  margin-top:70px;
   text-align:center;
 }
 .upgraded:before{
