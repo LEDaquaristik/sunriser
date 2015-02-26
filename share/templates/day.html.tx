@@ -132,19 +132,19 @@ var SrDayplanner = Class.extend({
   make_grid: function(){
     var self = this;
     var attrs = {
-      stroke: "#ccc",
-      "stroke-width": "0.5px",
+      stroke: "#CCD7E2",
+      "stroke-width": "0.3px",
       "strole-linecap": "round",
       "stroke-dasharray": "1,1",
       class: "gridline"
     };
-    for (var i = 0; i <= self.gridSize; i++) {
+    for (var i = 1; i < self.gridSize; i++) {
       var x = i * ((self.maxTime - self.minTime) / self.gridSize);
       var xLine = self.paper.line(self.zeroX + x, self.zeroY + self.minValue, self.zeroX + x, self.zeroY + self.maxValue).attr(attrs);
       self.grid_group.add(xLine);
     }
 
-    for (var i = 0; i <= self.gridSize; i++) {
+    for (var i = 1; i < self.gridSize; i++) {
       var y = i * ((self.maxValue - self.minValue) / self.gridSize);
       var yLine = self.paper.line(self.zeroX + self.minTime, self.zeroY + y, self.zeroX + self.maxTime, self.zeroY + y).attr(attrs);
       self.grid_group.add(yLine);

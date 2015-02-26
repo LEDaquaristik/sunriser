@@ -140,7 +140,8 @@ hr{
   border-style: solid;
 }
 svg{
-  width:100%
+  width:100%;
+  border:1px solid #CCD7E2;
 }
 
 .main{
@@ -865,7 +866,7 @@ nav h2{
   position:relative;
   background-color:#FDE879;
   padding:25px;
-  color:#000;
+  color:rgba(0,0,0,0.5);
   margin-bottom:40px;
   transition-duration:0.2s;
   overflow:hidden;
@@ -975,6 +976,28 @@ nav h2{
   content:"⬇";
   padding-right:7px;
 } 
+/*Firmeware Upgrade*/
+
+.upgraded{
+  margin-top:70px
+  text-align:center;
+}
+.upgraded:before{
+  cursor:default;
+  font-size: 30px;
+  padding: 22px;
+  margin-bottom: 25px;
+  border-radius: 50%;
+  font-family: "IcoMoon";
+  margin: 0 auto;
+  display: block;
+  height: 75px;
+  width: 75px;
+  color: white;
+  background-color: #2ECC71;
+  content: "\f00c";
+}
+
 /** Sliders **/
 
 .slide-control {
