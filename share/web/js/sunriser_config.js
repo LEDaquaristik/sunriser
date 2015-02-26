@@ -28,9 +28,3 @@ function sr_default(){
   });
   return found;
 }
-
-function sr_storage_update(){
-  if (typeof(Storage) !== "undefined") {
-    sessionStorage.setItem('sr_config',JSON.stringify(sr_config));
-  }
-}

@@ -94,7 +94,6 @@ var SrForm = Class.extend({
         $.each(values,function(key,val){
           if (key == 'showexpert' && sr_config[key] != val) { reload = true; }
           sr_config[key] = val;
-          sr_storage_update();
         });
         if (reload) {
           window.location.href = window.location.href;
