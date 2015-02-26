@@ -976,23 +976,23 @@ nav h2{
 /*Firmeware Upgrade*/
 
 .upgraded{
-  text-align:center;
   margin-top:70px
+  text-align:center;
 }
 .upgraded:before{
-  content: "\f00c";
-  background-color: #2ECC71;
-  color: white;
-  width: 75px;
-  height: 75px;
-  display: block;
-  margin: 0 auto;
-  font-family: "IcoMoon";
-  border-radius: 50%;
-  margin-bottom: 25px;
-  padding: 22px;
-  font-size: 30px;
   cursor:default;
+  font-size: 30px;
+  padding: 22px;
+  margin-bottom: 25px;
+  border-radius: 50%;
+  font-family: "IcoMoon";
+  margin: 0 auto;
+  display: block;
+  height: 75px;
+  width: 75px;
+  color: white;
+  background-color: #2ECC71;
+  content: "\f00c";
 }
 
 /** Sliders **/
