@@ -137,7 +137,8 @@ hr{
   border-style: solid;
 }
 svg{
-  width:100%
+  width:100%;
+  border:1px solid #CCD7E2;
 }
 
 .main{
@@ -862,7 +863,7 @@ nav h2{
   position:relative;
   background-color:#FDE879;
   padding:25px;
-  color:#000;
+  color:rgba(0,0,0,0.5);
   margin-bottom:40px;
   transition-duration:0.2s;
   overflow:hidden;
@@ -972,6 +973,25 @@ nav h2{
   content:"⬇";
   padding-right:7px;
 } 
+.upgraded{
+  text-align:center;
+  margin-top:70px
+}
+.upgraded:before{
+  content: "\f00c";
+  background-color: #2ECC71;
+  color: white;
+  width: 75px;
+  height: 75px;
+  display: block;
+  margin: 0 auto;
+  font-family: "IcoMoon";
+  border-radius: 50%;
+  margin-bottom: 25px;
+  padding: 22px;
+  font-size: 30px;
+  cursor:default;
+}
 /** Sliders **/
 
 .slide-control {
