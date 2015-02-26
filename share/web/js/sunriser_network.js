@@ -44,6 +44,9 @@ function sr_request_mpack(method,url,data,success) {
         } else if (typeof result.time !== 'undefined') {
           current_time = result.time;
         }
+        if (typeof result.uptime !== 'undefined' && typeof current_time !== 'undefined') {
+          start_time = current_time - result.uptime;
+        }
       };
       if (method == 'PUT') {
         sr_finished();
@@ -63,14 +66,20 @@ function sr_request_mpack(method,url,data,success) {
 }
 
 function update_time() {
-  var dt_field = $('#sunriser_datetime');
+  var m = moment(current_time * 1000);
+  m.utcOffset(0);
+  var s = moment(start_time * 1000);
+  s.utcOffset(0);
+  $('.sunriser_datetime').each(function(){
+    var dt_field = $(this);
+    dt_field.text(m.format('LLL.ss'));
+  });
+  var d = moment.duration(s.diff(m));
+  $('.sunriser_uptime').text(d.humanize());
+  current_time += 1;
   setTimeout(function(){
     update_time();
   }, 1000);
-  var m = moment(current_time * 1000);
-  m.utcOffset(0);
-  dt_field.text(m.format('LLL.ss'));
-  current_time += 1;
 }
 
 function wait_for_sunriser(target) {

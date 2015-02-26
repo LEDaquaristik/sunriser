@@ -1,3 +1,6 @@
+
+
+
 /* Summary
     - FONT
     - GLOBAL
@@ -177,7 +180,7 @@ header{
   color:white;
   text-decoration:none;
 }
-#sunriser_datetime{
+#sunriser_datetime_header{
   font-size:24px;
   color:white;
   float:right;
@@ -1212,14 +1215,14 @@ a.index_function:active {
   .sunriser{
     width:100%
   }
-  #sunriser_datetime {
+  #sunriser_datetime_header {
     float: left;
     padding-top: 12px;
   }
 }
 @media screen and (max-width:500px) {
 
-  #sunriser_datetime {
+  #sunriser_datetime_header {
     display:none
   }
   body{

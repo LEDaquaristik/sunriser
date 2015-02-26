@@ -353,7 +353,7 @@ sub _web_serve_file {
 sub _web_state {
   my ( $self ) = @_;
   $self->debug('Sending state');
-  my $state = { time => $self->get_time(), %{$self->state} };
+  my $state = { time => $self->get_time(), uptime => 150000, %{$self->state} };
   use DDP; p($state);
   return $self->_web_serve_msgpack($state);
 }

@@ -24,10 +24,24 @@ my $p = path($dir);
 
 my $share = path(dist_dir('SunRiser'));
 
-copy($share->child('master/index.html'),path($dir)->child('index.html')) or die "Copy failed: $!";
-copy($share->child('web/js/jquery-1.11.2.min.js'),path($dir)->child('jquery-1.11.2.min.js')) or die "Copy failed: $!";
-copy($share->child('web/js/moment-2.9.0.min.js'),path($dir)->child('moment-2.9.0.min.js')) or die "Copy failed: $!";
-copy($share->child('web/js/moment-locale-de.js'),path($dir)->child('moment-locale-de.js')) or die "Copy failed: $!";
+my $files = $share->child('master/')->iterator({
+  recurse         => 1,
+  follow_symlinks => 1,
+});
+
+while (my $p = $files->()) {
+  copy($p,path($dir)) or die "Copy failed: $!";
+}
+
+my %other = (
+  'web/js/jquery-1.11.2.min.js' => 'jquery-1.11.2.min.js',
+  'web/js/moment-2.9.0.min.js' => 'moment-2.9.0.min.js',
+  'web/js/moment-locale-de.js' => 'moment-locale-de.js',
+);
+
+for my $from (keys %other) {
+  copy($share->child($from),path($dir)->child($other{$from})) or die "Copy failed: $!";  
+}
 
 my $config = SunRiser::Config->new;
 

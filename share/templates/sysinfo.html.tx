@@ -23,9 +23,10 @@
 
 var firmware_info = undefined;
 var bootloader_info = undefined;
+var state = undefined;
 
 function sr_sysinfo_done() {
-  if (firmware_info && bootloader_info) {
+  if (firmware_info && bootloader_info && state) {
     var bootloader_m = moment(bootloader_info.timestamp * 1000);
     bootloader_m.utcOffset(0);
     var firmware_m = moment(firmware_info.timestamp * 1000);
@@ -42,7 +43,8 @@ function sr_sysinfo_done() {
       "Experimentelle Firmware": firmware_info.experimental ? "Ja" : "Nein",
       "Netzwerk MAC Adresse": bootloader_info.mac.map(function(m){
         var h = m.toString(16); return h.length == 1 ? '0' + h : h;
-      }).join(":")
+      }).join(":"),
+      "Betriebszeit": '<div class="sunriser_uptime"></div>',
     };
     $('#sysinfo').html(tmpl('sysinfo_tmpl',{ info: info }));
   }
@@ -57,6 +59,10 @@ $('body').on('sr_config',function(){
   });
   sr_request_mpack('GET','/bootload.mp',undefined,function(values){
     bootloader_info = values;
+    sr_sysinfo_done();
+  });
+  sr_request_mpack('GET','/state',undefined,function(values){
+    state = values;
     sr_sysinfo_done();
   });
 

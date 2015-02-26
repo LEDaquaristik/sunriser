@@ -7,6 +7,7 @@ var sr_config_main_keys = [
 ];
 
 var current_time;
+var start_time;
 var sr_config_def;
 var sr_config_types = {};
 var sr_color = {};
