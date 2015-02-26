@@ -4,15 +4,15 @@ set -e
 
 VERSION=$1
 RELEASE_FILE=$2
+
+WORKDIR=$( pwd )
 VERSION_FILENAME=$( echo $VERSION | tr '.' '_' )
-LOGFILE=build.$1.log
+LOGFILE=$WORKDIR/build.$1.log
 
 TARGET=sunriser@sunriser
 
 OBJS_FILE=SunRiser8_Firmware_v${VERSION_FILENAME}_objs.tar.gz
 FIRMWARE_FILE=SunRiser8_Firmware_v$VERSION_FILENAME.bee
-
-WORKDIR=$( pwd )
 
 if [ ! -f $SUNRISER_MCU/xbin/generate_version_h.pl ]; then
   echo "Full source of microcontroller required for making release"

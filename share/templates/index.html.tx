@@ -64,7 +64,8 @@
 
 <script type="text/javascript">
 
-$('#home_configured').hide();
+$('#home_not_configured').hide();
+$('#index_functions').hide();
 
 // First execute stuff when the form is loaded
 $('body').on('sr_config',function(){
@@ -92,9 +93,13 @@ $('body').on('sr_config',function(){
     if (!managed && weather && weather.length > 0) {
       configured = 1;
     }
+    $('#index_functions').show();
     if (configured) {
       $('#home_not_configured').hide();
       $('#home_configured').show();
+    } else {
+      $('#home_not_configured').show();
+      $('#home_configured').hide();
     }
   });
 

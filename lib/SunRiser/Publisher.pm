@@ -167,7 +167,6 @@ sub _build_base_vars {
       css/reset.css
       css/tipr-1.0.1.css
       css/icomoon.css
-      css/OpenSans-Regular-webfont.css
       css/sunriser.css
       css/sunriser_dayplanner.css
     )],

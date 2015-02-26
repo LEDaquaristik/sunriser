@@ -19,12 +19,9 @@ function sr_request_mpack(method,url,data,success) {
       if (method == 'PUT') {
         sr_failed();
       }
-      // TODO remove debugging
-      console.log(method + ' ' + url);
-      console.log(data);
-      console.log('Errored: ' + error);
-      // TODO remove debugging
-      // window.location.href = window.location.href;
+      // console.log(method + ' ' + url);
+      // console.log(data);
+      // console.log('Errored: ' + error);
     },
     beforeSend: function(xhr,settings) {
       if (method == 'PUT') {
@@ -51,11 +48,9 @@ function sr_request_mpack(method,url,data,success) {
       if (method == 'PUT') {
         sr_finished();
       }
-      // TODO remove debugging
-      console.log(method + ' ' + url);
-      console.log(data);
-      //console.log(result);
-      // TODO remove debugging
+      // console.log(method + ' ' + url);
+      // console.log(data);
+      // console.log(result);
       if (success) {
         success.call(this,result,status,xhr);
       }
@@ -76,4 +71,25 @@ function update_time() {
   m.utcOffset(0);
   dt_field.text(m.format('LLL.ss'));
   current_time += 1;
+}
+
+function wait_for_sunriser(target) {
+  if (typeof target === 'undefined') {
+    target = window.location.href;
+  }
+  setTimeout(function(){
+    $.ajax({
+      cache: false,
+      type: 'GET',
+      url: '/ok',
+      timeout: 1000,
+      success: function(data, textStatus, XMLHttpRequest) {
+        if (data == 'OK') {
+          window.location.href = target;
+        } else {
+          wait_for_sunriser(target);          
+        }
+      }
+    });
+  },3000);
 }

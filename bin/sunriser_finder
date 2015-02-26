@@ -1,0 +1,17 @@
+#!/usr/bin/env perl
+# PODNAME: sunriser_finder
+# ABSTRACT: SunRiser Finder
+
+$|=1;
+
+use strict;
+use warnings;
+
+use FindBin;
+use lib $FindBin::Dir . "/../lib";
+use SunRiser::Finder;
+
+my $srfinder = SunRiser::Finder->new_with_options;
+$srfinder->run;
+
+exit 0;
