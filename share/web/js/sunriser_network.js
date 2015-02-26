@@ -92,11 +92,12 @@ function wait_for_sunriser(target) {
       type: 'GET',
       url: '/ok',
       timeout: 1000,
+      complete: function() {
+        wait_for_sunriser(target);
+      },
       success: function(data, textStatus, XMLHttpRequest) {
         if (data == 'OK') {
           window.location.href = target;
-        } else {
-          wait_for_sunriser(target);          
         }
       }
     });
