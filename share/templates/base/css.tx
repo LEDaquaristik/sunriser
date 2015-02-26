@@ -106,4 +106,14 @@
     font-style: normal;
   }
 
+  @font-face {
+    font-family: 'DIN1451';
+    src: url('../fonts/din_1451_std_mittelschrift.eot?<: $versioned || "dev" :>');
+    src: local('☺'), url('../fonts/din_1451_std_mittelschrift.woff?<: $versioned || "dev" :>') format('woff'),
+                    url('../fonts/din_1451_std_mittelschrift.ttf?<: $versioned || "dev" :>') format('truetype'),
+                    url('../fonts/din_1451_std_mittelschrift.svg?<: $versioned || "dev" :>') format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }
+
 </style>
