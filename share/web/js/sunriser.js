@@ -138,13 +138,6 @@ $('body').on('sr_config_def',function(){
     sr_color[color.id] = color;
   });
 
-  if (typeof(Storage) !== "undefined") {
-    var session_sr_config = sessionStorage.getItem('sr_config');
-    if (session_sr_config) {
-      sr_config = JSON.parse(session_sr_config);
-    }
-  }
-
   if (typeof(sr_config) === "undefined" || typeof(sr_config.pwm_count) == "undefined") {
     sr_request_mpack('POST','/',sr_config_main_keys,function(values){
       $.each(sr_config_main_keys,function(i,key){
@@ -153,7 +146,6 @@ $('body').on('sr_config_def',function(){
         }
       });
       sr_config = values;
-      sr_storage_update();
       $('body').trigger('sr_config');
     });
   } else {
