@@ -101,5 +101,5 @@ function wait_for_sunriser(target) {
         }
       }
     });
-  },3000);
+  },2500);
 }
