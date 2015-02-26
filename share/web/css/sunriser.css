@@ -990,6 +990,7 @@ nav h2{
   display: block;
   height: 75px;
   width: 75px;
+  margin-bottom:25px;
   color: white;
   background-color: #2ECC71;
   content: "\f00c";
