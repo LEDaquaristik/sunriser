@@ -52,7 +52,7 @@ backup_reader.onload = function(e){
       },
       success: function(data,status,xhr){
         sr_screenblock('<div>Warte auf Neustart</div><div>Bitte das Ger&auml;t NICHT abschalten!!!</div>');
-        // TODO real check for back up
+        wait_for_sunriser();
       },
     };
     $.ajax(call_options);    

@@ -525,7 +525,9 @@ sub _build_web {
 
       if ($method eq 'GET') {
         my ( $file ) = $uri =~ m/^\/([^\?]*)/;
-        if ($uri =~ /^\/state/) {
+        if ($uri =~ /^\/ok/) {
+          return $self->_web_ok;
+        } elsif ($uri =~ /^\/state/) {
           return $self->_web_state;
         } elsif ($uri =~ /^\/firmware\.mp/) {
           return $self->_web_firmware_mp;
