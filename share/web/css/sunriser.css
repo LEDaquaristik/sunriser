@@ -603,15 +603,15 @@ nav h2{
   position:relative
 }
 .timebox label:after {
-  content:"";
-  font-family:"icomoon";
+  content:"\f00c";
+  font-family:"IcoMoon";
   color:white;
   bottom: 2px;
   right: 6px;
   position: absolute;
 }
 .timebox label:before {
-  content: "";
+  content: "\f00d";
   font-family:"icomoon";
   color:white;
   top: -29px;
