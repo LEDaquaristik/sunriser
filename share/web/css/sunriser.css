@@ -909,7 +909,8 @@ nav h2{
   text-align: center;
   height: 30px;
   margin: 2px 2px 2px -2px;
-  border-radius:3px
+  border-radius:3px;
+  padding-top:2px
 }
 .daypicker .monday label{
   margin: 2px;
