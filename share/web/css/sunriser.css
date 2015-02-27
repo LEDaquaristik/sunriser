@@ -637,7 +637,7 @@ nav h2{
 }
 .timepickertable{
   opacity: 0;
-  transform: translate3d(0,-100px,0) scale3d(0,0,0);
+  transform: translate3d(00,-100px,0) scale3d(0,0,0);
   position:absolute;
   background: white;
   right:10px;
@@ -1022,6 +1022,19 @@ nav h2{
   border: 0.15em solid #FFF;
   border-radius: 17px;
   background-color: #2980b9;
+  z-index:3;
+}
+.sliderbar:after {
+  content: "";
+  display: block;
+  position: relative;
+  top: -17px;
+  width: auto;
+  height: 7px;
+  border: 2px solid rgb(204, 215, 226);
+  border-radius: 17px;
+  background-color: #fff;
+  right:0px;
 }
 
 .slider{
