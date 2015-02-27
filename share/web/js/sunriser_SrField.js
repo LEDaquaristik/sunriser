@@ -139,7 +139,6 @@ var SrField_Integer = SrField_Text.extend({
         html_field.val(value);
         html_field.parent().find('.slider_value').text(self.display_value(value));
       });
-
     }
   }
 
@@ -272,22 +271,22 @@ var SrField_Time = SrField_Integer.extend({
 
   initjs: function(){
     var self = this;
-    var hour = $('#' + self.id + '_hour');
-    var minutes = $('#' + self.id + '_minutes');
-    var inuse = $('#' + self.id + '_inuse');
-    if (typeof self.value !== 'undefined') {
-      hour.val(Math.floor(self.value / 60));
-      minutes.val(self.value % 60);
-      inuse.prop('checked',true);
-    }
-    $(hour).add(minutes).change(function(){
-      inuse.prop('checked',true);
-    }).add(inuse).change(function(){
-      if (inuse.prop('checked')) {
-        self.html_field().val(parseInt(hour.val()) * 60 + parseInt(minutes.val()));
-      } else {
-        self.html_field().val(undefined);
-      }
+    var html_field = self.html_field();
+    var table = html_field.parent().find('.timepickertable');
+    table.find('.hrs').on('click',function(){
+      var hour = Math.floor(html_field.val() / 60);
+      var minute = html_field.val() - ( hour * 60 );
+      var new_hour = parseInt($(this).text());
+      var new_daymin = ( new_hour * 60 ) + minute;
+      html_field.val(new_daymin);
+      html_field.parent().find('.timepicked').text(daymin_to_time(new_daymin));
+    });
+    table.find('.minutes').on('click',function(){
+      var hour = Math.floor(html_field.val() / 60);
+      var new_minute = parseInt($(this).text());
+      var new_daymin = ( hour * 60 ) + new_minute;
+      html_field.val(new_daymin);
+      html_field.parent().find('.timepicked').text(daymin_to_time(new_daymin));
     });
   }
 

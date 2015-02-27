@@ -1,5 +1,5 @@
-<div id="timepicker" class="timepickerdiv">
-  <input style="display:none" value="<%=field.value||0%>" type="number" <: include form::idname :>>
+<div class="timepickerdiv">
+  <input style="display:none" class="timefield" value="<%=field.value||0%>" type="number" <: include form::idname :>>
   <div class="timebox">
     <input type="checkbox" id="<%=field.id%>_inuse" value="1"></input>
     <label for="<%=field.id%>_inuse"></label>
