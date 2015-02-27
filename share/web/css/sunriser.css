@@ -622,10 +622,14 @@ nav h2{
   margin-top:-30px;
 }
 /*TimePicker Better one*/
-.timepicker{
-  position:relative;
-  width:130px;
-  float:right
+.timepicked{
+  display: inline-block;
+  border: 2px solid #CCD7F2;
+  border-radius:3px;
+  padding-top: 4px;
+  height: 39px;
+  width: 70px;
+  text-align: center;
 }
 .timepicker input{
   width: 80px !important;
@@ -636,14 +640,15 @@ nav h2{
   transform: translate3d(0,-100px,0) scale3d(0,0,0);
   position:absolute;
   background: white;
-  right:0;
+  right:10px;
   width: auto !important;
-  border: 2px solid #ccc;
+  border: 1px solid #aaa;
   border-radius: 3px;
   box-shadow: 0px 0px 3px rgba(0,0,0,0.2);
   margin-top: 10px;
   padding: 20px;
-  transition-duration:0.2s
+  transition-duration:0.2s;
+  z-index:11
 }
 .timepickertable.bunny{
   opacity: 1;
@@ -652,12 +657,12 @@ nav h2{
 .timepickerdiv{
   float: right;
 }
-.timepicker tbody{
+.timepickertable tbody{
   border-top:1px solid #ccc;
   border-left:1px solid #ccc;
 }
-.timepicker td,
-.timepicker th{
+.timepickertable td,
+.timepickertable th{
   border-bottom:1px solid #ccc;
   border-right:1px solid #ccc;
   text-align:center;
@@ -1008,7 +1013,6 @@ nav h2{
   z-index: 3;
   width: 17px;
   height: 17px;
-  left: 0;
   top: -6px;
   border-radius:8px;
   border:2px solid white;
