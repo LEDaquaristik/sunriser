@@ -994,16 +994,17 @@ nav h2{
 /** Sliders **/
 .slidermaster{
   margin: 0 0 0 50px;
-  width: 240px;
+  width: 250px;
+  float:right;
 }
 
 .sliderbar {
   position: relative;
   width: 100%;
-  height: 0.3em;
+  height: 7px;
   margin: 1.5em auto;
   background-color: rgb(204, 215, 226);
-  border-radius: 1em;
+  border-radius: 4px;
   box-sizing: border-box;
   -ms-touch-action: none;
       touch-action: none;
@@ -1014,7 +1015,7 @@ nav h2{
   content: "";
   display: block;
   position: relative;
-  top: -6px;
+  top: -5px;
   width: 17px;
   height: 17px;
   margin-left: -8px;
@@ -1028,7 +1029,7 @@ nav h2{
 }
 .slider_value{
   position:absolute;
-  top:-10px
+  top:16px
 }
 /** Login **/
 
