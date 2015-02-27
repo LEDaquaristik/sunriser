@@ -100,7 +100,8 @@ $(function(){
     max: Infinity
   }).on('dragmove', function (event) {  // call this function on every move
     var sliderWidth = interact.getElementRect(event.target.parentNode).width;
-    value = event.pageX / sliderWidth;
+    var value = event.pageX / sliderWidth;
+    console.log(value);
     event.target.style.paddingLeft = (value * 100) + '%';
     $(event.target).data('value', value);
     $(event.target).trigger('change');

@@ -992,31 +992,35 @@ nav h2{
 }
 
 /** Sliders **/
+.slidermaster{
+  margin: 0 0 0 50px;
+  width: 240px;
+}
 
 .sliderbar {
   position: relative;
-  width: auto;
-  height: 9px;
-  background-color: transparent;
-  border:2px solid #CCD7E2;
-  border-radius:4px;
-  margin: 0 0 0 50px;
-  display: block;
-  overflow: visible;
+  width: 100%;
+  height: 0.3em;
+  margin: 1.5em auto;
+  background-color: rgb(204, 215, 226);
+  border-radius: 1em;
+  box-sizing: border-box;
+  -ms-touch-action: none;
+      touch-action: none;
 }
 
 /* the slider handle */
 .sliderbar:before {
   content: "";
+  display: block;
   position: relative;
-  display:block;
-  z-index: 3;
+  top: -6px;
   width: 17px;
   height: 17px;
-  top: -6px;
-  border-radius:8px;
-  border:2px solid white;
-  background-color: #2980B9;
+  margin-left: -8px;
+  border: 0.15em solid #FFF;
+  border-radius: 17px;
+  background-color: #2980b9;
 }
 
 .slider{
@@ -1214,6 +1218,11 @@ a.index_function:active {
     margin: 2px;
   }
 }
+@media screen and (max-width:1000px) {
+  .slidermaster{
+    width: 150px;
+  }
+}
 @media screen and (max-width:900px) {
   .main{
     padding:0 10px;
@@ -1229,6 +1238,9 @@ a.index_function:active {
   #sunriser_datetime_header {
     float: left;
     padding-top: 12px;
+  }
+  .slidermaster{
+    width: 100px;
   }
 }
 @media screen and (max-width:500px) {
@@ -1311,6 +1323,9 @@ a.index_function:active {
   }
   .sunriser_content input[type='submit']{
     right:60px;
+  }
+  .slidermaster{
+    width: 86px;
   }
 }
 
