@@ -92,42 +92,16 @@ $(function(){
     });
   }
 
-  // Js Timepicker : very 'inspired' by http://codepen.io/ElmahdiMahmoud/pen/Injdq
-  
-  $(document).on('click', '.hrs', function () {
-      hours = $(this).html();
-      setDate();
-      return false;
-  });
-  
-  $(document).on('click', '.minutes', function () {
-      min = $(this).html();
-      setDate();
-      return false;
-  });
-  
-  function setDate() {
-  
-      if (hours) {
-          if (min) {
-              $('#timepicker input').val(hours + ':' + min);
-          } else {
-              $('#timepicker input').val(hours + ':00');
-          }
-      } else {
-          if (min) {
-              $('#timepicker input').val('00:' + min);
-          } else {
-              $('#timepicker input').val();
-          }
-      }
-  }
-  $(document).on('click', 'div.timepickerdiv input', function (e) {
-      e.stopPropagation();
-      $(this).parent().find('table.timepickertable').addClass("bunny");
-  });
-  $(document).on('click', function () {
-      $('table.timepickertable').removeClass("bunny");
+  interact('.sliderbar').origin('self').draggable({
+    inertia: true,
+    restrict: { restriction: 'self' },
+    max: Infinity
+  }).on('dragmove', function (event) {  // call this function on every move
+    var sliderWidth = interact.getElementRect(event.target.parentNode).width;
+    value = event.pageX / sliderWidth;
+    event.target.style.paddingLeft = (value * 100) + '%';
+    $(event.target).data('value', value);
+    $(event.target).trigger('change');
   });
 
 });
@@ -166,5 +140,10 @@ $('body').on('sr_config',function(){
     var id = $(this).attr('id');
     var form = new SrForm(this,sr_forms[id]);
   });
+
+  // have to be added if we add again a storage
+  // if (typeof current_time === 'undefined') {
+  //   sr_request_mpack('POST','/',[],function(values){});
+  // }
 
 });

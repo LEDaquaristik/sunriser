@@ -129,61 +129,17 @@ var SrField_Integer = SrField_Text.extend({
     var self = this;
     var html_field = self.html_field();
 
-    // This script was stolen here : http://voidcanvas.com/jquery-slider-without-using-jquery-ui-plugin/ 
     if (html_field.hasClass('sliders')) {
-      var i = 0;
-      var j = 0;
-      html_field = self.html_field();
-      control = html_field.data('control-group');
-      htm = '<div class="slide-control"><div class="fillslide"></div><div class="slide-control-button" data-control-group="'+control+'"></div></div>';
-      html_field.after(htm).attr('readonly', true).css('display', "none");
-
-      var sliders  = html_field.next();
-      var button = sliders.find('.slide-control-button');
-      var fill_slid = sliders.find('.fillslide');
-      var startOffset, holderOffset, handleWidth;
-      var sliderWidth = sliders.width();
-
-      var range = self.max - self.min;
-      var value = html_field.val();
-      button.css({
-        left: ( sliderWidth * ( ( value - self.min ) / ( self.max - self.min ) ) )
-      });
-      fill_slid.css({
-        width: ( sliderWidth * ( ( value - self.min ) / ( self.max - self.min ) ) + 4 )
+      html_field.hide();
+      html_field.parent().find('.sliderbar').on('change',function(){
+        var factor = $(this).data('value');
+        var all = self.max - self.min;
+        var diff = Math.floor(all * factor);
+        var value = self.min + diff;
+        html_field.val(value);
+        html_field.parent().find('.slider_value').text(self.display_value(value));
       });
 
-      button.on('mousedown', function(e) {
-        e.preventDefault(); 
-        holderOffset = sliders.offset().left;
-        startOffset = button.offset().left - holderOffset;
-        sliderWidth = sliders.width();
-        $(document).on('mousemove', sliderMoveHandler);
-        $(document).on('mouseup', sliderStopHandler);
-      });
-      function sliderSetValue(factor) {
-        var val = Math.round(self.min + ( ( self.max - self.min ) * factor ));
-        html_field.val(val);
-        $('#' + self.id + '_value').html(self.display_value(val));
-      }
-      function sliderMoveHandler(e) {
-        j=i;
-        var posX = e.pageX - holderOffset;
-        posX = Math.min(Math.max(0, posX), sliderWidth);
-        i = button.offset().left - 88;
-        sliderSetValue(posX / sliderWidth);
-        button.css({
-          left: posX
-        });
-      	fill_slid.css({
-          width: posX + 4
-      	});
-      }
-      function sliderStopHandler() {
-        html_field.trigger('change');
-        $(document).off('mousemove', sliderMoveHandler);
-        $(document).off('mouseup', sliderStopHandler);
-      }     
     }
   }
 

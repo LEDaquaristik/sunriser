@@ -5,7 +5,7 @@
   </div>
   <label class="select_style"> 
     <select id="<%=field.id%>_hour"> 
-      <option value="1">0</option> 
+      <option value="0">0</option> 
       <option value="1">1</option> 
       <option value="2">2</option> 
       <option value="3">3</option> 
@@ -33,7 +33,7 @@
   </label><div class="doublepoints">:</div> 
   <label class="select_style"> 
     <select id="<%=field.id%>_minutes"> 
-      <option value="60">00</option> 
+      <option value="0">00</option> 
       <option value="1">01</option> 
       <option value="2">02</option> 
       <option value="3">03</option> 

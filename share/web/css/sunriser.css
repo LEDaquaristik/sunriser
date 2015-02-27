@@ -988,37 +988,38 @@ nav h2{
 
 /** Sliders **/
 
-.slide-control {
-  width: auto;
-  height: 9px;
+.sliderbar {
   position: relative;
-  background-color: transparent;
-  border:2px solid #CCD7E2;
-  border-radius:4px;
-  margin: 0 0 0 50px;
+  width: 100%;
+  height: 1em;
+  margin: 1.5em auto;
+  background-color: #29e;
+  border-radius: 0.5em;
+  box-sizing: border-box;
+  
+  font-size: 8vmin;
+  
+  -ms-touch-action: none;
+      touch-action: none;
+}
+
+/* the slider handle */
+.sliderbar:before {
+  content: "";
   display: block;
-  overflow: visible;
+  position: relative;
+  top: -0.5em;
+
+  width: 2em;
+  height: 2em;
+  margin-left: -1em;
+  border: solid 0.25em #fff;
+  border-radius: 1em;
+  background-color: inherit;
+
+  box-sizing: border-box;
 }
-.slide-control-button {
-  position: absolute;
-  z-index: 3;
-  width: 17px;
-  height: 17px;
-  left: 0;
-  top: -6px;
-  border-radius:8px;
-  border:2px solid white;
-  background-color: #2980B9;
-}
-.fillslide{
-  height:5px;
-  position:absolute;
-  left:0;
-  display:block;
-  background-color: #CCD7E2;
-  /*background-color: #e9f2f8;
-  border-radius: 4px;*/
-}
+
 .slider{
   position:relative;
 }
