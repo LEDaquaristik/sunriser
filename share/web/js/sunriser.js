@@ -12,9 +12,11 @@ var sr_config_def;
 var sr_config_types = {};
 var sr_color = {};
 
-//timepicker vars
-var hours,
-min = null;
+function daymin_to_time(daymin) {
+  var hour = Math.floor(daymin / 60);
+  var minute = daymin - ( hour * 60 );
+  return ( hour > 9 ? "" : "0" ) + hour + ":" + ( minute > 9 ? "" : "0" ) + minute;
+}
 
 $(function(){
 
@@ -102,6 +104,15 @@ $(function(){
     event.target.style.paddingLeft = (value * 100) + '%';
     $(event.target).data('value', value);
     $(event.target).trigger('change');
+  });
+
+  $(document).on('click','div.timepickerdiv .timepicked',function (e) {
+      $('table.timepickertable').removeClass("bunny");
+      e.stopPropagation();
+      $(this).parent().find('table.timepickertable').addClass("bunny");
+  });
+  $(document).on('click', function () {
+      $('table.timepickertable').removeClass("bunny");
   });
 
 });

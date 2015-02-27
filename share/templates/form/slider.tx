@@ -1,5 +1,5 @@
 <div class="slider">
-  <input min="<%=field.min%>" max="<%=field.max%>" value="<%=field.value||0%>" class="sliders" type="number" <: include form::idname :>>
+  <input style="display:none" min="<%=field.min%>" max="<%=field.max%>" value="<%=field.value||0%>" class="sliders" type="number" <: include form::idname :>>
   <div class="slider_value"><%=field.display_value()%></div>
   <div class="sliderbar"></div>
 </div>
