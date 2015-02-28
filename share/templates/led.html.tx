@@ -1,4 +1,4 @@
-: cascade base { title => "LED konfigurieren", nav => "setup" }
+: cascade base { title => "LED konfigurieren", nav => "setup", help => mark_raw("Hier stellen Sie die Farben und Funktionen Ihrer LED ein. Die Farbe ist optional, aber mit Farbe wird in den weiteren Darstellungen auch direkt diese benutzt. Vergessen Sie nicht nach der &Auml;nderung dieser Einstellungen am Ende der Seite auf 'Speichern' zu klicken.") }
 : override content -> {
 
 <div class="form noautoload" id="led"></div>
