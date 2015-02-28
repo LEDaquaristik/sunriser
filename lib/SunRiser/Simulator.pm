@@ -166,6 +166,16 @@ sub _build_state {
   };
 }
 
+has started => (
+  is => 'lazy',
+  init_arg => undef,
+);
+
+sub _build_started {
+  my ( $self ) = @_;
+  return $self->get_time();
+}
+
 has cdbs => (
   is => 'lazy',
   init_arg => undef,
@@ -422,7 +432,7 @@ sub set_pwm {
 sub _web_state {
   my ( $self, $env ) = @_;
   $self->debug('Sending state');
-  my $state = { time => $self->get_time(), uptime => 6300, %{$self->get_state($env)} };
+  my $state = { time => $self->get_time(), uptime => ( $self->get_time() - $self->started() ), %{$self->get_state($env)} };
   #use DDP; p($state);
   return $self->_web_serve_msgpack($state);
 }
@@ -451,13 +461,14 @@ sub _web_firmware_mp {
     # $self->cdb->put_replace('___firmware_timestamp',$utc_time);
     croak "TODO";
   } else {
+    my @stat = stat __FILE__;
     return $self->_web_serve_msgpack({
-      description => 'SunRiser Simulator',
-      filename => 'SRDEMO',
-      experimental => 1,
-      author => 'You',
-      timestamp => time(),
-      version => ( $self->versioned || '112233445566778899SIMULA' ),
+      description => $self->demo ? 'SunRiser Demo' : 'SunRiser Simulator',
+      filename => $self->demo ? 'SRDEMO' : 'SRSIMULA',
+      experimental => $self->demo ? 0 : 1,
+      author => $self->demo ? '<a href="http://LEDaquaristik.de/">LEDaquaristik.de</a>' : 'You',
+      timestamp => ( $stat[9] + ( $self->get('gmtoff') * 60 ) ),
+      version => ( $self->versioned || '112233445566778899DEMO' ),
     });
   }
 }
@@ -465,10 +476,11 @@ sub _web_firmware_mp {
 sub _web_bootload_mp {
   my ( $self, $env ) = @_;
   $self->debug('Sending bootload.mp');
+  my @stat = stat __FILE__;
   return $self->_web_serve_msgpack({
-    version => '112233445566778899SIMULA',
-    timestamp => $self->get_time(),
-    mac => [1,2,3,4,5,6]
+    version => 'DEMOSIMULATORBOOTLOADER',
+    timestamp => ( $stat[9] + ( $self->get('gmtoff') * 60 ) ),
+    mac => [18,52,86,120,154,188]
   });
 }
 
@@ -665,6 +677,7 @@ sub _build_psgi {
 sub BUILD {
   my ( $self ) = @_;
   $self->w;
+  $self->started;
 }
 
 sub run {
