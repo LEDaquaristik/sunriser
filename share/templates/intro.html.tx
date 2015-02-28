@@ -1,6 +1,119 @@
 : cascade base { title => r('Einf&uuml;hrung'), no_form => 1, no_bighelp => 1 }
 : override page -> {
 
-<!-- gallery style intro with cool fade -->
+<section class="intro">
+  <article class="introwelcome">
+    <nav class="navexemple">
+      <li title="Status" class="back_home first-level selected">
+        <a href="/"><i class="fa fa-home fa-2x"></i></a>
+      </li>
+      <li title="Zeitplanung" class="first-level">
+        <a href="/day.html"><i class="fa fa-clock-o fa-2x"></i></a>
+      </li>
+      <li title="Wettersimulation" class="first-level">
+        <i class="fa fa-cloud fa-2x"></i>
+      </li>
+      <li title="Wettersimulation" class="first-level">
+        <i class="fa fa-gear fa-2x"></i>
+      </li>
+      <li title="Wettersimulation" class="first-level">
+        <i class="fa fa-info fa-2x"></i>
+      </li>
+    </nav>
+    <div class="welcometext">
+      <h2>Welcome to your sunriser</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </div>
+  </article>
+  <article class="connectled">
+    <div class="connectledtext">
+      <h2>How to connect the LED</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </div>
+  </article>
+  <article class="settingled">
+    <div class="settingledtext">
+      <h2>Setting up the LED</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </div>
+    <div class="settingledimg">
+      <div class="browser">
+        <div class="browsertitlebar">
+          <div class="browserclosebutton">
+            <div class="browserclosebuttonclose">
+            </div>
+            <div class="browserclosebuttonmin">
+            </div>
+            <div class="browserclosebuttonmax">
+            </div>
+          </div>
+          <div class="browsertitle">
+            LED konfigurieren
+          </div>
+        </div>
+        <div class="browserscreen">
+        </div>
+      </div>
+    </div>
+  </article>
+  <article class="introdayplanner">
+    <div class="dayplannerimg"></div>
+    <div class="dayplannertext">
+      <h2>Setting up your dayplanner</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </div>
+  </article>
+  <article class="backupintro">
+    <div class="backuptext">
+      <h2>Backup & Restore</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </div>
+    <div class="backupimg">
+      <span>Backup</span>
+      <i class="fa fa-medkit"></i>
+    </div>
+  </article>
+  <article class="introfirmware">
+    <div class="firmimg">
+      <div class="fimblock">
+        Installiere aktuelle Firmware SR80049
+      </div>
+      <div class="fimblock redblockfirm">
+        Firmware SR0048 bereits installiert
+      </div>
+    </div>
+    <div class="firmtext">
+      <h2>Firmeware upgardes!</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </div>
+  </article>
+  <article class="moretocome">
+    <div class="moretocometxt">
+      <h2>More to come!</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris.</p>
+    </div>
+    <div class="moretocomeimg">
+      <div class="browser">
+        <div class="browsertitlebar">
+          <div class="browserclosebutton">
+            <div class="browserclosebuttonclose">
+            </div>
+            <div class="browserclosebuttonmin">
+            </div>
+            <div class="browserclosebuttonmax">
+            </div>
+          </div>
+          <div class="browsertitle">
+            LEDaquaristik.de
+          </div>
+        </div>
+        <div class="browserscreen">
+        </div>
+      </div>
+    </div>
+  </article>
+
+
+</section>
 
 : }

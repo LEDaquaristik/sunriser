@@ -1211,6 +1211,207 @@ a.index_function:active {
 #home_not_configured {
   padding-bottom: 40px;
 }
+/** Intro Page**/
+
+.intro{
+  background-color:#fff;
+  font-family:"Open Sans", sans-serif;
+}
+.introwelcome{
+  display:table;
+  min-height:400px;
+  width:100%
+}
+.intro article{
+  border-bottom:1px solid #CCD7E2;
+}
+.intro article h2{
+  font-size:32px;
+  color:#202731;
+  padding-bottom:44px
+}
+.intro article p{
+  color: #777;
+}
+.navexemple{
+  position :relative;
+  float:left;
+  height: auto;
+}
+.welcometext{
+  padding:50px;
+  float:lefa;
+  width: calc(100% - 70px);
+  margin-left: 70px;
+}
+nav .first-level:last-child {
+  position: inherit;
+  bottom: auto;
+  width: auto;
+}
+.settingled{
+  display:table;
+  width:100%
+}
+.settingledimg{
+  width:350px;
+  float:right;
+  padding:25px;
+}
+.browser{
+  width:350px;
+  height:350px;
+  background:#CCD7E2;
+  border-radius: 3px 0 0 3px
+}
+.browsertitlebar{
+  width:100%;
+  height:40px;
+  padding:10px;
+}
+.browserclosebutton{
+  height: 10px;
+  margin-top: -5px;
+  margin-left: 5px;
+}
+.browsertitle{
+  float: right;
+  margin-top: -8px;
+  font-size: 14px;
+}
+.browserclosebuttonmax,
+.browserclosebuttonmin,
+.browserclosebuttonclose{
+  width: 10px;
+  height: 10px;
+  background-color: #aaa;
+  border-radius: 10px;
+  display: inline-block;
+}
+.browserscreen{
+  background:url(../img/ledsetting.png) no-repeat;
+  width: 350px;
+  height: 310px;
+  border-radius: 0 0 0 3px;
+}
+.settingledtext{
+  float:left;
+  padding:50px;
+  width: calc(100% - 350px);
+}
+.connectled{
+  padding:50px;
+}
+.connectledtext{
+  float:right;
+  width:calc(100% - 300px);
+}
+.connectledtext:before{
+  content:"\f0eb";
+  font-family:"IcoMoon";
+  position: absolute;
+  margin-left: -230px;
+  font-size: 180px;
+  margin-top: 100px;
+  color: #333; 
+}
+.connectled,
+.moretocome,
+.introfirmware,
+.backupintro,
+.introdayplanner{
+  display:table;
+}
+.dayplannerimg{
+  background:url(../img/dayplanner.png) no-repeat;
+  width: 400px;
+  height: 357px;
+  margin:25px 0;
+  float:left
+}
+.dayplannertext{
+  float:left;
+  width:calc(100% - 400px);
+  padding:50px;
+}
+.backupimg{
+  background-color:#68D472;
+  float:right;
+  text-align:center;
+  width: 200px;
+  height: 200px;
+  margin: 100px 75px;
+  color: #fff;
+  font-size: 20px;
+  padding-top:25px
+}
+.backupimg i{
+  font-size: 75px;
+  display: block !important;
+  margin-top: 25px;
+  width: 100%;
+}
+.backuptext{
+  float:left;
+  width:calc(100% - 350px);
+  padding:50px;
+}
+.moretocome{
+  text-align: center;
+  width: 100%;
+}
+.moretocometxt{
+  display:inline-block;
+  max-width:500px;
+  padding-top:50px;
+}
+.moretocomeimg{
+  width:100%;
+  text-align:center;
+}
+.moretocomeimg .browser{
+  width:690px;
+  display:inline-block;
+  height:300px;
+  margin-top:75px;
+  border-radius: 3px 3px 0px 0px;
+}
+.moretocomeimg .browserclosebutton{
+  position:absolute;
+}
+.moretocomeimg .browsertitle{
+  float:inherit;
+  margin-top:-4px;
+}
+.moretocomeimg .browserscreen{
+  background:url(../img/ledaqua.png) no-repeat;
+  width: 690px;
+  height: 260px;
+  border-radius: 0px;
+}
+.firmtext{
+  float:right;
+  width:calc(100% - 300px);
+  padding:50px;
+}
+.firmimg{
+  margin:100px 0 50px 0;
+  width:300px;
+  float:left
+}
+.fimblock{
+  height:50px;
+  background-color: #68D472;
+  display:block;
+  width:350px;
+  margin-bottom:50px;
+  margin-left:-50px;
+  padding:10px;
+  color:white
+}
+.redblockfirm{
+  background-color: #E74C3C
+}
 
 /***  RESPONSIVE  ***/
 
