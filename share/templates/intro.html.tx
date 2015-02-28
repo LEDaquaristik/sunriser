@@ -93,23 +93,25 @@
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris.</p>
     </div>
     <div class="moretocomeimg">
-      <div class="browser">
-        <div class="browsertitlebar">
-          <div class="browserclosebutton">
-            <div class="browserclosebuttonclose">
+      <a href="http://LEDaquaristick.de">
+        <div class="browser">
+          <div class="browsertitlebar">
+            <div class="browserclosebutton">
+              <div class="browserclosebuttonclose">
+              </div>
+              <div class="browserclosebuttonmin">
+              </div>
+              <div class="browserclosebuttonmax">
+              </div>
             </div>
-            <div class="browserclosebuttonmin">
-            </div>
-            <div class="browserclosebuttonmax">
+            <div class="browsertitle">
+              LEDaquaristik.de
             </div>
           </div>
-          <div class="browsertitle">
-            LEDaquaristik.de
+          <div class="browserscreen">
           </div>
         </div>
-        <div class="browserscreen">
-        </div>
-      </div>
+      </a>
     </div>
   </article>
 

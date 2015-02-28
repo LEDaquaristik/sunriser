@@ -1389,6 +1389,9 @@ nav .first-level:last-child {
   height: 260px;
   border-radius: 0px;
 }
+.moretocomeimg a{
+  color:#444;
+}
 .firmtext{
   float:right;
   width:calc(100% - 300px);
