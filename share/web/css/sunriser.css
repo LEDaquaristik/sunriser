@@ -1141,7 +1141,7 @@ nav h2{
 .bigbutton{
   width: 31%;
   display: block;
-  border-bottom: 0px !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
   background-color: #68D472;
   padding: 10px;
   float:left;
