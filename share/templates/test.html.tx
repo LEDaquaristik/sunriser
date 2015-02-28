@@ -39,13 +39,10 @@ $('body').on('sr_config',function(){
           custom_init: function(){
             var pwm = this.data.pwm_id;
             var html_field = this.html_field();
-            html_field.change(function(){
+            html_field.parent().find('.sliderbar').on('dragend',function(){
               var data = { pwms: {} };
               data.pwms[pwm] = parseInt(html_field.val());
-              //sr_screenblock();
-              sr_request_mpack('PUT','/state',data,function(){
-                //sr_screenunblock();
-              });
+              sr_request_mpack('PUT','/state',data,function(values){});
             });
           }
         });

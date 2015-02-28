@@ -89,6 +89,12 @@ sub _build_system_cdbs {
   )} @{$self->systemdb}] : [];
 }
 
+option demo => (
+  is => 'ro',
+  default => sub { 0 },
+  doc => 'Demo Website Mode (using session)',
+);
+
 option no_fallback => (
   is => 'ro',
   format => 'i',
@@ -130,6 +136,7 @@ has c => (
 
 sub _build_c {
   my ( $self ) = @_;
+  croak("Can't use config directory on demo mode") if $self->demo;
   my $c = path($self->configdir)->absolute->realpath;
   $c->mkpath;
   return $c;
@@ -163,13 +170,13 @@ sub _build_cdbs {
 }
 
 sub get {
-  my ( $self, $key ) = @_;
-  my $val = $self->get_config($key);
-  return $val if defined $val;
+  my ( $self, $key, $env ) = @_;
+  my @val = $self->get_config($key, $env);
+  return $val[0] if scalar @val == 1;
   if ($self->has_systemdb) {
     for my $cdb (@{$self->cdbs}) {
       return $cdb->get($key) if $cdb->exists($key);
-    }    
+    }
   } else {
     my $default = $self->config->default($key);
     return $default if defined $default;
@@ -179,49 +186,54 @@ sub get {
 }
 
 sub get_config {
-  my ( $self, $key ) = @_;
-  my $djb = djb($key);
-  my $mpkey = $self->_mp->pack($key);
-  my $filename = sprintf("%08X.MP", $djb);
-  my $path = path($self->c, $filename);
-  if (-f $path) {
-    my $file = $path->slurp_raw();
-    my $datakey = substr($file, 0, length($mpkey));
-    my $data = substr($file, length($mpkey));
-    my $ckey = $self->_mp->unpack($datakey);
-    if ($ckey eq $key) {
-      return $self->_mp->unpack($data);
-    } else {
-      $self->debug($ckey." in config file is not ".$key."!!!");
+  my ( $self, $key, $env ) = @_;
+  if ($self->demo) {
+    if (defined $env->{'psgix.session'}->{config} && exists $env->{'psgix.session'}->{config}->{$key}) {
+      return $env->{'psgix.session'}->{config}->{$key};
+    }
+  } else {
+    my $djb = djb($key);
+    my $mpkey = $self->_mp->pack($key);
+    my $filename = sprintf("%08X.MP", $djb);
+    my $path = path($self->c, $filename);
+    if (-f $path) {
+      my $file = $path->slurp_raw();
+      my $datakey = substr($file, 0, length($mpkey));
+      my $data = substr($file, length($mpkey));
+      my $ckey = $self->_mp->unpack($datakey);
+      if ($ckey eq $key) {
+        return $self->_mp->unpack($data);
+      } else {
+        $self->debug($ckey." in config file is not ".$key."!!!");
+      }
     }
   }
-  return undef;
+  return;
 }
 
 sub exists {
-  my ( $self, $key ) = @_;
+  my ( $self, $key, $env ) = @_;
   for my $cdb (@{$self->cdbs}) {
-    return 1 if $cdb->exists($key);
+    return 1 if $cdb->exists($key, $env);
   }
   return 1 if defined $self->model_info->{$key};
   return 0;
 }
 
 sub set {
-  my ( $self, $key, @val ) = @_;
-  my $djb = djb($key);
-  my $filename = sprintf("%08X.MP",$djb);
-  my @data;
-  my $p = path($self->c,$filename)->touch;
-  push @data, $self->_mp->pack($key);
-  if (scalar @val == 1) {
-    push @data, $self->_mp->pack($val[0]);
-  } elsif (scalar @val == 0) {
-    push @data, $self->_mp->pack(undef);
+  my ( $self, $key, $val, $env ) = @_;
+  if ($self->demo) {
+    $env->{'psgix.session'}->{config} = {} unless defined $env->{'psgix.session'}->{config};
+    $env->{'psgix.session'}->{config}->{$key} = $val;
   } else {
-    croak(__PACKAGE__." Unknown parameter count on ->set");
+    my $djb = djb($key);
+    my $filename = sprintf("%08X.MP",$djb);
+    my @data;
+    my $p = path($self->c,$filename)->touch;
+    push @data, $self->_mp->pack($key);
+    push @data, $self->_mp->pack($val);
+    $p->spew_raw(@data);
   }
-  $p->spew_raw(@data);
 }
 
 sub _web_ok { $_[0]->debug("Sending OK"); [
@@ -260,6 +272,7 @@ sub _web_serve_msgpack {
   return [ 200, [
     'Content-Type' => 'application/x-msgpack',
     'Content-Length' => length($msgpack),
+    @headers
   ], [ $msgpack ] ];
 }
 
@@ -350,11 +363,51 @@ sub _web_serve_file {
   ], $fh ];
 }
 
+sub _web_backup {
+  my ( $self, $env ) = @_;
+  my %values;
+  if ($self->demo) {
+    %values = defined $env->{'psgix.session'}->{config}
+      ? %{$env->{'psgix.session'}->{config}}
+      : ();
+  } else {
+    return $self->_web_servererror; # TODO
+  }
+  my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
+  return $self->_web_serve_msgpack(\%values,
+    'Content-Disposition' => sprintf('attachment;filename=SunRiser8_Backup_%04u%02u%02u_%02u%02u%02u.mp', $year+1900,$mon+1,$mday,$hour,$min,$sec)
+  );
+}
+
+sub get_state {
+  my ( $self, $env ) = @_;
+  if ($self->demo) {
+    if (!defined $env->{'psgix.session'}->{state}) {
+      $env->{'psgix.session'}->{state} = $self->state;
+    }
+    return $env->{'psgix.session'}->{state};
+  } else {
+    return $self->state;
+  }
+}
+
+sub set_pwm {
+  my ( $self, $pwm, $val, $env ) = @_;
+  if ($self->demo) {
+    if (!defined $env->{'psgix.session'}->{state}) {
+      $env->{'psgix.session'}->{state} = $self->state;
+    }
+    $env->{'psgix.session'}->{state}->{pwms}->{$pwm} = $val;
+  } else {
+    $self->state->{pwms}->{$pwm} = $val;
+  }
+}
+
 sub _web_state {
-  my ( $self ) = @_;
+  my ( $self, $env ) = @_;
   $self->debug('Sending state');
-  my $state = { time => $self->get_time(), uptime => 150000, %{$self->state} };
-  use DDP; p($state);
+  my $state = { time => $self->get_time(), uptime => 6300, %{$self->get_state($env)} };
+  #use DDP; p($state);
   return $self->_web_serve_msgpack($state);
 }
 
@@ -372,7 +425,7 @@ sub _web_time {
 }
 
 sub _web_firmware_mp {
-  my ( $self ) = @_;
+  my ( $self, $env ) = @_;
   $self->debug('Sending firmware.mp');
   if ($self->has_systemdb) {
     # $self->cdb->put_replace('___firmware_description',$values{'model'}." v".$version);
@@ -384,7 +437,7 @@ sub _web_firmware_mp {
   } else {
     return $self->_web_serve_msgpack({
       description => 'SunRiser Simulator',
-      filename => 'SIMULATO',
+      filename => 'SRDEMO',
       experimental => 1,
       author => 'You',
       timestamp => time(),
@@ -394,7 +447,7 @@ sub _web_firmware_mp {
 }
 
 sub _web_bootload_mp {
-  my ( $self ) = @_;
+  my ( $self, $env ) = @_;
   $self->debug('Sending bootload.mp');
   return $self->_web_serve_msgpack({
     version => '112233445566778899SIMULA',
@@ -442,12 +495,26 @@ has web => (
 
 sub _build_web {
   my ( $self ) = @_;
-  my $sessionid = 12345678;
+  croak("Can't start twiggy server on demo, use any PSGI server") if $self->demo;
   $self->info('Starting webserver on port '.$self->port.'...');
   my $server = Twiggy::Server->new(
     port => $self->port,
   );
-  $server->register_service(builder {
+  $server->register_service($self->psgi);
+  return $server;
+}
+
+has psgi => (
+  is => 'lazy',
+  init_arg => undef,
+);
+
+sub _build_psgi {
+  my ( $self ) = @_;
+  builder {
+    if ($self->demo) {
+      enable 'Session', store => 'File';
+    }
     enable sub {
       my $app = shift;
       sub {
@@ -460,9 +527,11 @@ sub _build_web {
       my ( $env ) = @_;
       my $req = Plack::Request->new($env);
 
+      # use DDP; p($env);
+
       my $method = uc($req->method);
-      my $uri = $req->request_uri;
-      $uri =~ s!/+!/!g; # remove double slashes
+      my $path = $req->path;
+      $path =~ s!/+!/!g; # remove double slashes
 
       # get cookie
       my $cookie = $req->headers->header('Cookie');
@@ -473,16 +542,18 @@ sub _build_web {
       #   $logged_in = 1;
       # }
 
-      if ($uri eq '/') {
+      # use DDP; p($env->{'psgix.session'});
+
+      if ($path eq '/') {
         # if logged in serve index.html
         if ($logged_in) {
           if ($method eq 'PUT') {
             my $body = $req->raw_body;
             my $data = $self->_mp->unpack($body);
-            use DDP; p($data); 1;
+            # use DDP; p($data); 1;
             for my $k (keys %{$data}) {
               $self->debug('Setting key '.$k);
-              $self->set($k,$data->{$k});
+              $self->set($k,$data->{$k},$env);
             }
             return $self->_web_ok;
           } elsif ($method eq 'POST') {
@@ -491,10 +562,10 @@ sub _build_web {
             my %values;
             $self->debug('Requested keys: '.join(',',@{$data}));
             for my $key (@{$data}) {
-              $values{$key} = $self->get($key);
+              $values{$key} = $self->get($key,$env);
             }
             $values{'time'} = $self->get_time();
-            use DDP; p(%values);
+            # use DDP; p(%values);
             return $self->_web_serve_msgpack(\%values);
           } else {
             return $self->_web_serve_file('index.html');          
@@ -506,7 +577,7 @@ sub _build_web {
             if ($body eq 'password='.$self->password) {
               # Set Cookie to newly generated sessionid from EPROM
               return $self->_web_serve_file('index.html',
-                'Set-Cookie' => 'sid='.$sessionid
+                # 'Set-Cookie' => 'sid='.$sessionid
               );
             }
           }
@@ -515,7 +586,7 @@ sub _build_web {
         }
       }
 
-      if ($uri =~ /^\/logout(.*)$/) {
+      if ($path =~ /^\/logout(.*)$/) {
         # Trick to simulate logout with instead of deleting cookie
         # just garbage it with a wrong session id (safe method)
         return $self->_web_serve_file('login.html',
@@ -524,28 +595,47 @@ sub _build_web {
       }
 
       if ($method eq 'GET') {
-        my ( $file ) = $uri =~ m/^\/([^\?]*)/;
-        if ($uri =~ /^\/ok/) {
+        my ( $file ) = $path =~ m/^\/([^\?]*)/;
+        if ($path =~ /^\/ok/) {
           return $self->_web_ok;
-        } elsif ($uri =~ /^\/state/) {
-          return $self->_web_state;
-        } elsif ($uri =~ /^\/firmware\.mp/) {
-          return $self->_web_firmware_mp;
-        } elsif ($uri =~ /^\/bootload\.mp/) {
-          return $self->_web_bootload_mp;
+        } elsif ($path =~ /^\/state$/) {
+          return $self->_web_state($env);
+        } elsif ($path =~ /^\/firmware\.mp$/) {
+          return $self->_web_firmware_mp($env);
+        } elsif ($path =~ /^\/bootload\.mp$/) {
+          return $self->_web_bootload_mp($env);
+        } elsif ($path =~ /^\/backup$/) {
+          return $self->_web_backup($env);
+        } elsif ($path =~ /^\/factorybackup$/) {
+          return $self->_web_backup($env);
         }
         # else serve file from storage
         # gives back 200 on success and 404 on not found
         return $self->_web_serve_file($file);
       } elsif ($method eq 'PUT') {
-        if ($uri =~ /^\/state/) {
+        if ($path =~ /^\/state$/) {
           my $body = $req->raw_body;
           my $data = $self->_mp->unpack($body);
-          use DDP; p($data);
+          #use DDP; p($data);
+          if (exists $data->{pwms}) {
+            for my $pwm (keys %{$data->{pwms}}) {
+              #use DDP; p($data->{pwms}->{$pwm}); p($pwm);
+              $self->set_pwm($pwm, $data->{pwms}->{$pwm}, $env);
+            }
+          }
+          return $self->_web_ok;
+        } elsif ($path =~ /^\/restore$/) {
+          my $body = $req->raw_body;
+          my $data = $self->_mp->unpack($body);
+          # use DDP; p($data); 1;
+          for my $k (keys %{$data}) {
+            $self->debug('Setting key '.$k);
+            $self->set($k,$data->{$k},$env);
+          }
           return $self->_web_ok;
         } else {
           my $l = length($req->raw_body);
-          use DDP; p($l);
+          # use DDP; p($l);
           return $self->_web_ok;
         }
       }
@@ -553,18 +643,19 @@ sub _build_web {
       # can't handle that request, send error
       return $self->_web_servererror;
     };
-  });
-  return $server;
+  };
 }
 
 sub BUILD {
   my ( $self ) = @_;
   $self->w;
-  $self->web;
-  $self->cdbs;
 }
 
 sub run {
+  my ( $self ) = @_;
+  croak("Can't run on demo") if $self->demo;
+  $self->web;
+  $self->cdbs;
   AE::cv->recv;
 }
 

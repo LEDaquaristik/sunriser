@@ -69,14 +69,16 @@
         "balancedist", ["Amount of random numbers used to reach the distance between thunder", "integer", 1],
         "fadepercent", ["Percentage of thunderstorm which is fade in and fade out (less thunders, lower light intensity, while fade)", "integer", 60],
         "daychance", ["Percentage for a thunderstorm to happen (Tried per day in daymax amount)", "integer", 10],
-        "fixedtimes", ["Fixed times for thunderstorms (daychance still applies, daymax tries still added)", "repeated(time)"],
+        "fixedtimes", ["Fixed times for thunderstorms (daychance still applies, daymax tries still added)", "array(time)"],
         "deferralmax", ["Maximum random deferral (in seconds)", "integer", 0],
         "weekdays", ["Apply thunderstorms to given weekdays (else always)", "array(weekday)"]
       ],
       "moonphase", "Moonphase setup", [
         "activated", ["Show moonphase based on reality", "bool", 0],
         "starttime", ["Most early start at this time", "time"],
+        "starttime_inuse", ["Use starttime at all", "bool"],
         "endtime", ["Always end at least at this time", "time"],
+        "endtime_inuse", ["Use endtime at all", "bool"],
         "maximum", ["Intensity of moon in percent (can be over 100%)", "integer", 100],
         "deferral", ["Deferral against real moon phase (in minutes)", "integer", 0],
         "weekdays", ["Apply moon to given weekdays (else every day)", "array(weekday)"]

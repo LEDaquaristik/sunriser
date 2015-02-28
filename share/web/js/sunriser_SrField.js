@@ -125,6 +125,14 @@ var SrField_Integer = SrField_Text.extend({
     }
     return value;
   },
+  factor: function(){
+    if (!this.min && !this.max) {
+      return undefined;
+    }
+    var all = this.max - this.min;
+    var part = this.value - this.min;
+    return part / all;
+  },
   initjs: function(){
     var self = this;
     var html_field = self.html_field();
@@ -137,6 +145,7 @@ var SrField_Integer = SrField_Text.extend({
         var diff = Math.floor(all * factor);
         var value = self.min + diff;
         html_field.val(value);
+        html_field.trigger('change');
         html_field.parent().find('.slider_value').text(self.display_value(value));
       });
     }

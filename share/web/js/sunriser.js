@@ -2,8 +2,7 @@
 var sr_config;
 
 var sr_config_main_keys = [
-  'model','model_id','pwm_count','factory_version','language','timezone',
-  'updated','name','showexpert','nohelp'
+  'model','model_id','pwm_count','factory_version','language','timezone','gmtoff','nodst','updated','name','showexpert','nohelp'
 ];
 
 var current_time;
@@ -101,10 +100,11 @@ $(function(){
   }).on('dragmove', function (event) {  // call this function on every move
     var sliderWidth = interact.getElementRect(event.target.parentNode).width;
     var value = event.pageX / sliderWidth;
-    console.log(value);
     event.target.style.paddingLeft = (value * 100) + '%';
     $(event.target).data('value', value);
     $(event.target).trigger('change');
+  }).on('dragend', function (event) {
+    $(event.target).trigger('dragend');    
   });
 
   $(document).on('click','div.timepickerdiv .timepicked',function (e) {

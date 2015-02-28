@@ -319,7 +319,7 @@ var SrPath = Class.extend({
         var x = self.dp.zeroX + time;
         var y = self.dp.zeroY + ( self.dp.maxValue - value );
         var id = btoa(Math.random()).substring(0,8);
-        var circle = self.dp.paper.circle(x,y,2).attr({
+        var circle = self.dp.paper.circle(x,y,self.editmode ? 4 : 2).attr({
           fill: ( self.editmode ? '#fff' : self.get_color() ),
           stroke: ( self.editmode ? '#68D472' : self.get_color() ),
           "stroke-width": "0.5px",
@@ -565,17 +565,17 @@ $('body').on('sr_config',function(){
           pre: true
         });
       });
-      expert_fields.push({
-        name: "dayplanner#randomdeferralmax",
-        template: "slider",
-        min: 0, max: 1440,
-        label: "Maximale zuf&auml;llige Abweichung in Minuten"
-      },{
-        name: "dayplanner#deferral",
-        template: "slider",
-        min: -1440, max: 1440,
-        label: "Feste Abweichung in Minuten"
-      });
+      // expert_fields.push({
+      //   name: "dayplanner#randomdeferralmax",
+      //   template: "slider",
+      //   min: 0, max: 1440,
+      //   label: "Maximale zuf&auml;llige Abweichung in Minuten"
+      // },{
+      //   name: "dayplanner#deferral",
+      //   template: "slider",
+      //   min: -1440, max: 1440,
+      //   label: "Feste Abweichung in Minuten"
+      // });
       var form = new SrForm($('#dayplan'),{
         title: undefined,
         fields: fields,

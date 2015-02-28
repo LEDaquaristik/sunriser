@@ -133,10 +133,10 @@ var sr_forms = {
     prefix: "weather#setup#X#moonphase",
     fields: [{
       name: "activated", label: "Simuliere Mondphasen nach Realit&auml;t"
-    },{
-      name: "starttime", label: "Fr&uuml;hster Mondaufgang"
-    },{
-      name: "endtime", label: "Sp&auml;tester Monduntergang"
+    // },{
+    //   name: "starttime", label: "Fr&uuml;hster Mondaufgang"
+    // },{
+    //   name: "endtime", label: "Sp&auml;tester Monduntergang"
     },{
       name: "maximum", label: "Maximale Intensit&auml;t des Mondes",
       template: "slider", min: 0, max: 100

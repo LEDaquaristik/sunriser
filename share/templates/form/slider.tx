@@ -2,6 +2,6 @@
   <input style="display:none" min="<%=field.min%>" max="<%=field.max%>" value="<%=field.value||0%>" class="sliders" type="number" <: include form::idname :>>
   <div class="slider_value"><%=field.display_value()%></div>
   <div class="slidermaster">
-    <div class="sliderbar"></div>
+    <div class="sliderbar" style="padding-left:<%=( field.factor() * 100 ) %>%"></div>
   </div>
 </div>

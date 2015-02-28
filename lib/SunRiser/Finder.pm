@@ -54,7 +54,7 @@ sub _build_web {
     mount '/' => sub {
       my ( $env ) = @_;
       my $req = Plack::Request->new($env);
-      my $ip = $req->address;
+      my $ip = $req->header('X-Real-IP') || $req->address;
       my $sr_ip = $req->header('X-SR-Finder-IP');
       my $sr_hostname = $req->header('X-SR-Finder-Hostname');
       my $sr_firmware = $req->header('X-SR-Finder-Firmware');
