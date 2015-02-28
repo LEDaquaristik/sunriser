@@ -95,6 +95,15 @@ option demo => (
   doc => 'Demo Website Mode (using session)',
 );
 
+option demo_cache => (
+  is => 'ro',
+  default => sub { 
+    my ( $self ) = @_;
+    return path($ENV{HOME},'.srdemocache',$self->versioned || getppid())->absolute;
+  },
+  doc => 'Demo Cache Directory',
+);
+
 option no_fallback => (
   is => 'ro',
   format => 'i',
@@ -283,12 +292,20 @@ sub _web_serve_file {
 
   my ( $ext ) = $file =~ m/\.(\w+)$/;
 
-  for my $pfile (($filename,$filename.'index.html',$filename.'/index.html')) {
+  for my $pfile ($filename) {
     if ($self->has_publish_file($pfile)) {
       ( $ext ) = $pfile =~ m/\.(\w+)$/;
-      my $tfile = tmpnam();
-      $file = path($tfile);
-      $file->spew_raw($self->render($pfile));
+      if ($self->demo && $self->demo_cache) {
+        $file = path($self->demo_cache,$pfile);
+        unless (-f $file) {
+          $file->parent->mkpath;
+          $file->spew_raw($self->render($pfile));
+        }
+      } else {
+        my $tfile = tmpnam();
+        $file = path($tfile);
+        $file->spew_raw($self->render($pfile));        
+      }
       last;
     }
   }
@@ -368,8 +385,7 @@ sub _web_backup {
   my %values;
   if ($self->demo) {
     %values = defined $env->{'psgix.session'}->{config}
-      ? %{$env->{'psgix.session'}->{config}}
-      : ();
+      ? %{$env->{'psgix.session'}->{config}} : ();
   } else {
     return $self->_web_servererror; # TODO
   }
@@ -630,7 +646,7 @@ sub _build_psgi {
           # use DDP; p($data); 1;
           for my $k (keys %{$data}) {
             $self->debug('Setting key '.$k);
-            $self->set($k,$data->{$k},$env);
+            $self->set($k,$data->{$k},$env) unless ($self->demo && $k eq 'password');
           }
           return $self->_web_ok;
         } else {

@@ -7,6 +7,8 @@ $|=1;
 use strict;
 use warnings;
 
+use Server::Starter;
+
 use FindBin;
 use lib $FindBin::Dir . "/../lib";
 use SunRiser::Finder;

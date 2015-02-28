@@ -19,6 +19,8 @@ requires 'MooX::Options', '0';
 requires 'MooX::Role::Logger', '0';
 requires 'Path::Tiny', '0';
 requires 'Plack', '0';
+requires 'Plack::Middleware::Session', '0';
+requires 'Starman', '0';
 requires 'Text::Xslate', '0';
 requires 'Time::Zone', '0';
 requires 'Twiggy::Server', '0';
@@ -26,4 +28,3 @@ requires 'Twiggy::Server', '0';
 on test => sub {
   requires 'Test::More', '0.96';
 };
-
