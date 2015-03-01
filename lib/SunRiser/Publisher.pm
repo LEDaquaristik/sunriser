@@ -123,7 +123,8 @@ sub render_all_css {
   for my $css_file (@{$self->base_vars->{css_files}}) {
     $css .= $share->child($css_file)->slurp_utf8;
   }
-  #$css = CSS::Minifier::XS::minify($css);
+  $css = CSS::Minifier::XS::minify($css);
+  utf8::decode($css);
   return $css;
 }
 
