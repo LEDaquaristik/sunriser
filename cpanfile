@@ -10,7 +10,7 @@ requires 'File::Copy::Recursive', '0';
 requires 'File::ShareDir::ProjectDistDir', '0';
 requires 'File::Temp', '0';
 requires 'HTTP::Date', '0';
-requires 'IO::Compress::Base', '0';
+requires 'Compress::Zlib', '0';
 requires 'JavaScript::Minifier', '0';
 requires 'JSON::MaybeXS', '0';
 requires 'Log::Any::Adapter', '0';

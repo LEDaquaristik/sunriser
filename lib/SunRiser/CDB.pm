@@ -12,7 +12,7 @@ use IO::Compress::Gzip;
 use bytes;
 use CDB::TinyCDB;
 use Data::MessagePack;
-use IO::Compress::Gzip qw( gzip $GzipError );
+use Compress::Zlib;
 use Carp qw( croak );
 use File::ShareDir::ProjectDistDir;
 use Time::Zone;
@@ -201,7 +201,7 @@ sub add_web {
   if ($length > 256) {
     $self->debug($base_debug.' (gzipped)');
     my $gzipped = "";
-    gzip(\$content,\$gzipped, BinModeIn => 1) or croak("gzip failed: $GzipError");
+    $gzipped = Compress::Zlib::memGzip($content);
     $self->set($base_key.'#bytes',$length);
     $self->set($base_key.'#gzip',1);
     $self->set($base_key.'#content',$gzipped);

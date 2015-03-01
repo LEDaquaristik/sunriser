@@ -309,12 +309,12 @@ sub _web_serve_file {
         $file = path($self->demo_cache,$pfile);
         unless (-f $file) {
           $file->parent->mkpath;
-          $file->spew_raw($self->render($pfile));
+          $file->spew_utf8($self->render($pfile));
         }
       } else {
         my $tfile = tmpnam();
         $file = path($tfile);
-        $file->spew_raw($self->render($pfile));        
+        $file->spew_utf8($self->render($pfile));
       }
       last;
     }
@@ -339,14 +339,14 @@ sub _web_serve_file {
 
   unless ($content_type) {
     if ($ext eq 'html') {
-      $content_type = 'text/html';
+      $content_type = 'text/html; charset=utf-8';
       $parse = 1;
     } elsif ($ext eq 'js') {
-      $content_type = 'application/javascript';
+      $content_type = 'application/javascript; charset=utf-8';
     } elsif ($ext eq 'css') {
-      $content_type = 'text/css';
+      $content_type = 'text/css; charset=utf-8';
     } elsif ($ext eq 'svg') {
-      $content_type = 'image/svg+xml';
+      $content_type = 'image/svg+xml; charset=utf-8';
     } elsif ($ext eq 'woff') {
       $content_type = 'application/font-woff';
     } elsif ($ext eq 'ttf') {
@@ -358,7 +358,7 @@ sub _web_serve_file {
     } elsif ($ext eq 'png') {
       $content_type = 'image/png';
     } elsif ($ext eq 'json') {
-      $content_type = 'application/json';
+      $content_type = 'application/json; charset=utf-8';
     } elsif ($ext eq 'webm') {
       $content_type = 'video/webm';
     } elsif ($ext eq 'flv') {
@@ -370,12 +370,8 @@ sub _web_serve_file {
     } elsif ($ext eq 'ico') {
       $content_type = 'image/x-icon';
     } else {
-      $content_type = 'text/plain'
+      $content_type = 'text/plain; charset=utf-8'
     }
-  }
-
-  if ($content_type =~ m!^text/! or $content_type =~ m!/json$!) {
-    $content_type .= "; charset=utf-8";
   }
 
   open my $fh, "<:raw", $file or return $self->_web_forbidden;
