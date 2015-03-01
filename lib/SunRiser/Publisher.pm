@@ -87,7 +87,7 @@ sub publish_to {
   for my $filename (@files) {
     my $file = path($dir,$filename);
     $file->parent->mkpath unless -d $file->parent;
-    $file->spew_raw($self->render($filename));
+    $file->spew_utf8($self->render($filename));
   }
 }
 
@@ -121,7 +121,7 @@ sub render_all_css {
   my $css = "";
   my $share = path(dist_dir('SunRiser'),'web');
   for my $css_file (@{$self->base_vars->{css_files}}) {
-    $css .= $share->child($css_file)->slurp_raw;
+    $css .= $share->child($css_file)->slurp_utf8;
   }
   $css = CSS::Minifier::XS::minify($css);
   return $css;
@@ -132,7 +132,7 @@ sub render_all_js {
   my $js = "var sr_config_def_factory = ".encode_json($self->json_sr_config_def).";\n";
   my $share = path(dist_dir('SunRiser'),'web');
   for my $js_file (@{$self->base_vars->{js_files}}) {
-    $js .= $share->child($js_file)->slurp_raw;
+    $js .= $share->child($js_file)->slurp_utf8;
   }
   $js = minify( input => $js );
   return $js;  
