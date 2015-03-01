@@ -1,4 +1,4 @@
-: cascade base { title => "Tagesplanung", nav => "planner", help => r("Hier k&ouml;nnen Sie den Tagesverlauf Ihrer LEDs einfach per Klick einstellen. W&auml;hlen Sie zuerst oben die einzustellende LED aus, und f&uuml;gen Sie dann &uuml;ber die Plus Zeichen unten neue Punkte hinzu. Diese k&ouml;nnen Sie dann im Graphen nach belieben verschieben. Um einen Punkt zu entfernen, dr&uuml;cken Sie einfach auf die Uhrzeit/Prozent Angabe dieses Punktes unten neben den Plus Zeichen.") }
+: cascade base { title => "Tagesplanung", nav => "planner", help => r("Hier k&ouml;nnen Sie den Tagesverlauf Ihrer LEDs einfach per Klick einstellen. W&auml;hlen Sie zuerst oben die einzustellende LED aus, und f&uuml;gen Sie dann &uuml;ber die Plus Zeichen unten neue Punkte hinzu. Diese k&ouml;nnen Sie dann im Graphen nach belieben verschieben. Um einen Punkt zu entfernen, dr&uuml;cken Sie einfach auf die Uhrzeit/Prozent Angabe dieses Punktes unten neben den Plus Zeichen. Vergessen Sie nicht nach Ihren &Auml;nderungen auch am Ende der Seite auf 'Speichern' zu klicken.") }
 : override content -> {
 
 <div id="pwmpicker"></div>

@@ -4,37 +4,25 @@
 <section class="intro">
   <article class="introwelcome">
     <nav class="navexemple">
-      <li title="Status" class="back_home first-level selected">
-        <a href="/"><i class="fa fa-home fa-2x"></i></a>
-      </li>
-      <li title="Zeitplanung" class="first-level">
-        <a href="/day.html"><i class="fa fa-clock-o fa-2x"></i></a>
-      </li>
-      <li title="Wettersimulation" class="first-level">
-        <i class="fa fa-cloud fa-2x"></i>
-      </li>
-      <li title="Wettersimulation" class="first-level">
-        <i class="fa fa-gear fa-2x"></i>
-      </li>
-      <li title="Wettersimulation" class="first-level">
-        <i class="fa fa-info fa-2x"></i>
-      </li>
+      <: include base::nav :>
     </nav>
     <div class="welcometext">
-      <h2>Welcome to your sunriser</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <h2>Herzlich Willkommen zum <i>SunRiser</i> Management</h2>
+      <p>Erstmal Danke f&uuml;r Ihr Vertrauen in unser Produkt. <i>SunRiser</i> wurde gezielt daf&uuml;r entwickelt f&uuml;r Sie es so einfach wie m&ouml;glich zu machen all Ihre Bedürfnisse für die Regulierung Ihrer LED Beleuchtung bequem von Ihrem Rechner aus zu erledigen. Da Sie diese Seite bereits erreicht haben ist der schwierigste Teil bereits hinter Ihnen, ab jetzt wird es nur noch einfacher!</p>
+      <br>
+      <p>Auf der linken Seite sehen Sie das Hauptmen&uuml; Punkte. Das &nbsp;<i class="fa fa-home fa-2x"></i>&nbsp; ganz oben f&uuml;hrt Sie wieder zur Startseite die Ihnen immer Schnelltasten zu den wichtigsten Funktionen anzeigt. Die &nbsp;<i class="fa fa-clock-o fa-2x"></i>&nbsp; ist f&uuml;r die Tagesplanung um den Tagesverlauf Ihrer LED einzustellen. Falls Sie die LED noch nicht eingestellt haben, werden Sie zu der Seite, um diese einzustellen, automatisch weitergeleitet. Hinter der &nbsp;<i class="fa fa-cloud fa-2x"></i>&nbsp; befinden sich die Funktionen f&uuml;r die Wetter Simulation. Dies ist bisher noch sehr simpel gehalten, wird aber mit den Kunden W&uuml;nschen weiter wachsen. Beim &nbsp;<i class="fa fa-gears fa-2x"></i>&nbsp; sind die Funktionen zum eigentlichen System, wie z.B. Sicherung &amp; Wiederherstellung, LED Farben &amp; Steuerung, Netzwerk &amp; Interface Einstellungen, sowie Funktionstests und Firmware Aktualisierung. Und unter dem &nbsp;<i class="fa fa-info fa-2x"></i>&nbsp; finden Sie weitere Informationen, wie z.B. die Lizenzen, Kontaktinformationen, Systeminformationen, den Link zur Open Source Seite und diese Einf&uuml;hrung.</p>
     </div>
   </article>
   <article class="connectled">
     <div class="connectledtext">
-      <h2>How to connect the LED</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <h2>LED mit dem <i>SunRiser</i> verbinden</h2>
+      <p>Zu jedem einzelnen LED Ausgang haben wir einen dazu passenden Stecker mitgeliefert. Dieser ist so konzipiert das er nur in einer Richtung reingesteckt werden kann. Wenn Sie Ihn rausziehen werden Sie am Ausgang selber direkt sehen welche Seite <b>+</b> und welche Seite <b>-</b>. Mit einem kleinen Schraubenzieher k&ouml;nnen Sie dann einfach Ihre LED an diesen Stecker anbringen. Bitte achte Sie hierbei darauf das genug Isolation vom Kabel entfernt ist, und das auch das Kabel sehr fest sitzt. Als guter Tipp kann hier gesagt werden das darauf geachtet wird das die Schraube zwar fest sitzt, aber nicht &uuml;berdreht wird, weil die Verbindung sonst wieder zu locker ist. Ziehen Sie ruhig mal leicht am Kabel nachdem Sie es am Stecker festgeschraubt haben, es sollte gut sitzen.</p>
     </div>
   </article>
   <article class="settingled">
     <div class="settingledtext">
-      <h2>Setting up the LED</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <h2>LED einstellen</h2>
+      <p>Bevor oder nachdem Sie Ihre LED angesteckt haben sollten Sie diese Konfigurieren und dann den regul&auml;ren Tagesverlauf einstellen. &Uuml;ber <a href="/led.html">LED einstellen</a> m&uuml;ssen Sie zuerst definieren welche LED &uuml;ber die Tagesplanung und die Wettersimulation gesteuert werden. Vergessen Sie nicht am Ende der Seite auf <b>'Speichern'</b> zu klicken, ansonsten gehen Ihre &Auml;nderungen verloren. Eine LED die von niemandem verwaltet wird beh&auml;lt bis zum Neustart immer den Wert den Sie beim <a href="/test.html">Funktionstest</a> zuletzt eingestellt haben.</p>
     </div>
     <div class="settingledimg">
       <div class="browser">
@@ -59,41 +47,80 @@
   <article class="introdayplanner">
     <div class="dayplannerimg"></div>
     <div class="dayplannertext">
-      <h2>Setting up your dayplanner</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <h2>Tagesverlauf festlegen</h2>
+      <p>Nun k&ouml;nnen Sie auf der <a href="/day.html">Tagesplanung</a> den Tagesverlauf Ihrer LED nach belieben einstellen. &Uuml;ber den Graphen lassen sich mit Drag&amp;Drop oder mit einfachem Touch auf einem Touchscreen die Punkte verschieben. Um neue Punkte hinzu zuf&uuml;gen stehen <b>+</b> Zeichen bereit, w&auml;hrend ein Klick auf die Uhrzeit einen Punkt wieder entfernt. Eines der n&auml;chsten geplanten Funktionen ist die einfache Verwaltung dieser Verl&auml;ufe als Programme die exportiert, importiert und kopiert werden k&ouml;nnen.</p>
+    </div>
+  </article>
+  <article class="weatherintro">
+    <div class="weatherintrotext">
+      <h2>Wettersimulation einstellen</h2>
+      <p>Die Wetter Simulation kann &uuml;ber die verschiedenen Men&uuml;punkte hinter der Wolke angesprochen werden (<a href="/thunderstorm.html">Gewitter</a>, <a href="/moon.html">Mondphasen</a>, <a href="/clouds.html">Wolken</a>, <a href="/rain.html">Regentage</a>).</p>
     </div>
   </article>
   <article class="backupintro">
     <div class="backuptext">
-      <h2>Backup & Restore</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <h2>Sicherung &amp; Wiederherstellung</h2>
+      <p>Eine Sicherung der Konfiguration sollte man aus vielerlei Gr&uuml;nden immer nach wichtigen Einstellungen ins Visier nehmen. Der wichtigste Grund ist hier wohl, das auch Sie vielleicht sp&auml;ter merken das eine &Auml;nderung nicht wirklich Ihren Bed&uuml;rfnissen entspricht und dann zu gern zum alten Stand zur&uuml;ck kehren m&ouml;chten. Auch ein Defekt der internen SD Karte l&auml;sst sich leider niemals ausschliessen, auch wenn dieser recht unwahrscheinlich ist. Ein Austausch ist hier zwar einfach und kann von Ihnen vor Ort durchgef&uuml;hrt werden, aber die existierende Konfiguration w&auml;re verloren.</p><br>
+      <p>Die <a href="/backup.html">Sicherungsfunktionen</a> sind sehr simpel, mit einem Klick erhalten Sie eine Datei mit Datum schon im Dateinamen, die Ihre aktuelle Konfiguration beinhaltet. Einfach auf Ihrem Computer abspeichern. &Uuml;ber Drag&amp;Drop oder einem einfachen Klick auf das Wiederherstellungsfeld, kann dann diese Backup Datei wieder eingespielt werden. Der <i>SunRiser</i> startet sich danach automatisch neu.</p><br>
+      <p>Sicherungsdateien sind kompatibel zu unserem <a href="http://srdemo.ledaquaristik.de/"><i>SunRiser</i> Demo</a>, dies erlaubt Ihnen eine Konfigurationsdatei vorher anzugucken bevor Sie diese auf den echten <i>SunRiser</i> einspielen. Auch ist es Ihnen so m&ouml;glich Konfigurationsdateien mit anderen Menschen, <i>SunRiser</i> Besitzer oder nicht, auszutauschen und zu diskutieren.</p>
     </div>
     <div class="backupimg">
-      <span>Backup</span>
-      <i class="fa fa-medkit"></i>
+      <a style="text-decoration: none; color:inherit;" href="/backup.html">
+        <span>Sicherung</span>
+        <i class="fa fa-medkit"></i>
+      </a>
     </div>
   </article>
   <article class="introfirmware">
     <div class="firmimg">
       <div class="fimblock">
-        Installiere aktuelle Firmware SR80049
+        Installiere aktuelle Firmware SR81001
       </div>
       <div class="fimblock redblockfirm">
-        Firmware SR0048 bereits installiert
+        Firmware SR81000 bereits installiert
       </div>
     </div>
     <div class="firmtext">
-      <h2>Firmeware upgardes!</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <h2>Software Aktualisierung</h2>
+        <p>Einer der wichtigsten Punkte in der gesamten Planung war die Aktualisierung der Software des <i>SunRiser</i>s, die sogenannte <b>Firmware</b>, so einfach und benutzerfreundlich wie m&ouml;glich zu machen, aber zeitgleich nat&uuml;rlich auch optional und flexibel in der Handhabung. Auf der <a href="/firmware.html">Firmware aktualisieren</a> Seite k&ouml;nnen Sie direkt erkennen ob Ihre Firmware eine Aktualisierung braucht, und falls dem so ist, diese auch mit einem Klick direkt installieren. Diese Prozedur wird vor Ihren Augen im Web Browser gemacht. Dieser l&auml;dt aus dem Internet die gew&uuml;nschte Firmware herunter, und schickt Sie dann von dort direkt an den <i>SunRiser</i>, aber keine Panik, eine weitere Interaktion von Ihnen ist nicht notwendig. Nach dem Erhalt der Datei, startet sich der <i>SunRiser</i> neu, und installiert dabei die neue Firmware. Dies dauert etwas weniger als 1 Minute dauert. Ihr Web Browser &uuml;berwacht ob der <i>SunRiser</i> wieder erreichbar ist, und leitet Sie dann zu einer Seite um, die das erfolgreiche Erneuern der Firmware best&auml;tigt. Hier finden Sie auch meist Informationen &uuml;ber die Neuerung dieser Firmware.</p>
+    </div>
+  </article>
+  <article class="factoryreset">
+    <div class="factoryresettext">
+      <h2>Factory-Reset</h2>
+      <p>Auch wenn wir hoffen das Sie es nie ben&ouml;tigen, haben wir nat&uuml;rlich auch eine "Factory-Reset" Funktion eingebaut, die es Ihnen erm&ouml;glicht das Ger&auml;t in den Urzustand zu versetzen. Zeitgleich wird hierbei auch die alte Konfiguration verschoben, um zu verhindern das ein Fehler in der Konfiguration dazu f&uuml;hrte das Sie den Factory-Reset durchf&uuml;hren mussten. Die alte Konfiguration kann dann &uuml;ber den dritten Knopf auf bei den <a href="/backup.html">Sicherungsfunktionen</a> nach der Wiederherstellung heruntergeladen werden.</p>
+      <br>
+      <p>Um einen Factory Reset durchzuf&uuml;hren m&uuml;ssen Sie nur den Reset Knopf am SunRiser dr&uuml;cken in den ersten 5 Sekunden nachdem Sie es mit der Stromversorgung verbunden haben. Sie brauchen Ihn nur kurz zu dr&uuml;cken und sollten danach sofort den Knopf wieder loslassen und mindestens eine Minute den SunRiser arbeiten lassen. W&auml;hrendessen auf gar keinen Fall die Stromversorgung trennen.</p>
     </div>
   </article>
   <article class="moretocome">
     <div class="moretocometxt">
-      <h2>More to come!</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris.</p>
+      <h2>Und das beste ist, es f&auml;ngt gerade erst an!</h2>
+      <p>Der <i>SunRiser</i> ist ein sehr junges Produkt, und wurde von Anfang an geplant sich stark an den Kundenw&uuml;nschen zu orientieren, und nicht einen unverst&auml;ndlichen Funktionalit&auml;tskatalog zu erstellen, wo genau die gew&uuml;nschten Funktionen nicht m&ouml;glich sind. Bei solchen Systemen warten Kunden sehr lange bis neue Funktionen nach Ihren W&uuml;nschen eingebaut werden. <i>SunRiser</i> soll hier ein anders Bild abgeben. Regelm&auml;ssige Firmware Aktualisierung und aktive Interaktion mit den Kunden &uuml;ber <a href="https://github.com/LEDaquaristik/sunriser">GitHub</a> werden daf&uuml;r sorgen das genau das Produkt entsteht welchen Sie als Kunde ben&ouml;tigen.</p>
+      <br>
+      <p>Hier mal eine kleine Auflistung aller zuk&uuml;nftiger Funktionen die wir schon auf unserem Radar haben (Sortierung ist nach Priorit&auml;t, dies ist aber nicht in Stein gemeiselt):</p>
+      <ul>
+        <li>
+          Schnelltasten f&uuml;r Standardfunktionen wie Kehrwoche (Maximale Leistung w&uuml;hrend der Reingung) oder Mittagspause (Dimmen alle Lampen zu einem maximal Wert f&uuml;r einen bestimmten definierten Zeitraum).
+        </li>
+        <li>
+          Programme f&uuml;r Tagesverlauf (Verwaltung, Import, Export, Kopieren und zeitgesteuerte Programmwechsel)
+        </li>
+        <li>
+          Mehr als nur ein Programm f&uuml;r die Wetter Simulation, auch mit Verwaltungsfunktionen und zeitgesteuertem Wechsel, um z.B. individuelles Jahreszeiten-Wetter zu simulieren.
+        </li>
+        <li>
+          Unterst&uuml;tzung der <a href="http://www.amazon.de/EnerGenie-EG-PMS2-LAN-IP-Steckdosenleiste-Überspannungsschutz-LAN-Schnittstelle/dp/B0099AHPQ4/">GemBird LAN IP Steckdosenleiste</a> als Teil der Tagesplanung um Ein/Ausschalten von weiterer Peripherie zu kontrollieren.
+        </li>
+        <li>
+          Eine Tagesverlauf Preview, die erm&ouml;glicht das geplante Programm vor dem speichern mal in Kurzfassung zu sehen, 24 Stunden in 24 Sekunden quasi (nat&uuml;rlich einstellbar).
+        </li>
+      </ul>
+      <br>
+      <p>Abonnieren Sie einfach den Newsletter von <a href="http://www.LEDaquaristik.de">LEDaquaristik</a> um immer auf dem laufenden zu bleiben! Sie finden die Anmeldung in der rechten Leiste auf der Seite.</p>
     </div>
     <div class="moretocomeimg">
-      <a href="http://LEDaquaristick.de">
+      <a href="http://www.LEDaquaristik.de">
         <div class="browser">
           <div class="browsertitlebar">
             <div class="browserclosebutton">
@@ -105,7 +132,7 @@
               </div>
             </div>
             <div class="browsertitle">
-              LEDaquaristik.de
+              www.LEDaquaristik.de
             </div>
           </div>
           <div class="browserscreen">

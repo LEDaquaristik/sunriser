@@ -6,6 +6,13 @@
   <img class="loader" src="/img/ajaxload.gif">
 </div>
 
+<br><br>
+
+<a class="index_function" href="/backup">
+  <span class="index_function_badge">+</span>
+  <div>Sicherung herunterladen</div>
+</a>
+
 : }
 : override postjs -> {
 

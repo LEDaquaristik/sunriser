@@ -110,8 +110,8 @@ var sr_forms = {
     },{
       name: "daychance", label: "Wahrscheinlichkeit eines Gewitters pro maximale Anzahl von Gewittern am Tag",
       template: "slider", min: 1, max: 100
-    },{
-      name: "weekdays", label: "Nur an diesen Wochentagen gibt es Gewitter (sonst jeden Tag)"
+    // },{
+    //   name: "weekdays", label: "Nur an diesen Wochentagen gibt es Gewitter (sonst jeden Tag)"
     }],
     expert_fields: [{
       name: "balancelength", label: "Anzahl der Faktoren f&uuml;r die Berechnung der Gewitterl&auml;nge",
@@ -143,8 +143,8 @@ var sr_forms = {
     },{
       name: "deferral", label: "Abstand in Tagen zum echten Mondphasen Zyklus",
       template: "slider", min: -31, max: 31
-    },{
-      name: "weekdays", label: "Nur an diesen Wochentagen gibt es Mondphasen (sonst jeden Tag)"
+    // },{
+    //   name: "weekdays", label: "Nur an diesen Wochentagen gibt es Mondphasen (sonst jeden Tag)"
     }]    
   },
   //
@@ -162,8 +162,8 @@ var sr_forms = {
     },{
       name: "cloudchance", label: "Wahrscheinlichkeit einer Wolke pro Minute",
       template: "slider", min: 0, max: 100
-    },{
-      name: "weekdays", label: "Nur an diesen Wochentagen gibt es Wolken (sonst jeden Tag)"
+    // },{
+    //   name: "weekdays", label: "Nur an diesen Wochentagen gibt es Wolken (sonst jeden Tag)"
     }],
     expert_fields: [{
       name: "cloudminlength", label: "Minimum L&auml;nge einer Wolke in Sekunden",

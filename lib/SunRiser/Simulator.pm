@@ -542,15 +542,16 @@ sub _build_psgi {
   builder {
     if ($self->demo) {
       enable 'Session', store => 'File';
-    }
-    enable sub {
-      my $app = shift;
-      sub {
-        $self->debug('Web Request '.$_[0]->{REQUEST_METHOD}.' '.$_[0]->{PATH_INFO});
-        my $res = $app->($_[0]);
-        return $res;
+    } else { # v ^ still not related
+      enable sub {
+        my $app = shift;
+        sub {
+          $self->debug('Web Request '.$_[0]->{REQUEST_METHOD}.' '.$_[0]->{PATH_INFO});
+          my $res = $app->($_[0]);
+          return $res;
+        };
       };
-    };
+    }
     mount '/' => sub {
       my ( $env ) = @_;
       my $req = Plack::Request->new($env);
@@ -623,7 +624,8 @@ sub _build_psgi {
       }
 
       if ($method eq 'GET') {
-        my ( $file ) = $path =~ m/^\/([^\?]*)/;
+        my ( $file ) = $path =~ m/^\/(.*)/;
+
         if ($path =~ /^\/ok/) {
           return $self->_web_ok;
         } elsif ($path =~ /^\/state$/) {
