@@ -121,7 +121,7 @@ sub render_all_css {
   my $css = "";
   my $share = path(dist_dir('SunRiser'),'web');
   for my $css_file (@{$self->base_vars->{css_files}}) {
-    $css .= $share->child($css_file)->slurp;
+    $css .= $share->child($css_file)->slurp_raw;
   }
   $css = CSS::Minifier::XS::minify($css);
   return $css;
@@ -132,7 +132,7 @@ sub render_all_js {
   my $js = "var sr_config_def_factory = ".encode_json($self->json_sr_config_def).";\n";
   my $share = path(dist_dir('SunRiser'),'web');
   for my $js_file (@{$self->base_vars->{js_files}}) {
-    $js .= $share->child($js_file)->slurp;
+    $js .= $share->child($js_file)->slurp_raw;
   }
   $js = minify( input => $js );
   return $js;  
