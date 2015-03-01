@@ -14,6 +14,16 @@
     </div>
   </article>
   <article class="connectled">
+    <div class="connectledanim">
+      <div class="shine">
+        <div class="shineone"></div>
+        <div class="shinetwo"></div>
+        <div class="shinethree"></div>
+        <div class="shinefour"></div>
+        <div class="shinefive"></div>
+      </div>
+      <i class="fa fa-lightbulb-o"></i>
+    </div>
     <div class="connectledtext">
       <h2>LED mit dem <i>SunRiser</i> verbinden</h2>
       <p>Zu jedem einzelnen LED Ausgang haben wir einen dazu passenden Stecker mitgeliefert. Dieser ist so konzipiert das er nur in einer Richtung eingesteckt werden kann. Wenn Sie Ihn rausziehen werden Sie am Ausgang selber direkt sehen welche Seite <b>+</b> und welche Seite <b>-</b>. Mit einem kleinen Schraubenzieher k&ouml;nnen Sie dann einfach Ihre LED an diesen Stecker anbringen. Bitte achte Sie hierbei darauf das genug Isolation vom Kabel entfernt ist, und das auch das Kabel sehr fest sitzt. Als guter Tipp kann hier gesagt werden das darauf geachtet wird das die Schraube zwar fest sitzt, aber nicht &uuml;berdreht wird, weil die Verbindung sonst wieder zu locker ist. Ziehen Sie ruhig mal leicht am Kabel nachdem Sie es am Stecker festgeschraubt haben, es sollte gut sitzen.</p>

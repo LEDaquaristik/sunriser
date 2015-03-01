@@ -1220,7 +1220,8 @@ a.index_function:active {
 .introwelcome{
   display:table;
   min-height:400px;
-  width:100%
+  width:100%;
+  position:relative
 }
 .intro article{
   border-bottom:1px solid #CCD7E2;
@@ -1233,16 +1234,36 @@ a.index_function:active {
 .intro article p{
   color: #777;
 }
+.intro a{
+  color: #2980B9;
+  text-decoration: none;
+  border-bottom: 2px solid #97C1DD;
+}
 .navexemple{
-  position :relative;
-  float:left;
+  position :absolute;
   height: auto;
+  top:0;
+  bottom:0;
+  font-family: "DIN1451";
+}
+.navexemple h2 {
+  text-transform: uppercase;
+  color: #777 !important;
+  padding: 24px 0px 0px 24px;
+  height: 71px;
+  font-size: 16px !important;
+}
+.navexemple .second-nav{
+  border-bottom:#ccc solid 1px
+}
+.intro nav a{
+  border-bottom:0px !important;
+  color: #A6A9AD !important;
 }
 .welcometext{
   padding:50px;
-  float:lefa;
-  width: calc(100% - 70px);
-  margin-left: 70px;
+  width:calc(100% - 70px);
+  margin-left: 70px
 }
 nav .first-level:last-child {
   position: inherit;
@@ -1306,19 +1327,61 @@ nav .first-level:last-child {
   float:right;
   width:calc(100% - 300px);
 }
-.connectledtext:before{
-  content:"\f0eb";
-  font-family:"IcoMoon";
-  position: absolute;
-  margin-left: -230px;
+.connectledanim{
+  width: 250px;
+  height: 400px;
+  float: left;
+  margin-top:50px;
+}
+.connectledanim i{
   font-size: 180px;
   margin-top: 100px;
   color: #333; 
-  transition-duration:0.2s
+  transition-duration:0.2s;
+  display: block !important;
+  text-align: center;
 }
-.connectled:hover .connectledtext:before{
+.shine{
+  opacity:0;
+  transition-duration:0.2s;
+}
+.connectled:hover .shine,
+.connectled:hover .connectledanim i{
   color:#F39C12;
-  text-shadow:0 0 10px rgba(241, 196, 15, 0.3);
+  opacity:1
+}
+.shineone,
+.shinetwo,
+.shinethree,
+.shinefour,
+.shinefive{
+  background-color: #F1C40F;
+  border-radius: 10px;
+  width: 14px;
+  height: 50px;
+  display: block;
+  position: absolute;
+  transform: rotate(-60deg);
+  margin-top: 80px;
+  margin-left: 20px;
+}
+.shinetwo{
+  transform: rotate(0deg);
+  margin-top: 30px;
+  margin-left: 120px;
+}
+.shinethree{
+  transform: rotate(-110deg);
+  margin-top: 185px;
+}
+.shinefour{
+  transform: rotate(110deg);
+  margin-top: 185px;
+  margin-left: 220px;
+}
+.shinefive{
+  transform: rotate(60deg);
+  margin-left: 220px;
 }
 .connectled,
 .moretocome,
@@ -1352,6 +1415,9 @@ nav .first-level:last-child {
   font-size: 20px;
   padding-top:25px;
   border: 1px solid rgba(0, 0, 0, 0.1);
+}
+.backupimg a{
+  border-bottom:0px
 }
 .backupimg i{
   font-size: 75px;
@@ -1416,7 +1482,7 @@ nav .first-level:last-child {
   padding:50px;
 }
 .firmimg{
-  margin:100px 0 50px 0;
+  margin:250px 0 0 0;
   width:300px;
   float:left
 }
@@ -1432,6 +1498,14 @@ nav .first-level:last-child {
 }
 .redblockfirm{
   background-color: #E74C3C
+}
+.ui-layer, #weather-box, #explanation {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  left: 0;
+  top: 0;
 }
 
 /***  RESPONSIVE  ***/
