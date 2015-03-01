@@ -1324,6 +1324,8 @@ nav .first-level:last-child {
 .moretocome,
 .introfirmware,
 .backupintro,
+.weatherintro,
+.factoryreset,
 .introdayplanner{
   display:table;
 }
@@ -1358,6 +1360,16 @@ nav .first-level:last-child {
   width: 100%;
 }
 .backuptext{
+  float:left;
+  width:calc(100% - 350px);
+  padding:50px;
+}
+.weatherintrotext{
+  float:left;
+  width:calc(100% - 350px);
+  padding:50px;
+}
+.factoryresettext{
   float:left;
   width:calc(100% - 350px);
   padding:50px;
@@ -1573,4 +1585,8 @@ nav .first-level:last-child {
   width: 0px;
   height: 0px;
   overflow: hidden;
+}
+
+td.contactlabel {
+  vertical-align: top;
 }
