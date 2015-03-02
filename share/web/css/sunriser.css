@@ -1453,7 +1453,7 @@ nav .first-level:last-child {
   font-size:250px;
   width:250px;
   margin-left:-50px;
-  margin-top:200px;
+  margin-top:250px;
   float:left;
   color:#333
 }
@@ -1581,6 +1581,7 @@ nav .first-level:last-child {
 }
 @media screen and (max-width:500px) {
 
+  .sunriser span,
   #sunriser_datetime_header {
     display:none
   }
@@ -1591,22 +1592,35 @@ nav .first-level:last-child {
     padding:0;
   }
   header {
-      height: 50px;
-      padding: 12px 0 0 12px;
-      background-color: #34495e;
+      height: 60px;
+      padding: 17px 0 0 12px;
+      background-color: #202731;
+  }
+  .sunriser{
+      z-index: 5;
+      position: absolute;
+      display:none;
+  }
+  .back_home{
+      position:absolute;
+      left:0
   }
   nav {
       width: 100%;
-      min-height: 50px;
-      height: 50px;
+      padding-left:calc(100% - 240px);
+      min-height: 60px;
+      height: 60px;
       font-size:12px;
+      position:absolute;
+      top:-60px;
+      right:0px;
   }
   nav .first-level > i,
   nav .first-level > a {
       padding-top:0;
-      height: 50px;
-      padding-top:12px;
-      width:50px;
+      height: 60px;
+      padding-top:17px;
+      width:60px;
       display: inline-block;
   }
   nav .first-level:last-child {
@@ -1617,7 +1631,7 @@ nav .first-level:last-child {
       float: left;
   }
   .second-nav{
-    top:50px;
+    top:60px;
     left:0;
     margin-left:0px;
     border-width:0 0 1px 0;
@@ -1634,7 +1648,7 @@ nav .first-level:last-child {
   }
   .first-level.toggle::before {
     border-color: transparent transparent #FFF transparent;
-    margin: 30px 0px 0px -10px;
+    margin: 40px 0px 0px -10px;
     left:auto
   }
   .noscript-text{
@@ -1644,7 +1658,7 @@ nav .first-level:last-child {
     top: 50px;
   }
   .sunriser_content {
-    padding: 60px 10px 80px 10px;
+    padding: 10px 10px 80px 10px;
     margin-left:0;
     min-height: inherit;
   }
@@ -1653,6 +1667,7 @@ nav .first-level:last-child {
   }
   .control_center {
     margin-bottom: 0px;
+    overflow: inherit;
   }
   .sunriser_dialogue{
     padding: 20px 10px 0px 70px;

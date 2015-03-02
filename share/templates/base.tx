@@ -30,7 +30,7 @@
         <header>
           <: block header -> { :>
             <h1 class="sunriser">
-              <a href="/">SunRiser 8</a><: $title ? " | " ~ $title : "" :>
+              <a href="/">SunRiser 8</a><span><: $title ? " | " ~ $title : "" :></span>
             </h1>
             <div id="sunriser_datetime_header" class="sunriser sunriser_datetime"></div>
           <: } :>
