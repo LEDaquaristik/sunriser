@@ -746,11 +746,11 @@ nav h2{
   bottom: 0px;
   position: absolute;
   height: 70px;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid #CCD7E2;
   width: 100%;
   left: 0;
   padding: 19px 35px 0px 70px;
-  box-shadow: 0px -12px 0 white;
+  box-shadow: 0px -45px 0 white;
 }
 .help{
   position: relative;
@@ -1523,6 +1523,60 @@ nav .first-level:last-child {
   left: 0;
   top: 0;
 }
+/**       Backup         **/
+
+.backupbutton {
+  height: 300px;
+  vertical-align: middle;
+}
+.backupbutton i{
+  font-size:80px;
+  margin-top: 25px;
+  display: block !important;
+}
+.bigfactory i:before{
+  content:"\f011";
+  font-family:"IcoMoon";
+}
+.bigfactory i{
+  margin: 60px 0 25px;
+}
+#backup_restore {
+  cursor: pointer;
+}
+.backupdown {
+  width:40px;
+  height:60px;
+  background-color: #fff;
+  position:relative;
+  margin:40px 0;
+  display:inline-block
+}
+.backupdown:after {
+content: " ";
+display: block;
+height: 0px;
+width: 0px;
+position: absolute;
+border-width: 40px;
+border-style: solid;
+border-color: white transparent transparent;
+margin-bottom: -80px;
+margin-left: -20px;
+bottom:0
+}
+
+/**   Hidden File upload   **/
+
+.hiddenfileupload {
+  width: 0px;
+  height: 0px;
+  overflow: hidden;
+}
+
+td.contactlabel {
+  vertical-align: top;
+}
 
 /***  RESPONSIVE  ***/
 
@@ -1661,10 +1715,11 @@ nav .first-level:last-child {
   }
   .sunriser_dialogue{
     padding: 20px 10px 0px 70px;
+    box-shadow: 0px -12px 0 white;
   }
   .sunriser_content .form_title{
     display:block;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #CCD7E2;
     margin-left: -10px;
     margin-right: -10px;
     padding-left: 10px;
@@ -1719,59 +1774,20 @@ nav .first-level:last-child {
   .slider{
     width: 136px;
   }
+
+@media screen and (max-width:350px) {
+  .welcometext{
+    padding:80px 20px 20px 20px;
+  }
+  .moretocometxt,
+  .factoryresettext,
+  .firmtext,
+  .backuptext,
+  .weatherintrotext,
+  .dayplannertext,
+  .settingledtext,
+  .connectled {
+      padding: 20px;
+  }
 }
 
-/**       Backup         **/
-
-.backupbutton {
-  height: 300px;
-  vertical-align: middle;
-}
-.backupbutton i{
-  font-size:80px;
-  margin-top: 25px;
-  display: block !important;
-}
-.bigfactory i:before{
-  content:"\f011";
-  font-family:"IcoMoon";
-}
-.bigfactory i{
-  margin: 60px 0 25px;
-}
-#backup_restore {
-  cursor: pointer;
-}
-.backupdown {
-  width:40px;
-  height:60px;
-  background-color: #fff;
-  position:relative;
-  margin:40px 0;
-  display:inline-block
-}
-.backupdown:after {
-content: " ";
-display: block;
-height: 0px;
-width: 0px;
-position: absolute;
-border-width: 40px;
-border-style: solid;
-border-color: white transparent transparent;
-margin-bottom: -80px;
-margin-left: -20px;
-bottom:0
-}
-
-/**   Hidden File upload   **/
-
-.hiddenfileupload {
-  width: 0px;
-  height: 0px;
-  overflow: hidden;
-}
-
-td.contactlabel {
-  vertical-align: top;
-}
