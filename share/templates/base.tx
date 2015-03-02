@@ -61,9 +61,11 @@
             <div id="bighelp" class="hilfe-sidebar"></div>
           <: } :>
         </div>
-        <div class="banderolebox">
-          <a href="#" class="sunriserbanderole">SunRiser 8 Produkt Demo</a>
-        </div>
+        <: if $demo { :>
+          <div class="banderolebox">
+            <a href="http://www.ledaquaristik.de/SunRiser-8-Tagessimulation-und-Lichtsteuerung" class="sunriserbanderole">SunRiser 8 Produkt Demo</a>
+          </div>
+        <: } :>
         <!--<div>  What the fuck is this?-->
       </div>
     </main>
