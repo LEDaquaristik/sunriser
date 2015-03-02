@@ -3,12 +3,15 @@
 
 <div class="buttonbloc backupbuttons">
   <a class="bigbutton backupbutton" href="/backup">
+    <div class="backupdown"></div>
     <div>Konfiguration runterladen</div>
   </a>
   <div id="backup_restore" class="bigbutton backupbutton">
+    <i class="fa fa-medkit"></i>
     <div>Konfiguration wieder herstellen (Einfach .mp Datei hier hineinziehen oder anklicken f&uuml;r Dateimanager)</div>
   </div>
-  <a class="bigbutton backupbutton" href="/factorybackup">
+  <a class="bigbutton backupbutton bigfactory" href="/factorybackup">
+    <i class="resetfactor"></i>
     <div>Factory-Reset Sicherung runterladen</div>
   </a>
 </div>

@@ -1660,7 +1660,7 @@ nav .first-level:last-child {
 }
 @media screen and (max-width:650px) {
   .moretocomeimg,
-  .resetfactor,
+  .factoryresetimg,
   .firmimg,
   .backupimg,
   .factoryresetimg,
@@ -1713,12 +1713,44 @@ nav .first-level:last-child {
 /**       Backup         **/
 
 .backupbutton {
-  height: 200px;
+  height: 300px;
   vertical-align: middle;
 }
-
+.backupbutton i{
+  font-size:80px;
+  margin-top: 25px;
+  display: block !important;
+}
+.bigfactory i:before{
+  content:"\f011";
+  font-family:"IcoMoon";
+}
+.bigfactory i{
+  margin: 60px 0 25px;
+}
 #backup_restore {
   cursor: pointer;
+}
+.backupdown {
+  width:40px;
+  height:60px;
+  background-color: #fff;
+  position:relative;
+  margin:40px 0;
+  display:inline-block
+}
+.backupdown:after {
+content: " ";
+display: block;
+height: 0px;
+width: 0px;
+position: absolute;
+border-width: 40px;
+border-style: solid;
+border-color: white transparent transparent;
+margin-bottom: -80px;
+margin-left: -20px;
+bottom:0
 }
 
 /**   Hidden File upload   **/
