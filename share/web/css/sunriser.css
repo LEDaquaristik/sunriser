@@ -1405,29 +1405,21 @@ nav .first-level:last-child {
   padding:50px;
 }
 .backupimg{
-  background-color:#68D472;
-  float:right;
-  text-align:center;
-  width: 200px;
-  height: 200px;
-  margin: 100px 75px;
-  color: #fff;
-  font-size: 20px;
-  padding-top:25px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  float:left;
+  color:#333
 }
 .backupimg a{
   border-bottom:0px
 }
 .backupimg i{
-  font-size: 75px;
+  font-size: 200px;
   display: block !important;
-  margin-top: 25px;
   width: 100%;
+  margin: 225px 0 0 50px;
 }
 .backuptext{
-  float:left;
-  width:calc(100% - 350px);
+  float:right;
+  width:calc(100% - 250px);
   padding:50px;
 }
 .weatherintrotext{
@@ -1435,8 +1427,18 @@ nav .first-level:last-child {
   width:calc(100% - 350px);
   padding:50px;
 }
+.weatherintoimg{
+  float: right;
+  border: 0px solid;
+  margin-top: 140px;
+  margin-right: -30px;
+  transform: scale(1.15);
+}
+.weatherintoimg svg{
+  border:0px solid;
+}
 .factoryresettext{
-  float:left;
+  float:right;
   width:calc(100% - 350px);
   padding:50px;
 }
@@ -1477,22 +1479,22 @@ nav .first-level:last-child {
   color:#444;
 }
 .firmtext{
-  float:right;
+  float:left;
   width:calc(100% - 300px);
   padding:50px;
 }
 .firmimg{
   margin:250px 0 0 0;
   width:300px;
-  float:left
+  float:right
 }
 .fimblock{
   height:50px;
   background-color: #68D472;
   display:block;
-  width:350px;
+  width:370px;
   margin-bottom:50px;
-  margin-left:-50px;
+  margin-right:-50px;
   padding:10px;
   color:white
 }

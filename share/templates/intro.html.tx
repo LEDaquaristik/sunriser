@@ -68,6 +68,99 @@
       <h2>Wettersimulation einstellen</h2>
       <p>Die Wetter Simulation kann &uuml;ber die verschiedenen Men&uuml;punkte hinter der Wolke angesprochen werden (<a href="/thunderstorm.html">Gewitter</a>, <a href="/moon.html">Mondphasen</a>, <a href="/clouds.html">Wolken</a>, <a href="/rain.html">Regentage</a>). Alle Funktionen sind sehr simpel implementiert, weil wir hier gezielter uns den W&uuml;nschen von Ihnen anpassen m&ouml;chten. Regen und Wolken wird pro Tag bestimmt, und an Regen- bzw. Wolkentagen wird dann der entsprechende Effekt angebracht, bei Regen kurzes Flackern, bei Wolken etwas l&auml;ngere Phasen einer Verdunkelung. Mondphasen Simulation nutzt die LEDs der Wettersimulation um zu den entsprechenden Nachtzeiten den Mond erscheinen zu lassen, also die Helligkeit entsprechend erh&ouml;hen. Hierbei wird der Wert vom Tagesplaner nicht dazu addiert, sondern es gilt zu jedem Zeitpunkt nur der h&ouml;here der beiden Werte. Gewitter treten verteilt &uuml;ber den Tag auf in Anzahl und Wahrscheinlichkeit wie angegeben. Wir haben hier bisher keinerlei unterschiedliche Gewitter Modelle, wollen aber in Kooperation mit Ihnen als Kunde gern weitere Optionen erschaffen.</p>
     </div>
+    <div class="weatherintoimg">
+      <svg
+       xmlns:dc="http://purl.org/dc/elements/1.1/"
+       xmlns:cc="http://creativecommons.org/ns#"
+       xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+       xmlns:svg="http://www.w3.org/2000/svg"
+       xmlns="http://www.w3.org/2000/svg"
+       xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+       xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+       width="300"
+       height="270"
+       viewBox="0 0 300 270"
+       id="svg2"
+       version="1.1"
+       inkscape:version="0.91 r13725"
+       sodipodi:docname="cloud.svg">
+      <g
+         inkscape:label="Calque 1"
+         inkscape:groupmode="layer"
+         id="layer1"
+         transform="translate(0,-782.36216)">
+        <path
+           style="fill:#b7c6c6;fill-opacity:1"
+           d="m 149.81785,784.08246 c -39.9616,0.0435 -73.72885,29.48363 -79.00982,68.88519 -1.98538,-0.19004 -3.97853,-0.28885 -5.97307,-0.29611 -35.80742,0 -64.835049999791,28.8741 -64.83496,64.49207 -8.9999791e-5,35.61796 29.02754,64.49208 64.83496,64.49208 l 155.36817,0 c 44.07114,0 79.79765,-35.53811 79.79687,-79.37607 -3.1e-4,-43.8372 -35.7265,-79.37411 -79.79687,-79.37411 -0.61846,0.015 -1.23671,0.037 -1.85465,0.0662 -14.35241,-24.07553 -40.39162,-38.85208 -68.53063,-38.88929 z"
+           id="path3336"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="cccscccccc" />
+        <rect
+           style="fill:#32b7ff;fill-opacity:1"
+           id="rect4171"
+           width="12.798512"
+           height="60.981144"
+           x="530.98639"
+           y="843.25934"
+           ry="6.3992558"
+           transform="matrix(0.87222695,0.48910137,-0.48910137,0.87222695,0,0)" />
+        <rect
+           style="fill:#32b7ff;fill-opacity:1"
+           id="rect4171-5"
+           width="12.798512"
+           height="60.981144"
+           x="571.47522"
+           y="819.2605"
+           ry="6.3992558"
+           transform="matrix(0.87222695,0.48910137,-0.48910137,0.87222695,0,0)" />
+        <rect
+           style="fill:#32b7ff;fill-opacity:1"
+           id="rect4171-7"
+           width="12.798512"
+           height="60.981144"
+           x="571.91559"
+           y="819.66095"
+           ry="6.3992558"
+           transform="matrix(0.87222695,0.48910137,-0.48910137,0.87222695,0,0)" />
+        <rect
+           style="fill:#32b7ff;fill-opacity:1"
+           id="rect4171-5-7"
+           width="12.798512"
+           height="60.981144"
+           x="612.40442"
+           y="795.66211"
+           ry="6.3992558"
+           transform="matrix(0.87222695,0.48910137,-0.48910137,0.87222695,0,0)" />
+        <rect
+           style="fill:#32b7ff;fill-opacity:1"
+           id="rect4171-5-6-2"
+           width="12.798512"
+           height="60.981144"
+           x="651.14734"
+           y="773.93701"
+           ry="6.3992558"
+           transform="matrix(0.87222695,0.48910137,-0.48910137,0.87222695,0,0)" />
+        <rect
+           style="fill:#32b7ff;fill-opacity:1"
+           id="rect4171-5-71"
+           width="12.798512"
+           height="60.981144"
+           x="692.32892"
+           y="749.44183"
+           ry="6.3992558"
+           transform="matrix(0.87222695,0.48910137,-0.48910137,0.87222695,0,0)" />
+        <rect
+           style="fill:#32b7ff;fill-opacity:1"
+           id="rect4171-7-4"
+           width="12.798512"
+           height="60.981144"
+           x="692.76929"
+           y="749.84229"
+           ry="6.3992558"
+           transform="matrix(0.87222695,0.48910137,-0.48910137,0.87222695,0,0)" />
+      </g>
+    </svg>
+    </div>
   </article>
   <article class="backupintro">
     <div class="backuptext">
@@ -77,8 +170,8 @@
       <p>Sicherungsdateien sind kompatibel zu unserem <a href="http://srdemo.ledaquaristik.de/"><i>SunRiser</i> Demo</a>, dies erlaubt Ihnen eine Konfigurationsdatei vorher anzugucken bevor Sie diese auf den echten <i>SunRiser</i> einspielen. Auch ist es Ihnen so m&ouml;glich Konfigurationsdateien mit anderen Menschen, <i>SunRiser</i> Besitzer oder nicht, auszutauschen und zu diskutieren.</p>
     </div>
     <div class="backupimg">
-      <a style="text-decoration: none; color:inherit;" href="/backup.html">
-        <span>Sicherung</span>
+      <!--<a style="text-decoration: none; color:inherit;" href="/backup.html">-->
+        <!--<span>Sicherung</span>-->
         <i class="fa fa-medkit"></i>
       </a>
     </div>
@@ -86,7 +179,7 @@
   <article class="introfirmware">
     <div class="firmimg">
       <div class="fimblock">
-        Installiere aktuelle Firmware SR81001
+       <i class="firmdown"></i> Installiere aktuelle Firmware SR81001
       </div>
       <div class="fimblock redblockfirm">
         Firmware SR81000 bereits installiert
