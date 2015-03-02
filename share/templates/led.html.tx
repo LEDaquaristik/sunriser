@@ -101,6 +101,7 @@ $('body').on('sr_config',function(){
     fields.push({
       name: "weather#setup#0#pwms",
       pre: true,
+      transform_value: function(value) { return parseInt(value); },
       initjs: function(){
         for (j = 1; j <= sr_config['pwm_count']; j++) {
           if ($.inArray(j,this.value) !== -1) {

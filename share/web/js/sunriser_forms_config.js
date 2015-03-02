@@ -191,8 +191,8 @@ var sr_forms = {
     },{
       name: "rainchance", label: "Wahrscheinlichkeit eines Regentages",
       template: "slider", min: 0, max: 100
-    },{
-      name: "weekdays", label: "Nur an diesen Wochentagen gibt es Regen (sonst jeden Tag)"
+    // },{
+    //   name: "weekdays", label: "Nur an diesen Wochentagen gibt es Regen (sonst jeden Tag)"
     }]
   }
 };
