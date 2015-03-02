@@ -1555,10 +1555,14 @@ nav .first-level:last-child {
   .slider{
     width: 200px;
   }
-}
-@media screen and (max-width:900px) {
+  header{
+    padding:30px
+  }
   .main{
-    padding:0 10px;
+    padding: 0px;
+  }
+  .control_center{
+    margin-bottom:0px
   }
 }
 @media screen and (max-width:700px) {
@@ -1573,51 +1577,15 @@ nav .first-level:last-child {
     padding-top: 12px;
   }
   .slidermaster{
-    width: 80px;
+    width: 120px;
   }
   .slider{
-    width: 136px;
+    width: 176px;
   }
-}
-@media screen and (max-width:650px) {
-  .moretocomeimg,
-  .resetfactor,
-  .firmimg,
-  .backupimg,
-  .factoryresetimg,
-  .weatherintoimg,
-  .dayplannerimg,
-  .settingledimg,
-  .connectledanim{
-    display:none
-  }
-  .factoryresettext,
-  .firmtext,
-  .backuptext,
-  .weatherintrotext,
-  .dayplannertext,
-  .settingledtext,
-  .connectledtext{
-    width:100%;
-    margin-left:0px
-  }
-  .moretocometxt{
-    padding:50px
-  }
-
-}
-@media screen and (max-width:500px) {
-
   header,
   .sunriser span,
   #sunriser_datetime_header {
     display:none
-  }
-  body{
-    background : none;
-  }
-  .main{
-    padding:0;
   }
   .back_home{
       position:absolute;
@@ -1674,12 +1642,6 @@ nav .first-level:last-child {
     margin: 40px 0px 0px -10px;
     left:auto
   }
-  .noscript-text{
-    margin: 0;
-    left: 10px;
-    right: 10px;
-    top: 50px;
-  }
   .sunriser_content {
     padding: 70px 10px 80px 10px;
     margin-left:0;
@@ -1688,14 +1650,56 @@ nav .first-level:last-child {
   .warningbloc{
     margin: -10px -40px 0px;
   }
-  .control_center {
-    margin-bottom: 0px;
-  }
   .sunriser_dialogue{
     padding: 20px 10px 0px 70px;
   }
+}
+@media screen and (max-width:650px) {
+  .moretocomeimg,
+  .resetfactor,
+  .firmimg,
+  .backupimg,
+  .factoryresetimg,
+  .weatherintoimg,
+  .dayplannerimg,
+  .settingledimg,
+  .connectledanim{
+    display:none
+  }
+  .factoryresettext,
+  .firmtext,
+  .backuptext,
+  .weatherintrotext,
+  .dayplannertext,
+  .settingledtext,
+  .connectledtext{
+    width:100%;
+    margin-left:0px
+  }
+  .moretocometxt{
+    padding:50px
+  }
+
+}
+@media screen and (max-width:500px) {
+
+  body{
+    background : none;
+  }
+  .noscript-text{
+    margin: 0;
+    left: 10px;
+    right: 10px;
+    top: 50px;
+  }
   .sunriser_content input[type='submit']{
     right:60px;
+  }
+  .slidermaster{
+    width: 80px;
+  }
+  .slider{
+    width: 136px;
   }
 }
 
