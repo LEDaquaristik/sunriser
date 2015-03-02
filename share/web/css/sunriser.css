@@ -1608,6 +1608,7 @@ nav .first-level:last-child {
 }
 @media screen and (max-width:500px) {
 
+  header,
   .sunriser span,
   #sunriser_datetime_header {
     display:none
@@ -1617,16 +1618,6 @@ nav .first-level:last-child {
   }
   .main{
     padding:0;
-  }
-  header {
-      height: 60px;
-      padding: 17px 0 0 12px;
-      background-color: #202731;
-  }
-  .sunriser{
-      z-index: 5;
-      position: absolute;
-      display:none;
   }
   .back_home{
       position:absolute;
@@ -1638,9 +1629,6 @@ nav .first-level:last-child {
       min-height: 60px;
       height: 60px;
       font-size:12px;
-      position:absolute;
-      top:-60px;
-      right:0px;
   }
   nav .first-level > i,
   nav .first-level > a {
@@ -1656,7 +1644,8 @@ nav .first-level:last-child {
   }
   .welcometext{
     width:100%;
-    margin-left:0px
+    margin-left:0px;
+    padding-top:100px
   }
   nav .first-level {
       float: left;
@@ -1673,7 +1662,6 @@ nav .first-level:last-child {
   }
   .navexemple{
      height: 60px;
-     top: -60px;
   }
   .toggle .second-nav {
     display:table;
@@ -1693,7 +1681,7 @@ nav .first-level:last-child {
     top: 50px;
   }
   .sunriser_content {
-    padding: 10px 10px 80px 10px;
+    padding: 70px 10px 80px 10px;
     margin-left:0;
     min-height: inherit;
   }
@@ -1702,7 +1690,6 @@ nav .first-level:last-child {
   }
   .control_center {
     margin-bottom: 0px;
-    overflow: inherit;
   }
   .sunriser_dialogue{
     padding: 20px 10px 0px 70px;
