@@ -868,7 +868,7 @@ nav h2{
 .helparea.closethehelparea{
   height:0px;
   padding:0 25px;
-  margin-bottom:0px;
+  margin:0px;
 }
 .helpareaclose{
   position:absolute;
@@ -1740,10 +1740,13 @@ td.contactlabel {
     box-shadow: 0px -12px 0 white;
   }
   .sunriser_content .form_title{
-    display:block;
+    display: block;
     border-bottom: 1px solid #CCD7E2;
-    margin: 0 -10px 0 -10px;
-    padding-left: 10px;
+    padding: 10px 0 10px 10px;
+    margin:-10px -10px 10px -10px
+  }
+  #daypicker ~ .helparea{
+    margin-top: 0px;
   }
   .banderolebox{
     height:50px;

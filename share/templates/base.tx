@@ -35,7 +35,8 @@
             <div id="sunriser_datetime_header" class="sunriser sunriser_datetime"></div>
           <: } :>
         </header>
-        <div class="page control_center <: if $no_form { :>no_dialogue<: } :>">
+              
+        <div class="page control_center <: if $no_form { :>no_dialogue<: } :> <: if $help { :>page_with_help<: } :>">
           <: block page -> { :>
             <nav>
               <: block nav -> { :>
