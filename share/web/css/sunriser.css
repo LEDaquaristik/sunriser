@@ -1579,8 +1579,7 @@ nav .first-level:last-child {
     width: 136px;
   }
 }
-@media screen and (max-width:500px) {
-
+@media screen and (max-width:650px) {
   .moretocomeimg,
   .resetfactor,
   .firmimg,
@@ -1589,7 +1588,26 @@ nav .first-level:last-child {
   .weatherintoimg,
   .dayplannerimg,
   .settingledimg,
-  .connectledanim,
+  .connectledanim{
+    display:none
+  }
+  .factoryresettext,
+  .firmtext,
+  .backuptext,
+  .weatherintrotext,
+  .dayplannertext,
+  .settingledtext,
+  .connectledtext{
+    width:100%;
+    margin-left:0px
+  }
+  .moretocometxt{
+    padding:50px
+  }
+
+}
+@media screen and (max-width:500px) {
+
   .sunriser span,
   #sunriser_datetime_header {
     display:none
@@ -1636,6 +1654,10 @@ nav .first-level:last-child {
       right: 0px;
       bottom:auto
   }
+  .welcometext{
+    width:100%;
+    margin-left:0px
+  }
   nav .first-level {
       float: left;
   }
@@ -1652,20 +1674,6 @@ nav .first-level:last-child {
   .navexemple{
      height: 60px;
      top: -60px;
-  }
-  .factoryresettext,
-  .firmtext,
-  .backuptext,
-  .weatherintrotext,
-  .dayplannertext,
-  .settingledtext,
-  .connectledtext,
-  .welcometext{
-    width:100%;
-    margin-left:0px
-  }
-  .moretocometxt{
-    padding:50px
   }
   .toggle .second-nav {
     display:table;
