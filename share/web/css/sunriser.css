@@ -151,7 +151,7 @@ svg{
 header{
   height:100px;
   width:auto;
-  padding-top:40px;
+  padding-top:35px;
 }
 .sunriser{
   font-size:30px;
@@ -734,11 +734,6 @@ nav h2{
   height: 70px;
 }
 .sunriser_content .form_title{
-  display: inline-block;
-  border-bottom: 2px solid #CCC;
-  padding: 10px 0px 16px 0px;
-  font-size: 2em;
-  margin-bottom: 20px;
   display:none
 }
 .sunriser_content td{
@@ -755,6 +750,7 @@ nav h2{
   width: 100%;
   left: 0;
   padding: 19px 35px 0px 70px;
+  box-shadow: 0px -12px 0 white;
 }
 .help{
   position: relative;
@@ -1566,6 +1562,9 @@ nav .first-level:last-child {
   }
 }
 @media screen and (max-width:700px) {
+  body{
+    background : none;
+  }
   header{
     position: absolute;
     z-index: 5;
@@ -1663,6 +1662,13 @@ nav .first-level:last-child {
   .sunriser_dialogue{
     padding: 20px 10px 0px 70px;
   }
+  .sunriser_content .form_title{
+    display:block;
+    border-bottom: 1px solid #ccc;
+    margin-left: -10px;
+    margin-right: -10px;
+    padding-left: 10px;
+  }
 }
 @media screen and (max-width:650px) {
   .moretocomeimg,
@@ -1697,9 +1703,6 @@ nav .first-level:last-child {
   }
   header{
     display:none
-  }
-  body{
-    background : none;
   }
   .noscript-text{
     margin: 0;
