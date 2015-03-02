@@ -920,7 +920,6 @@ nav h2{
 }
 /**  Firmeware  **/
 .firmware{
-  border-bottom: 1px solid #eee;
   padding: 10px 0;
   display: table;
   width: 100%;
@@ -1735,8 +1734,7 @@ td.contactlabel {
   .sunriser_content .form_title{
     display:block;
     border-bottom: 1px solid #CCD7E2;
-    margin-left: -10px;
-    margin-right: -10px;
+    margin: 0 -10px 0 -10px;
     padding-left: 10px;
   }
   .banderolebox{
@@ -1801,6 +1799,11 @@ td.contactlabel {
   .slider{
     width: 136px;
   }
+  .bigbutton {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
 
 @media screen and (max-width:350px) {
   .welcometext{
@@ -1817,4 +1820,3 @@ td.contactlabel {
       padding: 20px;
   }
 }
-
