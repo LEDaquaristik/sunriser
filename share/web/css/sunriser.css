@@ -1567,11 +1567,11 @@ nav .first-level:last-child {
 }
 @media screen and (max-width:700px) {
   header{
-    padding:15px 0 0 50px;
     position: absolute;
     z-index: 5;
-    width: 250px;
+    width: 170px;
     height:60px;
+    padding:0;
   }
   .back_home{
     width:170px
@@ -1580,6 +1580,12 @@ nav .first-level:last-child {
     width:100%;
     font-size:20px;
     text-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  }
+  .sunriser a{
+    padding:15px 0 0 50px;
+    width: 170px;
+    height: 60px;
+    display: block;
   }
   .slidermaster{
     width: 120px;
@@ -1686,7 +1692,9 @@ nav .first-level:last-child {
 
 }
 @media screen and (max-width:500px) {
-
+  .back_home{
+    width:60px
+  }
   header{
     display:none
   }
