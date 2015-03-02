@@ -36,7 +36,7 @@
           <: } :>
         </header>
               
-        <div class="page control_center <: if $no_form { :>no_dialogue<: } :> <: if $help { :>page_with_help<: } :>">
+        <div class="page control_center <: if $no_form { :>no_dialogue<: } :>">
           <: block page -> { :>
             <nav>
               <: block nav -> { :>
