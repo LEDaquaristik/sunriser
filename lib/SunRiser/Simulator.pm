@@ -501,7 +501,8 @@ has publisher => (
 sub _build_publisher {
   my ( $self ) = @_;
   return SunRiser::Publisher->new(
-    config => $self->config
+    config => $self->config,
+    demo => $self->demo,
   );
 }
 

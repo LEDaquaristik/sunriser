@@ -22,6 +22,12 @@ has versioned => (
 
 sub _build_versioned { $SunRiser::VERSION || $ENV{V} || 0 }
 
+has demo => (
+  is => 'lazy',
+);
+
+sub _build_demo { 0 }
+
 has config => (
   is => 'lazy',
 );
@@ -164,6 +170,7 @@ sub _build_base_vars {
   return {
     pwm_count => 8,
     versioned => $self->versioned,
+    demo => $self->demo,
     css_files => [qw(
       css/reset.css
       css/tipr-1.0.1.css
