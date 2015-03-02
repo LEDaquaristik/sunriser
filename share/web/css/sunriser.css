@@ -752,6 +752,12 @@ nav h2{
   padding: 19px 35px 0px 70px;
   box-shadow: 0px -45px 0 white;
 }
+.no_dialogue .sunriser_dialogue{
+  display:none
+}
+.no_dialogue .sunriser_content{
+  padding: 40px 40px 40px 110px;
+}
 .help{
   position: relative;
   right: 0px;
@@ -1165,7 +1171,6 @@ nav h2{
 .bigbutton div{
   padding: 20px 0px;
 }
-
 .index_functions hr{
   border-color: #AAA;
   border-width: 2px 0px 0px;
@@ -1723,6 +1728,9 @@ td.contactlabel {
     padding: 70px 10px 80px 10px;
     margin-left:0;
     min-height: inherit;
+  }
+  .no_dialogue .sunriser_content{
+    padding: 70px 10px 10px 10px;
   }
   .warningbloc{
     margin: -10px -40px 0px;
