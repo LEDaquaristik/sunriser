@@ -59,42 +59,27 @@
       "pwms", [    "Identification of pwms effected", "array(integer)"],
       "thunder", "Thunderstorm setup", [
         "activated", ["Produce thunderstorms", "bool", 0],
-        "nightonly", ["Thunderstorm only if dayplanner sets pwm to 0", "bool", 0],
-        "daymax", ["Maximum amount of thunderstorms per day", "integer", 1],
-        "minlength", ["Minimum amount of time a thunderstorm should be (in seconds)", "integer", 300],
-        "maxlength", ["Maximum amount of time a thunderstorm should be (in seconds)", "integer", 900],
-        "balancelength", ["Amount of random numbers used to reach the amount of time for a thunderstorm", "integer", 2],
-        "mindist", ["Minimum distance between thunders (in seconds)", "integer", 5],
-        "maxdist", ["Maximum distance between thunders (in seconds)", "integer", 120],
-        "balancedist", ["Amount of random numbers used to reach the distance between thunder", "integer", 1],
-        "fadepercent", ["Percentage of thunderstorm which is fade in and fade out (less thunders, lower light intensity, while fade)", "integer", 60],
         "daychance", ["Percentage for a thunderstorm to happen (Tried per day in daymax amount)", "integer", 10],
-        "fixedtimes", ["Fixed times for thunderstorms (daychance still applies, daymax tries still added)", "array(time)"],
-        "deferralmax", ["Maximum random deferral (in seconds)", "integer", 0],
+        "daymax", ["Maximum amount of thunderstorms per day", "integer", 1],
+        "nightonly", ["Thunderstorm only if dayplanner sets pwm to 0", "bool", 0],
         "weekdays", ["Apply thunderstorms to given weekdays (else always)", "array(weekday)"]
       ],
       "moonphase", "Moonphase setup", [
         "activated", ["Show moonphase based on reality", "bool", 0],
-        "starttime", ["Most early start at this time", "time"],
-        "starttime_inuse", ["Use starttime at all", "bool"],
-        "endtime", ["Always end at least at this time", "time"],
-        "endtime_inuse", ["Use endtime at all", "bool"],
-        "maximum", ["Intensity of moon in percent (can be over 100%)", "integer", 100],
-        "deferral", ["Deferral against real moon phase (in minutes)", "integer", 0],
+        "maximum", ["Maximum intensity of moonlight", "integer", 100],
         "weekdays", ["Apply moon to given weekdays (else every day)", "array(weekday)"]
       ],
       "clouds", "Clouds setup", [
         "activated", ["Show clouds", "bool", 0],
         "daychance", ["Chance that it is a day with clouds", "integer", 10],
-        "cloudminlength", ["Minimum amount of time a cloud takes (in seconds)", "integer", 5],
-        "cloudmaxlength", ["Maximum amount of time a cloud takes (in seconds)", "integer", 30],
-        "cloudbalancelength", ["Amount of random numbers used to reach the amount of time a cloud takes", "integer", 2],
-        "cloudchance", ["Chance that a cloud comes up per minute", "integer", 5],
+        "cloudshare", ["Maximum percentage share of cloud on a cloudy day", "integer", 30],
         "weekdays", ["Weekdays who may have rain (else every day)", "array(weekday)"]
       ],
       "rain", "Rain setup", [
         "activated", ["Make rainy days", "bool", 0],
-        "rainchance", ["Chance that the day is rainy (with clouds activated, also day with clouds automatically)", "integer", 10],
+        "daychance", ["Chance that the day is rainy (with clouds activated, also day with clouds automatically)", "integer", 10],
+        "rainshare", ["Maximum percentage share of rain on a rainy day", "integer", 30],
+        "raincloudshare", ["Maximum percentage share of cloud on a rainy day", "integer", 80],
         "weekdays", ["Weekdays who may have rain (else every day)", "array(weekday)"]
       ]
     ]

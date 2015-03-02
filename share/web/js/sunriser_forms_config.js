@@ -91,34 +91,29 @@ var sr_forms = {
     fields: [{
       name: "activated", label: "Simuliere Gewitter"
     },{
+      name: "daychance", label: "Wahrscheinlichkeit eines Gewitters pro maximale Anzahl von Gewittern am Tag",
+      template: "slider", min: 1, max: 100
+    },{
       name: "daymax", label: "Maximale Anzahl von Gewittern pro Tag",
       template: "slider", min: 1, max: 24
     },{
-      name: "minlength", label: "Minimum L&auml;nge eines Gewitters in Sekunden",
-      template: "slider", min: 120, max: 600
-    },{
-      name: "maxlength", label: "Maximale L&auml;nge eines Gewitters in Sekunden",
-      template: "slider", min: 240, max: 1200
-    },{
-      name: "mindist", label: "Minimaler Abstand zwischen den Blitzen in Sekunden",
-      template: "slider", min: 1, max: 60
-    },{
-      name: "maxdist", label: "Maximaler Abstand zwischen den Blitzen",
-      template: "slider", min: 10, max: 300
+      name: "nightonly", label: "Gewitter nur wenn LED Tagesplanung auf 0%"
+    // },{
+    //   name: "minlength", label: "Minimum L&auml;nge eines Gewitters in Sekunden",
+    //   template: "slider", min: 120, max: 600
+    // },{
+    //   name: "maxlength", label: "Maximale L&auml;nge eines Gewitters in Sekunden",
+    //   template: "slider", min: 240, max: 1200
+    // },{
+    //   name: "mindist", label: "Minimaler Abstand zwischen den Blitzen in Sekunden",
+    //   template: "slider", min: 1, max: 60
+    // },{
+    //   name: "maxdist", label: "Maximaler Abstand zwischen den Blitzen",
+    //   template: "slider", min: 10, max: 300
     // },{
     //   name: "fadepercent", label: "Prozentualer Anteil f&uuml;r Ein/Ausblendung des Gewitters"
-    },{
-      name: "daychance", label: "Wahrscheinlichkeit eines Gewitters pro maximale Anzahl von Gewittern am Tag",
-      template: "slider", min: 1, max: 100
     // },{
     //   name: "weekdays", label: "Nur an diesen Wochentagen gibt es Gewitter (sonst jeden Tag)"
-    }],
-    expert_fields: [{
-      name: "balancelength", label: "Anzahl der Faktoren f&uuml;r die Berechnung der Gewitterl&auml;nge",
-      template: "slider", min: 1, max: 5
-    },{
-      name: "balancedist", label: "Anzahl der Faktoren f&uuml;r die Berechnung des Abstands zwischen den Blitzen",
-      template: "slider", min: 1, max: 5
     }]
   },
   //
@@ -139,10 +134,10 @@ var sr_forms = {
     //   name: "endtime", label: "Sp&auml;tester Monduntergang"
     },{
       name: "maximum", label: "Maximale Intensit&auml;t des Mondes",
-      template: "slider", min: 0, max: 100
-    },{
-      name: "deferral", label: "Abstand in Tagen zum echten Mondphasen Zyklus",
-      template: "slider", min: -31, max: 31
+      template: "slider", min: 0, max: 200, percent_sign: true
+    // },{
+    //   name: "deferral", label: "Abstand in Tagen zum echten Mondphasen Zyklus",
+    //   template: "slider", min: -31, max: 31
     // },{
     //   name: "weekdays", label: "Nur an diesen Wochentagen gibt es Mondphasen (sonst jeden Tag)"
     }]    
@@ -160,20 +155,13 @@ var sr_forms = {
     fields: [{
       name: "activated", label: "Simuliere Wolken"
     },{
-      name: "cloudchance", label: "Wahrscheinlichkeit einer Wolke pro Minute",
-      template: "slider", min: 0, max: 100
+      name: "daychance", label: "Wahrscheinlichkeit eines Wolkentages",
+      template: "slider", min: 0, max: 100, percent_sign: true
+    },{
+      name: "cloudshare", label: "Maximaler Anteil von Wolken am Wolkentag",
+      template: "slider", min: 0, max: 100, percent_sign: true
     // },{
     //   name: "weekdays", label: "Nur an diesen Wochentagen gibt es Wolken (sonst jeden Tag)"
-    }],
-    expert_fields: [{
-      name: "cloudminlength", label: "Minimum L&auml;nge einer Wolke in Sekunden",
-      template: "slider", min: 1, max: 30
-    },{
-      name: "cloudmaxlength", label: "Maximale L&auml;nge einer Wolke in Sekunden",
-      template: "slider", min: 5, max: 60
-    },{
-      name: "cloudbalancelength", label: "Anzahl der Faktoren f&uuml;r die Berechnung der Wolkenl&auml;nge",
-      template: "slider", min: 1, max: 5
     }]
   },
   //
@@ -189,8 +177,14 @@ var sr_forms = {
     fields: [{
       name: "activated", label: "Simuliere Regen"
     },{
-      name: "rainchance", label: "Wahrscheinlichkeit eines Regentages",
-      template: "slider", min: 0, max: 100
+      name: "daychance", label: "Wahrscheinlichkeit eines Regentages",
+      template: "slider", min: 0, max: 100, percent_sign: true
+    },{
+      name: "rainshare", label: "Maximaler Anteil von Regenfronten am Regentag",
+      template: "slider", min: 0, max: 100, percent_sign: true
+    },{
+      name: "raincloudshare", label: "Maximaler Anteil von Wolkenfronten am Regentag (wenn Wolken aktiviert sind)",
+      template: "slider", min: 0, max: 100, percent_sign: true
     // },{
     //   name: "weekdays", label: "Nur an diesen Wochentagen gibt es Regen (sonst jeden Tag)"
     }]
