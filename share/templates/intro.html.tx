@@ -193,6 +193,9 @@
     </div>
   </article>
   <article class="factoryreset">
+    <div class="factoryresetimg">
+      <i class="resetfactor"></i>
+    </div>
     <div class="factoryresettext">
       <h2>Factory-Reset</h2>
       <p>Auch wenn wir hoffen das Sie es nie ben&ouml;tigen, haben wir nat&uuml;rlich auch eine "Factory-Reset" Funktion eingebaut, die es Ihnen erm&ouml;glicht das Ger&auml;t in den Urzustand zu versetzen. Zeitgleich wird hierbei auch die alte Konfiguration verschoben, um zu verhindern das ein Fehler in der Konfiguration dazu f&uuml;hrte das Sie den Factory-Reset durchf&uuml;hren mussten. Die alte Konfiguration kann dann &uuml;ber den dritten Knopf bei den <a href="/backup.html">Sicherungsfunktionen</a> nach der Factory-Reset Wiederherstellung heruntergeladen werden.</p>

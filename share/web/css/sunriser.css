@@ -1239,6 +1239,13 @@ a.index_function:active {
   text-decoration: none;
   border-bottom: 2px solid #97C1DD;
 }
+.moretocometxt ul{
+  text-align:left;
+  color:#777
+}
+.moretocometxt li:before{
+  content:"—";
+}
 .navexemple{
   position :absolute;
   height: auto;
@@ -1439,17 +1446,28 @@ nav .first-level:last-child {
 }
 .factoryresettext{
   float:right;
-  width:calc(100% - 350px);
+  width:calc(100% - 200px);
   padding:50px;
 }
+.factoryresetimg{
+  font-size:250px;
+  width:250px;
+  margin-left:-50px;
+  margin-top:200px;
+  float:left;
+  color:#333
+}
+.factoryresetimg i:before{
+  content:"\f011";
+  font-family:"IcoMoon"
+}
 .moretocome{
-  text-align: center;
   width: 100%;
 }
 .moretocometxt{
   display:inline-block;
-  max-width:800px;
-  padding-top:50px;
+  width:100%;
+  padding:50px 50px 0 50px;
 }
 .moretocomeimg{
   width:100%;
