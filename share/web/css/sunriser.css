@@ -398,7 +398,7 @@ nav h2{
   border:none;
   padding:12px;
   bottom:11px;
-  right:100px;
+  right:40px;
   width:120px;
   position:absolute;
   font-size: 18px;
@@ -425,7 +425,7 @@ nav h2{
   width:120px;
   height:48px;
   bottom:11px;
-  right:100px;
+  right:40px;
   position:absolute;
   font-size: 18px;
   color: white;
@@ -739,10 +739,10 @@ nav h2{
   padding: 10px 0px 16px 0px;
   font-size: 2em;
   margin-bottom: 20px;
+  display:none
 }
 .sunriser_content td{
   vertical-align:middle;
-  padding-right:10px;
 }
 
 /**  dialogue  **/
