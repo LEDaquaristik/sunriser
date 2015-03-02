@@ -1581,6 +1581,15 @@ nav .first-level:last-child {
 }
 @media screen and (max-width:500px) {
 
+  .moretocomeimg,
+  .resetfactor,
+  .firmimg,
+  .backupimg,
+  .factoryresetimg,
+  .weatherintoimg,
+  .dayplannerimg,
+  .settingledimg,
+  .connectledanim,
   .sunriser span,
   #sunriser_datetime_header {
     display:none
@@ -1639,6 +1648,24 @@ nav .first-level:last-child {
   }
   nav .first-level:last-child {
     width: 50px;
+  }
+  .navexemple{
+     height: 60px;
+     top: -60px;
+  }
+  .factoryresettext,
+  .firmtext,
+  .backuptext,
+  .weatherintrotext,
+  .dayplannertext,
+  .settingledtext,
+  .connectledtext,
+  .welcometext{
+    width:100%;
+    margin-left:0px
+  }
+  .moretocometxt{
+    padding:50px
   }
   .toggle .second-nav {
     display:table;
