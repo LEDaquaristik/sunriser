@@ -61,7 +61,10 @@
             <div id="bighelp" class="hilfe-sidebar"></div>
           <: } :>
         </div>
-        <div>
+        <div class="banderolebox">
+          <a href="#" class="sunriserbanderole">SunRiser 8 Produkt Demo</a>
+        </div>
+        <!--<div>  What the fuck is this?-->
       </div>
     </main>
     <: if $versioned { :>

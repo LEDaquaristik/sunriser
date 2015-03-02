@@ -1577,6 +1577,20 @@ bottom:0
 td.contactlabel {
   vertical-align: top;
 }
+/**  Sunriser 8 Banderole  **/
+.sunriserbanderole{
+  right: -165px;
+  top: 65px;
+  padding: 10px;
+  color: #FFF;
+  background-color: #E74C3C;
+  width: 500px;
+  transform: rotate(45deg);
+  position: fixed;
+  text-align: center;
+  z-index: 10;
+  text-decoration:none;
+}
 
 /***  RESPONSIVE  ***/
 
@@ -1723,6 +1737,18 @@ td.contactlabel {
     margin-left: -10px;
     margin-right: -10px;
     padding-left: 10px;
+  }
+  .banderolebox{
+    height:50px;
+    display:block
+  }
+  .sunriserbanderole{
+    right: auto;
+    top: auto;
+    bottom:0px;
+    color: #FFF;
+    width: 100%;
+    transform: rotate(0deg);
   }
 }
 @media screen and (max-width:650px) {
