@@ -29,7 +29,7 @@
         <div id="blockertext">Seite wird noch geladen</div>
       </div>
     </div>
-    <main class="main">
+    <div class="main">
       <header>
         <: block header -> { :>
           <h1 class="sunriser">
@@ -69,7 +69,7 @@
           <a href="http://www.ledaquaristik.de/SunRiser-8-Tagessimulation-und-Lichtsteuerung" class="sunriserbanderole">SunRiser 8 Produkt Demo</a>
         </div>
       <: } :>
-    </main>
+    </div>
     <: if $versioned { :>
       <script src="/js/all-<: $versioned :>.js" charset="UTF-8" type="text/javascript"></script>
     <: } else { :>
