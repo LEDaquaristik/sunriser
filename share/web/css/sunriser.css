@@ -1450,6 +1450,17 @@ a.index_function:active {
 .weatherintoimg svg{
   border:0px solid;
 }
+.svgcloud{
+  position:relative;
+  z-index:1
+}
+.weatherintro .rain{
+  transform :matrix(0.87222695,0.48910137,-0.48910137,0.87222695,0,0) translate(0px, -100px);
+  transition-duration:0.2s;
+}
+.weatherintro:hover .rain{
+  transform :matrix(0.87222695,0.48910137,-0.48910137,0.87222695,0,0) translate(0px, 0px);
+}
 .factoryresettext{
   float:right;
   width:calc(100% - 200px);
