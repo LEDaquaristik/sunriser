@@ -1249,9 +1249,11 @@ a.index_function:active {
   margin:1em;
 }
 .moretocometxt li:before{
-  content:"●";
-  font-size:10px;
-  margin-left:-22px;
+  content: "●";
+  font-size: 12px;
+  margin-left: -25px;
+  padding-right: 10px;
+  color: #AAA;
 }
 .navexemple{
   position :absolute;
