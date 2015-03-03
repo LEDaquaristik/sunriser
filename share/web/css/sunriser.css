@@ -880,6 +880,7 @@ tbody tr:first-child{
   font-size:20px;
   color:rgba(0,0,0,0.2);
   cursor:pointer;
+  padding-top: 3px;
 }
 .helpareaclose:hover{
   background-color:rgba(0,0,0,0.4);
@@ -1717,10 +1718,6 @@ td.contactlabel {
   .second-nav{
     box-shadow:0 1px 1px rgba(0,0,0,0.15);
   }
-  /*nav .first-level:last-child {
-      right: 0px;
-      bottom:auto
-  }*/
   .navclosemenu{
     width:60px;
     height:60px;
@@ -1791,8 +1788,13 @@ td.contactlabel {
   .sunriser_content .form_title{
     display: block;
     border-bottom: 1px solid #CCD7E2;
-    padding: 10px 0 20px 10px;
-    margin:0px -10px 10px -10px
+    padding: 20px 0 20px 10px;
+    margin:0px -10px 10px -10px;
+    background-color:#E5EBF0
+  }
+  .closethehelparea + div > .form_title{
+    padding: 15px 0 20px 10px;
+    margin:-10px -10px 10px -10px;
   }
   .banderolebox{
     height:50px;
@@ -1811,6 +1813,11 @@ td.contactlabel {
   }
   .helparea {
     margin-bottom: 0px;
+    margin: -10px;
+    border-bottom: 1px solid rgba(0,0,0,0.15);
+  }
+  .closethehelparea{
+    border-bottom: 0px solid transparent;
   }
 }
 @media screen and (max-width:650px) {
