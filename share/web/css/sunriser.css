@@ -1242,10 +1242,15 @@ a.index_function:active {
 }
 .moretocometxt ul{
   text-align:left;
-  color:#777
+  color:#777;
+  margin-left:1em;
+}
+.moretocometxt li{
+  margin:1em;
 }
 .moretocometxt li:before{
   content:"—";
+  margin-left:-22px;
 }
 .navexemple{
   position :absolute;
@@ -1696,6 +1701,9 @@ td.contactlabel {
     padding-top:17px;
     width:60px;
     display: inline-block;
+  }
+  .second-nav{
+    box-shadow:0 1px 1px rgba(0,0,0,0.15);
   }
   /*nav .first-level:last-child {
       right: 0px;
