@@ -228,9 +228,8 @@ nav .first-level:hover{
 nav .selected:hover,
 nav .selected,
 nav .selected a{
-  /* color:#68D472 !important; */
   color:#fff !important;
-  background: none repeat scroll 0% 0% #68D472;
+  background-color: #68D472;
 }
 .second-nav{
   margin-left: 70px;
@@ -861,7 +860,7 @@ nav h2{
   background-color:#FDE879;
   padding:25px;
   color:rgba(0,0,0,0.5);
-  margin-bottom:40px;
+  margin-bottom:25px;
   transition-duration:0.2s;
   overflow:hidden;
 }
@@ -1652,6 +1651,7 @@ td.contactlabel {
     width:100%;
     font-size:20px;
     text-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+    height:60px;
   }
   .sunriser a{
     padding:15px 0 0 50px;
@@ -1670,23 +1670,30 @@ td.contactlabel {
     display:none
   }
   .back_home{
-      position:absolute;
-      left:0
+    position:absolute;
+    left:0
   }
   nav {
-      width: 100%;
-      padding-left:calc(100% - 240px);
-      min-height: 60px;
-      height: 60px;
-      font-size:12px;
+    width: 100%;
+    padding-left:calc(100% - 240px);
+    min-height: 60px;
+    height: 60px;
+    font-size:12px;
+    border-bottom: 2px solid rgba(0,0,0,0.6);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+  }
+  nav .selected a,
+  nav .selected{
+    height:60px;
+    border-bottom: 2px solid rgba(0,0,0,0.3);
   }
   nav .first-level > i,
   nav .first-level > a {
-      padding-top:0;
-      height: 60px;
-      padding-top:17px;
-      width:60px;
-      display: inline-block;
+    padding-top:0;
+    height: 60px;
+    padding-top:17px;
+    width:60px;
+    display: inline-block;
   }
   nav .first-level:last-child {
       right: 0px;
@@ -1722,7 +1729,8 @@ td.contactlabel {
   .first-level.toggle::before {
     border-color: transparent transparent #FFF transparent;
     margin: 40px 0px 0px -10px;
-    left:auto
+    left:auto;
+    z-index: 1;
   }
   .sunriser_content {
     padding: 70px 10px 80px 10px;
@@ -1742,11 +1750,8 @@ td.contactlabel {
   .sunriser_content .form_title{
     display: block;
     border-bottom: 1px solid #CCD7E2;
-    padding: 10px 0 10px 10px;
-    margin:-10px -10px 10px -10px
-  }
-  #daypicker ~ .helparea{
-    margin-top: 0px;
+    padding: 10px 0 20px 10px;
+    margin:0px -10px 10px -10px
   }
   .banderolebox{
     height:50px;
@@ -1762,6 +1767,9 @@ td.contactlabel {
   }
   .sunriser_content input[type='submit']{
     right:10px;
+  }
+  .helparea {
+    margin-bottom: 0px;
   }
 }
 @media screen and (max-width:650px) {
