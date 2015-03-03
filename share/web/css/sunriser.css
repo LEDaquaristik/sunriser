@@ -1249,7 +1249,8 @@ a.index_function:active {
   margin:1em;
 }
 .moretocometxt li:before{
-  content:"—";
+  content:"●";
+  font-size:10px;
   margin-left:-22px;
 }
 .navexemple{
