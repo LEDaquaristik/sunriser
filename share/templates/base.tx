@@ -26,7 +26,7 @@
     <div class="screenblockertext">
       <div class="blocking"><div class="anim"></div><div id="blockertext">Seite wird noch geladen</div></div>
       </div>
-      <main class="main">
+      <div class="main">
         <header>
           <: block header -> { :>
             <h1 class="sunriser">
@@ -69,7 +69,7 @@
         <: } :>
         <!--<div>  What the fuck is this?-->
       </div>
-    </main>
+    </div>
     <: if $versioned { :>
       <script src="/js/all-<: $versioned :>.js" charset="UTF-8" type="text/javascript"></script>
     <: } else { :>
