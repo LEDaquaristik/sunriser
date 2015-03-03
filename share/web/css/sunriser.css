@@ -311,8 +311,9 @@ nav h2{
   cursor:default
 }
 /*font awesome fix*/
-.fa{
-  display: initial !important;
+.second-nav .fa{
+  width:36px;
+  text-align:center
 }
 .fa-2x{
   font-size:20px !important
