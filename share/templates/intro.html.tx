@@ -230,6 +230,9 @@
           Unterst&uuml;tzung der <a href="http://www.amazon.de/EnerGenie-EG-PMS2-LAN-IP-Steckdosenleiste-Überspannungsschutz-LAN-Schnittstelle/dp/B0099AHPQ4/">GemBird LAN IP Steckdosenleiste</a> als Teil der Tagesplanung um Ein/Ausschalten von weiterer Peripherie zu kontrollieren.
         </li>
         <li>
+          Umstellung auf ein <a href="http://de.wikipedia.org/wiki/Echtzeitbetriebssystem">RTOS</a>.
+        </li>
+        <li>
           <a href="http://de.wikipedia.org/wiki/WebSocket">WebSocket</a> Unterst&uuml;tzung f&uuml;r ein noch aktiveres Interface.
         </li>
       </ul>

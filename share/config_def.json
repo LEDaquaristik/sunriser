@@ -64,7 +64,7 @@
         "nightonly", ["Thunderstorm only if dayplanner sets pwm to 0", "bool", 0],
         "weekdays", ["Apply thunderstorms to given weekdays (else always)", "array(weekday)"]
       ],
-      "moonphase", "Moonphase setup", [
+      "moon", "Moon setup", [
         "activated", ["Show moonphase based on reality", "bool", 0],
         "maximum", ["Maximum intensity of moonlight", "integer", 100],
         "weekdays", ["Apply moon to given weekdays (else every day)", "array(weekday)"]
