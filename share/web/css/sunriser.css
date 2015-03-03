@@ -727,8 +727,11 @@ nav h2{
   width:100%
 }
 .table_separation{
-  border-bottom:1px solid #eee;
+  border-top:1px solid #eee;
   height: 70px;
+}
+tbody tr:first-child{
+  border-top:1px solid white;
 }
 .sunriser_content .form_title{
   display:none
@@ -747,7 +750,6 @@ nav h2{
   width: 100%;
   left: 0;
   padding: 19px 35px 0px 70px;
-  box-shadow: 0px -45px 0 white;
 }
 .no_dialogue .sunriser_dialogue{
   display:none
@@ -1785,7 +1787,6 @@ td.contactlabel {
   }
   .sunriser_dialogue{
     padding: 20px 10px 0px 70px;
-    box-shadow: 0px -12px 0 white;
   }
   .sunriser_content .form_title{
     display: block;
