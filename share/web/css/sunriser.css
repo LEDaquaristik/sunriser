@@ -247,7 +247,7 @@ nav .selected a{
                   Have to check if something better exists */
 }
 .first-level .second-nav li a{
-  padding: 14px 50px 0 2em;
+  padding: 14px 50px 14px 2em;
   height:50px;
   display: block;
 }
