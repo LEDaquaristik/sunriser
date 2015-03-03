@@ -4,7 +4,7 @@
 <section class="intro">
   <article class="introwelcome">
     <nav class="navexemple">
-      <: include base::nav :>
+      <: include base::nav { nav => "info" } :>
     </nav>
     <div class="welcometext">
       <h2>Herzlich Willkommen zum <i>SunRiser</i> Management</h2>
