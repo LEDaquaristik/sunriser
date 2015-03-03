@@ -1696,13 +1696,13 @@ td.contactlabel {
     min-height: 60px;
     height: 60px;
     font-size:12px;
-    border-bottom: 2px solid rgba(0,0,0,0.6);
+    border-bottom: 2px solid #0d1014;
     box-shadow: 0 1px 1px rgba(0,0,0,0.15);
   }
   nav .selected > a,
   nav .selected{
     height:60px;
-    border-bottom: 2px solid rgba(0,0,0,0.3);
+    border-bottom: 2px solid #499450;
   }
   nav .first-level > i,
   nav .first-level > a {
