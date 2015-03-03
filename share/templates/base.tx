@@ -24,51 +24,51 @@
     <: include base::noscript :>
     <div class="overlay"></div>
     <div class="screenblockertext">
-      <div class="blocking"><div class="anim"></div><div id="blockertext">Seite wird noch geladen</div></div>
+      <div class="blocking">
+        <div class="anim"></div>
+        <div id="blockertext">Seite wird noch geladen</div>
       </div>
-      <main class="main">
-        <header>
-          <: block header -> { :>
-            <h1 class="sunriser">
-              <a href="/">SunRiser 8</a><span><: $title ? " | " ~ $title : "" :></span>
-            </h1>
-            <div id="sunriser_datetime_header" class="sunriser sunriser_datetime"></div>
-          <: } :>
-        </header>
-              
-        <div class="page control_center <: if $no_form { :>no_dialogue<: } :>">
-          <: block page -> { :>
-            <nav>
-              <: block nav -> { :>
-                <: include base::nav :>
-              <: } :>
-            </nav>
-            <section class="sunriser_content">
-              <: if $help { :>
-                <div class="helparea"><div class="helpareaclose"></div><: $help :></div>
-              <: } :>
-              <: block content -> { :>
-                Diese Seite wurde nicht gefunden!
-              <: } :>
-            </section>
-            <aside class="sunriser_dialogue">
-              <div class="pleasewaitanim">
-                <div class="pleasewaitanimloader"></div>
-              </div>
-              <: if !$no_bighelp { :>
-                <a id="bighelp_button" class="js-hide help tip" data-tip="Hilfe" href="#"><i class="fa fa-question"></i></a>
-              <: } :>
-            </aside>
-            <div id="bighelp" class="hilfe-sidebar"></div>
-          <: } :>
-        </div>
-        <: if $demo { :>
-          <div class="banderolebox">
-            <a href="http://www.ledaquaristik.de/SunRiser-8-Tagessimulation-und-Lichtsteuerung" class="sunriserbanderole">SunRiser 8 Produkt Demo</a>
-          </div>
+    </div>
+    <main class="main">
+      <header>
+        <: block header -> { :>
+          <h1 class="sunriser">
+            <a href="/">SunRiser 8</a><span><: $title ? " | " ~ $title : "" :></span>
+          </h1>
+          <div id="sunriser_datetime_header" class="sunriser sunriser_datetime"></div>
         <: } :>
-        <!--<div>  What the fuck is this?-->
+      </header>              
+      <div class="page control_center <: if $no_form { :>no_dialogue<: } :>">
+        <: block page -> { :>
+          <nav>
+            <: block nav -> { :>
+              <: include base::nav :>
+            <: } :>
+          </nav>
+          <section class="sunriser_content">
+            <: if $help { :>
+              <div class="helparea"><div class="helpareaclose"></div><: $help :></div>
+            <: } :>
+            <: block content -> { :>
+              Diese Seite wurde nicht gefunden!
+            <: } :>
+          </section>
+          <aside class="sunriser_dialogue">
+            <div class="pleasewaitanim">
+              <div class="pleasewaitanimloader"></div>
+            </div>
+            <: if !$no_bighelp { :>
+              <a id="bighelp_button" class="js-hide help tip" data-tip="Hilfe" href="#"><i class="fa fa-question"></i></a>
+            <: } :>
+          </aside>
+          <div id="bighelp" class="hilfe-sidebar"></div>
+        <: } :>
       </div>
+      <: if $demo { :>
+        <div class="banderolebox">
+          <a href="http://www.ledaquaristik.de/SunRiser-8-Tagessimulation-und-Lichtsteuerung" class="sunriserbanderole">SunRiser 8 Produkt Demo</a>
+        </div>
+      <: } :>
     </main>
     <: if $versioned { :>
       <script src="/js/all-<: $versioned :>.js" charset="UTF-8" type="text/javascript"></script>
