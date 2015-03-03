@@ -47,11 +47,16 @@ $(function(){
   }).click(function(){
     // but only if they have a sub navigation
     if ($(this).find('.second-nav').length) {
-      if ($(".toggle").length > 0) {
-        $(".toggle").removeClass("toggle");
+      if($(this).hasClass("toggle")){
+        $(this).removeClass("toggle");
+        $(".overlay").removeClass("actif");
+      }else{
+        if ($(".toggle").length > 0) {
+          $(".toggle").removeClass("toggle");
+        }
+        $(this).addClass("toggle");
+        $(".overlay").addClass("actif");
       }
-      $(this).addClass("toggle");
-      $(".overlay").addClass("actif");
     }
   });
 

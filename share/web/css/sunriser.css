@@ -212,19 +212,21 @@ nav{
   padding-top: 24px;
   display:block !important
 }
-nav .first-level:last-child{
+/*nav .first-level:last-child{
   position:absolute;
   bottom:0px;
   width:70px
-}
+}*/
 nav .first-level:hover,
 nav .selected{
   cursor:pointer;
 }
+nav .first-level:hover > a,
 nav .first-level:hover{
   background-color: #1D2029;
   color:#fff;
 }
+nav .selected:hover > a,
 nav .selected:hover,
 nav .selected,
 nav .selected a{
@@ -1271,11 +1273,11 @@ a.index_function:active {
   width:calc(100% - 70px);
   margin-left: 70px
 }
-nav .first-level:last-child {
+/*nav .first-level:last-child {
   position: inherit;
   bottom: auto;
   width: auto;
-}
+}*/
 .settingled{
   display:table;
   width:100%
@@ -1695,9 +1697,29 @@ td.contactlabel {
     width:60px;
     display: inline-block;
   }
-  nav .first-level:last-child {
+  /*nav .first-level:last-child {
       right: 0px;
       bottom:auto
+  }*/
+  .navclosemenu{
+    width:60px;
+    height:60px;
+    display:block;
+    margin-top: -60px;
+    transition-duration:0.2s;
+    padding-top: 12px;
+  }
+  .navclosemenu:before{
+    content:"\f00d";
+    font-family:"IcoMoon";
+    font-size:20px;
+  }
+  .toggle .navclosemenu{
+    margin-top:0px;
+  }
+  nav .first-level {
+    overflow: hidden;
+    height: 60px;
   }
   .welcometext{
     width:100%;
@@ -1714,9 +1736,9 @@ td.contactlabel {
     border-width:0 0 1px 0;
     width:100%
   }
-  nav .first-level:last-child {
+  /*nav .first-level:last-child {
     width: 50px;
-  }
+  }*/
   .navexemple{
      height: 60px;
   }

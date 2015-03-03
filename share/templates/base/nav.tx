@@ -6,6 +6,7 @@
     <a href="/day.html"><i class="fa fa-clock-o fa-2x"></i></a>
   </li>
   <li title="Wettersimulation" class="<: if $nav == 'weather' { 'selected' } :> first-level">
+    <div class="navclosemenu"></div>
     <i class="fa fa-cloud fa-2x"></i>
     <ul class="second-nav">
       <h2 class="second-level"></h2>
@@ -32,6 +33,7 @@
     </ul>
   </li>
   <li title="Einstellungen" class="<: if $nav == 'setup' { 'selected' } :> first-level">
+    <div class="navclosemenu"></div>
     <i class="fa fa-gears fa-2x"></i>
     <ul class="second-nav">
       <h2 class="second-level"></h2>
@@ -73,6 +75,7 @@
     </ul>
   </li>
   <li title="Info" class="<: if $nav == 'info' { 'selected' } :> first-level">
+    <div class="navclosemenu"></div>
     <i class="fa fa-info fa-2x"></i>
     <ul class="second-nav">
       <h2 class="second-level"></h2>
