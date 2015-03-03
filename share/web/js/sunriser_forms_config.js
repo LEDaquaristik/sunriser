@@ -96,8 +96,8 @@ var sr_forms = {
     },{
       name: "daymax", label: "Maximale Anzahl von Gewittern pro Tag",
       template: "slider", min: 1, max: 24
-    },{
-      name: "nightonly", label: "Gewitter nur wenn LED Tagesplanung auf 0%"
+    // },{
+    //   name: "nightonly", label: "Gewitter nur wenn LED Tagesplanung auf 0%"
     // },{
     //   name: "minlength", label: "Minimum L&auml;nge eines Gewitters in Sekunden",
     //   template: "slider", min: 120, max: 600
@@ -125,7 +125,7 @@ var sr_forms = {
   //
   moon: {
     title: "Mondphasen Simulation",
-    prefix: "weather#setup#X#moonphase",
+    prefix: "weather#setup#X#moon",
     fields: [{
       name: "activated", label: "Simuliere Mondphasen nach Realit&auml;t"
     // },{
@@ -182,9 +182,9 @@ var sr_forms = {
     },{
       name: "rainshare", label: "Maximaler Anteil von Regenfronten am Regentag",
       template: "slider", min: 0, max: 100, percent_sign: true
-    },{
-      name: "raincloudshare", label: "Maximaler Anteil von Wolkenfronten am Regentag (wenn Wolken aktiviert sind)",
-      template: "slider", min: 0, max: 100, percent_sign: true
+    // },{
+    //   name: "raincloudshare", label: "Maximaler Anteil von Wolkenfronten am Regentag (wenn Wolken aktiviert sind)",
+    //   template: "slider", min: 0, max: 100, percent_sign: true
     // },{
     //   name: "weekdays", label: "Nur an diesen Wochentagen gibt es Regen (sonst jeden Tag)"
     }]
