@@ -50,6 +50,7 @@ svg#dayplanner{
   width:calc(100% - 50px);
   border:1px solid #CCD7E2;
   margin:10px 0 0 50px;
+  overflow:hidden
 }
 .daysvgbox{
   position:relative;
