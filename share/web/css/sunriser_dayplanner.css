@@ -22,7 +22,10 @@
 }
 
 .countbar {
-  font-size:16px
+  font-size:16px;
+  padding-left:50px;
+  margin-bottom:10px;
+  overflow:auto
 }
 
 .counttime {
@@ -41,4 +44,38 @@
 
 .countend {
   float:right
+}
+
+svg#dayplanner{
+  width:calc(100% - 50px);
+  border:1px solid #CCD7E2;
+  margin:10px 0 0 50px;
+}
+.daysvgbox{
+  position:relative;
+  margin-top:15px;
+}
+.percentbar{
+  font-size: 16px;
+  height:100%;
+  width:50px;
+  display:block;
+  position:absolute;
+  margin-top:-4px
+}
+.percent{
+  height:23.5%;
+}
+
+@media screen and (max-width:700px) {
+  .percentbar{
+     display:none
+   }
+  svg#dayplanner{
+    width:100%;
+    margin:10px 0 0 0;
+  }
+  .countbar {
+    padding-left:0px;
+  }
 }

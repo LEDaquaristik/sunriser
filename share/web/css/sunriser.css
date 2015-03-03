@@ -126,11 +126,6 @@ hr{
   border-color: #ddd;
   border-style: solid;
 }
-svg{
-  width:100%;
-  border:1px solid #CCD7E2;
-}
-
 .main{
   height:100%;
   max-width:1200px;

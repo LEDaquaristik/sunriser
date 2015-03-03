@@ -2,7 +2,16 @@
 : override content -> {
 
 <div id="pwmpicker"></div>
-<svg id="dayplanner"></svg>
+<div class="daysvgbox">
+  <div class="percentbar">
+    <div class="percent">100%</div>
+    <div class="percent">75%</div>
+    <div class="percent">50%</div>
+    <div class="percent">25%</div>
+    <div class="percentlast">0%</div>
+  </div>
+  <svg id="dayplanner"></svg>
+</div>
 <div id="day_countbar"></div>
 <div id="pathedit"></div>
 <div class="form noautoload" id="dayplan"></div>
