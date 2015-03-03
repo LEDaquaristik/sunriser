@@ -1796,6 +1796,16 @@ td.contactlabel {
     padding: 15px 0 20px 10px;
     margin:-10px -10px 10px -10px;
   }
+  .helparea + #pwmpicker{
+    margin-top:10px
+  }
+  .daysvgbox,
+  svg#dayplanner{
+    margin-top:0px !important
+  }
+  .closethehelparea + #pwmpicker{
+    margin-top:-10px
+  }
   .banderolebox{
     height:50px;
     display:block
