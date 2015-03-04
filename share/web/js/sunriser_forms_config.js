@@ -96,14 +96,14 @@ var sr_forms = {
     },{
       name: "daymax", label: "Maximale Anzahl von Gewittern pro Tag",
       template: "slider", min: 1, max: 24
+    },{
+      name: "minstorm", label: "Minimum L&auml;nge eines Gewittersturms in Minuten",
+      template: "slider", min: 120, max: 600
+    },{
+      name: "randstorm", label: "Maximale zus&auml;tzliche L&auml;nge eines Gewitters in Minuten",
+      template: "slider", min: 240, max: 1200
     // },{
     //   name: "nightonly", label: "Gewitter nur wenn LED Tagesplanung auf 0%"
-    // },{
-    //   name: "minlength", label: "Minimum L&auml;nge eines Gewitters in Sekunden",
-    //   template: "slider", min: 120, max: 600
-    // },{
-    //   name: "maxlength", label: "Maximale L&auml;nge eines Gewitters in Sekunden",
-    //   template: "slider", min: 240, max: 1200
     // },{
     //   name: "mindist", label: "Minimaler Abstand zwischen den Blitzen in Sekunden",
     //   template: "slider", min: 1, max: 60
@@ -160,8 +160,18 @@ var sr_forms = {
     },{
       name: "cloudshare", label: "Maximaler Anteil von Wolken am Wolkentag",
       template: "slider", min: 0, max: 100, percent_sign: true
+    },{
+      name: "clouddarkness", label: "Maximale Dunkelheit durch die Wolken",
+      template: "slider", min: 1, max: 10
     // },{
     //   name: "weekdays", label: "Nur an diesen Wochentagen gibt es Wolken (sonst jeden Tag)"
+    }],
+    expert_fields: [{
+      name: "mincloud", label: "Minimale L&auml;nge einer Wolke in Sekunden",
+      template: "slider", min: 1, max: 120
+    },{
+      name: "randcloud", label: "Maximale zus&auml;tzliche L&auml;nge einer Wolke in Sekunden",
+      template: "slider", min: 0, max: 240
     }]
   },
   //
@@ -182,6 +192,9 @@ var sr_forms = {
     },{
       name: "rainshare", label: "Maximaler Anteil von Regenfronten am Regentag",
       template: "slider", min: 0, max: 100, percent_sign: true
+    },{
+      name: "dropdarkness", label: "Maximale Dunkelheit durch die Regentropfen",
+      template: "slider", min: 1, max: 10
     // },{
     //   name: "raincloudshare", label: "Maximaler Anteil von Wolkenfronten am Regentag (wenn Wolken aktiviert sind)",
     //   template: "slider", min: 0, max: 100, percent_sign: true

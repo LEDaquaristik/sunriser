@@ -61,6 +61,8 @@
         "activated", ["Produce thunderstorms", "bool", 0],
         "daychance", ["Percentage for a thunderstorm to happen (Tried per day in daymax amount)", "integer", 10],
         "daymax", ["Maximum amount of thunderstorms per day", "integer", 1],
+        "minstorm", ["Minimum length of a storm in minutes", "integer", 10],
+        "randstorm", ["Maximum length added to a storm length in minutes", "integer", 50],
         "nightonly", ["Thunderstorm only if dayplanner sets pwm to 0", "bool", 0],
         "weekdays", ["Apply thunderstorms to given weekdays (else always)", "array(weekday)"]
       ],
@@ -73,6 +75,9 @@
         "activated", ["Show clouds", "bool", 0],
         "daychance", ["Chance that it is a day with clouds", "integer", 10],
         "cloudshare", ["Maximum percentage share of cloud on a cloudy day", "integer", 30],
+        "clouddarkness", ["Maximum darkness applied through cloud", "integer", 10],
+        "mincloud", ["Minimum length of cloud in seconds", "integer", 2],
+        "randcloud", ["Maximum length added to the cloud length in seconds", "integer", 40],
         "weekdays", ["Weekdays who may have rain (else every day)", "array(weekday)"]
       ],
       "rain", "Rain setup", [
@@ -80,6 +85,7 @@
         "daychance", ["Chance that the day is rainy (with clouds activated, also day with clouds automatically)", "integer", 10],
         "rainshare", ["Maximum percentage share of rain on a rainy day", "integer", 30],
         "raincloudshare", ["Maximum percentage share of cloud on a rainy day", "integer", 80],
+        "dropdarkness", ["Maximum darkness applied through rain drop", "integer", 10],
         "weekdays", ["Weekdays who may have rain (else every day)", "array(weekday)"]
       ]
     ]
