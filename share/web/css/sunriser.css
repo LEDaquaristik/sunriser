@@ -1788,15 +1788,18 @@ td.contactlabel {
   .sunriser_content .form_title{
     display: block;
     border-bottom: 1px solid #CCD7E2;
-    padding: 20px 0 20px 10px;
+    padding: 15px 0 12px 15px;
     margin:-10px -10px 10px -10px;
-    background-color:#E5EBF0
+    background-color:#E5EBF0;
+    text-transform: uppercase;
+    color: #777;
+    font-size: 20px;
   }
   .helparea + div > .form_title{
     margin:0px -10px 10px -10px;
   }
   .closethehelparea + div > .form_title{
-    padding: 15px 0 20px 10px;
+    padding: 10px 0px 12px 15px;
     margin:-10px -10px 10px -10px;
   }
   .helparea + #pwmpicker{
