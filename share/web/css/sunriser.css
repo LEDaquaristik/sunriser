@@ -1789,8 +1789,11 @@ td.contactlabel {
     display: block;
     border-bottom: 1px solid #CCD7E2;
     padding: 20px 0 20px 10px;
-    margin:0px -10px 10px -10px;
+    margin:-10px -10px 10px -10px;
     background-color:#E5EBF0
+  }
+  .helparea + div > .form_title{
+    margin:0px -10px 10px -10px;
   }
   .closethehelparea + div > .form_title{
     padding: 15px 0 20px 10px;
