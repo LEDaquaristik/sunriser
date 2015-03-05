@@ -1652,6 +1652,9 @@ td.contactlabel {
   .control_center{
     margin-bottom:0px
   }
+  select#timezone{
+    width:210px
+  }
 }
 @media screen and (max-width:700px) {
   body{
@@ -1885,6 +1888,9 @@ td.contactlabel {
   .bigbutton {
     width: 100%;
     margin-bottom: 10px;
+  }
+  select#timezone {
+    width: 132px;
   }
 }
 
