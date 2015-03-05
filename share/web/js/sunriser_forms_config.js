@@ -98,10 +98,10 @@ var sr_forms = {
       template: "slider", min: 1, max: 24
     },{
       name: "minstorm", label: "Minimum L&auml;nge eines Gewittersturms in Minuten",
-      template: "slider", min: 120, max: 600
+      template: "slider", min: 2, max: 10
     },{
       name: "randstorm", label: "Maximale zus&auml;tzliche L&auml;nge eines Gewitters in Minuten",
-      template: "slider", min: 240, max: 1200
+      template: "slider", min: 10, max: 120
     // },{
     //   name: "nightonly", label: "Gewitter nur wenn LED Tagesplanung auf 0%"
     // },{
