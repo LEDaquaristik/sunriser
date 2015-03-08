@@ -17,7 +17,7 @@
       </div>
     </noscript>
     <h1>SunRiser Finder</h1>
-    <h2 id="not_found" class="hideme">Wir haben keinen SunRiser gefunden, der sich von Ihrer Internet Adresse gemeldet hat. Bitte achten Sie darauf diese Seite &uuml;ber die gleiche Internet Verbindung zu benutzen, wie die vom SunRiser selbst! &Uuml;berpr&uuml;fen Sie auch nochmal alle Kabel Verbindungen und verbinden Sie den SunRiser erneut mit der Stromversorgung und laden Sie dann nach einer Minute diese Seite nochmal.</h2>
+    <h2 id="not_found" class="hideme">Wir haben keinen SunRiser gefunden, der sich von Ihrer Internet Adresse gemeldet hat. Bitte achten Sie darauf diese Seite &uuml;ber die gleiche Internet Verbindung zu benutzen, wie die vom SunRiser selbst! &Uuml;berpr&uuml;fen Sie auch nochmal alle Kabel Verbindungen und verbinden Sie den SunRiser erneut mit der Stromversorgung und laden Sie dann nach einer Minute diese Seite nochmal. Diese Seite wird sich alle 10 Sekunden neu laden, um zu pr&uuml;fen ob sich dieser Zustand ge&auml;ndert hat.</h2>
     <h2 id="service_down" class="hideme">Der Service ist gerade nicht verf&uuml;gbar, bitte versuchen Sie es sp&auml;ter nochmal. (Dies k&ouml;nnte auch eine Fehlfunktion in Ihrem Browser sein, bitte benutzen Sie die neuste Version von <a href="http://www.google.com/chrome/">Chrome</a> oder <a href="https://www.mozilla.org/de/firefox/new/">FireFox</a>. Falls Sie auch nach 24 Stunden diese Meldung bekommen, melden Sie sich bitte beim Support.)</h2>
     <h2 id="found"></h2>
     <script src="/jquery-1.11.2.min.js" type="text/javascript"></script>
@@ -56,6 +56,9 @@ function srf_done() {
       });
       if (found_count == 0) {
         $('#not_found').show();
+        setTimeout(function(){
+          window.location.href = window.location.href;
+        },10000);
       } else if (found_count == 1) {
         $('#found').append('<div>Nur einen SunRiser gefunden, Sie werden in 5 Sekunden dahin umgeleitet.</div>');
         setTimeout(function(){
