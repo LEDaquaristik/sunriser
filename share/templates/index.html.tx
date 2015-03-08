@@ -46,13 +46,13 @@
       <span class="index_function_badge">+</span>
       <div>Sicherung</div>
     </a>
+  </div>
+
+  <div class="index_functions">
     <a class="index_function" href="/firmware.html">
       <span class="index_function_badge">+</span>
       <div>Firmware aktualisieren</div>
     </a>
-  </div>
-
-  <div class="index_functions">
     <a class="index_function" href="/test.html">
       <span class="index_function_badge">+</span>
       <div>Funktionstest</div>

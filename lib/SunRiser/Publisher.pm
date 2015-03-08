@@ -64,7 +64,6 @@ sub _build_publish_files {
     intro.html
     led.html
     licenses.html
-    login.html
     moon.html
     network.html
     password.html
