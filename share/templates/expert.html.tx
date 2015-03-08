@@ -1,6 +1,105 @@
-: cascade base { title => "Expertenfunktionen", no_form => 1, no_bighelp => 1 }
+: cascade base { title => "Expertenfunktionen", no_bighelp => 1 }
 : override content -> {
 
+<div class="buttonbloc backupbuttons">
+  <div id="custom_firmware" class="bigbutton backupbutton">
+    <i class="fa fa-forumbee"></i>
+    <div>Eigene Firmware einspielen (EIGENE GEFAHR)</div>
+  </div>
+</div>
 
+<br>
+
+<div class="form noautoload" id="expertform"></div>
+
+<div class="expert_info">
+</div>
+
+<input type="file" class="hiddenfileupload" id="firmware_fileupload" />
+
+: }
+: override postjs -> {
+
+<script type="text/javascript">
+
+var backup_reader = new FileReader();
+backup_reader.onload = function(e){
+  var bytesarray = new Uint8Array(backup_reader.result);
+  install_firmware(bytesarray);
+};
+
+function use_firmware_file(file) {
+  backup_reader.readAsArrayBuffer(file);
+}
+
+function too_many_files() {
+  alert('Bitte nur eine Datei hochladen!');
+}
+
+// Setup the dnd listeners.
+$('#custom_firmware').on('dragover',function(e){
+  e.stopPropagation();
+  e.preventDefault();
+  e.originalEvent.dataTransfer.dropEffect = 'copy';
+}).on('drop',function(e){
+  e.stopPropagation();
+  e.preventDefault();
+  var files = e.originalEvent.dataTransfer.files; // FileList object.
+  if (files.length == 1) {
+    use_firmware_file(files[0]);
+  } else if (files.length == 0) {
+    // do nothing
+  } else {
+    too_many_files();
+  }
+}).click(function(){
+  $('#firmware_fileupload').trigger('click');
+});
+
+$('#firmware_fileupload').change(function(){
+  if (this.files.length == 1) {
+    use_firmware_file(this.files[0]);
+  } else if (this.files.length == 0) {
+    // do nothing
+  } else {
+    too_many_files();
+  }
+});
+
+$('body').on('sr_config',function(){
+  $('#expertform').each(function(){
+    var keys = new Array();
+    for (i = 1; i <= sr_config["pwm_count"]; i++) {
+      keys.push('pwm#' + i + '#manager');
+    }
+    sr_request_mpack('POST','/',keys,function(values){
+      var dayplanner_pwms = new Array();
+      for (i = 1; i <= sr_config["pwm_count"]; i++) {
+        var key = 'pwm#' + i + '#manager';
+        if (values[key] == 1) {
+          dayplanner_pwms.push(i);
+        }
+      }
+      var fields = [];
+      $.each(dayplanner_pwms,function(i,pwm){
+        fields.push({
+          name: "dayplanner#marker#" + pwm,
+          transform_value: function(value) { return parseInt(value); },
+          label: "Tagesplanung LED " + pwm
+        });
+      });
+      if (fields.length) {
+        var form = new SrForm($('#expertform'),{
+          title: undefined,
+          fields: fields
+        });
+      } else {
+        $('#expertform').html("");
+      }
+    });
+  });
+});
+
+</script>
 
 : }

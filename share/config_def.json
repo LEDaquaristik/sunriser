@@ -14,7 +14,8 @@
   "useip4", [      "Used fixed IPv4 instead of DHCP", "bool", 0],
   "nohelp", [      "Don't show help",            "bool", 0],
   "showexpert", [  "Show expert form fields",    "bool", 0],
-  "nofinder", [    "SunRiser Finder deaktivieren", "bool", 0],
+  "nofinder", [    "Deactivate SunRiser Finder", "bool", 0],
+  "nomdns", [      "Deactivate mdns",            "bool", 0],
   "ip4", [         "Set fixed IPv4",             "ip4"],
   "ip4_netmask", [ "IPv4 Netmask",               "ip4"],
   "ip4_gateway", [ "IPv4 Gateway",               "ip4"],
@@ -48,8 +49,8 @@
   ],
   "dayplanner",    "Day planner configuration", [
     "marker#X", [ "Control markers for PWM X (time and percent)", "array(time,percent)"],
-    "randomdeferralmax", ["Maximum random deferral (in minutes)", "integer", 0],
-    "deferral", ["Fixed deferral (in minutes)", "integer", 0]
+    "randomdeferralmax", ["(TODO) Maximum random deferral (in minutes)", "integer", 0],
+    "deferral", ["(TODO) Fixed deferral (in minutes)", "integer", 0]
   ],
   "weather",       "Weather simulation configuration", [
     "last_setup_id", ["Holding the last id used for new setup", "integer", 0],
