@@ -8,7 +8,7 @@
     </nav>
     <div class="welcometext">
       <h2>Herzlich Willkommen zum <i>SunRiser</i> Management</h2>
-      <p>Erstmal Danke f&uuml;r Ihr Vertrauen in unser Produkt. <i>SunRiser</i> wurde gezielt daf&uuml;r entwickelt f&uuml;r Sie es so einfach wie m&ouml;glich zu machen all Ihre Bedürfnisse für die Regulierung Ihrer LED Beleuchtung bequem von Ihrem Rechner aus zu erledigen. Da Sie diese Seite bereits erreicht haben ist der schwierigste Teil bereits hinter Ihnen, ab jetzt wird es nur noch einfacher!</p>
+      <p>Ihr Ger&auml;t wurde noch nicht konfiguriert, besuchen Sie die Einf&uuml;hrung oder erkunden Sie das Men&uuml; auf der linken Seite bzw. nutzen unsere direkt Links. Vielen Dank f&uuml;r Ihr Vertrauen in unser Produkt. Der <i>SunRiser 8</i> steht f&uuml;r eine funktionsreiche und bequeme Steuerung Ihrer LED-Beleuchtung. Mit dem Aufrufen dieser Seite liegt der schwierigste Teil bereits hinter Ihnen, ab jetzt wird es nur noch einfacher!</p>
       <br>
       <p>Auf der linken Seite sehen Sie das Hauptmen&uuml; Punkte. Das &nbsp;<i class="fa fa-home fa-2x"></i>&nbsp; ganz oben f&uuml;hrt Sie wieder zur Startseite die Ihnen immer Schnelltasten zu den wichtigsten Funktionen anzeigt. Die &nbsp;<i class="fa fa-clock-o fa-2x"></i>&nbsp; ist f&uuml;r die Tagesplanung um den Tagesverlauf Ihrer LED einzustellen. Falls Sie die LED noch nicht eingestellt haben, werden Sie zu der Seite um diese einzustellen automatisch weitergeleitet. Hinter der &nbsp;<i class="fa fa-cloud fa-2x"></i>&nbsp; befinden sich die Funktionen f&uuml;r die Wetter Simulation. Dies ist bisher noch sehr simpel gehalten, wird aber mit den Kunden W&uuml;nschen weiter wachsen. Beim &nbsp;<i class="fa fa-gears fa-2x"></i>&nbsp; sind die Funktionen zum eigentlichen System, wie z.B. Sicherung &amp; Wiederherstellung, LED Farben &amp; Steuerung bestimmen, Netzwerk &amp; Benutzeroberfl&auml;chen Einstellungen, sowie Funktionstests und Firmware Aktualisierung. Und unter dem &nbsp;<i class="fa fa-info fa-2x"></i>&nbsp; finden Sie weitere Informationen, wie z.B. die Lizenzen, Kontaktinformationen, Systeminformationen, den Link zur Open Source Seite und diese Einf&uuml;hrung.</p>
     </div>
@@ -26,7 +26,7 @@
     </div>
     <div class="connectledtext">
       <h2>LED mit dem <i>SunRiser</i> verbinden</h2>
-      <p>Zu jedem einzelnen LED Ausgang haben wir einen dazu passenden Stecker mitgeliefert. Dieser ist so konzipiert das er nur in einer Richtung eingesteckt werden kann. Wenn Sie Ihn rausziehen werden Sie am Ausgang selber direkt sehen welche Seite <b>+</b> und welche Seite <b>-</b>. Mit einem kleinen Schraubenzieher k&ouml;nnen Sie dann einfach Ihre LED an diesen Stecker anbringen. Bitte achte Sie hierbei darauf das genug Isolation vom Kabel entfernt ist, und das auch das Kabel sehr fest sitzt. Als guter Tipp kann hier gesagt werden das darauf geachtet wird das die Schraube zwar fest sitzt, aber nicht &uuml;berdreht wird, weil die Verbindung sonst wieder zu locker ist. Ziehen Sie ruhig mal leicht am Kabel nachdem Sie es am Stecker festgeschraubt haben, es sollte gut sitzen.</p>
+      <p>Zu jedem einzelnen LED Ausgang haben wir einen dazu passenden Stecker mitgeliefert. Dieser ist so konzipiert das er nur in einer Richtung eingesteckt werden kann. Wenn Sie Ihn rausziehen werden Sie am Ausgang selber direkt sehen welche Seite <b>+</b> und welche Seite <b>-</b> ist. Mit einem kleinen Schraubenzieher k&ouml;nnen Sie dann einfach Ihre LED an diesen Stecker anbringen. Bitte achte Sie hierbei darauf das genug Isolation vom Kabel entfernt ist, und das auch das Kabel sehr fest sitzt. Als guter Tipp kann hier gesagt werden das darauf geachtet wird das die Schraube zwar fest sitzt, aber nicht &uuml;berdreht wird, weil die Verbindung sonst wieder zu locker ist. Ziehen Sie ruhig mal leicht am Kabel nachdem Sie es am Stecker festgeschraubt haben, es sollte gut sitzen.</p>
       <br>
       <p>Nachdem Sie die LED verbunden haben k&ouml;nnen Sie &uuml;ber den <a href="/test.html">Funktionstest</a> einfach den korrekten Anschluss &uuml;berpr&uuml;fen. W&auml;hrend Sie die Funktion testen wird das regul&auml;re Programm f&uuml;r eine Minute ausgesetzt.</p>
     </div>
@@ -207,7 +207,7 @@
   <article class="moretocome">
     <div class="moretocometxt">
       <h2>Und das beste ist, es f&auml;ngt gerade erst an!</h2>
-      <p>Der <i>SunRiser</i> ist ein sehr junges Produkt, und wurde von Anfang an geplant sich stark an den Kundenw&uuml;nschen zu orientieren, und nicht einen unverst&auml;ndlichen Funktionalit&auml;tskatalog zu erstellen, wo genau die gew&uuml;nschten Funktionen nicht m&ouml;glich sind. Bei solchen Systemen warten Kunden sehr lange bis neue Funktionen nach Ihren W&uuml;nschen eingebaut werden. <i>SunRiser</i> soll hier ein anders Bild abgeben. Regelm&auml;ssige Firmware Aktualisierung und aktive Interaktion mit den Kunden &uuml;ber <a href="https://github.com/LEDaquaristik/sunriser">GitHub</a> werden daf&uuml;r sorgen das genau das Produkt entsteht welchen Sie als Kunde ben&ouml;tigen.</p>
+      <p>Der <i>SunRiser</i> ist ein sehr junges Produkt, und wurde von Anfang an geplant sich stark an den Kundenw&uuml;nschen zu orientieren, und nicht einen unverst&auml;ndlichen Funktionalit&auml;tskatalog zu erstellen, wo genau die gew&uuml;nschten Funktionen nicht m&ouml;glich sind. Bei solchen Systemen warten Kunden sehr lange bis neue Funktionen nach Ihren W&uuml;nschen eingebaut werden. <i>SunRiser</i> soll hier ein anders Bild abgeben. Regelm&auml;ssige Firmware Aktualisierung und aktive Interaktion mit den Kunden &uuml;ber <a href="https://github.com/LEDaquaristik/sunriser">GitHub</a> werden daf&uuml;r sorgen das genau das Produkt entsteht welchen Sie als Kunde ben&ouml;tigen. Sie k&ouml;nnen nat&uuml;rlich auch jederzeit Erweiterungsvorschl&auml;ge an <a href="mailto:sunriser@ledaquaristik.de">sunriser@ledaquaristik.de</a>schicken.</p>
       <br>
       <p>Hier mal eine kleine Auflistung aller zuk&uuml;nftiger Funktionen die wir schon auf unserem Radar haben (Sortierung ist nach Priorit&auml;t, dies ist aber nicht in Stein gemeiselt):</p>
       <ul>
@@ -219,6 +219,9 @@
         </li>
         <li>
           Mehr als nur ein Programm f&uuml;r die Wetter Simulation, auch mit Verwaltungsfunktionen und zeitgesteuertem Wechsel, um z.B. individuelles Jahreszeiten-Wetter zu simulieren.
+        </li>
+        <li>
+          Cloud speichern der Konfiguration. Dadurch k&ouml;nnen Sie dann jederzeit auf jeden alten Stand der Konfiguration zur&uuml;ckgehen, soweit Ihr Computer mit dem Sie auf den <i>SunRiser</i> zugreifen mit dem Internet verbunden ist (der <i>SunRiser</i> selber muss hierf&uuml;r nicht mit dem Internet verbunden sein dann).
         </li>
         <li>
           Erweiterung der Wetter Optionen um Wochentage und Zeitregulierungen.
