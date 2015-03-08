@@ -44,21 +44,21 @@ scp $FIRMWARE_FILE $TARGET:~/htdocs/
 scp $RELEASE_FILE  $TARGET:~/
 
 ssh $TARGET "(
-  echo Killing old demo server... &&
-  /sbin/start-stop-daemon -o -p sr_demo_web.pid --stop &&
-  echo Killing old finder server... &&
-  /sbin/start-stop-daemon -o -p sr_finder.pid --stop &&
-  echo Deleting demo cache... &&
-  rm -rf .srdemocache &&
-  echo Waiting... && sleep 5 &&
-  echo Install distribution, upgrade images file... &&
-  cpanm $RELEASE_FILE && cd htdocs && sunriser_generatemaster && cd .. &&
-  echo Extracting sunriser.psgi &&
-  tar xvzf $RELEASE_FILE --wildcards --strip-components=1 \\*/sunriser.psgi &&
-  echo Starting new demo server... &&
-  starman --listen :7781 --workers 8 --pid sr_demo_web.pid --daemonize sunriser.psgi &&
-  echo Starting new finder server... &&
-  /sbin/start-stop-daemon -o -m -p sr_finder.pid --start --background --exec \$( type -p sunriser_finder ) &&
+  echo Killing old demo server... && \
+  /sbin/start-stop-daemon -o -p sr_demo_web.pid --stop && \
+  echo Killing old finder server... && \
+  /sbin/start-stop-daemon -o -p sr_finder.pid --stop && \
+  echo Deleting demo cache... && \
+  rm -rf .srdemocache && \
+  echo Waiting... && sleep 5 && \
+  echo Install distribution, upgrade images file... && \
+  cpanm $RELEASE_FILE && cd htdocs && sunriser_generatemaster && cd .. && \
+  echo Extracting sunriser.psgi && \
+  tar xvzf $RELEASE_FILE --wildcards --strip-components=1 \\*/sunriser.psgi && \
+  echo Starting new demo server... && \
+  starman --listen :7781 --workers 8 --pid sr_demo_web.pid --daemonize sunriser.psgi && \
+  echo Starting new finder server... && \
+  /sbin/start-stop-daemon -o -m -p sr_finder.pid --start --background --exec \$( type -p sunriser_finder ) && \
   echo Reload of servers done...
 )"
 
