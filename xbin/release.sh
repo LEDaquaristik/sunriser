@@ -54,7 +54,7 @@ ssh $TARGET "(
   echo Install distribution, upgrade images file... &&
   cpanm $RELEASE_FILE && cd htdocs && sunriser_generatemaster && cd .. &&
   echo Extracting sunriser.psgi &&
-  tar xvzf $RELEASE_FILE --wildcards --strip-components=1 \\*/sunriser.psgi
+  tar xvzf $RELEASE_FILE --wildcards --strip-components=1 \\*/sunriser.psgi &&
   echo Starting new demo server... &&
   starman --listen :7781 --workers 8 --pid sr_demo_web.pid --daemonize sunriser.psgi &&
   echo Starting new finder server... &&
