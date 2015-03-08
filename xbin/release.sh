@@ -27,7 +27,7 @@ rm -f $LOGFILE
 cd $SUNRISER_MCU
 
 echo "Generating microcontroller application and object file distribution..."
-V=$VERSION make -s clean main.bin dist &>$LOGFILE
+V=$VERSION make PRODUCTION_FIRMWARE=1 -s clean main.bin dist &>$LOGFILE
 
 cp -v $OBJS_FILE $WORKDIR/
 cp -v main.bin $WORKDIR/
