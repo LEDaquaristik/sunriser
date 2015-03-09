@@ -1191,12 +1191,9 @@ a.index_function {
   display: inline-block;
   width: 100%;
   transition-duration: 0.2s;
-  border:1px solid rgba(0, 0, 0, 0.1) !important
-}
-a.index_function:first-child{
+  border:1px solid rgba(0, 0, 0, 0.1) !important;
   margin-bottom:25px
 }
-
 a.index_function:hover {
   background-color: #69a6ce;
 }
