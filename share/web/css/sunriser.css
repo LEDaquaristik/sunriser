@@ -1850,6 +1850,12 @@ td.contactlabel {
   .closethehelparea{
     border-bottom: 0px solid transparent;
   }
+  #home_not_configured {
+    padding-bottom: 25px;
+  }
+  a.index_function {
+    margin-bottom:10px
+  }
 }
 @media screen and (max-width:650px) {
   .moretocomeimg,
