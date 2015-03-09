@@ -1171,6 +1171,7 @@ tbody tr:first-child{
   border-radius: 50%;
   margin: 25px 0px;
   border:7px solid;
+  padding: 0 6px 0 0;
 }
 .bigbutton div{
   padding: 20px 0px;
