@@ -19,15 +19,15 @@
     </div>
     <div class="buttonbloc">
       <a class="bigbutton red" href="/intro.html">
-        <span class="badge">1.</span>
+        <span class="badge">1</span>
         <div>Einf&uuml;hrung anschauen</div>
       </a>
       <a class="bigbutton" href="/led.html">
-        <span class="badge">2.</span>
+        <span class="badge">2</span>
         <div>LED Farben einstellen</div>
       </a>
       <a class="bigbutton" href="/day.html">
-        <span class="badge">3.</span>
+        <span class="badge">3</span>
         <div>Tagesplanung einstellen</div>
       </a>
     </div>
