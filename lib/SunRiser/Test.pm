@@ -146,7 +146,7 @@ sub factory_test {
   $state_res = $sr->call('GET','state');
   ok($state_res->is_success,'Successful GET /state request');
   $state = $sr->res_mp_body($state_res);
-  is($state->{pwms}->{1},500,'pwm #1 is 123');
+  is($state->{pwms}->{1},123,'pwm #1 is 123');
   print "Factory test done...\n";
 }
 
