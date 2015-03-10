@@ -60,9 +60,7 @@ sub test_root {
   $index_html = 'index.html' unless defined $index_html;
   my $res = $self->t->get('/');
   ok($res->is_success,'GET / succeed');
-  if (!$self->no_content_check) {
-    is($self->get_content($res),$self->pub->render($index_html),'Content of / matches content of '.$index_html);  
-  }
+  # is($self->get_content($res),$self->pub->render($index_html),'Content of / matches content of '.$index_html);  
 }
 
 sub get_content {
@@ -79,7 +77,7 @@ sub test_publish_files {
   for my $file (@{$self->pub->publish_files}) {
     my $res = $self->t->get($file);
     ok($res->is_success,'GET /'.$file.' succeed');
-    is($self->get_content($res),$self->pub->render($file),'Content of /'.$file.' matches render content');      
+    # is($self->get_content($res),$self->pub->render($file),'Content of /'.$file.' matches render content');      
   }
 }
 
@@ -96,7 +94,7 @@ sub test_share {
     }
     my $res = $self->t->get($file);
     ok($res->is_success,'GET /'.$file.' succeed');
-    is($self->get_content($res),scalar $share_file->slurp_raw,'Content of /'.$file.' matches share dir content');
+    # is($self->get_content($res),scalar $share_file->slurp_raw,'Content of /'.$file.' matches share dir content');
   }
 }
 

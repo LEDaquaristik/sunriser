@@ -7,7 +7,6 @@ use SunRiser::Test;
 
 use FindBin;
 use lib $FindBin::Dir."/lib";
-use TestSunRiser;
 
 my $ts = SunRiser::Test->new( sim => SunRiser::Simulator->new( demo => 1, versioned => '1.234' ) );
 
