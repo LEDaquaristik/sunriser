@@ -32,7 +32,7 @@ has mp => (
   is => 'lazy',
 );
 
-sub _build_mp { Data::MessagePack->new->canonical->utf8->prefer_integer }
+sub _build_mp { Data::MessagePack->new->canonical->utf8 }
 
 has ua => (
   is => 'lazy',

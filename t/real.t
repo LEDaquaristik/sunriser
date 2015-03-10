@@ -50,26 +50,6 @@ SKIP: {
 
   is_deeply($mp,{ testvalue => 1 },'Data correct on POST request for testvalue after set 1');
 
-
-    # pwm#1#color            "",
-    # pwm#1#manager          0,
-    # pwm#2#color            "",
-    # pwm#2#manager          0,
-    # pwm#3#color            "",
-    # pwm#3#manager          0,
-    # pwm#4#color            "",
-    # pwm#4#manager          0,
-    # pwm#5#color            "",
-    # pwm#5#manager          0,
-    # pwm#6#color            "",
-    # pwm#6#manager          0,
-    # pwm#7#color            "",
-    # pwm#7#manager          0,
-    # pwm#8#color            "",
-    # pwm#8#manager          0,
-    # weather#setup#0#pwms   []
-
-
 }
 
 done_testing;

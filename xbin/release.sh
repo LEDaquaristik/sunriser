@@ -9,6 +9,7 @@ WORKDIR=$( pwd )
 VERSION_FILENAME=$( echo $VERSION | tr '.' '_' )
 LOGFILE=$WORKDIR/build.$1.log
 CURRENT_DATE_FILENAME=$( date +%Y%m%d_%H%M%S )
+NOW=$( date +%s )
 
 TARGET=sunriser@sunriser
 
@@ -27,7 +28,7 @@ rm -f $LOGFILE
 cd $SUNRISER_MCU
 
 echo "Generating microcontroller application and object file distribution..."
-V=$VERSION make PRODUCTION_FIRMWARE=1 -s clean main.bin bootloader.bin dist &>$LOGFILE
+V=$VERSION SR_TIMESTAMP=$NOW make PRODUCTION_FIRMWARE=1 -s clean main.bin bootloader.bin dist &>$LOGFILE
 
 cp -v $OBJS_FILE $WORKDIR/
 cp -v main.bin $WORKDIR/
@@ -36,7 +37,7 @@ cp -v bootloader.bin $WORKDIR/
 cd $WORKDIR
 
 echo "Generating factory file..."
-V=$VERSION bin/sunriser_factory $FIRMWARE_FILE >>$LOGFILE
+V=$VERSION SR_TIMESTAMP=$NOW bin/sunriser_factory $FIRMWARE_FILE >>$LOGFILE
 
 echo "Upload to target..."
 scp $OBJS_FILE     $TARGET:~/htdocs/objs/

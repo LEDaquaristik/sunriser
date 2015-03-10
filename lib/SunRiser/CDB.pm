@@ -153,7 +153,7 @@ sub add_factory {
   my $offset_sec = tz_local_offset();
   my $time = time();
   my $utc_time = $time + $offset_sec;
-  $self->cdb->put_replace('___firmware_timestamp',$utc_time);
+  $self->cdb->put_replace('___firmware_timestamp',$ENV{SR_TIMESTAMP} || $utc_time);
   # Adding firmware if main.bin exist
   my $main = path('main.bin');
   if (-f $main) {

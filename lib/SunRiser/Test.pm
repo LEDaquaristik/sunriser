@@ -60,7 +60,6 @@ sub test_root {
   $index_html = 'index.html' unless defined $index_html;
   my $res = $self->t->get('/');
   ok($res->is_success,'GET / succeed');
-  # is($self->get_content($res),$self->pub->render($index_html),'Content of / matches content of '.$index_html);  
 }
 
 sub get_content {
@@ -77,7 +76,6 @@ sub test_publish_files {
   for my $file (@{$self->pub->publish_files}) {
     my $res = $self->t->get($file);
     ok($res->is_success,'GET /'.$file.' succeed');
-    # is($self->get_content($res),$self->pub->render($file),'Content of /'.$file.' matches render content');      
   }
 }
 
@@ -94,8 +92,80 @@ sub test_share {
     }
     my $res = $self->t->get($file);
     ok($res->is_success,'GET /'.$file.' succeed');
-    # is($self->get_content($res),scalar $share_file->slurp_raw,'Content of /'.$file.' matches share dir content');
   }
 }
+
+sub factory_test {
+  my ( $self, $cdb, $sr ) = @_;
+  my $t = $self->t;
+  my @keys = $cdb->keys;
+  my $fi = $cdb->get_firmware_info;
+  $fi->{version} = $cdb->get('factory_version');
+  $fi->{experimental} = Data::MessagePack::false() unless defined $fi->{experimental};
+  my $rfi = $sr->res_mp_body($sr->call('GET','firmware.mp'));
+  is_deeply($fi,$rfi,'Firmware Info matches Bee');
+  my @config_keys;
+  for my $k (sort { $a cmp $b } @keys) {
+    if ($k =~ m/^web#([\/\w\.]*)#content$/) {
+      my $file = $1;
+      my $res = $t->get($file);
+      ok($res->is_success,'GET /'.$file.' succeed');
+      is($res->content,$cdb->get($k),'Content of file '.$file.' matches Bee content');
+    } elsif ($k =~ m/^web#.*/ || $k =~ m/^___.*/) {
+      # ignore 
+    } else {
+      push @config_keys, $k;
+    }
+  }
+  my $conf_res = $sr->call_mp('POST','',[@config_keys]);
+  ok($conf_res->is_success,'Successful POST / request for config keys');
+  my $factory_config = $sr->res_mp_body($conf_res);
+  for my $k (keys %{$factory_config}) {
+    next if $k eq 'time';
+    is_deeply($factory_config->{$k},$cdb->get($k),'Default config key '.$k.' matches Bee content');
+  }
+  my $save_res = $sr->call_mp('PUT','',$factory_config);
+  ok($save_res->is_success,'Successful PUT / request for factory config');
+  my $backup_res = $sr->call('GET','backup');
+  ok($backup_res->is_success,'Successful GET /backup request for factory config backup');
+  my $backup_config = $sr->res_mp_body($backup_res);
+  is_deeply($backup_config,$factory_config,'Backup config matches previously fetched factory config');
+  my $state_res = $sr->call('GET','state');
+  ok($state_res->is_success,'Successful GET /state request');
+  my $state = $sr->res_mp_body($state_res);
+  is($state->{pwmloop_stopped},0,'pwmloop is stopped');
+  for (1..8) {
+    is($state->{pwms}->{$_},0,'pwm #'.$_.' is zero');
+  }
+  ok($state->{uptime} > 0,'uptime is bigger as 0');
+  my $gmtoff = $cdb->get('gmtoff') || 0;
+  my $time = time + ( $gmtoff * 60 );
+  ok(abs($time - $state->{time}) < 30,'Clock may be maximum off by 30');
+  my $set_res = $sr->call_mp('PUT','state',{ pwms => { "1" => 123 }});
+  ok($set_res->is_success,'Successful PUT /state request');
+  $state_res = $sr->call('GET','state');
+  ok($state_res->is_success,'Successful GET /state request');
+  $state = $sr->res_mp_body($state_res);
+  is($state->{pwms}->{1},500,'pwm #1 is 123');
+  print "Factory test done...\n";
+}
+
+  # pwm#1#color            "",
+  # pwm#1#manager          0,
+  # pwm#2#color            "",
+  # pwm#2#manager          0,
+  # pwm#3#color            "",
+  # pwm#3#manager          0,
+  # pwm#4#color            "",
+  # pwm#4#manager          0,
+  # pwm#5#color            "",
+  # pwm#5#manager          0,
+  # pwm#6#color            "",
+  # pwm#6#manager          0,
+  # pwm#7#color            "",
+  # pwm#7#manager          0,
+  # pwm#8#color            "",
+  # pwm#8#manager          0,
+  # weather#setup#0#pwms   []
 
 1;

@@ -66,6 +66,7 @@ sub _build_firmware_info {
 sub run {
   my ( $self ) = @_;
   my $fi = $self->firmware_info;
+  my $factory_version = $self->firmware_cdb->get('factory_version');
   my $firmware = scalar path($self->firmware)->slurp_raw;
   while (1) {
     my $req = GET($self->finder);
@@ -105,9 +106,6 @@ sub run {
                   print "Factory installation must have failed, too short timeframe\n";
                   exit 1;
                 }
-
-                print "now i would run tests!\n";
-
               } else {
                 print "FAILURE!\n";
                 exit 1;
@@ -115,6 +113,10 @@ sub run {
             } else {
               print "Already installed tester firmware\n";
             }
+
+            my $test = SunRiser::Test->new( remote => 'http://'.$ip.'/' );
+            $test->factory_test($self->firmware_cdb,$sr);
+
           } else {
             print "unreachable... Ignoring\n";
           }
