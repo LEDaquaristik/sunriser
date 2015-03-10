@@ -44,7 +44,7 @@ has cdb => (
 sub _build_cdb {
   my ( $self ) = @_;
   return -f $self->filename
-    ? CDB::TinyCDB->open($self->filename, for_update => $self->filename.".$$")
+    ? CDB::TinyCDB->open($self->filename)
     : $self->readonly
       ? croak("Can't open non-existing readonly database ".$self->filename)
       : CDB::TinyCDB->create($self->filename,$self->filename.".$$");

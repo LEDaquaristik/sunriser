@@ -24,7 +24,10 @@ requires 'Starman', '0';
 requires 'Text::Xslate', '0';
 requires 'Time::Zone', '0';
 requires 'Twiggy::Server', '0';
+requires 'Plack::Test::Agent', '0';
+requires 'Plack::App::Proxy', '0';
+requires 'Test::More', '0.96';
 
 on test => sub {
-  requires 'Test::More', '0.96';
+  requires 'Test::TempDir::Tiny', '0';
 };

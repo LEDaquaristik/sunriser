@@ -1,0 +1,17 @@
+#!/usr/bin/env perl
+# PODNAME: sunriser_tester
+# ABSTRACT: SunRiser Production Tester
+
+$|=1;
+
+use strict;
+use warnings;
+
+use FindBin;
+use lib $FindBin::Dir . "/../lib";
+use SunRiser::Tester;
+
+my $srtester = SunRiser::Tester->new_with_options( firmware => (shift @ARGV) );
+$srtester->run;
+
+exit 0;

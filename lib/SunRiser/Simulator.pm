@@ -576,7 +576,7 @@ sub _build_psgi {
           if ($method eq 'PUT') {
             my $body = $req->raw_body;
             my $data = $self->_mp->unpack($body);
-            # use DDP; p($data); 1;
+            #use DDP; p($data); 1;
             for my $k (keys %{$data}) {
               $self->debug('Setting key '.$k);
               $self->set($k,$data->{$k},$env);
@@ -682,8 +682,8 @@ sub BUILD {
 sub run {
   my ( $self ) = @_;
   croak("Can't run on demo") if $self->demo;
-  $self->web;
   $self->cdbs;
+  $self->web;
   AE::cv->recv;
 }
 

@@ -7,8 +7,11 @@ for (qw(
   SunRiser
   SunRiser::CDB
   SunRiser::Config
+  SunRiser::Finder
   SunRiser::Publisher
+  SunRiser::Role::Logger
   SunRiser::Simulator
+  SunRiser::Test
 )) {
   use_ok($_);
 }
