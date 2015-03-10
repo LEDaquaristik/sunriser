@@ -86,6 +86,17 @@ if (lc($command) eq 'firmware') {
   } else {
     croak "Too many args";
   }
+} elsif ($command eq 'reboot') {
+  if (scalar @args == 0) {
+    if ($sr->call('GET','reboot')->is_success) {
+      print "Reboot\n";
+    } else {
+      print "Reboot failed!\n";
+      exit 1;
+    }
+  } else {
+    croak "Too many args";
+  }
 }
 
 exit 0;

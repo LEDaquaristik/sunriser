@@ -78,41 +78,36 @@ sub run {
           my $ip = $data->{$mac}->{ip};
           print "Testing ".$ip.":\n";
           my $sr = SunRiser->new( host => $ip );
-          my $tfi = $sr->firmware_info;
           my $ok = $sr->call('GET','ok');
           if ($ok->is_success) {
-            use DDP; p($tfi);
-            use DDP; p($fi);
+            my $tfi = $sr->firmware_info;
             if (!$tfi || $tfi->{filename} ne $fi->{filename} || $tfi->{timestamp} != $fi->{timestamp}) {
-              print "Installing tester firmware as factory... ";
+              print "Install tester firmware as factory... ";
               my $fares = $sr->call('PUT','factory',$firmware);
               if ($fares->is_success) {
                 print "success!\n";
-                print "Installing tester firmware... ";
-                my $fares = $sr->call('PUT','firmware',$firmware);
-                if ($fares->is_success) {
-                  print "success!\n";
-                  print "Waiting for restart of SunRiser...";
-                  sleep(40);
-                  my $i = 0;
-                  while (1) {
-                    $i++;
-                    my $res = $sr->call('GET','ok');
-                    print ".";
-                    if ($res->is_success) {
-                      print "\n";
-                      last;
-                    }
-                    if ($i > 120) {
-                      print "FAILURE!\n";
-                      exit 1;
-                    }
+                print "Waiting for SunRiser being back again...";
+                my $i = 0;
+                while (1) {
+                  $i++;
+                  my $res = $sr->call('GET','ok');
+                  print ".";
+                  if ($res->is_success) {
+                    last;
                   }
-                  print "now i would run tests!\n";
-                } else {
-                  print "FAILURE!\n";
+                  if ($i > 50) {
+                    print "FAILURE!\n";
+                    exit 1;
+                  }
+                }
+                print " (".$i." seconds)\n";
+                if ($i < 20) {
+                  print "Factory installation must have failed, too short timeframe\n";
                   exit 1;
                 }
+
+                print "now i would run tests!\n";
+
               } else {
                 print "FAILURE!\n";
                 exit 1;
