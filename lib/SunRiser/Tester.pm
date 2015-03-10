@@ -101,7 +101,7 @@ sub run {
                   }
                 }
                 print " (".$i." seconds)\n";
-                if ($i < 20) {
+                if ($i < 10) {
                   print "Factory installation must have failed, too short timeframe\n";
                   exit 1;
                 }
