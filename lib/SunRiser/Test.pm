@@ -131,7 +131,7 @@ sub factory_test {
     my $state = $sr->res_mp_body($state_res);
     is($state->{pwmloop_stopped},0,'pwmloop is stopped');
     for (1..8) {
-      is($state->{pwms}->{$_},0,'pwm #'.$_.' is zero');
+      is($state->{pwms}->{$_},0,'pwm '.$_.' is zero');
     }
     ok(defined $state->{uptime} && $state->{uptime} > 0,'uptime is bigger as 0');
     my $gmtoff = $cdb->get('gmtoff') || 0;
@@ -154,7 +154,7 @@ sub factory_test {
     $state_res = $sr->call('GET','state');
     ok($state_res->is_success,'Successful GET /state request after setting back to 0') || p($state_res);
     $state = $sr->res_mp_body($state_res);
-    is($state->{pwms}->{1},0,'pwm #1 is 0');
+    is($state->{pwms}->{1},0,'pwm 1 is 0');
     ok($state->{pwmloop_stopped} != 0,'pwmloop stopped is not 0');
     print "Factory test done...\n";
   };

@@ -134,6 +134,14 @@ sub run {
               }
             }
 
+            while(1) {
+              for (1..8,reverse(2..7)) {
+                $sr->call_mp('PUT','state',{ pwms => { "".$_ => 1000 }});
+                sleep(1);
+                $sr->call_mp('PUT','state',{ pwms => { "".$_ => 0 }});
+              }
+            }
+
           } else {
             print "unreachable... Ignoring\n";
           }

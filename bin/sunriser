@@ -74,6 +74,14 @@ if (lc($command) eq 'firmware') {
   } else {
     croak "Too few or too many args";
   }
+} elsif ($command eq 'led') {
+  if (scalar @args == 2) {
+    my $arg = { pwms => { "".$args[0], $args[1]+0 } };
+
+    print "Setting PWM ".$args[0]." to ".$args[1].": ".($sr->call_mp('PUT','state',$arg)->is_success ? "OK\n" : "FAILURE!!!\n");
+  } else {
+    croak "Too few or too many args";
+  }
 } elsif ($command eq 'state') {
   if (scalar @args == 0) {
     p($sr->res_mp_body($sr->call_mp('GET','state')));
