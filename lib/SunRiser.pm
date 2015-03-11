@@ -41,7 +41,7 @@ has ua => (
 sub _build_ua {
   my ( $self ) = @_;
   my $ua = LWP::UserAgent->new;
-  $ua->timeout(3);
+  $ua->timeout(20);
   return $ua;
 }
 

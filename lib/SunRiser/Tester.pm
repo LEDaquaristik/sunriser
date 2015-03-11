@@ -34,7 +34,7 @@ has ua => (
 sub _build_ua {
   my ( $self ) = @_;
   my $ua = LWP::UserAgent->new;
-  $ua->timeout(5);
+  $ua->timeout(20);
   return $ua;
 }
 
@@ -82,40 +82,57 @@ sub run {
           my $ok = $sr->call('GET','ok');
           if ($ok->is_success) {
             my $tfi = $sr->firmware_info;
+            my $fares;
+            my $max = 50;
+            my $min = 2;
             if (!$tfi || $tfi->{filename} ne $fi->{filename} || $tfi->{timestamp} != $fi->{timestamp}) {
               print "Install tester firmware as factory... ";
-              my $fares = $sr->call('PUT','factory',$firmware);
-              if ($fares->is_success) {
-                print "success!\n";
-                print "Waiting for SunRiser being back again...";
-                my $i = 0;
-                while (1) {
-                  $i++;
-                  my $res = $sr->call('GET','ok');
-                  print ".";
-                  if ($res->is_success) {
-                    last;
-                  }
-                  if ($i > 50) {
-                    print "FAILURE!\n";
-                    exit 1;
-                  }
+              $fares = $sr->call('PUT','factory',$firmware);
+            } else {
+              print "Already installed tester firmware\n";
+              $fares = $sr->call('GET','reboot');
+              $max = 20;
+            }
+            if ($fares->is_success) {
+              print "success!\n";
+              print "Waiting for SunRiser being back again...";
+              my $i = 0;
+              while (1) {
+                $i++;
+                my $res = $sr->call('GET','ok');
+                print ".";
+                if ($res->is_success) {
+                  last;
                 }
-                print " (".$i." seconds)\n";
-                if ($i < 10) {
-                  print "Factory installation must have failed, too short timeframe\n";
+                if ($i > $max) {
+                  print "FAILURE!\n";
                   exit 1;
                 }
-              } else {
-                print "FAILURE!\n";
+              }
+              print " (".$i." seconds)\n";
+              if ($i < $min) {
+                print "Factory installation must have failed, too short timeframe\n";
                 exit 1;
               }
             } else {
-              print "Already installed tester firmware\n";
+              print "FAILURE!\n";
+              exit 1;
             }
 
+            my $try = 0;
+            my $success = 0;
+
             my $test = SunRiser::Test->new( remote => 'http://'.$ip.'/' );
-            $test->factory_test($self->firmware_cdb,$sr);
+            while (!$success) {
+              $try++;
+              my $start = time;
+              $success = $test->factory_test($self->firmware_cdb,$sr);
+              my $diff = time - $start;
+              print "\nTests took: ".$diff." seconds [#".$try."]\n\n";
+              if ($try == 5) {
+                croak "Tests failed too often";
+              }
+            }
 
           } else {
             print "unreachable... Ignoring\n";
