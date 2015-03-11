@@ -97,67 +97,7 @@ sub test_share {
 }
 
 sub factory_test {
-  my ( $self, $cdb, $sr ) = @_;
-  return subtest __PACKAGE__." Factory Test", sub {
-    my $t = $self->t;
-    my @keys = $cdb->keys;
-    my $fi = $cdb->get_firmware_info;
-    $fi->{version} = $cdb->get('factory_version');
-    $fi->{experimental} = Data::MessagePack::false() unless defined $fi->{experimental};
-    my $rfi = $sr->res_mp_body($sr->call('GET','firmware.mp'));
-    is_deeply($fi,$rfi,'Firmware Info matches Bee');
-    my @config_keys;
-    for my $k (sort { $a cmp $b } @keys) {
-      if ($k =~ m/^web#([\/\w\.]*)#content$/) {
-        my $file = $1;
-        my $res = $t->get($file);
-        ok($res->is_success,'GET /'.$file.' succeed');
-        is($res->content,$cdb->get($k),'Content of file '.$file.' matches Bee content');
-      } elsif ($k =~ m/^web#.*/ || $k =~ m/^___.*/) {
-        # ignore 
-      } else {
-        push @config_keys, $k;
-      }
-    }
-    my $conf_res = $sr->call_mp('POST','',[@config_keys]);
-    ok($conf_res->is_success,'Successful POST / request for config keys');
-    my $factory_config = $sr->res_mp_body($conf_res);
-    for my $k (keys %{$factory_config}) {
-      next if $k eq 'time';
-      is_deeply($factory_config->{$k},$cdb->get($k),'Default config key '.$k.' matches Bee content');
-    }
-    my $state_res = $sr->call('GET','state');
-    ok($state_res->is_success,'Successful GET /state request') || p($state_res);
-    my $state = $sr->res_mp_body($state_res);
-    is($state->{pwmloop_stopped},0,'pwmloop is stopped');
-    for (1..8) {
-      is($state->{pwms}->{$_},0,'pwm '.$_.' is zero');
-    }
-    ok(defined $state->{uptime} && $state->{uptime} > 0,'uptime is bigger as 0');
-    my $gmtoff = $cdb->get('gmtoff') || 0;
-    my $time = time + ( $gmtoff * 60 );
-    ok(abs($time - $state->{time}) < 30,'Clock may be maximum off by 30');
-    my $save_res = $sr->call_mp('PUT','',$factory_config);
-    ok($save_res->is_success,'Successful PUT / request for factory config') || p($save_res);
-    my $backup_res = $sr->call('GET','backup');
-    ok($backup_res->is_success,'Successful GET /backup request for factory config backup') || p($backup_res);
-    my $backup_config = $sr->res_mp_body($backup_res);
-    is_deeply($backup_config,$factory_config,'Backup config matches previously fetched factory config');
-    my $set_res = $sr->call_mp('PUT','state',{ pwms => { "1" => 123 }});
-    ok($set_res->is_success,'Successful PUT /state request to set pwm 1 to 123') || p($set_res);
-    $state_res = $sr->call('GET','state');
-    ok($state_res->is_success,'Successful GET /state request') || p($state_res);
-    $state = $sr->res_mp_body($state_res);
-    is($state->{pwms}->{1},123,'pwm #1 is 123');
-    my $reset_res = $sr->call_mp('PUT','state',{ pwms => { "1" => 0 }});
-    ok($reset_res->is_success,'Successful PUT /state request to set pwm 1 back to 0') || p($reset_res);
-    $state_res = $sr->call('GET','state');
-    ok($state_res->is_success,'Successful GET /state request after setting back to 0') || p($state_res);
-    $state = $sr->res_mp_body($state_res);
-    is($state->{pwms}->{1},0,'pwm 1 is 0');
-    ok($state->{pwmloop_stopped} != 0,'pwmloop stopped is not 0');
-    print "Factory test done...\n";
-  };
+
 }
 
   # pwm#1#color            "",

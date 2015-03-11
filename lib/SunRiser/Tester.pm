@@ -9,7 +9,9 @@ use JSON::MaybeXS;
 use SunRiser;
 use SunRiser::CDB;
 use SunRiser::Config;
+use Test::Tester;
 use SunRiser::Test;
+use File::ShareDir::ProjectDistDir;
 use Carp qw( croak );
 use Path::Tiny;
 
@@ -77,69 +79,75 @@ sub run {
         if (!defined $self->tested->{$mac}) {
           $self->tested->{$mac} = 1;
           my $ip = $data->{$mac}->{ip};
-          print "Testing ".$ip.":\n";
+          print "Testing ".$ip.": ";
           my $sr = SunRiser->new( host => $ip );
-          my $ok = $sr->call('GET','ok');
-          if ($ok->is_success) {
+          if ($sr->ok) {
+            print "ok\n";
             my $tfi = $sr->firmware_info;
-            my $fares;
-            my $max = 50;
-            my $min = 2;
             if (!$tfi || $tfi->{filename} ne $fi->{filename} || $tfi->{timestamp} != $fi->{timestamp}) {
               print "Install tester firmware as factory... ";
-              $fares = $sr->call('PUT','factory',$firmware);
-            } else {
-              print "Already installed tester firmware\n";
-              $fares = $sr->call('GET','reboot');
-              $max = 20;
-            }
-            if ($fares->is_success) {
-              print "success!\n";
-              print "Waiting for SunRiser being back again...";
-              my $i = 0;
-              while (1) {
-                $i++;
-                my $res = $sr->call('GET','ok');
-                print ".";
-                if ($res->is_success) {
-                  last;
-                }
-                if ($i > $max) {
-                  print "FAILURE!\n";
-                  exit 1;
-                }
-              }
-              print " (".$i." seconds)\n";
-              if ($i < $min) {
-                print "Factory installation must have failed, too short timeframe\n";
-                exit 1;
+              if ($sr->update_factory($firmware)) {
+                print "OK\n";
+              } else {
+                print "FAILED!!!\n";
               }
             } else {
-              print "FAILURE!\n";
-              exit 1;
+              print "Already installed tester firmware.. rebooting\n";
+              $sr->reboot;
             }
+            print "Waiting for SunRiser... ";
+            print "waited ".$sr->wait_for." seconds\n";
 
+            my $test = path(dist_dir('SunRiser'),'tests','factory.t')->slurp;
             my $try = 0;
-            my $success = 0;
+            my $all_ok = 0;
 
-            my $test = SunRiser::Test->new( remote => 'http://'.$ip.'/' );
-            while (!$success) {
+            while (!$all_ok) {
+              my $time = time;
+
               $try++;
-              my $start = time;
-              $success = $test->factory_test($self->firmware_cdb,$sr);
-              my $diff = time - $start;
-              print "\nTests took: ".$diff." seconds [#".$try."]\n\n";
-              if ($try == 5) {
-                croak "Tests failed too often";
+
+              print "Factory test try ".$try."... ";
+
+              my ($premature, @results) = run_tests(sub {
+                {
+                  @ARGV = ( $ip, $self->firmware );
+                  eval 'package SunRiserTester'.$time.";\n".$test;
+                  croak $@ if $@;
+                }
+              });
+
+              my %failed;
+              my $last;
+              my $i = 0;
+              for (@results) {
+                unless ($_->{ok}) {
+                  $failed{$i} = $_->{name};
+                }
+                $last = $_;
+                $i++;
               }
+              print %failed ? 'Failed' : 'OK', "\n";
+
+              if ($last->{name} ne 'factory.t done') {
+                print "Did not reached last test\n";
+              } elsif (%failed) {
+                print "We got failing tests:\n";
+                for (keys %failed) {
+                  print "  ".$failed{$_}."\n";
+                }
+              } else {
+                $all_ok = 1;
+              }              
             }
 
             while(1) {
-              for (1..8,reverse(2..7)) {
-                $sr->call_mp('PUT','state',{ pwms => { "".$_ => 1000 }});
-                sleep(1);
-                $sr->call_mp('PUT','state',{ pwms => { "".$_ => 0 }});
+              for (1..8,reverse(1..7)) {
+                $sr->state({ pwms => { "".$_ => 1000 }});
+                sleep(0.1);
+                $sr->state({ pwms => { "".$_ => 0 }});
               }
+              sleep(1);
             }
 
           } else {

@@ -26,23 +26,15 @@ my $sr = SunRiser->new( host => $host );
 
 if (lc($command) eq 'firmware') {
   if (scalar @args == 0) {
-    my $res = $sr->call('GET','firmware.mp');
+    my $res = $sr->firmware_info;
     p($sr->res_mp_body($res));
   } elsif (scalar @args == 1) {
     print "Installing firmware ".$args[0].".... ";
     my $firmware = scalar path($args[0])->slurp_raw;
-    if ($sr->call('PUT','firmware',$firmware)->is_success) {
+    if ($sr->update_firmware($firmware)) {
       print "success!\n";
-      print "Waiting for restart of SunRiser...";
-      sleep(40);
-      while (1) {
-        my $res = $sr->call('GET','ok');
-        print ".";
-        if ($res->is_success) {
-          print "\n";
-          last;
-        }
-      }
+      print "Waiting for restart of SunRiser... ";
+      print "waited ".$sr->wait_for." seconds\n";
     } else {
       print "FAILURE!!!!\n";
       exit 1;
@@ -52,7 +44,7 @@ if (lc($command) eq 'firmware') {
   }
 } elsif ($command eq 'ok') {
   if (scalar @args == 0) {
-    if ($sr->call('GET','ok')->is_success) {
+    if ($sr->ok) {
       print "OK\n";
     } else {
       print "ERROR NOT OK\n";
@@ -65,7 +57,7 @@ if (lc($command) eq 'firmware') {
   if (scalar @args == 1) {
     print "Installing factory ".$args[0].".... ";
     my $factory = scalar path($args[0])->slurp_raw;
-    if ($sr->call('PUT','factory',$factory)->is_success) {
+    if ($sr->factory($factory)) {
       print "success!\n";
     } else {
       print "FAILURE!!!!\n";
@@ -77,26 +69,25 @@ if (lc($command) eq 'firmware') {
 } elsif ($command eq 'led') {
   if (scalar @args == 2) {
     my $arg = { pwms => { "".$args[0], $args[1]+0 } };
-
-    print "Setting PWM ".$args[0]." to ".$args[1].": ".($sr->call_mp('PUT','state',$arg)->is_success ? "OK\n" : "FAILURE!!!\n");
+    print "Setting PWM ".$args[0]." to ".$args[1].": ".($sr->call_mp('PUT','state',$arg)->is_success ? "OK" : "FAILURE!!!")."\n";
   } else {
     croak "Too few or too many args";
   }
 } elsif ($command eq 'state') {
   if (scalar @args == 0) {
-    p($sr->res_mp_body($sr->call_mp('GET','state')));
+    p($sr->state);
   } else {
     croak "Too many args";
   }
 } elsif ($command eq 'bootload') {
   if (scalar @args == 0) {
-    p($sr->res_mp_body($sr->call_mp('GET','bootload.mp')));
+    p($sr->bootloader_info);
   } else {
     croak "Too many args";
   }
 } elsif ($command eq 'reboot') {
   if (scalar @args == 0) {
-    if ($sr->call('GET','reboot')->is_success) {
+    if ($sr->reboot) {
       print "Reboot\n";
     } else {
       print "Reboot failed!\n";

@@ -18,9 +18,13 @@ use File::ShareDir::ProjectDistDir;
 use Time::Zone;
 
 has config => (
-  is => 'ro',
-  required => 1,
+  is => 'lazy',
 );
+
+sub _build_config {
+  my ( $self ) = @_;
+  return SunRiser::Config->new;
+}
 
 has filename => (
   is => 'ro',

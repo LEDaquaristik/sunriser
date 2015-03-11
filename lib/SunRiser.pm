@@ -5,6 +5,8 @@ use Moo;
 use Data::MessagePack;
 use LWP::UserAgent;
 use HTTP::Request;
+use Carp qw( croak );
+use bytes;
 
 our %models = (
   sr8 => {
@@ -19,12 +21,19 @@ sub model_info {
   return $models{$model};
 }
 
+has timeout => (
+  is => 'lazy',
+);
+
+sub _build_timeout {
+  return 20;
+}
+
 has model => (
   is => 'lazy',
 );
 
 sub _build_model {
-  my ( $self ) = @_;
   return 'sr8';
 }
 
@@ -41,7 +50,7 @@ has ua => (
 sub _build_ua {
   my ( $self ) = @_;
   my $ua = LWP::UserAgent->new;
-  $ua->timeout(20);
+  $ua->timeout($self->timeout);
   return $ua;
 }
 
@@ -51,8 +60,8 @@ has host => (
 );
 
 sub call_mp {
-  my ( $self, $method, $path, $data ) = @_;
-  my $req = $self->mp_request($method, $path, $data);
+  my ( $self, $method, $path, @data ) = @_;
+  my $req = scalar @data ? $self->mp_request($method, $path, $data[0]) : $self->request($method, $path);
   my $res = $self->ua->request($req);
   return $res;
 }
@@ -67,6 +76,7 @@ sub call {
   my ( $self, $method, $path, $data ) = @_;
   my $req = $self->request($method, $path, $data);
   my $res = $self->ua->request($req);
+  #use DDP; p($res);
   return $res;
 }
 
@@ -82,7 +92,80 @@ sub mp_request {
 
 sub firmware_info {
   my ( $self ) = @_;
-  return $self->res_mp_body($self->call_mp('GET','firmware.mp'));
+  return $self->res_mp_body($self->call('GET', 'firmware.mp'));
+}
+
+sub update_firmware {
+  my ( $self, $firmware ) = @_;
+  croak "Doesn't look like a firmware with this size" unless length($firmware) > 50_000;
+  return $self->call('PUT', 'firmware', $firmware);
+}
+
+sub update_factory {
+  my ( $self, $factory ) = @_;
+  croak "Doesn't look like a firmware with this size" unless length($factory) > 50_000;
+  return $self->call('PUT', 'factory', $factory);
+}
+
+sub bootloader_info {
+  my ( $self ) = @_;
+  return $self->res_mp_body($self->call('GET', 'bootload.mp'));
+}
+
+sub backup {
+  my ( $self ) = @_;
+  return $self->res_mp_body($self->call('GET', 'backup'));
+}
+
+sub reboot {
+  my ( $self ) = @_;
+  return $self->call('GET', 'reboot')->is_success;
+}
+
+sub ok {
+  my ( $self ) = @_;
+  return $self->call('GET', 'ok')->is_success;
+}
+
+sub restore {
+  my ( $self, $restore ) = @_;
+  return $self->call('PUT', 'restore', $restore)->is_success;
+}
+
+sub state {
+  my ( $self, @args ) = @_;
+  croak __PACKAGE__."->state too many args" if scalar @args > 1;
+  my $state = $args[0];
+  my $res = $self->call_mp($state ? 'PUT' : 'GET', 'state', $state ? ($state) : ());
+  return $state ? $res->is_success : $self->res_mp_body($res);
+}
+
+sub get {
+  my ( $self, $path ) = @_;
+  my $res = $self->call('GET', $path);
+  return undef unless $res->is_success;
+  return $res->content;
+}
+
+sub query {
+  my ( $self, @keys ) = @_;
+  return $self->res_mp_body($self->call_mp('POST', '', [ @keys ]));
+}
+
+sub update {
+  my ( $self, %data ) = @_;
+  return $self->call_mp('PUT', '', { %data })->is_success;
+}
+
+sub wait_for {
+  my ( $self ) = @_;
+  my $i = 0;
+  while (1) {
+    $i++;
+    last if $self->ok;
+    return undef if $i > 60;
+  }
+  return $i;
 }
 
 1;
