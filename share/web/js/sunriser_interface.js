@@ -32,15 +32,5 @@ function sr_error(text) {
   sr_screenblock('<div>' + text + '</div>');
   setTimeout(function(){
     window.location.href = window.location.href;
-  },3000);
-}
-
-function sr_saved(text) {
-  if (!text) {
-    text = '&Auml;nderungen gespeichert!'
-  }
-  sr_screenblock('<div>' + text + '</div>');
-  setTimeout(function(){
-    sr_screenunblock();
-  },500);
+  }, 3000);
 }

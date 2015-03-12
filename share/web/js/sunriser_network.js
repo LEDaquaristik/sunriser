@@ -132,7 +132,7 @@ function _wait_for_sunriser_loop_mac(target) {
         }
       }
     });
-  },2500);
+  }, 2500);
 }
 
 function wait_for_sunriser(target) {
