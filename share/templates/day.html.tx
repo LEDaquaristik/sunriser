@@ -13,7 +13,7 @@
   <svg id="dayplanner"></svg>
 </div>
 <div id="day_countbar"></div>
-<div id="pathedit"></div>
+<div id="pathedit" style="margin-left:auto;margin-right:auto"></div>
 <div class="form noautoload" id="dayplan"></div>
 
 : }
