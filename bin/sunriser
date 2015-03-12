@@ -81,6 +81,12 @@ if (lc($command) eq 'firmware') {
   } else {
     croak "Too many args";
   }
+} elsif ($command eq 'settime') {
+  if (scalar @args == 1) {
+    print $sr->state({ time => 0+$args[0] }) ? 'OK' : 'NOT OK';
+  } else {
+    croak "Too few or too many args";
+  }
 } elsif ($command eq 'bootload') {
   if (scalar @args == 0) {
     p($sr->bootloader_info);
