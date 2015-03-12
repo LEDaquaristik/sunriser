@@ -128,14 +128,14 @@ function _wait_for_sunriser_loop_mac(target) {
         }
       }
     });
-  },4000);
+  },2500);
 }
 
 function wait_for_sunriser(target) {
   if (typeof target === 'undefined') {
     target = window.location.href;
   }
-  if (mac) {
+  if (mac && !sr_config.nofinder) {
     _wait_for_sunriser_loop_mac(target);
   }
   _wait_for_sunriser_loop(target);
