@@ -15,9 +15,13 @@ function sr_request_mpack(method,url,data,success) {
     dataType: 'arraybuffer',
     processData: false,
     cache: false,
+    timeout: 10000,
     error: function(xhr,error,errorthrown) {
       if (method == 'PUT') {
         sr_failed();
+      }
+      if (method == 'POST') {
+        sr_error();
       }
       // console.log(method + ' ' + url);
       // console.log(data);

@@ -21,10 +21,7 @@ function sr_failed() {
 }
 
 function sr_finished() {
-  $('.pleasewaitanim').removeClass('pleasewait').removeClass('failed').addClass('finished');    
-}
-
-function sr_finished() {
+  $('#form_formsubmit').attr('value','Gespeichert!');
   $('.pleasewaitanim').removeClass('pleasewait').removeClass('failed').addClass('finished');    
 }
 
@@ -36,4 +33,14 @@ function sr_error(text) {
   setTimeout(function(){
     window.location.href = window.location.href;
   },3000);
+}
+
+function sr_saved(text) {
+  if (!text) {
+    text = '&Auml;nderungen gespeichert!'
+  }
+  sr_screenblock('<div>' + text + '</div>');
+  setTimeout(function(){
+    sr_screenunblock();
+  },500);
 }

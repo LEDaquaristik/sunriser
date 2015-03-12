@@ -46,7 +46,7 @@
   <% if (!no_submit) { %>
     <tr>
       <td colspan="2">
-        <input type="submit" value="<%=formsubmit %>">
+        <input type="submit" id="form_formsubmit" value="<%=formsubmit %>">
       </td>
     </tr>
   <% } %>

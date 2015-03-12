@@ -396,7 +396,7 @@ nav h2{
   padding:12px;
   bottom:11px;
   right:40px;
-  width:120px;
+  width:150px;
   position:absolute;
   font-size: 18px;
   color: white;
@@ -1185,7 +1185,7 @@ tbody tr:first-child{
   margin:0 auto 40px auto
 }
 
-a.index_function {
+.index_function {
   color: #fff;
   border:none;
   background-color: #5399c7;
@@ -1195,11 +1195,11 @@ a.index_function {
   border:1px solid rgba(0, 0, 0, 0.1) !important;
   margin-bottom:25px
 }
-a.index_function:hover {
+.index_function:hover {
   background-color: #69a6ce;
 }
 
-a.index_function:active {
+.index_function:active {
   background-color: #2980B9;
 }
 

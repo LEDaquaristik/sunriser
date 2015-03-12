@@ -1,6 +1,36 @@
 : cascade base { title => "System Einstellungen", nav => "setup" }
 : override content -> {
 
+<div class="index_functions">
+  <div class="index_function" id="set_time">
+    <span class="index_function_badge">+</span>
+    <div>SunRiser Uhr mit Ihrem System angleichen</div>
+  </div>
+</div>
+
 <div class="form" id="system"></div>
+
+: }
+: override postjs -> {
+
+<script type="text/javascript">
+
+// First execute stuff when the form is loaded
+$('body').on('sr_config',function(){
+
+  if (sr_config.usentp) {
+    $('#set_time').hide();
+  } else {
+    $('#set_time').click(function(){
+      sr_screenblock('<div>Stelle Uhr</div>');
+      sr_request_mpack('PUT','/state',{ time: moment().unix() },function(){
+        window.location.href = window.location.href;
+      });
+    });
+  }
+
+});
+
+</script>
 
 : }

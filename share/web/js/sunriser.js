@@ -3,7 +3,7 @@ var sr_config;
 
 var sr_config_main_keys = [
   'model','model_id','pwm_count','factory_version','language','timezone',
-  'gmtoff','nodst','updated','name','showexpert','nohelp','nofinder'
+  'gmtoff','nodst','updated','name','showexpert','nohelp','nofinder','usentp'
 ];
 
 var current_time;

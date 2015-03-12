@@ -80,12 +80,14 @@ var SrField_Text = SrField.extend({
 
   transform: function() {
     var value = this.html_value();
-    if (typeof value === 'string') {
+    if (value === "") {
+      this.value = undefined;
+    } else if (typeof value === 'string') {
       if (value.length == 0) {
         if (this.required) {
           this.error_required();
         } else {
-          this.value = undefined;          
+          this.value = undefined;
         }
       } else {
         this.value = value;
@@ -231,6 +233,8 @@ var SrField_IP = SrField_CSV.extend({
           this.error_ip();
         }
       });
+    } else if (this.value.length == 0) {
+      this.value = undefined;
     } else {
       this.error_ip();
     }

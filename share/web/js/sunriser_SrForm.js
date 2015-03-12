@@ -92,7 +92,11 @@ var SrForm = Class.extend({
       sr_request_mpack('PUT','/',values,function(){
         var reload = false;
         $.each(values,function(key,val){
-          if (key == 'showexpert' && sr_config[key] != val) { reload = true; }
+          if (key == 'showexpert' || key == 'nohelp') {
+            if (sr_config[key] != val) {
+              reload = true;
+            }
+          }
           sr_config[key] = val;
         });
         if (reload) {
