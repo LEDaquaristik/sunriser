@@ -21,6 +21,7 @@ requires 'Path::Tiny', '0';
 requires 'Plack', '0';
 requires 'Plack::Middleware::Session', '0';
 requires 'Starman', '0';
+requires 'Term::ReadKey', '0';
 requires 'Test::Tester', '0';
 requires 'Text::Xslate', '0';
 requires 'Time::Zone', '0';

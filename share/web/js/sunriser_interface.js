@@ -23,6 +23,17 @@ function sr_failed() {
 function sr_finished() {
   $('.pleasewaitanim').removeClass('pleasewait').removeClass('failed').addClass('finished');    
 }
+
 function sr_finished() {
   $('.pleasewaitanim').removeClass('pleasewait').removeClass('failed').addClass('finished');    
+}
+
+function sr_error(text) {
+  if (!text) {
+    text = 'Es ist ein Fehler aufgetreten!'
+  }
+  sr_screenblock('<div>' + text + '</div>');
+  setTimeout(function(){
+    window.location.href = window.location.href;
+  },5000);
 }

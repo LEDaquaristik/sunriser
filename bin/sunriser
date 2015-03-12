@@ -17,9 +17,11 @@ use bytes;
 use Carp qw( croak );
 
 my $host = shift @ARGV;
-croak "Requires target Host/IP" unless $host;
-my $command = shift @ARGV;
-croak "Require command" unless $command;
+unless ($host) {
+  p(SunRiser->finder);
+  exit 0;
+}
+my $command = shift @ARGV || "state";
 my @args = @ARGV;
 
 my $sr = SunRiser->new( host => $host );
@@ -57,7 +59,7 @@ if (lc($command) eq 'firmware') {
   if (scalar @args == 1) {
     print "Installing factory ".$args[0].".... ";
     my $factory = scalar path($args[0])->slurp_raw;
-    if ($sr->factory($factory)) {
+    if ($sr->update_factory($factory)) {
       print "success!\n";
     } else {
       print "FAILURE!!!!\n";

@@ -9,14 +9,8 @@ function download_and_install_firmware(firmware_url) {
     dataType: 'arraybuffer',
     processData: false,
     cache: false,
-    // progress: function(evt) {
-    //   if (evt.lengthComputable) {
-    //     var percentComplete = evt.loaded / evt.total;
-    //     $('#progress_download').changePercent(Math.floor(percentComplete * 100));
-    //   }
-    // },
     error: function (xhr, ajaxOptions, thrownError) {
-      // TODO error handling
+      sr_error();
     },
     success: function (bytesarray) {
       install_firmware(bytesarray);
@@ -36,11 +30,10 @@ function install_firmware(bytesarray) {
     processData: false,
     cache: false,
     error: function(xhr,error,errorthrown){
-      // TODO error handling
+      sr_error();
     },
     success: function(data,status,xhr){
       sr_screenblock('<div>Warte auf Neustart</div><div>Bitte das Ger&auml;t NICHT abschalten!!!</div><div>(ca. 1 Minute)</div>');
-      // TODO real check for back up
       wait_for_sunriser(window.location.href.replace('firmware','upgraded'));
     },
   };

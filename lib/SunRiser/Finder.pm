@@ -70,7 +70,11 @@ sub _build_web {
         };
       }
       my $json = encode_json(defined $self->ips->{$ip} ? $self->ips->{$ip} : {});
-      return [ 200, [ "Content-Type" => "application/json", "Content-Length" => length($json) ], [ $json ] ];
+      return [ 200, [
+        "Content-Type" => "application/json",
+        "Content-Length" => length($json),
+        "Access-Control-Allow-Origin" => "*"
+      ], [ $json ] ];
     };
   });
   return $server;

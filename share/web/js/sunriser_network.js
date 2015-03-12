@@ -82,10 +82,9 @@ function update_time() {
   }, 1000);
 }
 
-function wait_for_sunriser(target) {
-  if (typeof target === 'undefined') {
-    target = window.location.href;
-  }
+var mac;
+
+function _wait_for_sunriser_loop(target) {
   setTimeout(function(){
     $.ajax({
       cache: false,
@@ -93,7 +92,7 @@ function wait_for_sunriser(target) {
       url: '/ok',
       timeout: 1000,
       complete: function() {
-        wait_for_sunriser(target);
+        wait_for_sunriser_loop(target);
       },
       success: function(data, textStatus, XMLHttpRequest) {
         if (data == 'OK') {
@@ -102,4 +101,33 @@ function wait_for_sunriser(target) {
       }
     });
   },2500);
+}
+
+function _wait_for_sunriser_loop_mac(target) {
+  console.log(mac);
+  setTimeout(function(){
+    $.ajax({
+      cache: false,
+      dataType: "json",
+      type: 'GET',
+      url: 'http://sunriser.ledaquaristik.de/finder',
+      timeout: 3000,
+      complete: function() {
+        _wait_for_sunriser_loop_mac(target);
+      },
+      success: function(data, textStatus, XMLHttpRequest) {
+        console.log(data);
+      }
+    });
+  },4000);
+}
+
+function wait_for_sunriser(target) {
+  if (typeof target === 'undefined') {
+    target = window.location.href;
+  }
+  if (mac) {
+    _wait_for_sunriser_loop_mac(target);
+  }
+  _wait_for_sunriser_loop(target);
 }

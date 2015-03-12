@@ -14,6 +14,7 @@ use SunRiser::Test;
 use File::ShareDir::ProjectDistDir;
 use Carp qw( croak );
 use Path::Tiny;
+use Term::ReadKey;
 
 option firmware => (
   is => 'ro',
@@ -138,7 +139,13 @@ sub run {
               if ($last->{name} ne 'factory.t done') {
                 print "Did not reached last test\n";
               } elsif (%failed) {
-                print "We got ".(scalar keys %failed)." failing tests\n";
+                print "We got ".(scalar keys %failed)." failing tests:\n";
+                for (keys %failed) {
+                  print " - ".$failed{$_}."\n";
+                }
+                print "Rebooting... ";
+                $sr->reboot; $sr->wait_for;
+                print "done\n";
               } else {
                 $all_ok = 1;
               }
@@ -146,14 +153,36 @@ sub run {
               croak "Failed too often!" if $try > 9;
             }
 
+            print "Reinstall tester firmware for resetting... ";
+            if ($sr->update_factory($firmware)) {
+              print "OK\n";
+            } else {
+              print "FAILED!!!\n";
+            }
+
+            print "Waiting for SunRiser... ";
+            print "waited ".$sr->wait_for." seconds\n";
+
+            print "Testing LED.... Press key to continue... ";
+            ReadMode(3);
             while(1) {
+              my $key;
               for (1..8,reverse(1..7)) {
                 $sr->state({ pwms => { "".$_ => 1000 }});
-                sleep(0.1);
+                for (1..100000) {
+                  $key = ReadKey(-1);
+                  last if $key;
+                }
+                last if $key;
                 $sr->state({ pwms => { "".$_ => 0 }});
               }
-              sleep(1);
+              last if $key;
+              for (1..500000) {
+                $key = ReadKey(-1);
+                last if $key;
+              }
             }
+            print "done\n";
 
             $sr->state({ pwms => { map { "".$_ => 0 } 1..8 }});
 

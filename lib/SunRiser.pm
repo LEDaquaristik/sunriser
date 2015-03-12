@@ -5,6 +5,7 @@ use Moo;
 use Data::MessagePack;
 use LWP::UserAgent;
 use HTTP::Request;
+use JSON::MaybeXS;
 use Carp qw( croak );
 use bytes;
 
@@ -59,6 +60,13 @@ has host => (
   required => 1,
 );
 
+sub finder {
+  my ( $class, $ua ) = @_;
+  $ua = LWP::UserAgent->new unless $ua;
+  my $res = $ua->request(HTTP::Request->new( 'GET', 'http://sunriser.ledaquaristik.de/finder/' ));
+  return $res->is_success ? decode_json($res->content) : undef;
+}
+
 sub call_mp {
   my ( $self, $method, $path, @data ) = @_;
   my $req = scalar @data ? $self->mp_request($method, $path, $data[0]) : $self->request($method, $path);
@@ -82,7 +90,7 @@ sub call {
 
 sub request {
   my ( $self, $method, $path, $data ) = @_;
-  return HTTP::Request->new( $method, 'http://'.($self->host).'/'.$path, [], $data );  
+  return HTTP::Request->new( $method, 'http://'.($self->host).'/'.$path, [], $data );
 }
 
 sub mp_request {

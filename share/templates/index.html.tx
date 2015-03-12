@@ -7,10 +7,9 @@
       <h2 class="willkommen">Willkommen</h2>
       <!--<h2>Ihr Ger&auml;t wurde noch nicht konfiguriert!</h2>-->
       <p class="intro-warning">
-        Ihr Ger&auml;t wurde noch nicht konfiguriert, Sie k&ouml;nnen daf&uuml;r
-        eine Einf&uuml;hrung durchgehen die wir f&uuml;r Sie vorbereitet haben oder
-        als erfahrener Benutzer einfacher auf der linken Seite das Men&uuml;
-        erkunden oder unsere direkt Links vorschl&auml;ge nutzen.
+        Ihr Ger&auml;t wurde noch nicht konfiguriert, besuchen Sie die
+        Einf&uuml;hrung oder erkunden Sie das Men&uuml; auf der linken Seite
+        bzw. nutzen unsere direkt Links.
       </p>
     </div>
     <div class="centerarrow">
