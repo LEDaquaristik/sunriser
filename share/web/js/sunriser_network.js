@@ -96,7 +96,7 @@ function _wait_for_sunriser_loop(target) {
       url: '/ok',
       timeout: 1000,
       complete: function() {
-        wait_for_sunriser_loop(target);
+        _wait_for_sunriser_loop(target);
       },
       success: function(data, textStatus, XMLHttpRequest) {
         if (data == 'OK') {
