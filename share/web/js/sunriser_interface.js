@@ -35,5 +35,5 @@ function sr_error(text) {
   sr_screenblock('<div>' + text + '</div>');
   setTimeout(function(){
     window.location.href = window.location.href;
-  },5000);
+  },3000);
 }
