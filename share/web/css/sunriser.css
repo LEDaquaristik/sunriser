@@ -1185,7 +1185,7 @@ tbody tr:first-child{
   margin:0 auto 40px auto
 }
 
-.index_function {
+a.index_function,div.index_function {
   color: #fff;
   border:none;
   background-color: #5399c7;
@@ -1195,11 +1195,11 @@ tbody tr:first-child{
   border:1px solid rgba(0, 0, 0, 0.1) !important;
   margin-bottom:25px
 }
-.index_function:hover {
+a.index_function:hover,div.index_function:hover {
   background-color: #69a6ce;
 }
 
-.index_function:active {
+a.index_function:active,div.index_function:active {
   background-color: #2980B9;
 }
 
