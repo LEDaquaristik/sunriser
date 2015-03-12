@@ -121,8 +121,14 @@ sub run {
               my $last;
               my $i = 0;
               for (@results) {
-                unless ($_->{ok}) {
-                  $failed{$i} = $_->{name};
+                if ($_->{ok}) {
+                  if ($try > 1) {
+                    delete $failed{$i} if exists $failed{$i};
+                  }
+                } else {
+                  if ($try == 1) {
+                    $failed{$i} = $_->{name};
+                  }
                 }
                 $last = $_;
                 $i++;
@@ -132,13 +138,12 @@ sub run {
               if ($last->{name} ne 'factory.t done') {
                 print "Did not reached last test\n";
               } elsif (%failed) {
-                print "We got failing tests:\n";
-                for (keys %failed) {
-                  print "  ".$failed{$_}."\n";
-                }
+                print "We got ".(scalar keys %failed)." failing tests\n";
               } else {
                 $all_ok = 1;
-              }              
+              }
+
+              croak "Failed too often!" if $try > 9;
             }
 
             while(1) {
@@ -149,6 +154,8 @@ sub run {
               }
               sleep(1);
             }
+
+            $sr->state({ pwms => { map { "".$_ => 0 } 1..8 }});
 
           } else {
             print "unreachable... Ignoring\n";

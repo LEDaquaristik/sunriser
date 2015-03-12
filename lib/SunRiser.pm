@@ -26,7 +26,7 @@ has timeout => (
 );
 
 sub _build_timeout {
-  return 20;
+  return 12;
 }
 
 has model => (
