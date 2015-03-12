@@ -26,12 +26,12 @@ var sr_forms = {
       name: "ip4_gateway", label: "Feste IPv4 Adresse Gateway"
     },{
       name: "ip4_dns", label: "Feste IPv4 Adresse DNS"
-    },{
+    // },{
     //   name: "ip4_filter", label: "IPv4 Whitelist Filter aktivieren"
     // },{
     //   name: "ip4_whitelist", label: "IPv4 Whitelist"
     // },{
-      name: "webport", label: "Webserver Port"
+    //   name: "webport", label: "Webserver Port"
     }]
   },
   //

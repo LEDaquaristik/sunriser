@@ -104,7 +104,7 @@ function _wait_for_sunriser_loop(target) {
 }
 
 function _wait_for_sunriser_loop_mac(target) {
-  console.log(mac);
+  var uri = new URI(target);
   setTimeout(function(){
     $.ajax({
       cache: false,
@@ -116,7 +116,16 @@ function _wait_for_sunriser_loop_mac(target) {
         _wait_for_sunriser_loop_mac(target);
       },
       success: function(data, textStatus, XMLHttpRequest) {
-        console.log(data);
+        if (data && data[mac]) {
+          var ip = data[mac].ip;
+          if (ip) {
+            var new_uri = uri.clone();
+            new_uri.host(ip);
+            if (!new_uri.equals(uri)) {
+              window.location.href = new_uri.toString();
+            }
+          }
+        }
       }
     });
   },4000);

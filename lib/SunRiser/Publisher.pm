@@ -190,6 +190,7 @@ sub _build_base_vars {
       js/moment-locale-de.js
       js/tipr-1.0.1.js
       js/ipaddr-0.1.3.js
+      js/URI-1.14.2.min.js
       js/jquery-ajax-blob-arraybuffer.js
 
       js/sunriser_colors_config.js
