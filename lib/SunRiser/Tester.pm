@@ -71,6 +71,7 @@ sub run {
   my $fi = $self->firmware_info;
   my $factory_version = $self->firmware_cdb->get('factory_version');
   my $firmware = scalar path($self->firmware)->slurp_raw;
+  ReadMode(3);
   while (1) {
     my $req = GET($self->finder);
     my $res = $self->ua->request($req);
@@ -163,8 +164,11 @@ sub run {
             print "Waiting for SunRiser... ";
             print "waited ".$sr->wait_for." seconds\n";
 
+            for (1..100000) { # empty key buffer
+              ReadKey(-1);
+            }
+
             print "Testing LED.... Press key to continue... ";
-            ReadMode(3);
             while(1) {
               my $key;
               for (1..8,reverse(1..7)) {
