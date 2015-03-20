@@ -22,12 +22,18 @@ sub model_info {
   return $models{$model};
 }
 
-has timeout => (
+has timeout_arg => (
   is => 'lazy',
+  init_arg => 'timeout',
 );
 
-sub _build_timeout {
-  return 12;
+sub _build_timeout_arg {
+  return 5;
+}
+
+sub timeout {
+  my ( $self, @args ) = @_;
+  return $self->ua->timeout(@args);
 }
 
 has model => (
@@ -51,7 +57,7 @@ has ua => (
 sub _build_ua {
   my ( $self ) = @_;
   my $ua = LWP::UserAgent->new;
-  $ua->timeout($self->timeout);
+  $ua->timeout($self->timeout_arg);
   return $ua;
 }
 
@@ -166,13 +172,18 @@ sub update {
 }
 
 sub wait_for {
-  my ( $self ) = @_;
+  my ( $self, $timeout ) = @_;
   my $i = 0;
+  my $old_timeout = $self->timeout;
+  if (defined $timeout) {
+    $self->timeout($timeout);
+  }
   while (1) {
     $i++;
     last if $self->ok;
-    return undef if $i > 60;
+    return undef if $i > 90;
   }
+  $self->timeout($old_timeout);
   return $i;
 }
 

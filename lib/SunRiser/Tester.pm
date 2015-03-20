@@ -37,7 +37,7 @@ has ua => (
 sub _build_ua {
   my ( $self ) = @_;
   my $ua = LWP::UserAgent->new;
-  $ua->timeout(20);
+  $ua->timeout(5);
   return $ua;
 }
 
@@ -79,26 +79,31 @@ sub run {
       my $data = decode_json($res->content);
       for my $mac (keys %{$data}) {
         if (!defined $self->tested->{$mac}) {
-          $self->tested->{$mac} = 1;
           my $ip = $data->{$mac}->{ip};
           print "Testing ".$ip.": ";
           my $sr = SunRiser->new( host => $ip );
           if ($sr->ok) {
             print "ok\n";
             my $tfi = $sr->firmware_info;
-            if (!$tfi || $tfi->{filename} ne $fi->{filename} || $tfi->{timestamp} != $fi->{timestamp}) {
-              print "Install tester firmware as factory... ";
-              if ($sr->update_factory($firmware)) {
-                print "OK\n";
-              } else {
-                print "FAILED!!!\n";
-              }
-            } else {
-              print "Already installed tester firmware.. rebooting\n";
+            unless (!$tfi || $tfi->{filename} ne $fi->{filename} || $tfi->{timestamp} != $fi->{timestamp}) {
+              print "Already installed tester firmware.. still reinstalling\n";
               $sr->reboot;
             }
+            print "Install tester firmware as factory... ";
+            if ($sr->update_factory($firmware)) {
+              print "OK\n";
+            } else {
+              print "FAILED!!!\n";
+              last;
+            }
             print "Waiting for SunRiser... ";
-            print "waited ".$sr->wait_for." seconds\n";
+            my $waited = $sr->wait_for(1);
+            print "waited ".$waited." seconds\n";
+
+            if ($waited < 5) {
+              print "Waited too short...\n";
+              last;
+            }
 
             my $test = path(dist_dir('SunRiser'),'tests','factory.t')->slurp;
             my $try = 0;
@@ -145,13 +150,18 @@ sub run {
                   print " - ".$failed{$_}."\n";
                 }
                 print "Rebooting... ";
-                $sr->reboot; $sr->wait_for;
+                $sr->reboot; $sr->wait_for(1);
                 print "done\n";
               } else {
                 $all_ok = 1;
               }
 
-              croak "Failed too often!" if $try > 9;
+              last if $try > 9;
+            }
+
+            if ($try > 9) {
+              print "Tried too often\n";
+              last;
             }
 
             print "Reinstall tester firmware for resetting... ";
@@ -162,11 +172,19 @@ sub run {
             }
 
             print "Waiting for SunRiser... ";
-            print "waited ".$sr->wait_for." seconds\n";
+            $waited = $sr->wait_for(1);
+            print "waited ".$waited." seconds\n";
+
+            if ($waited < 5) {
+              print "Waited too short...\n";
+              last;
+            }
 
             for (1..100000) { # empty key buffer
               ReadKey(-1);
             }
+
+            $self->tested->{$mac} = 1;
 
             print "Testing LED.... Press key to continue... ";
             while(1) {
@@ -192,6 +210,7 @@ sub run {
 
           } else {
             print "unreachable... Ignoring\n";
+            $self->tested->{$mac} = 1;
           }
         }
       }
