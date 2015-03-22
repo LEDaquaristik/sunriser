@@ -56,6 +56,10 @@
       <span class="index_function_badge">+</span>
       <div>Funktionstest</div>
     </a>
+    <div class="index_function" id="index_reboot_sunriser">
+      <span class="index_function_badge">+</span>
+      <div>SunRiser neustarten</div>
+    </div>
   </div>
 
 : }

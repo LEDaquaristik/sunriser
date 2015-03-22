@@ -99,6 +99,13 @@ $(function(){
     });
   }
 
+  $("#index_reboot_sunriser").click(function(){
+    sr_screenblock('<div>Warte auf Neustart</div><div>(ca. 1 Minute)</div>');
+    $.get( "/reboot", function(data) {
+      wait_for_sunriser();
+    });
+  });
+
   interact('.sliderbar').origin('self').draggable({
     inertia: true,
     restrict: { restriction: 'self' },

@@ -258,7 +258,7 @@ sub set {
 sub _web_ok { $_[0]->debug("Sending OK"); [
   200,
   [ "Content-Type" => "text/plain" ],
-  [ "OK" ]
+  [ defined $_[1] ? $_[1] : "OK" ]
 ]}
 
 sub _web_forbidden { $_[0]->debug("Request forbidden"); [
@@ -625,6 +625,8 @@ sub _build_psgi {
 
         if ($path =~ /^\/ok/) {
           return $self->_web_ok;
+        } elsif ($path =~ /^\/reboot$/) {
+          return $self->_web_ok('REBOOT');
         } elsif ($path =~ /^\/state$/) {
           return $self->_web_state($env);
         } elsif ($path =~ /^\/firmware\.mp$/) {
