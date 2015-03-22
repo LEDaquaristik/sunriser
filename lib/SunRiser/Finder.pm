@@ -55,26 +55,36 @@ sub _build_web {
       my ( $env ) = @_;
       my $req = Plack::Request->new($env);
       my $ip = $req->header('X-Real-IP') || $req->address;
-      my $sr_ip = $req->header('X-SR-Finder-IP');
-      my $sr_hostname = $req->header('X-SR-Finder-Hostname');
-      my $sr_firmware = $req->header('X-SR-Finder-Firmware');
-      my $sr_firmware_timestamp = $req->header('X-SR-Finder-Firmware-Timestamp');
-      my $sr_mac = $req->header('X-SR-Finder-MAC');
-      if ($sr_ip) {
-        $self->ips->{$ip} = {} unless defined $self->ips->{$ip};
-        $self->ips->{$ip}->{$sr_mac} = {
-          ip => $sr_ip,
-          hostname => $sr_hostname,
-          firmware_filename => $sr_firmware,
-          firmware_timestamp => $sr_firmware_timestamp+0
-        };
+      my $clear = $req->parameters->{clear};
+      if ($clear) {
+        $self->ips->{$ip} = {};
+        return [ 200, [
+          "Content-Type" => "text/plain",
+          $req->method eq 'HEAD' ? () : ( "Content-Length" => 2 ),
+          "Access-Control-Allow-Origin" => "*",
+        ], [ $req->method eq 'HEAD' ? () : ("OK") ] ];
+      } else {
+        my $sr_ip = $req->header('X-SR-Finder-IP');
+        my $sr_hostname = $req->header('X-SR-Finder-Hostname');
+        my $sr_firmware = $req->header('X-SR-Finder-Firmware');
+        my $sr_firmware_timestamp = $req->header('X-SR-Finder-Firmware-Timestamp');
+        my $sr_mac = $req->header('X-SR-Finder-MAC');
+        if ($sr_ip) {
+          $self->ips->{$ip} = {} unless defined $self->ips->{$ip};
+          $self->ips->{$ip}->{$sr_mac} = {
+            ip => $sr_ip,
+            hostname => $sr_hostname,
+            firmware_filename => $sr_firmware,
+            firmware_timestamp => $sr_firmware_timestamp+0
+          };
+        }
+        my $json = encode_json(defined $self->ips->{$ip} ? $self->ips->{$ip} : {});
+        return [ 200, [
+          "Content-Type" => "application/json",
+          $req->method eq 'HEAD' ? () : ( "Content-Length" => length($json) ),
+          "Access-Control-Allow-Origin" => "*",
+        ], [ $req->method eq 'HEAD' ? () : ($json) ] ];
       }
-      my $json = encode_json(defined $self->ips->{$ip} ? $self->ips->{$ip} : {});
-      return [ 200, [
-        "Content-Type" => "application/json",
-        $req->method eq 'HEAD' ? () : ( "Content-Length" => length($json) ),
-        "Access-Control-Allow-Origin" => "*",
-      ], [ $req->method eq 'HEAD' ? () : ($json) ] ];
     };
   });
   return $server;

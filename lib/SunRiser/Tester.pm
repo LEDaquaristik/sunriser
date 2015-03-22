@@ -72,6 +72,12 @@ sub run {
   my $factory_version = $self->firmware_cdb->get('factory_version');
   my $firmware = scalar path($self->firmware)->slurp_raw;
   ReadMode(3);
+  my $success;
+  unless ($success) {
+    print "Trying clearing finder memory...\n";
+    $success = $self->ua->request(GET($self->finder.'?clear=1'))->is_success;
+    sleep(1);
+  }
   while (1) {
     my $req = GET($self->finder);
     my $res = $self->ua->request($req);

@@ -29,6 +29,9 @@ var SrField = Class.extend({
     this.value = this.html_value();
   },
   validate: function(){},
+  text_value: function(){
+    return this.value;
+  },
 
   value: undefined,
   errors: undefined,
@@ -196,6 +199,10 @@ var SrField_CSV = SrField_Text.extend({
     return this.value.join(this.comma);
   },
 
+  text_value: function(){
+    return this.joined_value();
+  },
+
   transform: function() {
     var self = this;
     var value = self.html_value();
@@ -219,6 +226,8 @@ var SrField_CSV = SrField_Text.extend({
 var SrField_IP = SrField_CSV.extend({
 
   comma: '.',
+
+  transform_value: function(value) { return parseInt(value); },
 
   error_ip: function() {
     this.error("Hier muss eine g&uuml;ltige IP angegeben werden (z.b. 192.168.1.0)");
