@@ -22,6 +22,11 @@ option firmware => (
   required => 1,
 );
 
+option stresstest => (
+  is => 'lazy',
+  default => sub { 0 },
+);
+
 option finder => (
   is => 'ro',
   format => 's',
@@ -186,33 +191,37 @@ sub run {
               last;
             }
 
-            for (1..100000) { # empty key buffer
-              ReadKey(-1);
-            }
+            unless ($self->stresstest) {
 
-            $self->tested->{$mac} = 1;
+              for (1..100000) { # empty key buffer
+                ReadKey(-1);
+              }
 
-            print "Testing LED.... Press key to continue... ";
-            while(1) {
-              my $key;
-              for (1..8,reverse(1..7)) {
-                $sr->state({ pwms => { "".$_ => 1000 }});
-                for (1..100000) {
+              $self->tested->{$mac} = 1;
+
+              print "Testing LED.... Press key to continue... ";
+              while(1) {
+                my $key;
+                for (1..8,reverse(1..7)) {
+                  $sr->state({ pwms => { "".$_ => 1000 }});
+                  for (1..100000) {
+                    $key = ReadKey(-1);
+                    last if $key;
+                  }
+                  last if $key;
+                  $sr->state({ pwms => { "".$_ => 0 }});
+                }
+                last if $key;
+                for (1..500000) {
                   $key = ReadKey(-1);
                   last if $key;
                 }
-                last if $key;
-                $sr->state({ pwms => { "".$_ => 0 }});
               }
-              last if $key;
-              for (1..500000) {
-                $key = ReadKey(-1);
-                last if $key;
-              }
-            }
-            print "done\n";
+              print "done\n";
 
-            $sr->state({ pwms => { map { "".$_ => 0 } 1..8 }});
+              $sr->state({ pwms => { map { "".$_ => 0 } 1..8 }});
+              
+            }
 
           } else {
             print "unreachable... Ignoring\n";

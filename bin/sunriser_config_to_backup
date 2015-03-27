@@ -1,0 +1,41 @@
+#!/usr/bin/env perl
+# PODNAME: sunriser_config_to_backup
+# ABSTRACT: Convert SunRiser config dir to SunRiser backup file
+
+$|=1;
+
+use strict;
+use warnings;
+
+use FindBin;
+use lib $FindBin::Dir . "/../lib";
+use Path::Tiny;
+use Carp qw( croak );
+
+my $config_dir_filename = shift @ARGV;
+my $backup_file_filename = shift @ARGV;
+
+croak("needs config dir and backup filename") unless $config_dir_filename && $backup_file_filename;
+
+my $config = path($config_dir_filename);
+my $backup = path($backup_file_filename);
+
+croak("config dir not a directory") unless -d $config;
+croak("backup file already exist") if -x $backup;
+
+my @configs = $config->children( qr/\.MP$/ );
+
+my $count = scalar @configs;
+
+my $header =  $count < 16          ? pack( 'C',  0x80 + $count )
+            : $count < 2 ** 16 - 1 ? pack( 'Cn', 0xde,  $count )
+            : $count < 2 ** 32 - 1 ? pack( 'CN', 0xdf,  $count )
+            : croak("too many %d", $count);
+
+$backup->spew_raw($header);
+
+for (@configs) {
+  $backup->append_raw(scalar $_->slurp_raw);  
+}
+
+exit 0;

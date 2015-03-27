@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <title>SunRiser Stresstest</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" />
+    <base href="/">
+    <link href="style.css" type="text/css" rel="stylesheet">
+  </head>
+  <body>
+    <noscript>
+      <div class="noscript-overlay">
+        <section class="noscript-text">
+          <h2>Bitte aktivieren Sie Javascript!</h2>
+          <p>Dieses Interface nutzt Javascript um die M&ouml;glichkeiten eines modernen Web Interfaces auch voll ausnutzen zu k&ouml;nnen. Bitte aktivieren Sie JavaScript auf Ihrem Browser oder benutzen Sie einen anderen Browser, wie z.B. <a href="http://www.google.com/chrome/">Chrome</a> oder <a href="https://www.mozilla.org/de/firefox/new/">FireFox</a>.</p>
+        </section>
+      </div>
+    </noscript>
+    <button style="font-size:30px" id="reset">Test fehlgeschlagen, Reset Knopf gedr&uuml;ckt</button>
+    <h1>SunRiser Stresstest #<span id="test_counter"></span></h1>
+    <h2 id="status"></h2>
+    <h3 id="reboots"></h3>
+    <script src="/jquery-1.11.2.min.js" type="text/javascript"></script>
+    <script src="/moment-2.9.0.min.js" type="text/javascript"></script>
+    <script src="/moment-locale-de.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+var not_found_timer = 0;
+var counter = 1;
+var success = 0;
+
+$('#reset').click(function(){
+  not_found_timer = 0;
+  counter++;
+  $('#status').css('background-color', '');
+});
+
+function timer_loop() {
+  setTimeout(function(){
+    not_found_timer++;
+    timer_loop();
+    $.get("finder?clear=1");
+    $('#status').css('background-color', undefined);
+  },1000);
+}
+
+function stresstest_loop() {
+
+  setTimeout(function(){
+
+    $('#test_counter').text(counter);
+    if (counter > 1) {
+      $('#test_counter').append(" " + success + "/" + (counter - 1));
+    }
+    $('#status').text('Suche seit ' + not_found_timer + ' Sekunden nach einem SunRiser beim Finder...');
+
+    if (not_found_timer > 50) {
+      $('#status').css('background-color', 'red');
+    } else if (not_found_timer > 40) {
+      $('#status').css('background-color', 'orange');
+    } else if (not_found_timer > 20) {
+      $('#status').css('background-color', 'yellow');      
+    }
+
+    $.getJSON("finder?" + (new Date().getTime()), function(finder) {
+      $('#reboots').text("");
+      var found = 0;
+      $.each(finder,function(i,j){
+        found++;
+        $('#reboots').append("<div>Reboote " + j.ip + " [" + i + "]</div>");
+        $.get("http://" + j.ip + "/reboot");
+      });
+      if (found) {
+        not_found_timer = 0;
+        counter++;
+        success++;
+        $.get("finder?clear=1", function(){
+          stresstest_loop();
+        }).error(function(){
+          stresstest_loop();
+        });
+        $('#status').css('background-color', '');
+      } else {
+        stresstest_loop();
+      }
+    }).error(function() {
+      $('#reboots').text("Konnte SunRiser Finder nicht erreichen!!!");
+      stresstest_loop();
+    });
+
+  },800);
+
+}
+
+stresstest_loop();
+timer_loop();
+
+</script>
+  </body>
+</html>
