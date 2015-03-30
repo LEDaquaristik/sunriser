@@ -30,7 +30,8 @@
   "language", [    "Interface language (ISO 639-1)", "text", "de"],
   "timezone", [    "Timezone ID",                "integer", 31],
   "gmtoff", [      "Timezone UTC offset in minutes during standard time", "integer", 60],
-  "nodst", [       "Ignore Daylight Saving Time", "bool", 0],
+  "nodst", [       "Ignore Daylight Saving Time (TODO)", "bool", 0],
+  "summertime", [  "It is summertime, add an hour", "bool", 1],
   "name", [        "Custom visual name of device", "text"],
   "hostname", [    "Hostname for the device",    "text", "sunriser"],
   "pwm#X",       "Main data of PWM X", [

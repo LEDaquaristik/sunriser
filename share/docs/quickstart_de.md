@@ -17,7 +17,7 @@ Mit dem beigelegtem Netzwerk Kabel einfach den SunRiser mit einem der Netzwerk P
 
   * http://sunriser.ledaquaristik.de/
 
-Sobald der SunRiser in Ihrem Netzwerk eine Adresse erhalten hat, sollte hier eine kurze Information stehen das ein SunRiser gefunden wurde, welche Sie aber direkt nach 5 Sekunden auf Ihren SunRiser weiterleitet. Falls dies nicht der Fall ist, werden auf der Webseite weitere Informationen stehen was Sie tun können um den Zustand zu beheben. Einmal die Stromversorgung neu zu verbinden wäre ein erster Versuch.
+Sobald der SunRiser in Ihrem Netzwerk eine Adresse erhalten hat, sollte hier eine kurze Information stehen das ein SunRiser gefunden wurde, welche Sie aber direkt nach 10 Sekunden auf Ihren SunRiser weiterleitet. Falls dies nicht der Fall ist, werden auf der Webseite weitere Informationen stehen was Sie tun können um den Zustand zu beheben. Am besten einmal kurz den Reset Knopf vorne am Gerät drücken und mindestens eine Minute warten.
 
 Alternativ können Sie auch (soweit Ihr Browser und Router die entsprechend nötigen Funktionen zulässt) über:
 

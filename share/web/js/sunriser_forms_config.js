@@ -46,9 +46,11 @@ var sr_forms = {
     fields: [{
       name: "timezone", label: "Zeitzone", type: "timezone"
     },{
-      name: "showexpert", label: "Experten Funktionen aktivieren"
+      name: "summertime", label: "Sommerzeit"
     },{
       name: "nohelp", label: "Keine Hilfe anzeigen"
+    },{
+      name: "showexpert", label: "Experten Funktionen aktivieren"
     },{
       name: "nodst", pre: true
     },{

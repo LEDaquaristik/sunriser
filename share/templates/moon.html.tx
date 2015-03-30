@@ -1,4 +1,4 @@
-: cascade base { title => 'Mondphasen', nav => 'weather' }
+: cascade base { title => 'Mondphasen', nav => 'weather', help => mark_raw("Die Mondphasen erhellen die f&uuml;r Wettersimulation bestimmten LED exakt nach den realen Mondphasen. Bitte seien Sie sich bewusst das dies ggf. im Gegensatz zu Ihrer Tagesplanung steht und daher dazu f&uuml;hrt das Ihre LED erhellt, wo eigentlich abgeschaltet sein sollte.") }
 : override content -> {
 
 <div class="form" id="moon"></div>
