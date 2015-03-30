@@ -52,7 +52,7 @@ Falls Sie nach einer Firmware Erneuerung keinerlei Reaktion von Ihrem SunRiser e
 Direkt Verbindung
 =================
 
-Falls Sie eine direkte Verbindung mit dem SunRiser aufbauen müssen, ist dies auch möglich. Wenn der SunRiser in den ersten 2-3 Minuten nicht in der Lage ist eine IP-Adresse zu erhalten, wird er automatisch auf die IP-Adresse 192.168.0.2 eingestellt. Um darauf zuzugreifen müssen Sie Ihre Netzwerk Einstellungen für das verbundene Gerät auf folgende Werte einstellen:
+Falls Sie eine direkte Verbindung mit dem SunRiser aufbauen müssen, ist dies auch möglich. Wenn der SunRiser in den ersten 4-5 Minuten nicht in der Lage ist eine IP-Adresse zu erhalten, wird er automatisch auf die IP-Adresse 192.168.0.2 eingestellt. Um darauf zuzugreifen müssen Sie Ihre Netzwerk Einstellungen für das verbundene Gerät auf folgende Werte einstellen:
 
  * IP-Adresse:     192.168.0.1
  
@@ -61,3 +61,5 @@ Falls Sie eine direkte Verbindung mit dem SunRiser aufbauen müssen, ist dies au
 Alle anderen Einstellungen wie DNS und Default Gateway sind vollkommen irrelevant. Danach können Sie sich von Ihrem Gerät aus über die folgende Adresse mit dem SunRiser verbinden:
 
  * http://192.168.0.2/
+
+Bitte drücken Sie den Reset Knopf, falls Sie auch nach 10 Minuten keinerlei Direkt Verbindung bekommen.
