@@ -158,7 +158,7 @@ function set_all_pwm(value, success) {
   }
   sr_request_mpack('PUT','/state',data,function(values){
     if (typeof success !== 'undefined') {
-      success.call(this,values);
+      success.call(this, values);
     }
   });
 }
