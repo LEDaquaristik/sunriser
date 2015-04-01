@@ -426,6 +426,18 @@ sub set_pwm {
   }
 }
 
+sub set_service_mode {
+  my ( $self, $env, $value ) = @_;
+  if ($self->demo) {
+    if (!defined $env->{'psgix.session'}->{state}) {
+      $env->{'psgix.session'}->{state} = $self->state;
+    }
+    $env->{'psgix.session'}->{state}->{service_mode} = $value;
+  } else {
+    $self->state->{service_mode} = $value;
+  }
+}
+
 sub _web_state {
   my ( $self, $env ) = @_;
   $self->debug('Sending state');
@@ -658,11 +670,7 @@ sub _build_psgi {
             }
           }
           if (exists $data->{service_mode}) {
-            if ($data->{service_mode}) {
-              $self->state->{service_mode} = $self->get_time;
-            } else {
-              $self->state->{service_mode} = 0;
-            }
+            $self->set_service_mode($env, $data->{service_mode} ? $self->get_time : 0);
           }
           return $self->_web_ok;
         } elsif ($path =~ /^\/restore$/) {
