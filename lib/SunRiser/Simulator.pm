@@ -572,6 +572,14 @@ sub _build_psgi {
 
       # use DDP; p($env);
 
+      if ($self->demo) {
+        if (exists $env->{'psgix.session'}->{state}) {
+          if (!exists $env->{'psgix.session'}->{state}->{service_mode}) {
+            $env->{'psgix.session'}->{state}->{service_mode} = 0;
+          }
+        }
+      }
+
       my $method = uc($req->method);
       my $path = $req->path;
       $path =~ s!/+!/!g; # remove double slashes
