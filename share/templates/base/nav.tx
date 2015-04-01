@@ -63,6 +63,11 @@
         </a>
       </li>
       <li class="second-level">
+        <a href="/service.html">
+          <i class="fa fa-gears"></i>Wartungsarbeiten
+        </a>
+      </li>
+      <li class="second-level">
         <a href="/network.html">
           <i class="fa fa-sitemap"></i>Netzwerk
         </a>

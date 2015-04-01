@@ -1,0 +1,83 @@
+: cascade base { title => "Wartungsarbeiten", nav => "setup", no_bighelp => 1, help => mark_raw("Wartungsarbeiten schalten den regul&auml;hren Betrieb der Tagesplanung ab um dann gemeinsam an oder ab geschaltet werden zu k&ouml;nnen. Das System verl&auml;sst erst nach 24 Stunden die Wartungsarbeiten, wenn Sie dies hier nicht tun. Ein anderer Trick w&auml;re auch einfach am Ger&auml;t den Reset Knopf zu dr&uuml;cken, welches die Wartungsarbeiten auch direkt beendet und dann den regul&auml;ren Betrieb wieder aufnimmt.") }
+: override content -> {
+
+<div class="js-hide" id="service_mode_on">
+  <a class="index_function" id="stop_service_mode">
+    <span class="index_function_badge">+</span>
+    <div>Wartungsarbeiten beenden <span id="service_mode_diff"></span></div>
+  </a>
+  <a class="index_function" id="service_full">
+    <span class="index_function_badge">+</span>
+    <div>Volle Leistung</div>
+  </a>
+  <a class="index_function" id="service_half">
+    <span class="index_function_badge">+</span>
+    <div>Niedrige Leistung</div>
+  </a>
+  <a class="index_function" id="service_off">
+    <span class="index_function_badge">+</span>
+    <div>Abschalten</div>
+  </a>
+</div>
+
+<div class="js-hide" id="service_mode_off">
+  <a class="index_function" id="start_service_mode">
+    <span class="index_function_badge">+</span>
+    <div>Wartungsarbeiten starten</div>
+  </a>
+</div>
+
+: }
+: override postjs -> {
+
+<script type="text/javascript">
+
+var service_mode_time;
+
+// First execute stuff when the form is loaded
+$('body').on('sr_config',function(){
+
+  $('#start_service_mode').click(function(){
+    sr_request_mpack('PUT','/state',{ service_mode: 1 },function(values){
+      set_all_pwm(1000,function(){
+        window.location.href = window.location.href;
+      });
+    });
+  });
+
+  $('#stop_service_mode').click(function(){
+    sr_request_mpack('PUT','/state',{ service_mode: 0 },function(values){
+      window.location.href = window.location.href;
+    });
+  });
+
+  sr_request_mpack('GET','/state',undefined,function(values){
+    if (typeof values.service_mode !== 'undefined') {
+      if (values.service_mode == 0) {
+        $('#service_mode_off').show();
+      } else {
+        service_mode_time = values.service_mode;
+        $('#service_mode_on').show();
+      }
+    } else {
+      window.location.href = window.location.href.replace('service','index');
+    }
+  });
+
+  $('#service_full').click(function(){
+    set_all_pwm(1000);
+  });
+
+  $('#service_half').click(function(){
+    set_all_pwm(200);
+  });
+
+  $('#service_off').click(function(){
+    set_all_pwm(0);
+  });
+
+});
+
+</script>
+
+: }

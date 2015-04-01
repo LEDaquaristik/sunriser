@@ -161,6 +161,7 @@ sub _build_state {
   my $pwms = $self->model_info->{pwm_count};
   return {
     pwmloop_stopped => 0,
+    service_mode => 0,
     # PWM name is a number but must be treated like a string
     pwms => { map { $_."", 100 } 1..$pwms }
   };
@@ -428,7 +429,11 @@ sub set_pwm {
 sub _web_state {
   my ( $self, $env ) = @_;
   $self->debug('Sending state');
-  my $state = { time => $self->get_time(), uptime => ( $self->get_time() - $self->started() ), %{$self->get_state($env)} };
+  my $state = {
+    time => $self->get_time(),
+    uptime => ( $self->get_time() - $self->started() ),
+    %{$self->get_state($env)},
+  };
   #use DDP; p($state);
   return $self->_web_serve_msgpack($state);
 }
@@ -650,6 +655,13 @@ sub _build_psgi {
             for my $pwm (keys %{$data->{pwms}}) {
               #use DDP; p($data->{pwms}->{$pwm}); p($pwm);
               $self->set_pwm($pwm, $data->{pwms}->{$pwm}, $env);
+            }
+          }
+          if (exists $data->{service_mode}) {
+            if ($data->{service_mode}) {
+              $self->state->{service_mode} = $self->get_time;
+            } else {
+              $self->state->{service_mode} = 0;
             }
           }
           return $self->_web_ok;

@@ -81,6 +81,12 @@ function update_time() {
   var d = moment.duration(s.diff(m));
   $('.sunriser_uptime').text(d.humanize());
   current_time += 1;
+  if (typeof service_mode_time !== 'undefined') {
+    var st = moment(service_mode_time * 1000);
+    st.utcOffset(0);
+    var std = moment.duration(st.diff(m));
+    $('#service_mode_diff').text('(laufen seit ' + std.humanize() + ')');
+  }
   setTimeout(function(){
     update_time();
   }, 1000);
@@ -143,4 +149,16 @@ function wait_for_sunriser(target) {
     _wait_for_sunriser_loop_mac(target);
   }
   _wait_for_sunriser_loop(target);
+}
+
+function set_all_pwm(value, success) {
+  var data = { pwms: {} };
+  for (i = 1; i <= sr_config['pwm_count']; i++) {
+    data.pwms[i] = value;
+  }
+  sr_request_mpack('PUT','/state',data,function(values){
+    if (typeof success !== 'undefined') {
+      success.call(this,values);
+    }
+  });
 }

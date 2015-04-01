@@ -52,6 +52,10 @@
       <span class="index_function_badge">+</span>
       <div>Firmware aktualisieren</div>
     </a>
+    <a class="index_function" href="/service.html">
+      <span class="index_function_badge">+</span>
+      <div>Wartungsarbeiten</div>
+    </a>
     <a class="index_function" href="/test.html">
       <span class="index_function_badge">+</span>
       <div>Funktionstest</div>

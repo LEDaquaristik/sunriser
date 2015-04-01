@@ -46,6 +46,7 @@ for my $k (keys %{$factory_config}) {
 }
 my $state = $sr->state;
 is($state->{pwmloop_stopped}, 0, 'pwmloop is stopped');
+is($state->{service_mode}, 0, 'service mode is off');
 for (1..8) {
   is($state->{pwms}->{$_}, 0, 'pwm '.$_.' is zero');
 }

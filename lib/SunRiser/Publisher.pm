@@ -68,6 +68,7 @@ sub _build_publish_files {
     network.html
     password.html
     rain.html
+    service.html
     system.html
     sysinfo.html
     test.html
