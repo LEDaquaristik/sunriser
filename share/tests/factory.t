@@ -8,6 +8,7 @@ use SunRiser;
 use SunRiser::CDB;
 use SunRiser::Config;
 use Data::MessagePack;
+use DDP;
 use Carp qw( croak );
 
 my ( $sr_ip, $sr_firmware ) = @ARGV;
@@ -52,8 +53,9 @@ for (1..8) {
 }
 ok(defined $state->{uptime} && $state->{uptime} > 0, 'uptime is bigger as 0');
 my $gmtoff = $cdb->get('gmtoff') || 0;
-my $time = time + ( $gmtoff * 60 );
-ok(abs($time - $state->{time}) < 30, 'Clock may be maximum off by 30');
+my $summertime = $cdb->get('summertime') ? 1 : 0;
+my $time = time + ( $gmtoff * 60 ) + ( $summertime * 60 * 60 );
+ok(abs($time - $state->{time}) < 60, 'Clock may be maximum off by 60');
 ok($sr->update(%{$factory_config}), 'Update with factory config successful');
 my $backup_config = $sr->backup;
 is_deeply($backup_config,$factory_config, 'Backup config matches previously fetched factory config');
