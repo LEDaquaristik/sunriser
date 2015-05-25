@@ -60,6 +60,7 @@ var SrForm = Class.extend({
       }
       field.prepare();
       field.initjs();
+      field.initchange();
       field.custom_init();
     });
     $(self.target).find('form').submit(function(e){

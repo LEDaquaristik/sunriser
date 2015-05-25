@@ -161,6 +161,10 @@ $('body').on('sr_config',function(){
     $('.helparea').hide();
   }
 
+  if (sr_config.showexpert) {
+    $('.expert-menu').show();
+  }
+
   $(".form").not(".noautoload").each(function(){
     var id = $(this).attr('id');
     var form = new SrForm(this,sr_forms[id]);

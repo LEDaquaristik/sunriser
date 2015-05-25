@@ -22,7 +22,12 @@ function sr_failed() {
 
 function sr_finished() {
   $('#form_formsubmit').attr('value','Gespeichert!');
-  $('.pleasewaitanim').removeClass('pleasewait').removeClass('failed').addClass('finished');    
+  $('.pleasewaitanim').removeClass('pleasewait').removeClass('failed').addClass('finished');
+}
+
+function sr_changed() {
+  $('#form_formsubmit').attr('value','Speichern');
+  $('.pleasewaitanim').removeClass('pleasewait').removeClass('failed').removeClass('finished');
 }
 
 function sr_error(text) {

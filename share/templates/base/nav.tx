@@ -37,11 +37,6 @@
     <i class="fa fa-gears fa-2x"></i>
     <ul class="second-nav">
       <h2 class="second-level"></h2>
-      <!-- TODO <li class="second-level">
-        <a href="/password.html">
-          <i class="fa fa-key"></i>Passwort &auml;ndern
-        </a>
-      </li> -->
       <li class="second-level">
         <a href="/led.html">
           <i class="fa fa-lightbulb-o"></i>LED
@@ -70,6 +65,11 @@
       <li class="second-level">
         <a href="/network.html">
           <i class="fa fa-sitemap"></i>Netzwerk
+        </a>
+      </li>
+      <li class="js-hide expert-menu second-level">
+        <a href="/expert.html">
+          <i class="fa fa-gears"></i>Experten Funktionen
         </a>
       </li>
       <li class="second-level">
@@ -105,15 +105,15 @@
         </a>
       </li>
       <li class="second-level">
+        <a href="/faq.html">
+          <i class="fa fa-question"></i>H&auml;ufige Fragen
+        </a>
+      </li>
+      <li class="second-level">
         <a href="/sysinfo.html">
           <i class="fa fa-info-circle"></i>System Informationen
         </a>
       </li>
     </ul>
-  </li>
-  <li title="Abmelden" class="logout first-level">
-<!--     <a href="/logout">
-      <i class="fa fa-power-off fa-2x"></i>
-    </a> -->
   </li>
 </ul>

@@ -25,6 +25,11 @@ var SrField = Class.extend({
 
   prepare: function(){},
   initjs: function(){},
+  initchange: function(){
+    this.html_field().on('change input',function(){
+      sr_changed();
+    });
+  },
   transform: function(){
     this.value = this.html_value();
   },

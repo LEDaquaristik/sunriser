@@ -1,0 +1,24 @@
+: cascade base { title => r("H&auml;ufige Fragen"), nav => "info", no_form => 1, no_bighelp => 1 }
+: override content -> {
+
+<hr>
+<h3 id="gamma">Warum verhalten sich die LED gesetzten Werte nicht so wie ich es von meiner bisherigen LED Steuerung gewohnt bin? (oder: Was hat es mit der Gammakorrektur auf sich?)</h3>
+<div>
+  <p>Ein bekanntes Problem in vielen Bereich die etwas mit Licht zutun haben, wie z.B. LED Steuerung oder auch Fotografie, ist die subjektive Wahrnehmung von Helligkeit im Verh&auml;ltnis zur tats&auml;chlichen Leistung die das Licht hat. Das Problem hierbei liegt in der Kennlinie des menschlichen Auges. Diese ist nichtlinear, genauer gesagt: sie ist nahezu logarithmisch. Das erm&ouml;glicht die Wahrnehmung eines sehr gro&szlig;en Helligkeitsbereichs, angefangen von Vollmond mit &#188; Lux &uuml;ber eine normale Schreibtischbeleuchtung mit 750 Lux bis zu einem hellen Sommertag mit bis zu 100.000 Lux. Solche hochdynamischen Signale sind nur mit einer logarithmischen Kennlinie in den Griff zu kriegen.</p>
+  <br>
+  <p>Um diesem Effekt entgegen zu wirken, gibt es die sogenannte <a href="http://de.wikipedia.org/wiki/Gammakorrektur">Gammakorrektur</a>. Mathematisch gesehen handelt es sich bei dieser Funktion um eine Potenzfunktion mit einem oft nur kurz Gamma genannten Exponenten als einzigem Parameter. Wir haben bei der Tagesplanung nun genau diese Funktion hinzugef&uuml;gt, wobei wir hier Vorberechnungen benutzen, die wir auf leistungsst&auml;rkeren Rechnern erstellen, um die Berechnungen viel genauer zu machen, als der kleine Prozessor im Ger&auml;t selber vornehmen kann.</p>
+  <br>
+  <p>In Planung ist aber, f&uuml;r Benutzer die volle Kontrolle &uuml;ber die Leistung haben wollen, eine Option zu erstellen, die diese Gammakorrektur abschaltet und somit ein absolutes, lineares Leistungs-Fading &uuml;ber den gesetzten Zeitraum vornimmt. Ein weiterer Schritt danach w&auml;hre die M&ouml;glichkeit die Gammakorrektur anzupassen, anstelle Sie nur abzuschalten.</p>
+  <br>
+</div>
+<hr>
+<h3 id="moonday">Eigentlich sollte laut Tagesplanung die LED aus sein, aber trotzdem leuchtet sie immer wieder ungeplant l&auml;ngere Zeit, was passiert da?</h3>
+<div>
+  <p>Wenn Sie den Mond aktivieren, wird dieser gem&auml;&szlig; der Realit&auml;t auch leuchten, dies kann auch tags&uuml;ber sein. Auf <a href="http://www.mondverlauf.de/">http://www.mondverlauf.de/</a> kann nachgeguckt werden, wann der Mond auf- und absteigt. Dies kann nat&uuml;rlich ein ungew&uuml;nschter Effekt sein. Am besten nutzen Sie f&uuml;r die Mondsimulation eine getrennte LED.</p>
+  <br>
+  <p>Eine Option, die wir bald hinzuf&uuml;gen, ist die Einstellung des Zeitraums des Tages wo ein Mondaufgang nur passieren kann.</p>
+  <br>
+</div>
+<hr>
+
+: }

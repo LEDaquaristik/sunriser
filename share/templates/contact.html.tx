@@ -15,6 +15,7 @@ Ostpreußenstraße 2<br>
 Deutschland</p></span></span>
       </td>
     </tr>
+    <tr><td colspan="2">&nbsp;</td></tr>
     <tr>
       <td class="contactlabel">Telefon</td>
       <td itemprop="telephone">+49 5257 9747 808</td>
@@ -23,10 +24,12 @@ Deutschland</p></span></span>
       <td class="contactlabel">Fax</td>
       <td itemprop="faxNumber">+49 5257 9747 807</td>
     </tr>
+    <tr><td colspan="2">&nbsp;</td></tr>
     <tr itemprop="founder" itemscope="" itemtype="http://schema.org/Person">
       <td class="contactlabel">Gesch&auml;ftsf&uuml;hrung</td>
       <td itemprop="name">Dennis R&uuml;sing</td>
     </tr>
+    <tr><td colspan="2">&nbsp;</td></tr>
     <tr>
       <td class="contactlabel">E-Mail</td>
       <td><a href="mailto:sunriser@LEDaquaristik.de" rel="nofollow"><span itemprop="email">sunriser@LEDaquaristik.de</span></a></td>

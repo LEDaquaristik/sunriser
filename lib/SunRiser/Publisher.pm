@@ -59,6 +59,7 @@ sub _build_publish_files {
     contact.html
     day.html
     expert.html
+    faq.html
     firmware.html
     index.html
     intro.html

@@ -193,7 +193,7 @@ nav{
   text-align: center;
   position:absolute;
   z-index:4;
-  min-height: 420px;
+  min-height: 500px;
 }
 nav a,
 nav{
@@ -348,7 +348,7 @@ nav h2{
   padding: 40px 40px 110px 110px;
   display:block;
   width:100%;
-  min-height: 420px;
+  min-height: 500px;
   /*Text formating*/
   color:#5f768a;
   line-height:1.5em;

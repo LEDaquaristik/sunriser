@@ -55,7 +55,7 @@
   ],
   "weather",       "Weather simulation configuration", [
     "last_setup_id", ["Holding the last id used for new setup", "integer", 0],
-    "setups", [    "List of activated setup ids",   "array(integer)"],
+    "setups", [    "List of existing setup ids",   "array(integer)"],
     "setup#X",     "Weather simulation setup X", [
       "name", [    "Custom name for weather setup", "text"],
       "pwms", [    "Identification of pwms effected", "array(integer)"],
