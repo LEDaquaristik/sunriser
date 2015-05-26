@@ -97,7 +97,9 @@ var SrForm = Class.extend({
       sr_request_mpack('PUT','/',values,function(){
         var reload = false;
         $.each(values,function(key,val){
-          if (key == 'showexpert' || key == 'nohelp' || key == 'weather#web') {
+          if ( key == 'showexpert'
+            || key == 'nohelp'
+            || key == 'weather#web' ) {
             if (sr_config[key] != val) {
               reload = true;
             }

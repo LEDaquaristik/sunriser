@@ -28,6 +28,8 @@ use CDB::TinyCDB;
 use SunRiser::Publisher;
 use SunRiser::CDB;
 use SunRiser;
+use Data::Coloured;
+use Data::Printer;
 
 has versioned => (
   is => 'lazy',
@@ -600,8 +602,9 @@ sub _build_psgi {
         if ($logged_in) {
           if ($method eq 'PUT') {
             my $body = $req->raw_body;
+            # poloured($body);
             my $data = $self->_mp->unpack($body);
-            use DDP; p($data); 1;
+            p($data);
             for my $k (keys %{$data}) {
               $self->debug('Setting key '.$k);
               $self->set($k,$data->{$k},$env);
