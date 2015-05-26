@@ -493,7 +493,7 @@
 }
 .fa-warning:before,
 .fa-exclamation-triangle:before {
-  content: "\f071";
+  content: "\e600";
 }
 .fa-plane:before {
   content: "\f072";
