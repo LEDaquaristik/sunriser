@@ -59,7 +59,8 @@ $('body').on('sr_config',function(){
         name: "pwm#" + i + "#weather",
         label: "Wetter Profil f&uuml;r LED #" + i,
         type: "select",
-        options: weather_profiles
+        options: weather_profiles,
+        integer: true
       });
     }
 

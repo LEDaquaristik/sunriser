@@ -341,7 +341,16 @@ var SrField_Time = SrField_Integer.extend({
 var SrField_Select = SrField.extend({
 
   template: 'select',
+  integer: false,
   options: undefined,
+
+  transform: function(){
+    if (this.integer) {
+      SrField_Integer_Transform.call(this);
+    } else {
+      this.value = this.html_value();
+    }
+  },
 
   initjs: function(){
     var select = this.html_field();
