@@ -33,7 +33,18 @@ $('body').on('sr_config',function(){
 
   $("#form_weather_profiles").each(function(){
     var fields = [{
-      name: "weather#web"
+      name: "weather#web",
+      getdata: function(data) {
+        var new_data = [];
+        $.each(sr_config['weather#web'],function(i,v){
+          var name_key = "weather#setup#" + v.id + "#name";
+          new_data.push({
+            id: v.id,
+            name: $('[name="' + name_key + '"').val()
+          });
+        });
+        return new_data;
+      }
     }];
 
     $.each(sr_config['weather#web'],function(i,v){

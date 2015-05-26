@@ -21,12 +21,15 @@ var SrForm = Class.extend({
     self.target = target;
     self.fields = new Array();
     $.each(fields,function(i,field){
+      if (typeof field === 'function') {
+        field = field.call(self,i);
+      }
       if (typeof field.name !== 'undefined') {
-        if (typeof config.prefix !== 'undefined') {
+        if (typeof config.prefix !== 'undefined' && !field.noprefix) {
           field.name = config.prefix + '#' + field.name;
         }
         // Weather setup replacement
-        field.name = field.name.replace('weather#setup#X#','weather#setup#' + $('#weather_setup_id').val() + '#');
+        field.name = field.name.replace('weather#setup#X#','weather#setup#' + get_weather_setup_id + '#');
         // -------------------------        
       }
       self.fields.push(self.get_field(field));
@@ -85,7 +88,7 @@ var SrForm = Class.extend({
       if (field.has_errors()) {
         self.error = true;
       } else {
-        if (typeof field.name !== 'undefined') {
+        if (typeof field.name !== 'undefined' && !field.nosubmit) {
           values[field.name] = field.value;
         }
       }
@@ -94,7 +97,7 @@ var SrForm = Class.extend({
       sr_request_mpack('PUT','/',values,function(){
         var reload = false;
         $.each(values,function(key,val){
-          if (key == 'showexpert' || key == 'nohelp') {
+          if (key == 'showexpert' || key == 'nohelp' || key == 'weather#web') {
             if (sr_config[key] != val) {
               reload = true;
             }
@@ -112,6 +115,7 @@ var SrForm = Class.extend({
     if (typeof field.type === 'undefined') {
       field.type = sr_type(field.name);
     }
+    field.form = this;
     switch(field.type) {
       case 'array(weekday)':
         return new SrField_Weekday(field);

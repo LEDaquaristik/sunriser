@@ -203,6 +203,9 @@ var SrField_JSON = SrField.extend({
   },
 
   transform: function() {
+    if (this.getdata) {
+      this.data = this.getdata(this.data);
+    }
     this.value = JSON.stringify(this.data);
   }
 
