@@ -218,7 +218,7 @@
           Programme f&uuml;r Tagesverlauf (Verwaltung, Import, Export, Kopieren und zeitgesteuerte Programmwechsel), auch die Option den original Sonnenauf- und Untergang zu simulieren.
         </li>
         <li>
-          Mehr als nur ein Programm f&uuml;r die Wetter Simulation, auch mit Verwaltungsfunktionen und zeitgesteuertem Wechsel, um z.B. individuelles Jahreszeiten-Wetter zu simulieren.
+          Weitere Verwaltungsfunktionen f&uuml;r die Wetter Profile und zeitgesteuertem Wechsel, um z.B. individuelles Jahreszeiten-Wetter zu simulieren.
         </li>
         <li>
           Passwort Schutz f&uuml;r das Administrations Interface
@@ -227,10 +227,13 @@
           Cloud Speicherung der Konfiguration. Dadurch k&ouml;nnen Sie dann jederzeit auf jeden alten Stand der Konfiguration zur&uuml;ckgehen, soweit Ihr Computer mit dem Sie auf den <i>SunRiser</i> zugreifen mit dem Internet verbunden ist (der <i>SunRiser</i> selber muss hierf&uuml;r nicht mit dem Internet verbunden sein).
         </li>
         <li>
+          Eine Tagesverlauf Preview, die erm&ouml;glicht das geplante Programm vor dem Speichern mal in Kurzfassung zu sehen, 24 Stunden in 24 Sekunden (nat&uuml;rlich einstellbar).
+        </li>
+        <li>
           Erweiterung der Wetter Optionen um Wochentage und Zeitregulierungen.
         </li>
         <li>
-          Eine Tagesverlauf Preview, die erm&ouml;glicht das geplante Programm vor dem Speichern mal in Kurzfassung zu sehen, 24 Stunden in 24 Sekunden (nat&uuml;rlich einstellbar).
+          LED Steuerung basierend auf Wochentage
         </li>
         <li>
           Unterst&uuml;tzung der <a href="http://www.amazon.de/EnerGenie-EG-PMS2-LAN-IP-Steckdosenleiste-Überspannungsschutz-LAN-Schnittstelle/dp/B0099AHPQ4/">GemBird LAN IP Steckdosenleiste</a> als Teil der Tagesplanung um Ein/Ausschalten von weiterer Peripherie zu kontrollieren.

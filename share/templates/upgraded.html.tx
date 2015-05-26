@@ -1,9 +1,15 @@
-: cascade base { title => "Firmware erneuert", nav => "system", no_form => 1, no_bighelp => 1 }
+: cascade base { title => "Firmware erneuert", no_form => 1, no_bighelp => 1 }
 : override content -> {
 
 <h2 class="upgraded" >Die Firmware wurde erfolgreich erneuert!</h2>
 
 <hr>
+
+<h3>Seit Firmware v0.500:</h3>
+
+<div>&Uuml;ber die <a href="/weather.html">Wetter Profile</a> k&ouml;nnen Sie nun gezielt f&uuml;r jede LED ein eigenes Wetter Programm einstellen. Sie finden den Men&uuml;punkt im Wetter Men&uuml; <i class="fa fa-cloud fa-2x"></i>.</div>
+
+<br><hr>
 
 <h3>Seit Firmware v0.400:</h3>
 

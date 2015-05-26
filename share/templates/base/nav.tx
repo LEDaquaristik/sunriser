@@ -11,6 +11,11 @@
     <ul class="second-nav">
       <h2 class="second-level"></h2>
       <li class="second-level">
+        <a href="/weather.html">
+          <i class="fa fa-gears"></i>Wetter Profile
+        </a>
+      </li>
+      <li class="second-level">
         <a href="/thunderstorm.html">
           <i class="fa fa-flash"></i>Gewitter
         </a>
@@ -69,7 +74,7 @@
       </li>
       <li class="js-hide expert-menu second-level">
         <a href="/expert.html">
-          <i class="fa fa-gears"></i>Experten Funktionen
+          <i class="fa fa-cloud"></i>Experten Funktionen
         </a>
       </li>
       <li class="second-level">
@@ -101,7 +106,7 @@
       </li>
       <li class="second-level">
         <a href="/intro.html">
-          <i class="fa fa-question"></i>Einf&uuml;hrung
+          <i class="fa fa-gear"></i>Einf&uuml;hrung
         </a>
       </li>
       <li class="second-level">

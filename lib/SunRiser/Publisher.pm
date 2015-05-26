@@ -75,6 +75,7 @@ sub _build_publish_files {
     test.html
     thunderstorm.html
     upgraded.html
+    weather.html
 
     notfound.html
 
@@ -205,6 +206,7 @@ sub _build_base_vars {
       js/sunriser_network.js
       js/sunriser_config.js
       js/sunriser_interface.js
+      js/sunriser_legacy.js
       js/sunriser.js
     )],
   };

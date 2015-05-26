@@ -26,6 +26,7 @@ var SrField = Class.extend({
   prepare: function(){},
   initjs: function(){},
   initchange: function(){
+    this.old_value = this.value;
     this.html_field().on('change input',function(){
       sr_changed();
     });
@@ -188,6 +189,21 @@ var SrField_Checkbox = SrField.extend({
     } else {
       this.value = this.html_field().prop("checked") ? true : false;
     }
+  }
+
+});
+
+var SrField_JSON = SrField.extend({
+
+  pre: true,
+  template: undefined, // will anyway not be used
+
+  prepare: function() {
+    this.data = $.parseJSON(this.value);
+  },
+
+  transform: function() {
+    this.value = JSON.stringify(this.data);
   }
 
 });

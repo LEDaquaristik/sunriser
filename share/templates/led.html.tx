@@ -1,4 +1,4 @@
-: cascade base { title => "LED konfigurieren", nav => "setup", help => r("Hier stellen Sie die Farben und Funktionen Ihrer LED ein. Vergessen Sie nicht nach der &Auml;nderung dieser Einstellungen am Ende der Seite auf 'Speichern' zu klicken.") }
+: cascade base { title => "LED konfigurieren", nav => "setup", help => r("Hier stellen Sie die Farben und Funktionen Ihrer LED ein. Vergessen Sie nicht nach der &Auml;nderung dieser Einstellungen am Ende der Seite auf 'Speichern' zu klicken.<br><br>F&uuml;r das Verbinden der LEDs zu der Wettersimulation benutzen Sie bitte die <a href=\"/weather.html\">Wetter Profile</a>.") }
 : override content -> {
 
 <div class="form noautoload" id="led"></div>
@@ -74,42 +74,10 @@ $('body').on('sr_config',function(){
         }
       });
       fields.push({
-        id: "pwm_" + i + "_weather",
-        label: "LED #" + i + " f&uuml;r Wettersimulation",
-        type: "bool",
-        data: { pwm_id: i },
-        initjs: function(){
-          var pwm = this.data.pwm_id;
-          var checkbox = this.html_field();
-          checkbox.change(function(){
-            var weather_pwms = new Array();
-            for (j = 1; j <= sr_config["pwm_count"]; j++) {
-              var cur = $("#pwm_" + j + "_weather");
-              if (cur.prop("checked")) {
-                weather_pwms.push(j);
-              }
-            }
-            $('#weather_setup_0_pwms').val(weather_pwms.join(","));
-          });
-        }
-      });
-      fields.push({
         name: "pwm#" + i + "#manager",
         pre: true
       });
     }
-    fields.push({
-      name: "weather#setup#0#pwms",
-      pre: true,
-      transform_value: function(value) { return parseInt(value); },
-      initjs: function(){
-        for (j = 1; j <= sr_config['pwm_count']; j++) {
-          if ($.inArray(j,this.value) !== -1) {
-            $("#pwm_" + j + "_weather").prop("checked",true);
-          }
-        }
-      }
-    });
     var form = new SrForm(this,{
       title: "LED Farben einstellen",
       fields: fields
