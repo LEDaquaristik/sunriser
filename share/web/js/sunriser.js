@@ -14,6 +14,10 @@ var sr_config_types = {};
 var sr_color = {};
 var is_changed = false;
 
+var url = new URI();
+var query = url.search(true);
+var get_weather_setup_id = query.weather || 1;
+
 var weather_profiles = [{
   value: 0,
   backgroundcolor: '#ffffff',
@@ -189,11 +193,11 @@ $('body').on('sr_config_init',function(){
       $('.expert-menu').show();
     }
 
-    $(".form").not(".noautoload").each(function(){
-      var id = $(this).attr('id');
-      var form = new SrForm(this,sr_forms[id]);
+    $('.weather-profiled').each(function(){
+      var link = new URI($(this).attr('href'));
+      link.addSearch("weather",get_weather_setup_id);
+      $(this).attr('href',link);
     });
-
     $.each(sr_config['weather#web'],function(i,v){
       weather_profiles.push({
         value: v.id,
@@ -201,6 +205,11 @@ $('body').on('sr_config_init',function(){
         label: "#" + v.id + " " + v.name,
         backgroundcolor: sr_colors[i].color
       });
+    });
+
+    $(".form").not(".noautoload").each(function(){
+      var id = $(this).attr('id');
+      var form = new SrForm(this,sr_forms[id]);
     });
 
     $('body').trigger('sr_config');

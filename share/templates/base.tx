@@ -84,6 +84,5 @@
       <: include base::bighelp :>
     <: } :>
     <: block postjs -> {} :>
-    <input type="hidden" id="weather_setup_id" value="0">
   </body>
 </html>
