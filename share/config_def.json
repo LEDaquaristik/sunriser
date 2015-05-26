@@ -37,7 +37,8 @@
   "pwm#X",       "Main data of PWM X", [
     "manager", [   "Assigned manager, 0 = unassigned, 1 = dayplanner, 2 = event", "integer", 0],
     "name", [      "Custom name for pwm",        "text"],
-    "color", [     "Color definition",           "text"]
+    "color", [     "Color definition",           "text"],
+    "weather", [   "Weather program assigned",   "integer"]
   ],
   "web#X",       "Web files storage for file X", [
     "content", [   "Content of file",            "binary"],
@@ -54,12 +55,10 @@
     "deferral", ["(TODO) Fixed deferral (in minutes)", "integer", 0]
   ],
   "weather",       "Weather simulation configuration", [
-    "last_setup_id", ["Holding the last id used for new setup", "integer", 0],
-    "setups", [    "List of existing setup ids",   "array(integer)"],
+    "web", [       "Web configuration for the weather profiles", "json"],
     "setup#X",     "Weather simulation setup X", [
-      "name", [    "Custom name for weather setup", "text"],
-      "pwms", [    "Identification of pwms effected", "array(integer)"],
-      "thunder", "Thunderstorm setup", [
+      "pwms", [    "[LEGACY] Identification of pwms effected", "array(integer)"],
+      "thunder",   "Thunderstorm setup", [
         "activated", ["Produce thunderstorms", "bool", 0],
         "daychance", ["Percentage for a thunderstorm to happen (Tried per day in daymax amount)", "integer", 10],
         "daymax", ["Maximum amount of thunderstorms per day", "integer", 1],

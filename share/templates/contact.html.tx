@@ -1,9 +1,16 @@
 : cascade base { title => "Kontaktinformationen", nav => "info", no_bighelp => 1 }
 : override content -> {
 
-<h1 class="form_title">Kontaktinformationen</h1>
+<h2 class="form_title">Kontaktinformationen</h2>
+
+<h3>Haben Sie schon geschaut ob die <a href="/intro.html">Einf&uuml;hrung</a> oder die <a href="/faq.html">h&auml;ufig gestellten Fragen</a> Ihnen vielleicht helfen k&ouml;nnen?</h3>
+
+<br>
+<hr>
+<br>
 
 <div class="contactinfo">
+
   <table>
     <tr>
       <td class="contactlabel">Adresse</td>

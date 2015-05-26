@@ -71,6 +71,7 @@ var SrForm = Class.extend({
     if (typeof self.loaded === 'function') {
       self.loaded();
     }
+    is_changed = 0;
   },
 
   submit: function() {
@@ -134,6 +135,8 @@ var SrForm = Class.extend({
         return new SrField_CSV(field);      
       case 'integer':
         return new SrField_Integer(field);
+      case 'json':
+        return new SrField_JSON(field);
       default:
         return new SrField_Text(field);
     }

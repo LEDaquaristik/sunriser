@@ -21,11 +21,13 @@ function sr_failed() {
 }
 
 function sr_finished() {
+  is_changed = false;
   $('#form_formsubmit').attr('value','Gespeichert!');
   $('.pleasewaitanim').removeClass('pleasewait').removeClass('failed').addClass('finished');
 }
 
 function sr_changed() {
+  is_changed = true;
   $('#form_formsubmit').attr('value','Speichern');
   $('.pleasewaitanim').removeClass('pleasewait').removeClass('failed').removeClass('finished');
 }

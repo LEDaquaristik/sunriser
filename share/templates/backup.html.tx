@@ -18,7 +18,7 @@
 <div class="backup_info">
 </div>
 
-<input type="file" class="hiddenfileupload" id="backup_fileupload" />
+<input type="file" class="hiddenfileupload" accept=".mp" id="backup_fileupload" />
 
 : }
 : override postjs -> {

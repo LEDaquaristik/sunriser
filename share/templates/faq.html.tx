@@ -1,8 +1,7 @@
 : cascade base { title => r("H&auml;ufige Fragen"), nav => "info", no_form => 1, no_bighelp => 1 }
 : override content -> {
 
-<hr>
-<h3 id="gamma">Warum verhalten sich die LED gesetzten Werte nicht so wie ich es von meiner bisherigen LED Steuerung gewohnt bin? (oder: Was hat es mit der Gammakorrektur auf sich?)</h3>
+<h2 id="gamma">Warum verhalten sich die LED gesetzten Werte nicht so wie ich es von meiner bisherigen LED Steuerung gewohnt bin? (oder: Was hat es mit der Gammakorrektur auf sich?)</h2>
 <div>
   <p>Ein bekanntes Problem in vielen Bereich die etwas mit Licht zutun haben, wie z.B. LED Steuerung oder auch Fotografie, ist die subjektive Wahrnehmung von Helligkeit im Verh&auml;ltnis zur tats&auml;chlichen Leistung die das Licht hat. Das Problem hierbei liegt in der Kennlinie des menschlichen Auges. Diese ist nichtlinear, genauer gesagt: sie ist nahezu logarithmisch. Das erm&ouml;glicht die Wahrnehmung eines sehr gro&szlig;en Helligkeitsbereichs, angefangen von Vollmond mit &#188; Lux &uuml;ber eine normale Schreibtischbeleuchtung mit 750 Lux bis zu einem hellen Sommertag mit bis zu 100.000 Lux. Solche hochdynamischen Signale sind nur mit einer logarithmischen Kennlinie in den Griff zu kriegen.</p>
   <br>
@@ -12,13 +11,12 @@
   <br>
 </div>
 <hr>
-<h3 id="moonday">Eigentlich sollte laut Tagesplanung die LED aus sein, aber trotzdem leuchtet sie immer wieder ungeplant l&auml;ngere Zeit, was passiert da?</h3>
+<h2 id="moonday">Eigentlich sollte laut Tagesplanung die LED aus sein, aber trotzdem leuchtet sie, was passiert da?</h2>
 <div>
-  <p>Wenn Sie den Mond aktivieren, wird dieser gem&auml;&szlig; der Realit&auml;t auch leuchten, dies kann auch tags&uuml;ber sein. Auf <a href="http://www.mondverlauf.de/">http://www.mondverlauf.de/</a> kann nachgeguckt werden, wann der Mond auf- und absteigt. Dies kann nat&uuml;rlich ein ungew&uuml;nschter Effekt sein. Am besten nutzen Sie f&uuml;r die Mondsimulation eine getrennte LED.</p>
+  <p>Wenn Sie den Mond aktivieren, wird dieser gem&auml;&szlig; der Realit&auml;t leuchten, dies kann auch tags&uuml;ber sein. Auf <a href="http://www.mondverlauf.de/#/50.6251,6.5918,5">http://www.mondverlauf.de/</a> kann nachgeguckt werden, wann der Mond auf- und absteigt, in einer der n&auml;chsten Versionen werden Sie die GPS Koordination f&uuml;r die Berechung selber bestimmen k&ouml;nnen. Dies kann nat&uuml;rlich ein ungew&uuml;nschter Effekt sein. Am besten nutzen Sie f&uuml;r die Mondsimulation eine getrennte LED.</p>
   <br>
-  <p>Eine Option, die wir bald hinzuf&uuml;gen, ist die Einstellung des Zeitraums des Tages wo ein Mondaufgang nur passieren kann.</p>
+  <p>Eine weitere helfende Option, die wir bald hinzuf&uuml;gen, ist die Einstellung des Zeitraums des Tages wo ein Mondaufgang nur passieren kann.</p>
   <br>
 </div>
-<hr>
 
 : }

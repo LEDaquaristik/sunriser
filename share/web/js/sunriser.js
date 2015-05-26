@@ -3,7 +3,8 @@ var sr_config;
 
 var sr_config_main_keys = [
   'model','model_id','pwm_count','factory_version','language','timezone',
-  'gmtoff','nodst','updated','name','showexpert','nohelp','nofinder','usentp'
+  'gmtoff','nodst','updated','name','showexpert','nohelp','nofinder','usentp',
+  'weather#web'
 ];
 
 var current_time;
@@ -11,6 +12,7 @@ var start_time;
 var sr_config_def;
 var sr_config_types = {};
 var sr_color = {};
+var is_changed = false;
 
 function daymin_to_time(daymin) {
   var hour = Math.floor(daymin / 60);
@@ -140,7 +142,16 @@ $('body').on('sr_config_def',function(){
   if (typeof(sr_config) === "undefined" || typeof(sr_config.pwm_count) == "undefined") {
     sr_request_mpack('POST','/',sr_config_main_keys,function(values){
       $.each(sr_config_main_keys,function(i,key){
-        if (typeof values[key] === 'undefined') {
+        if (sr_type(key) == 'json') {
+          if (typeof values[key] === 'undefined') {
+            var def = sr_default(key);
+            if (def) {
+              values[key] = $.parseJSON(def);
+            }
+          } else {
+            values[key] = $.parseJSON(values[key]);
+          }
+        } else if (typeof values[key] === 'undefined') {
           values[key] = sr_default(key);
         }
       });
@@ -157,18 +168,25 @@ $('body').on('sr_config',function(){
 
   //console.log(sr_config);
 
-  if (sr_config.nohelp) {
-    $('.helparea').hide();
-  }
+  // ------------------------------------------------ LEGACY ---------
+  // --- generating weather web config for fresh or pre-0.500 SunRiser
+  if (typeof(sr_config['weather#web']) === 'undefined') {
+    sr_generate_weather_web();
+  // -----------------------------------------------------------------
+  } else {
+    if (sr_config.nohelp) {
+      $('.helparea').hide();
+    }
 
-  if (sr_config.showexpert) {
-    $('.expert-menu').show();
-  }
+    if (sr_config.showexpert) {
+      $('.expert-menu').show();
+    }
 
-  $(".form").not(".noautoload").each(function(){
-    var id = $(this).attr('id');
-    var form = new SrForm(this,sr_forms[id]);
-  });
+    $(".form").not(".noautoload").each(function(){
+      var id = $(this).attr('id');
+      var form = new SrForm(this,sr_forms[id]);
+    });
+  }
 
   // have to be added if we add again a storage
   // if (typeof current_time === 'undefined') {

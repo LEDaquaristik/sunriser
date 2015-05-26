@@ -1,0 +1,55 @@
+: cascade base { title => "Wetter Profile", nav => "weather", no_bighelp => 1 }
+: override content -> {
+
+<div id="weather_profiles"></div>
+
+<div class="form noautoload" id="form_weather_profiles"></div>
+
+: }
+: override postjs -> {
+
+<script type="text/html" id="weather_profiles_tmpl">
+
+<table>
+  <tr>
+    <td>
+    </td>
+  </tr>
+</table>
+
+</script>
+<script type="text/javascript">
+
+$('body').on('sr_config',function(){
+
+  $("#form_weather_profiles").each(function(){
+    var fields = [{
+      name: "weather#web"
+    }];
+
+    $.each(sr_config['weather#web'],function(i,v){
+      var id = v.id;
+      var name = v.name;
+      fields.push({
+        name: "weather#setup#" + id + "#pwms", pre: true
+      });
+    });
+
+    for (i = 1; i <= sr_config['pwm_count']; i++) {
+      fields.push({
+        name: "pwm#" + i + "#weather",
+        pre: true
+      });
+    }
+
+    var form = new SrForm(this,{
+      title: "Wetter Profile",
+      fields: fields
+    });
+  });
+
+});
+
+</script>
+
+: }
