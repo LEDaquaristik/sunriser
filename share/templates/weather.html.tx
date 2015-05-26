@@ -1,26 +1,35 @@
 : cascade base { title => "Wetter Profile", nav => "weather", no_bighelp => 1 }
 : override content -> {
 
-<div id="weather_profiles"></div>
+<div class="index_function" id="add_weather_profile">
+  <span class="index_function_badge">+</span>
+  <div>Neues Wetter Profil anlegen (&Auml;nderungen gehen verloren)</div>
+</div>
 
 <div class="form noautoload" id="form_weather_profiles"></div>
 
 : }
 : override postjs -> {
 
-<script type="text/html" id="weather_profiles_tmpl">
-
-<table>
-  <tr>
-    <td>
-    </td>
-  </tr>
-</table>
-
-</script>
 <script type="text/javascript">
 
 $('body').on('sr_config',function(){
+
+  $("#add_weather_profile").click(function(){
+    var next_id = sr_config["weather#last_setup_id"] + 1;
+    var next_name = "Neues Profil " + next_id;
+    sr_config["weather#web"].push({
+      id: next_id,
+      name: next_name
+    });
+    var data = {};
+    data["weather#web"] = JSON.stringify(sr_config["weather#web"]);
+    data["weather#setup#" + next_id + "#name"] = next_name;
+    data["weather#last_setup_id"] = next_id;
+    sr_request_mpack('PUT','/',data,function(){
+      window.location.href = window.location.href;
+    });
+  });
 
   $("#form_weather_profiles").each(function(){
     var fields = [{
@@ -28,17 +37,18 @@ $('body').on('sr_config',function(){
     }];
 
     $.each(sr_config['weather#web'],function(i,v){
-      var id = v.id;
-      var name = v.name;
       fields.push({
-        name: "weather#setup#" + id + "#pwms", pre: true
+        name: "weather#setup#" + v.id + "#name",
+        label: "Bezeichnung Wetter Profil #" + v.id,
       });
     });
 
     for (i = 1; i <= sr_config['pwm_count']; i++) {
       fields.push({
         name: "pwm#" + i + "#weather",
-        pre: true
+        label: "Wetter Profil f&uuml;r LED #" + i,
+        type: "select",
+        options: weather_profiles
       });
     }
 
@@ -46,6 +56,7 @@ $('body').on('sr_config',function(){
       title: "Wetter Profile",
       fields: fields
     });
+
   });
 
 });

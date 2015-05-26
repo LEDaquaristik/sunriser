@@ -4,7 +4,7 @@ var sr_config;
 var sr_config_main_keys = [
   'model','model_id','pwm_count','factory_version','language','timezone',
   'gmtoff','nodst','updated','name','showexpert','nohelp','nofinder','usentp',
-  'weather#web'
+  'weather#web','weather#last_setup_id'
 ];
 
 var current_time;
@@ -13,6 +13,13 @@ var sr_config_def;
 var sr_config_types = {};
 var sr_color = {};
 var is_changed = false;
+
+var weather_profiles = [{
+  value: 0,
+  backgroundcolor: '#ffffff',
+  label: "Kein Wetterprogramm",
+  name: "Kein Wetterprogramm"
+}];
 
 function daymin_to_time(daymin) {
   var hour = Math.floor(daymin / 60);
@@ -139,7 +146,7 @@ $('body').on('sr_config_def',function(){
     sr_color[color.id] = color;
   });
 
-  if (typeof(sr_config) === "undefined" || typeof(sr_config.pwm_count) == "undefined") {
+  if (typeof sr_config === "undefined" || typeof sr_config.pwm_count === "undefined") {
     sr_request_mpack('POST','/',sr_config_main_keys,function(values){
       $.each(sr_config_main_keys,function(i,key){
         if (sr_type(key) == 'json') {
@@ -156,21 +163,21 @@ $('body').on('sr_config_def',function(){
         }
       });
       sr_config = values;
-      $('body').trigger('sr_config');
+      $('body').trigger('sr_config_init');
     });
   } else {
-    $('body').trigger('sr_config');    
+    $('body').trigger('sr_config_init');
   }
 
 });
 
-$('body').on('sr_config',function(){
+$('body').on('sr_config_init',function(){
 
   //console.log(sr_config);
 
   // ------------------------------------------------ LEGACY ---------
   // --- generating weather web config for fresh or pre-0.500 SunRiser
-  if (typeof(sr_config['weather#web']) === 'undefined') {
+  if (!sr_config['weather#web']) {
     sr_generate_weather_web();
   // -----------------------------------------------------------------
   } else {
@@ -186,6 +193,17 @@ $('body').on('sr_config',function(){
       var id = $(this).attr('id');
       var form = new SrForm(this,sr_forms[id]);
     });
+
+    $.each(sr_config['weather#web'],function(i,v){
+      weather_profiles.push({
+        value: v.id,
+        name: v.name,
+        label: "#" + v.id + " " + v.name,
+        backgroundcolor: sr_colors[i].color
+      });
+    });
+
+    $('body').trigger('sr_config');
   }
 
   // have to be added if we add again a storage

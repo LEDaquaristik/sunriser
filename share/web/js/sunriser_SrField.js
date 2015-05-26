@@ -341,9 +341,22 @@ var SrField_Select = SrField.extend({
   options: undefined,
 
   initjs: function(){
+    var select = this.html_field();
     if (typeof this.value !== 'undefined') {
-      this.html_field().val(this.value);      
+      select.val(this.value);      
     }
+    select.find('option').each(function(){
+      if ($(this).prop('selected')) {
+        select.css('background-color',$(this).css('background-color'));
+      }
+    });
+    select.change(function(){
+      select.find('option').each(function(){
+        if ($(this).prop('selected')) {
+          select.css('background-color',$(this).css('background-color'));
+        }
+      });
+    });
   }
 
 });

@@ -9,6 +9,10 @@
 
 <div>&Uuml;ber die <a href="/weather.html">Wetter Profile</a> k&ouml;nnen Sie nun gezielt f&uuml;r jede LED ein eigenes Wetter Programm einstellen. Sie finden den Men&uuml;punkt im Wetter Men&uuml; <i class="fa fa-cloud fa-2x"></i>.</div>
 
+<br>
+
+<div><i class="fa fa-warning fa-2x"></i> Bitte &uuml;berprf&uuml;fen Sie Ihre Wetter Einstellungen nach dieser Erneuerung und legen Sie dann ein neues Backup an.</div>
+
 <br><hr>
 
 <h3>Seit Firmware v0.400:</h3>

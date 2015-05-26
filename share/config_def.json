@@ -55,8 +55,10 @@
     "deferral", ["(TODO) Fixed deferral (in minutes)", "integer", 0]
   ],
   "weather",       "Weather simulation configuration", [
+    "last_setup_id", ["Holding the last id used for new setup", "integer", 0],
     "web", [       "Web configuration for the weather profiles", "json"],
     "setup#X",     "Weather simulation setup X", [
+      "name", [    "Name of the weather profile", "text"],
       "pwms", [    "[LEGACY] Identification of pwms effected", "array(integer)"],
       "thunder",   "Thunderstorm setup", [
         "activated", ["Produce thunderstorms", "bool", 0],
