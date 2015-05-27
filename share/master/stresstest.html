@@ -69,6 +69,8 @@ function stresstest_loop() {
         found++;
         $('#reboots').append("<div>Reboote " + j.ip + " [" + i + "]</div>");
         $.get("http://" + j.ip + "/reboot");
+        $.get("http://" + j.ip + "/reboot");
+        $.get("http://" + j.ip + "/reboot");
       });
       if (found) {
         not_found_timer = 0;

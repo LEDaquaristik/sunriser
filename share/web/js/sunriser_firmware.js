@@ -34,7 +34,9 @@ function install_firmware(bytesarray) {
     },
     success: function(data,status,xhr){
       sr_screenblock('<div>Warte auf Neustart</div><div>Bitte das Ger&auml;t NICHT abschalten!!!</div><div>(ca. 1 Minute)</div>');
-      wait_for_sunriser(window.location.href.replace('firmware','upgraded'));
+      var target = window.location.href.replace('firmware','upgraded');
+      target = target.replace('expert','upgraded');
+      wait_for_sunriser(target);
     },
   };
   $.ajax(call_options);

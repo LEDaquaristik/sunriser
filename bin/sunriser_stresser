@@ -1,0 +1,17 @@
+#!/usr/bin/env perl
+# PODNAME: sunriser_stresser
+# ABSTRACT: SunRiser Stresstool
+
+$|=1;
+
+use strict;
+use warnings;
+
+use FindBin;
+use lib $FindBin::Dir . "/../lib";
+use SunRiser::Stresser;
+
+my $srstress = SunRiser::Stresser->new_with_options;
+$srstress->run;
+
+exit 0;
