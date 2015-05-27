@@ -1,4 +1,4 @@
-: cascade base { title => "Wetter Profile", nav => "weather", no_bighelp => 1 }
+: cascade base { title => "Wetter Profile", nav => "weather", no_bighelp => 1, help => r("Bitte beachten Sie das wir noch keine Funktion haben um Profile zu entfernen, dies wird sehr bald folgen.") }
 : override content -> {
 
 <div class="index_function" id="add_weather_profile">

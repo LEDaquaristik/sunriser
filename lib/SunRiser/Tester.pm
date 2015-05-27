@@ -78,8 +78,8 @@ sub run {
   my $firmware = scalar path($self->firmware)->slurp_raw;
   ReadMode(3);
   my $success;
-  unless ($success) {
-    print "Trying clearing finder memory...\n";
+  until ($success) {
+    print "Clearing finder memory...\n";
     $success = $self->ua->request(GET($self->finder.'?clear=1'))->is_success;
     sleep(1);
   }
