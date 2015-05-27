@@ -52,6 +52,8 @@ var sr_forms = {
       name: "ip4_gateway", label: "Feste IPv4 Adresse Gateway"
     },{
       name: "ip4_dns", label: "Feste IPv4 Adresse DNS"
+    },{
+      name: "enforcenet", label: "Erzwinge Netzwerkverbindung"
     // },{
     //   name: "ip4_filter", label: "IPv4 Whitelist Filter aktivieren"
     // },{
