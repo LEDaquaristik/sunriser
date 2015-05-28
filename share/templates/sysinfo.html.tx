@@ -4,6 +4,7 @@
 <h2>System Informationen</h2>
 <hr><br>
 <div id="sysinfo"><img class="loader" src="/img/ajaxload.gif"></div>
+<br><hr>
 
 : }
 : override postjs -> {
