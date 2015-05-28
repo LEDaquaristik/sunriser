@@ -1,11 +1,10 @@
-: cascade base { title => "Kontaktinformationen", nav => "info", no_bighelp => 1 }
+: cascade base { title => "Kontaktinformationen", nav => "info", no_bighelp => 1, no_form => 1 }
 : override content -> {
 
 <h2 class="form_title">Kontaktinformationen</h2>
 
-<h3>Haben Sie schon geschaut ob die <a href="/intro.html">Einf&uuml;hrung</a> oder die <a href="/faq.html">h&auml;ufig gestellten Fragen</a> Ihnen vielleicht helfen k&ouml;nnen?</h3>
+<h3>Haben Sie schon geschaut, ob die <a href="/intro.html">Einf&uuml;hrung</a> oder die <a href="/faq.html">h&auml;ufig gestellten Fragen</a> Ihnen vielleicht helfen k&ouml;nnen?</h3>
 
-<br>
 <hr>
 <br>
 
@@ -15,11 +14,20 @@
     <tr>
       <td class="contactlabel">Adresse</td>
       <td>
-        <span itemprop="name"><a href="http://www.LEDaquaristik.de/">LEDaquaristik.de</a></span><br>
-        <span itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress"><span itemprop="streetAddress"><p>Dennis R&uuml;sing<br>
-Ostpreußenstraße 2<br>
-33161 H&ouml;velhof<br>
-Deutschland</p></span></span>
+        <span itemprop="name">
+          <a href="http://www.LEDaquaristik.de/">LEDaquaristik.de</a>
+        </span>
+        <br>
+        <span itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress">
+          <span itemprop="streetAddress">
+            <p>
+              Dennis R&uuml;sing<br>
+              Ostpreußenstraße 2<br>
+              33161 H&ouml;velhof<br>
+              Deutschland
+            </p>
+          </span>
+        </span>
       </td>
     </tr>
     <tr><td colspan="2">&nbsp;</td></tr>

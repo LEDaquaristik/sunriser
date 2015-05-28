@@ -1,4 +1,4 @@
-: cascade base { title => 'Netzwerk Einstellungen', nav => 'setup' }
+: cascade base { title => 'Netzwerk Einstellungen', nav => 'setup', help => r("Falls Sie Schwierigkeiten mit der Erreichbarkeit Ihres SunRisers haben, aktivieren Sie die 'Erzwinge Netzwerkverbindung' Option. Bitte beachten Sie aber, das daf&uuml;r der NTP-Server benutzt werden muss und Ihr SunRiser mit dem Internet verbunden sein muss.") }
 : override content -> {
 
 <div class="form" id="network"></div>

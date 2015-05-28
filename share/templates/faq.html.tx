@@ -1,8 +1,14 @@
 : cascade base { title => r("H&auml;ufige Fragen"), nav => "info", no_form => 1, no_bighelp => 1 }
 : override content -> {
 
-<h2 id="gamma">Warum verhalten sich die LED gesetzten Werte nicht so wie ich es von meiner bisherigen LED Steuerung gewohnt bin? (oder: Was hat es mit der Gammakorrektur auf sich?)</h2>
-<div>
+<h2 class="hiddencontent" id="suggestions">Ich hab da so ein paar Vorschl&auml;ge...</h2>
+<div class="js-hide" id="suggestionscontent">
+  <p>Schauen Sie bitte zuerst in unsere Liste am Ende der <a href="/intro.html#todo">Einf&uuml;hrung</a>, ob dort Ihr Wunsch vielleicht schon aufgef&uuml;hrt wurde. Falls Sie Ihren Vorschlag dort nicht finden, schicken Sie uns doch einfach eine Email an <a href="sunriser@ledaquaristik.de">sunriser@LEDaquaristik.de</a>, alternativ k&ouml;nnen Sie dies auch auf unserem <a href="https://github.com/LEDaquaristik/sunriser/issues">GitHub Projekt</a> als Vorschlag einreichen. Dort k&ouml;nnen sich dann auch andere Benutzer an der Diskussion beteiligen. Am besten ein GitHub Benutzerkonto erstellen und das Projekt <a href="https://github.com/LEDaquaristik/sunriser/subscription">"watchen"</a>.</p>
+  <br>
+</div>
+<hr>
+<h2 class="hiddencontent" id="gamma">Warum verhalten sich die LED gesetzten Werte nicht so wie ich es von meiner bisherigen LED Steuerung gewohnt bin? (oder: Was hat es mit der Gammakorrektur auf sich?)</h2>
+<div class="js-hide" id="gammacontent">
   <p>Ein bekanntes Problem in vielen Bereich die etwas mit Licht zutun haben, wie z.B. LED Steuerung oder auch Fotografie, ist die subjektive Wahrnehmung von Helligkeit im Verh&auml;ltnis zur tats&auml;chlichen Leistung die das Licht hat. Das Problem hierbei liegt in der Kennlinie des menschlichen Auges. Diese ist nichtlinear, genauer gesagt: sie ist nahezu logarithmisch. Das erm&ouml;glicht die Wahrnehmung eines sehr gro&szlig;en Helligkeitsbereichs, angefangen von Vollmond mit &#188; Lux &uuml;ber eine normale Schreibtischbeleuchtung mit 750 Lux bis zu einem hellen Sommertag mit bis zu 100.000 Lux. Solche hochdynamischen Signale sind nur mit einer logarithmischen Kennlinie in den Griff zu kriegen.</p>
   <br>
   <p>Um diesem Effekt entgegen zu wirken, gibt es die sogenannte <a href="http://de.wikipedia.org/wiki/Gammakorrektur">Gammakorrektur</a>. Mathematisch gesehen handelt es sich bei dieser Funktion um eine Potenzfunktion mit einem oft nur kurz Gamma genannten Exponenten als einzigem Parameter. Wir haben bei der Tagesplanung nun genau diese Funktion hinzugef&uuml;gt, wobei wir hier Vorberechnungen benutzen, die wir auf leistungsst&auml;rkeren Rechnern erstellen, um die Berechnungen viel genauer zu machen, als der kleine Prozessor im Ger&auml;t selber vornehmen kann.</p>
@@ -11,12 +17,22 @@
   <br>
 </div>
 <hr>
-<h2 id="moonday">Eigentlich sollte laut Tagesplanung die LED aus sein, aber trotzdem leuchtet sie, was passiert da?</h2>
-<div>
+<h2 class="hiddencontent" id="moonday">Eigentlich sollte laut Tagesplanung die LED aus sein, aber trotzdem leuchtet sie, was passiert da?</h2>
+<div class="js-hide" id="moondaycontent">
   <p>Wenn Sie den Mond aktivieren, wird dieser gem&auml;&szlig; der Realit&auml;t leuchten, dies kann auch tags&uuml;ber sein. Auf <a href="http://www.mondverlauf.de/#/50.6251,6.5918,5">http://www.mondverlauf.de/</a> kann nachgeguckt werden, wann der Mond auf- und absteigt, in einer der n&auml;chsten Versionen werden Sie die GPS Koordination f&uuml;r die Berechung selber bestimmen k&ouml;nnen. Dies kann nat&uuml;rlich ein ungew&uuml;nschter Effekt sein. Am besten nutzen Sie f&uuml;r die Mondsimulation eine getrennte LED.</p>
   <br>
   <p>Eine weitere helfende Option, die wir bald hinzuf&uuml;gen, ist die Einstellung des Zeitraums des Tages wo ein Mondaufgang nur passieren kann.</p>
   <br>
 </div>
+<hr>
+<h2 class="hiddencontent" id="api">Gibt es auch eine API?</h2>
+<div class="js-hide" id="apicontent">
+  <p>Das gesamte Web Frontend benutzt eine API um Ihre Konfiguration zu dem SunRiser zu bringen. Diese API erlaubt das Setzen der Konfiguration, Firmware einzuspielen oder alle anderen Funktionen die Sie im Web Interface haben.</p>
+  <br>
+  <p>Die Kommunikaton daf&uuml;r l&auml;uft als <a href="http://msgpack.org/">MessagePack</a> &uuml;ber HTTP vom SunRiser. Wir planen hier wenigstens eine weitere API &uuml;ber GET Parameter hinzuz&uuml;fgen um z.B. in Systeme wie <a href="http://fhem.de/">Fhem</a> eingebunden zu werden. Auf Anfrage werden wir auch gern die MessagePack API dokumentieren, planen aber soweit dies nur f&uuml;r die GET API zutun.</p>
+  <br>
+</div>
+<hr>
+<h2 style="text-align:right"><a href="/contact.html">... oder kontaktieren Sie uns :)</a></h2>
 
 : }

@@ -209,47 +209,56 @@
       <h2>Und das beste ist, es f&auml;ngt gerade erst an!</h2>
       <p>Der <i>SunRiser</i> ist ein sehr junges Produkt, und wurde von Anfang an so geplant sich stark an den Kundenw&uuml;nschen zu orientieren und mit diesen zu wachsen, und nicht einen unverst&auml;ndlichen Funktionalit&auml;tskatalog zu erstellen, wo genau die gew&uuml;nschten Funktionen nicht m&ouml;glich sind. Bei solchen Systemen warten Kunden sehr lange bis neue Funktionen nach Ihren W&uuml;nschen eingebaut werden. <i>SunRiser</i> soll hier ein anderes Bild zeigen. Regelm&auml;ssige Firmware Aktualisierung und aktive Interaktion mit den Kunden &uuml;ber <a href="https://github.com/LEDaquaristik/sunriser">GitHub</a> werden daf&uuml;r sorgen das genau das Produkt entsteht welches Sie als Kunde ben&ouml;tigen. Sie k&ouml;nnen nat&uuml;rlich auch jederzeit Erweiterungsvorschl&auml;ge an <a href="mailto:sunriser@ledaquaristik.de">sunriser@ledaquaristik.de</a> schicken.</p>
       <br>
-      <p>Hier mal eine kleine Auflistung aller zuk&uuml;nftiger Funktionen die wir schon auf unserem Radar haben (Sortierung ist nach Priorit&auml;t, dies ist aber nicht in Stein gemeiselt):</p>
+      <p id="todo">Hier mal eine kleine Auflistung aller zuk&uuml;nftiger Funktionen die wir schon auf unserem Radar haben (Sortierung ist nach Priorit&auml;t, dies ist aber nicht in Stein gemeiselt):</p>
       <ul>
         <li>
-          Schnelltasten f&uuml;r Standardfunktionen wie Kehrwoche (Maximale Leistung f&uuml; eine Reinigungsphase) oder Mittagspause (Dimmen alle Lampen zu einem bestimmten Wert f&uuml;r einen bestimmten definierten Zeitraum).
+          Ein Text Eingabe Feld f&uuml;r die Tagesplanung Zeitpunkte
         </li>
         <li>
-          Programme f&uuml;r Tagesverlauf (Verwaltung, Import, Export, Kopieren und zeitgesteuerte Programmwechsel), auch die Option den original Sonnenauf- und Untergang zu simulieren.
+          GET Parameter basierte API
         </li>
         <li>
-          Weitere Verwaltungsfunktionen f&uuml;r die Wetter Profile und zeitgesteuertem Wechsel, um z.B. individuelles Jahreszeiten-Wetter zu simulieren.
+          Schnelltasten f&uuml;r Standardfunktionen wie Kehrwoche (Maximale Leistung f&uuml;r eine Reinigungsphase) oder Mittagspause (Dimmen alle Lampen zu einem bestimmten Wert f&uuml;r einen bestimmten definierten Zeitraum)
         </li>
         <li>
-          Passwort Schutz f&uuml;r das Administrations Interface
+          Genaueres Programm Management f&uuml;r Tagesverlauf und Wetter Profile (Verwaltung, Import, Export, Kopieren und verschiedene Programme für Wochentage oder Monate)
         </li>
         <li>
-          Cloud Speicherung der Konfiguration. Dadurch k&ouml;nnen Sie dann jederzeit auf jeden alten Stand der Konfiguration zur&uuml;ckgehen, soweit Ihr Computer mit dem Sie auf den <i>SunRiser</i> zugreifen mit dem Internet verbunden ist (der <i>SunRiser</i> selber muss hierf&uuml;r nicht mit dem Internet verbunden sein).
+          Die Option den original Sonnenaufgang und Sonnenuntergang zu simulieren
         </li>
         <li>
-          Eine Tagesverlauf Preview, die erm&ouml;glicht das geplante Programm vor dem Speichern mal in Kurzfassung zu sehen, 24 Stunden in 24 Sekunden (nat&uuml;rlich einstellbar).
+          Gammakorrektur optional machbar (und langfristig auch regulierbar)
         </li>
         <li>
-          Erweiterung der Wetter Optionen um Wochentage und Zeitregulierungen.
+          Passwort Schutz f&uuml;r das Administrations Interface (Bitte sagen Sie uns Bescheid, wenn diese Funktion von Ihnen ben&ouml;tigt wird)
         </li>
         <li>
-          LED Steuerung basierend auf Wochentage
+          Cloud Speicherung der Konfiguration. Dadurch k&ouml;nnen Sie dann jederzeit auf jeden alten Stand der Konfiguration zur&uuml;ckgehen, soweit Ihr Computer mit dem Sie auf den <i>SunRiser</i> zugreifen mit dem Internet verbunden ist (der <i>SunRiser</i> selber muss hierf&uuml;r nicht mit dem Internet verbunden sein)
         </li>
         <li>
-          Unterst&uuml;tzung der <a href="http://www.amazon.de/EnerGenie-EG-PMS2-LAN-IP-Steckdosenleiste-Überspannungsschutz-LAN-Schnittstelle/dp/B0099AHPQ4/">GemBird LAN IP Steckdosenleiste</a> als Teil der Tagesplanung um Ein/Ausschalten von weiterer Peripherie zu kontrollieren.
+          Cloud Platform f&uuml;r den Austausch zwischen den SunRiser Benutzern
         </li>
         <li>
-          Umstellung auf ein <a href="http://de.wikipedia.org/wiki/Echtzeitbetriebssystem">Echtzeitbetriebssystem</a>.
+          Eine Tagesverlauf Preview, die erm&ouml;glicht das geplante Programm vor dem Speichern mal in Kurzfassung zu sehen, 24 Stunden in 24 Sekunden (nat&uuml;rlich einstellbar)
         </li>
         <li>
-          <a href="http://de.wikipedia.org/wiki/WebSocket">WebSocket</a> Unterst&uuml;tzung f&uuml;r ein noch aktiveres Interface.
+          Mehr Optionen f&uuml;r die Wetter Profile, inklusive eine Preview Option um alles vorher mehr anschauen zu k&ouml;nnen.
+        </li>
+        <li>
+          Unterst&uuml;tzung der <a href="http://www.amazon.de/EnerGenie-EG-PMS2-LAN-IP-Steckdosenleiste-Überspannungsschutz-LAN-Schnittstelle/dp/B0099AHPQ4/">GemBird LAN IP Steckdosenleiste</a> als Teil der Tagesplanung um Ein/Ausschalten von weiterer Peripherie zu kontrollieren
+        </li>
+        <li>
+          <a href="http://de.wikipedia.org/wiki/WebSocket">WebSocket</a> Unterst&uuml;tzung f&uuml;r ein noch aktiveres Interface
         </li>
         <li>
           <a href="http://de.wikipedia.org/wiki/IPv6">IPv6</a> Unterst&uuml;tzung
         </li>
+        <li>
+          Umstellung auf ein <a href="http://de.wikipedia.org/wiki/Echtzeitbetriebssystem">Echtzeitbetriebssystem</a>
+        </li>
       </ul>
       <br>
-      <p>Abonnieren Sie einfach den Newsletter von <a href="http://www.LEDaquaristik.de/">LEDaquaristik</a> um immer auf dem laufenden zu bleiben! Sie finden die Anmeldung in der rechten Leiste auf der Webseite.</p>
+      <p>Abonnieren Sie einfach den Newsletter von <a href="http://www.LEDaquaristik.de/">LEDaquaristik.de</a> um immer auf dem laufenden zu bleiben! Sie finden die Anmeldung in der rechten Leiste auf der Webseite.</p>
     </div>
     <div class="moretocomeimg">
       <a href="http://www.LEDaquaristik.de/">

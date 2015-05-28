@@ -112,6 +112,16 @@ $(function(){
     });
   }
 
+  $(".hiddencontent").each(function(){
+    var id = $(this).attr('id');
+    $(this).click(function(){
+      $('#' + id + 'content').toggle('slow');
+    });
+    if ('#' + id == window.location.hash) {
+      $(this).click();
+    }
+  });
+
   $("#index_reboot_sunriser").click(function(){
     sr_screenblock('<div>Warte auf Neustart</div><div>(ca. 1 Minute)</div>');
     $.get( "/reboot", function(data) {
