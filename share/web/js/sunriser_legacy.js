@@ -1,4 +1,4 @@
-function sr_generate_weather_web() {
+function sr_generate_upgrade_0500() {
   var legacy_keys = [
     "weather#setup#0#pwms",
     "weather#setup#0#rain#activated",
@@ -44,6 +44,7 @@ function sr_generate_weather_web() {
     }]);
     weather_setup_one["weather#setup#1#name"] = weather_setup_one_name;
     weather_setup_one["weather#last_setup_id"] = 1;
+    weather_setup_one["upgraded0500"] = 1;
     sr_request_mpack('PUT','/',weather_setup_one,function(){
       window.location.href = window.location.href;
     });
