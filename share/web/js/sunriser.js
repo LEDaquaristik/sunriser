@@ -4,7 +4,7 @@ var sr_config;
 var sr_config_main_keys = [
   'model','model_id','pwm_count','factory_version','language','timezone',
   'gmtoff','nodst','updated','name','showexpert','nohelp','nofinder','usentp',
-  'weather#web','weather#last_setup_id'
+  'weather#web','weather#last_setup_id','upgraded0500'
 ];
 
 var current_time;
@@ -191,8 +191,8 @@ $('body').on('sr_config_init',function(){
 
   // ------------------------------------------------ LEGACY ---------
   // --- generating weather web config for fresh or pre-0.500 SunRiser
-  if (!sr_config['weather#web']) {
-    sr_generate_weather_web();
+  if (!sr_config['upgraded0500']) {
+    sr_generate_upgrade_0500();
   // -----------------------------------------------------------------
   } else {
     if (sr_config.nohelp) {

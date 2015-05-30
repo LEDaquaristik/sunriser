@@ -35,6 +35,7 @@
   "summertime", [  "It is summertime, add an hour", "bool", 1],
   "name", [        "Custom visual name of device", "text"],
   "hostname", [    "Hostname for the device",    "text", "sunriser"],
+  "upgraded0500", [ "Upgrade to 0.500 done",     "bool", 0],
   "pwm#X",       "Main data of PWM X", [
     "manager", [   "Assigned manager, 0 = unassigned, 1 = dayplanner, 2 = event", "integer", 0],
     "name", [      "Custom name for pwm",        "text"],
