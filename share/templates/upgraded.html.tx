@@ -5,9 +5,19 @@
 
 <hr>
 
+<h3>Seit Firmware v0.502:</h3>
+
+<div>
+  Wir haben einen Fehler behoben der dazu f&uuml;hrte, dass die Netzwerkverbindung nach einiger Zeit unterbrochen wurde und das System einen Neustart durchf&uuml;hrte.
+</div>
+
+<hr>
+
 <h3>Seit Firmware v0.500:</h3>
 
-<div>&Uuml;ber die <a href="/weather.html">Wetter Profile</a> k&ouml;nnen Sie nun gezielt f&uuml;r jede LED ein eigenes Wetter Programm einstellen. Sie finden den Men&uuml;punkt im Wetter Men&uuml; <i class="fa fa-cloud fa-2x"></i>.</div>
+<div>
+  &Uuml;ber die <a href="/weather.html">Wetter Profile</a> k&ouml;nnen Sie nun gezielt f&uuml;r jede LED ein eigenes Wetter Programm einstellen. Sie finden den Men&uuml;punkt im Wetter Men&uuml; <i class="fa fa-cloud fa-2x"></i>.
+</div>
 
 <br>
 
@@ -17,6 +27,8 @@
 
 <h3>Seit Firmware v0.400:</h3>
 
-<div>Basierend auf Kundenwunsch haben wir nun eine <a href="/service.html">Wartungsarbeiten</a> Seite eingef&uuml;hrt, die Ihnen erlaubt einfacher die Kontrolle &uuml;ber Ihre LED zu &uuml;bernehmen, w&auml;hrend Sie aktiv am Aquarium arbeiten. Sie finden den Men&uuml;punkt im System Men&uuml; <i class="fa fa-gears fa-2x"></i>.</div>
+<div>
+  Basierend auf Kundenwunsch haben wir nun eine <a href="/service.html">Wartungsarbeiten</a> Seite eingef&uuml;hrt, die Ihnen erlaubt einfacher die Kontrolle &uuml;ber Ihre LED zu &uuml;bernehmen, w&auml;hrend Sie aktiv am Aquarium arbeiten. Sie finden den Men&uuml;punkt im System Men&uuml; <i class="fa fa-gears fa-2x"></i>.
+</div>
 
 : }

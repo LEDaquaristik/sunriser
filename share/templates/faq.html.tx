@@ -1,6 +1,7 @@
 : cascade base { title => r("H&auml;ufige Fragen"), nav => "info", no_form => 1, no_bighelp => 1 }
 : override content -> {
 
+<hr>
 <h2 class="hiddencontent" id="suggestions">Ich hab da so ein paar Vorschl&auml;ge...</h2>
 <div class="js-hide" id="suggestionscontent">
   <p>Schauen Sie bitte zuerst in unsere Liste am Ende der <a href="/intro.html#todo">Einf&uuml;hrung</a>, ob dort Ihr Wunsch vielleicht schon aufgef&uuml;hrt wurde. Falls Sie Ihren Vorschlag dort nicht finden, schicken Sie uns doch einfach eine Email an <a href="sunriser@ledaquaristik.de">sunriser@LEDaquaristik.de</a>, alternativ k&ouml;nnen Sie dies auch auf unserem <a href="https://github.com/LEDaquaristik/sunriser/issues">GitHub Projekt</a> als Vorschlag einreichen. Dort k&ouml;nnen sich dann auch andere Benutzer an der Diskussion beteiligen. Am besten ein GitHub Benutzerkonto erstellen und das Projekt <a href="https://github.com/LEDaquaristik/sunriser/subscription">"watchen"</a>.</p>
@@ -29,7 +30,7 @@
 <div class="js-hide" id="apicontent">
   <p>Das gesamte Web Frontend benutzt eine API um Ihre Konfiguration zu dem SunRiser zu bringen. Diese API erlaubt das Setzen der Konfiguration, Firmware einzuspielen oder alle anderen Funktionen die Sie im Web Interface haben.</p>
   <br>
-  <p>Die Kommunikaton daf&uuml;r l&auml;uft als <a href="http://msgpack.org/">MessagePack</a> &uuml;ber HTTP vom SunRiser. Wir planen hier wenigstens eine weitere API &uuml;ber GET Parameter hinzuz&uuml;fgen um z.B. in Systeme wie <a href="http://fhem.de/">Fhem</a> eingebunden zu werden. Auf Anfrage werden wir auch gern die MessagePack API dokumentieren, planen aber soweit dies nur f&uuml;r die GET API zutun.</p>
+  <p>Die Kommunikaton daf&uuml;r l&auml;uft als <a href="http://msgpack.org/">MessagePack</a> &uuml;ber HTTP vom SunRiser. Wir planen hier wenigstens eine weitere API &uuml;ber GET Parameter hinzuzuf&uuml;gen um z.B. in Systeme wie <a href="http://fhem.de/">Fhem</a> eingebunden zu werden. Auf Anfrage werden wir auch gern die MessagePack API dokumentieren, planen aber soweit dies nur f&uuml;r die GET API zutun.</p>
   <br>
 </div>
 <hr>
