@@ -5,6 +5,14 @@
 
 <hr>
 
+<h3>Seit Firmware v0.503:</h3>
+
+<div>
+  Wegen eines Fehler in der Berechnung des Ablaufs, blieb in seltenen F&auml;llen ein Kanal der LED Steuerung h&auml;ngen und konnte nur durch Reset wieder aktiviert werden. Dies ist nun behoben.
+</div>
+
+<br><hr>
+
 <h3>Seit Firmware v0.502:</h3>
 
 <div>
