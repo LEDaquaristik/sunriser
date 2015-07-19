@@ -138,7 +138,12 @@ sub reboot {
 
 sub ok {
   my ( $self ) = @_;
-  return $self->call('GET', 'ok')->is_success;
+  my $res = $self->call('GET', 'ok');
+  if ($res->message =~ /Connection refused/) {
+    sleep(1);
+    return 0;
+  }
+  return $res->is_success;
 }
 
 sub restore {
@@ -181,7 +186,7 @@ sub wait_for {
   while (1) {
     $i++;
     last if $self->ok;
-    return undef if $i > 90;
+    return undef if $i > 240;
   }
   $self->timeout($old_timeout);
   return $i;

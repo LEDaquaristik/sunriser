@@ -1,0 +1,27 @@
+#!/usr/bin/env perl
+# PODNAME: sunriser_stripnet
+# ABSTRACT: SunRiser Strip Network Configuration of Backup
+
+$|=1;
+
+use strict;
+use warnings;
+use Data::MessagePack;
+use Path::Tiny;
+
+$|=1;
+
+my $filename = shift @ARGV;
+my $target = shift @ARGV || $filename.'_nonet';
+
+my $mp = Data::MessagePack->new;
+$mp->utf8(1);
+my $data = $mp->unpack(path($filename)->slurp_raw);
+
+for (qw( useip4 ip4 ip4_dns ip4_gateway ip4_netmask )) {
+  delete $data->{$_} if exists $data->{$_};  
+}
+
+path($target)->spew_raw($mp->pack($data));
+
+exit 0;
