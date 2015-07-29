@@ -5,6 +5,14 @@
 
 <hr>
 
+<h3>Seit Firmware v0.510:</h3>
+
+<div>
+  Wir haben einen weiteren Fehler im Netzwerk beseitigt, der bei vielen fehlerhaften Verbindungen zu einem blockierten Netzwerk f&uuml;hrte. Weiterhin haben wir die Tagesplanung nun vor dem Netzwerk gestartet, damit die LEDs auch bei einem Neustart oder Absturz viel fr&uuml;her wieder starten (bei einem Reset z.B. nur 4 Sekunden).
+</div>
+
+<br><hr>
+
 <h3>Seit Firmware v0.503:</h3>
 
 <div>

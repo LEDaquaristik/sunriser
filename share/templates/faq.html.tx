@@ -14,7 +14,7 @@
   <br>
   <p>Um diesem Effekt entgegen zu wirken, gibt es die sogenannte <a href="http://de.wikipedia.org/wiki/Gammakorrektur">Gammakorrektur</a>. Mathematisch gesehen handelt es sich bei dieser Funktion um eine Potenzfunktion mit einem oft nur kurz Gamma genannten Exponenten als einzigem Parameter. Wir haben bei der Tagesplanung nun genau diese Funktion hinzugef&uuml;gt, wobei wir hier Vorberechnungen benutzen, die wir auf leistungsst&auml;rkeren Rechnern erstellen, um die Berechnungen viel genauer zu machen, als der kleine Prozessor im Ger&auml;t selber vornehmen kann.</p>
   <br>
-  <p>In Planung ist aber, f&uuml;r Benutzer die volle Kontrolle &uuml;ber die Leistung haben wollen, eine Option zu erstellen, die diese Gammakorrektur abschaltet und somit ein absolutes, lineares Leistungs-Fading &uuml;ber den gesetzten Zeitraum vornimmt. Ein weiterer Schritt danach w&auml;hre die M&ouml;glichkeit die Gammakorrektur anzupassen, anstelle Sie nur abzuschalten.</p>
+  <p>In Planung ist aber, f&uuml;r Benutzer die volle Kontrolle &uuml;ber die Leistung haben wollen, eine Option zu erstellen, die diese Gammakorrektur abschaltet und somit ein absolutes, lineares Leistungs-Fading &uuml;ber den gesetzten Zeitraum vornimmt. Ein weiterer Schritt danach w&auml;re die M&ouml;glichkeit die Gammakorrektur anzupassen, anstelle Sie nur abzuschalten.</p>
   <br>
 </div>
 <hr>
