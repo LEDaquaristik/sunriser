@@ -3,12 +3,14 @@ function sr_request_mpack(method,url,data,success) {
   if (method == 'PUT') {
     sr_pleasewait();
   }
+  var failed = 0;
   var mpack = msgpack.pack(data);
   var bytesarray = new Uint8Array(mpack.length);
   for (var i = 0; i < mpack.length; i++) {
     bytesarray[i] = mpack[i];
   }
-  var call_options = {
+  var call_options = {};
+  call_options = {
     type: method,
     url: url,
     contentType: 'application/x-msgpack',
@@ -17,11 +19,17 @@ function sr_request_mpack(method,url,data,success) {
     cache: false,
     timeout: 10000,
     error: function(xhr,error,errorthrown) {
-      if (method == 'PUT') {
-        sr_failed();
-      }
-      if (method == 'POST') {
-        sr_error();
+      failed = failed + 1;
+      console.log('Error on mpack request #' + failed);
+      if (failed > 2) {
+        if (method == 'PUT') {
+          sr_failed();
+        }
+        if (method == 'POST') {
+          sr_error();
+        }
+      } else {
+        $.ajax(call_options);
       }
       // console.log(method + ' ' + url);
       // console.log(data);
@@ -33,12 +41,12 @@ function sr_request_mpack(method,url,data,success) {
       }
     },
     complete: function(xhr,status) {
+    },
+    success: function(result,status,xhr) {
       if (method == 'PUT') {
         sr_screenunblock();
         sr_cleanwait();
       }
-    },
-    success: function(result,status,xhr) {
       if (xhr.getResponseHeader('content-type') == 'application/x-msgpack') {
         var bytearray = new Uint8Array(result);
         result = msgpack.unpack(bytearray);
@@ -110,7 +118,7 @@ function _wait_for_sunriser_loop(target) {
         }
       }
     });
-  },2500);
+  },2000);
 }
 
 function _wait_for_sunriser_loop_mac(target) {

@@ -4,7 +4,7 @@
       <title><: $title ? $title ~ " | " : "" :>SunRiser von LEDaquaristik.de</title>
       <script type="text/javascript">
         window.loaded = false;
-        setTimeout(function(){ if (!window.loaded) { window.location.href = window.location.href; }}, 25000);
+        setTimeout(function(){ if (!window.loaded) { window.location.href = window.location.href; }}, 15000);
       </script>
       <!-- META -->
       <meta charset="utf-8">

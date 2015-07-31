@@ -189,6 +189,9 @@ $('body').on('sr_config_init',function(){
 
   //console.log(sr_config);
 
+  // $('body').css('background','url("/img/background.jpg") no-repeat fixed center center / 200% 200% #145868;');
+  // $('body').css('background-image','url(/img/background.jpg)');
+
   // ------------------------------------------------ LEGACY ---------
   // --- generating weather web config for fresh or pre-0.500 SunRiser
   if (!sr_config['upgraded0500']) {
