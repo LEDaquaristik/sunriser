@@ -4,6 +4,9 @@ function sr_request_mpack(method,url,data,success) {
     sr_pleasewait();
   }
   var failed = 0;
+  if (method == 'PUT' && url == '/' && sr_config && sr_config.factory_version) {
+    data['save_version'] = sr_config.factory_version;
+  }
   var mpack = msgpack.pack(data);
   var bytesarray = new Uint8Array(mpack.length);
   for (var i = 0; i < mpack.length; i++) {

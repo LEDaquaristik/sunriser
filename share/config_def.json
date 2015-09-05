@@ -1,6 +1,7 @@
 [
   "factory", [     "Is factory file (contains all data)", "bool", 0],
   "factory_version", [ "Factory version",        "text"],
+  "save_version", [ "Version used to save this config", "text"],
   "model", [       "Firmware made for this model (human)", "text"],
   "model_id", [    "Firmware made for this model (short)", "text"],
   "pwm_count", [   "Amount of pwms",             "integer"],

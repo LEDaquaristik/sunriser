@@ -4,7 +4,7 @@ var sr_config;
 var sr_config_main_keys = [
   'model','model_id','pwm_count','factory_version','language','timezone',
   'gmtoff','nodst','updated','name','showexpert','nohelp','nofinder','usentp',
-  'weather#web','weather#last_setup_id','upgraded0500'
+  'weather#web','weather#last_setup_id','upgraded0500','ignoreupgrade'
 ];
 
 var firmware_info;
@@ -270,5 +270,7 @@ $('body').on('sr_config',function(){
       }
     });
   });
+
+  console.log(sr_config);
 
 });

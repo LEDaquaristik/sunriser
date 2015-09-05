@@ -52,7 +52,7 @@
     <input class="daybox" type="text" size="1" id="marker_time" value="<%=marker.time()%>">
   </div>
   <div style="float:left;margin:5px">
-    Leistung:
+     &#37; Leistung:
     <input class="daybox" type="text" size="1" id="marker_percent" value="<%=marker.percent%>">
   </div>
 
