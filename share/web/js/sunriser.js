@@ -21,7 +21,7 @@ var is_changed = false;
 
 var url = new URI();
 var query = url.search(true);
-var get_weather_setup_id = query.weather || 1;
+var get_weather_setup_id = query.weather;
 
 var weather_profiles = [{
   value: 0,
@@ -211,14 +211,13 @@ $('body').on('sr_config_init',function(){
       $('.expert-menu').show();
     }
 
-    $('.weather-profiled').each(function(){
-      var link = new URI($(this).attr('href'));
-      link.addSearch("weather",get_weather_setup_id);
-      $(this).attr('href',link);
-    });
     var got_empty = false;
+    var first_weather_setup_id;
     $.each(sr_config['weather#web'],function(i,v){
       if (v) {
+        if (!first_weather_setup_id) {
+          first_weather_setup_id = v.id;
+        }
         weather_profiles.push({
           value: v.id,
           name: v.name,
@@ -239,6 +238,16 @@ $('body').on('sr_config_init',function(){
       });
       sr_config['weather#web'] = new_weather_config;
     }
+
+    if (!get_weather_setup_id) {
+      get_weather_setup_id = first_weather_setup_id;
+    }
+
+    $('.weather-profiled').each(function(){
+      var link = new URI($(this).attr('href'));
+      link.addSearch("weather",get_weather_setup_id);
+      $(this).attr('href',link);
+    });
 
     $(".form").not(".noautoload").each(function(){
       var id = $(this).attr('id');
