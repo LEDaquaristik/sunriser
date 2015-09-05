@@ -20,7 +20,7 @@
 <hr>
 <h2 class="hiddencontent" id="moonday">Eigentlich sollte laut Tagesplanung die LED aus sein, aber trotzdem leuchtet sie, was passiert da?</h2>
 <div class="js-hide" id="moondaycontent">
-  <p>Wenn Sie den Mond aktivieren, wird dieser gem&auml;&szlig; der Realit&auml;t leuchten, dies kann auch tags&uuml;ber sein. Auf <a href="http://www.mondverlauf.de/#/50.6251,6.5918,5">http://www.mondverlauf.de/</a> kann nachgeguckt werden, wann der Mond auf- und absteigt, in einer der n&auml;chsten Versionen werden Sie die GPS Koordination f&uuml;r die Berechung selber bestimmen k&ouml;nnen. Dies kann nat&uuml;rlich ein ungew&uuml;nschter Effekt sein. Am besten nutzen Sie f&uuml;r die Mondsimulation eine getrennte LED.</p>
+  <p>Wenn Sie den Mond aktivieren, wird dieser gem&auml;&szlig; der Realit&auml;t leuchten, dies kann auch tags&uuml;ber sein. Dies kann nat&uuml;rlich ein ungew&uuml;nschter Effekt sein. Am besten nutzen Sie f&uuml;r die Mondsimulation eine getrennte LED. Auf <a href="http://www.mondverlauf.de/#/51.16,6.44,5/2015.09.05/08:00/1">http://www.mondverlauf.de/</a> kann nachgeguckt werden, wann der Mond auf- und absteigt, in einer der n&auml;chsten Versionen werden Sie die GPS Koordination f&uuml;r die Berechung selber bestimmen k&ouml;nnen.</p>
   <br>
   <p>Eine weitere helfende Option, die wir bald hinzuf&uuml;gen, ist die Einstellung des Zeitraums des Tages wo ein Mondaufgang nur passieren kann.</p>
   <br>

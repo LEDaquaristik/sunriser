@@ -384,6 +384,7 @@ var SrPath = Class.extend({
             orig_daymin: undefined,
             orig_percent: undefined,
             move: function (event) {
+              self.clear_current_marker();
               var x_diff   = event.pageX - this.dragger.orig_x;
               var y_diff   = this.dragger.orig_y - event.pageY;
               var time     = x_diff * self.dp.currScale * self.dp.timeScale;
@@ -463,25 +464,26 @@ var SrPath = Class.extend({
 // _/          _/_/_/      _/_/  _/    _/    _/_/_/    _/_/_/  _/      _/_/
 //
 
+  clear_current_marker: function() {
+    $('.pathedit_edit').css('background-color', '');
+    self.current_marker = undefined;
+    $('#markeredit').html("");
+  },
+
   set_pathedit: function() {
     var self = this;
     $('#pathedit').html(tmpl('pathedit_tmpl',self));
     $('.pathedit_edit').click(function(){
       var pos = $(this).data('pos');
-      $('.pathedit_edit').css('background-color', '');
-      if (self.current_marker == self.markers[pos]) {
-        self.current_marker = undefined;
-        $('#markeredit').html("");
-      } else {
+      self.clear_current_marker();
+      if (self.current_marker != self.markers[pos]) {
         self.current_marker = self.markers[pos];
-        $(this).css('background-color', '#CCD7E2');
+        $(this).css('background-color', '#ccd7e2');
         $('#markeredit').html(tmpl('markeredit_tmpl',{ marker: self.current_marker }));
         $('#marker_delete').click(function(){
           if (confirm("Wollen Sie " + self.current_marker.title() + " entfernen?") == true) {
             self.delete_marker(pos);
-            $('.pathedit_edit').css('background-color', '');
-            self.current_marker = undefined;
-            $('#markeredit').html("");
+            self.clear_current_marker();
           }
         });
         $('#marker_update').click(function(){
@@ -506,14 +508,13 @@ var SrPath = Class.extend({
           if (!error) {
             self.delete_marker(pos);
             self.add_marker(newdaymin,newpercent);
-            $('.pathedit_edit').css('background-color', '');
-            self.current_marker = undefined;
-            $('#markeredit').html("");
+            self.clear_current_marker();
           }
         });
       }
     });
     $('.pathedit_add').click(function(){
+      self.clear_current_marker();
       var pos = $(this).data('pos');
       if (self.size == 0) {
         self.add_marker(self.dp.alldaymin / 2, self.dp.maxValue / 2);
