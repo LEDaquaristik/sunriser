@@ -19,3 +19,5 @@ SunRiser-*
 *firmware_images.json*
 
 config/*
+
+tmp/*

@@ -496,14 +496,14 @@ var SrPath = Class.extend({
             newpercent = Math.floor(newvalue);
           } else {
             error = 1;
-            $('#marker_percent').css('background-color','#dd0000');
+            $('#marker_percent').css('background-color','#E74C3C');
           }
           if (!isNaN(newtime[0]) && newtime[0] >= 0 && newtime[0] <= 23 &&
             !isNaN(newtime[1]) && newtime[1] >= 0 && newtime[1] <= 59) {
             newdaymin = ( Math.floor(newtime[0]) * 60 ) + Math.floor(newtime[1]);
           } else {
             error = 1;
-            $('#marker_time').css('background-color','#dd0000');
+            $('#marker_time').css('background-color','#E74C3C');
           }
           if (!error) {
             self.delete_marker(pos);

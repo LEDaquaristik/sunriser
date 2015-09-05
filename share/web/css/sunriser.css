@@ -53,7 +53,7 @@ body{
     -moz-animation: BackAnim 175s ease infinite;
     animation: BackAnim 175s linear infinite;
   -------------------------------------------------- */  
-  background:url("/img/background.jpg") no-repeat fixed center center / 200% 200% #145868;
+  background:url("/img/background.jpg") no-repeat fixed center center / 150% 150% #145868;
   transform-origin: 50% 400px 0px;
 }
 @-o-keyframes BackAnim {
