@@ -85,6 +85,8 @@ var sr_forms = {
       name: "gmtoff", pre: true
     }],
     expert_fields: [{
+      name: "ignoreupgrade", label: "Ignoriere Verf&uuml;gbarkeit neuer Firmware"
+    },{
       name: "nofinder", label: "SunRiser Finder deaktivieren"
     },{
       name: "nomdns", label: "mdns deaktivieren"

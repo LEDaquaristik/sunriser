@@ -14,6 +14,7 @@
 </div>
 <div id="day_countbar"></div>
 <div id="pathedit" style="margin-left:auto;margin-right:auto"></div>
+<div id="markeredit"></div>
 <div class="form noautoload" id="dayplan"></div>
 
 : }
@@ -34,6 +35,32 @@
     LED #<%=path.pwm%>
   </div>
 <% }); %>
+
+</script>
+<script type="text/html" id="markeredit_tmpl">
+
+<hr>
+
+<div class="form">
+
+  <div style="float:left;margin-top:20px;margin-right:15px" class="daybox" id="marker_delete">
+    Punkt entfernen
+  </div>
+
+  <div style="float:left;margin:5px">
+    Zeit:
+    <input class="daybox" type="text" size="1" id="marker_time" value="<%=marker.time()%>">
+  </div>
+  <div style="float:left;margin:5px">
+    Leistung:
+    <input class="daybox" type="text" size="1" id="marker_percent" value="<%=marker.percent%>">
+  </div>
+
+  <div style="float:left;margin-top:20px;margin-left:15px" class="daybox" id="marker_update">
+    Neue Werte &uuml;bernehmen
+  </div>
+
+</div>
 
 </script>
 <script type="text/html" id="pathedit_tmpl">
@@ -89,6 +116,7 @@ var SrDayplanner = Class.extend({
   currScale:       undefined,
   matrix:          undefined,
   current_edit:    undefined,
+  current_marker:  undefined,
 
   init: function(pwm_markers){
     var self = this;
@@ -204,11 +232,15 @@ var SrMarker = Class.extend({
     this.percent = percent;
   },
 
+  time: function() {
+    return sprintf("%2d:%02d", Math.floor( this.daymin / 60), this.daymin % 60);
+  },
+
   title: function() {
     var hour = Math.floor( this.daymin / 60);
     var min = this.daymin - ( hour * 60 );
     if (hour == 24) { hour = 0 }; // shouldn't happen anymore, but better lets be safe
-    return "" + hour + ":" + ( min < 10 ? "0" : "" ) + min + " " + this.percent + "%";    
+    return this.time() + " " + this.percent + "%";    
   }
 
 });
@@ -436,9 +468,49 @@ var SrPath = Class.extend({
     $('#pathedit').html(tmpl('pathedit_tmpl',self));
     $('.pathedit_edit').click(function(){
       var pos = $(this).data('pos');
-      var marker = self.markers[pos];
-      if (confirm("Wollen Sie " + marker.title() + " entfernen?") == true) {
-        self.delete_marker(pos);
+      $('.pathedit_edit').css('background-color', '');
+      if (self.current_marker == self.markers[pos]) {
+        self.current_marker = undefined;
+        $('#markeredit').html("");
+      } else {
+        self.current_marker = self.markers[pos];
+        $(this).css('background-color', '#CCD7E2');
+        $('#markeredit').html(tmpl('markeredit_tmpl',{ marker: self.current_marker }));
+        $('#marker_delete').click(function(){
+          if (confirm("Wollen Sie " + self.current_marker.title() + " entfernen?") == true) {
+            self.delete_marker(pos);
+            $('.pathedit_edit').css('background-color', '');
+            self.current_marker = undefined;
+            $('#markeredit').html("");
+          }
+        });
+        $('#marker_update').click(function(){
+          var newtime = $('#marker_time').val().split(":");
+          var newdaymin;
+          var newvalue = $('#marker_percent').val();
+          var newpercent;
+          var error = 0;
+          if (!isNaN(newvalue) && newvalue >= 0 && newvalue <= 100) {
+            newpercent = Math.floor(newvalue);
+          } else {
+            error = 1;
+            $('#marker_percent').css('background-color','#dd0000');
+          }
+          if (!isNaN(newtime[0]) && newtime[0] >= 0 && newtime[0] <= 23 &&
+            !isNaN(newtime[1]) && newtime[1] >= 0 && newtime[1] <= 59) {
+            newdaymin = ( Math.floor(newtime[0]) * 60 ) + Math.floor(newtime[1]);
+          } else {
+            error = 1;
+            $('#marker_time').css('background-color','#dd0000');
+          }
+          if (!error) {
+            self.delete_marker(pos);
+            self.add_marker(newdaymin,newpercent);
+            $('.pathedit_edit').css('background-color', '');
+            self.current_marker = undefined;
+            $('#markeredit').html("");
+          }
+        });
       }
     });
     $('.pathedit_add').click(function(){

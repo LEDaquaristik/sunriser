@@ -212,9 +212,6 @@
       <p id="todo">Hier mal eine kleine Auflistung aller zuk&uuml;nftiger Funktionen die wir schon auf unserem Radar haben (Sortierung ist nach Priorit&auml;t, dies ist aber nicht in Stein gemeiselt):</p>
       <ul>
         <li>
-          Ein Text Eingabe Feld f&uuml;r die Tagesplanung Zeitpunkte
-        </li>
-        <li>
           GET Parameter basierte API
         </li>
         <li>
@@ -248,13 +245,7 @@
           Unterst&uuml;tzung der <a href="http://www.amazon.de/EnerGenie-EG-PMS2-LAN-IP-Steckdosenleiste-Überspannungsschutz-LAN-Schnittstelle/dp/B0099AHPQ4/">GemBird LAN IP Steckdosenleiste</a> als Teil der Tagesplanung um Ein/Ausschalten von weiterer Peripherie zu kontrollieren
         </li>
         <li>
-          <a href="http://de.wikipedia.org/wiki/WebSocket">WebSocket</a> Unterst&uuml;tzung f&uuml;r ein noch aktiveres Interface
-        </li>
-        <li>
           <a href="http://de.wikipedia.org/wiki/IPv6">IPv6</a> Unterst&uuml;tzung
-        </li>
-        <li>
-          Umstellung auf ein <a href="http://de.wikipedia.org/wiki/Echtzeitbetriebssystem">Echtzeitbetriebssystem</a>
         </li>
       </ul>
       <br>

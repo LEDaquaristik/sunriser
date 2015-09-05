@@ -1,4 +1,4 @@
-: cascade base { title => "Wetter Profile", nav => "weather", no_bighelp => 1, help => r("Bitte beachten Sie das wir noch keine Funktion haben um Profile zu entfernen, dies wird sehr bald folgen.") }
+: cascade base { title => "Wetter Profile", nav => "weather", no_bighelp => 1, help => r("Mit den Wetter Profilen k&ouml;nnen Sie f&uuml;r jede LED individuelle Wetter Einstellungen vornehmen. Ein Programm arbeitet auch als eine Einheit, was z.B. bedeutet das Gewitter und Regen auf allen LED des Profils gemeinsam angewendet werden.") }
 : override content -> {
 
 <div class="index_function" id="add_weather_profile">
@@ -16,6 +16,7 @@
 $('body').on('sr_config',function(){
 
   $("#add_weather_profile").click(function(){
+
     var next_id = sr_config["weather#last_setup_id"] + 1;
     var next_name = "Neues Profil " + next_id;
     sr_config["weather#web"].push({
@@ -25,13 +26,16 @@ $('body').on('sr_config',function(){
     var data = {};
     data["weather#web"] = JSON.stringify(sr_config["weather#web"]);
     data["weather#setup#" + next_id + "#name"] = next_name;
+    data["weather#setup#" + next_id + "#deleted"] = false;
     data["weather#last_setup_id"] = next_id;
     sr_request_mpack('PUT','/',data,function(){
       window.location.href = window.location.href;
     });
+
   });
 
   $("#form_weather_profiles").each(function(){
+
     var fields = [{
       name: "weather#web",
       getdata: function(data) {
@@ -66,7 +70,49 @@ $('body').on('sr_config',function(){
 
     var form = new SrForm(this,{
       title: "Wetter Profile",
-      fields: fields
+      fields: fields,
+      loaded: function(){
+        var self = this;
+        var values = self.values();
+        for (i = 1; i <= sr_config['pwm_count']; i++) {
+          var weather_id = values['pwm#' + i + '#weather'];
+          if (weather_id > 0) {
+            $.each(weather_profiles, function(i,v){
+              if (v.value == weather_id) {
+                v.used = true;
+              }
+            });            
+          }
+        }
+        $.each(weather_profiles, function(i,v){
+          if (!v.used) {
+            var weather_id = v.value;
+            var name_key = "weather#setup#" + v.value + "#name";
+            $('#weather_setup_' + v.value + '_name').each(function(){
+              var namefield = $(this);
+              $(namefield).parent().each(function(){
+                $(this).append('<div style="text-align:right"><span id="weather_setup_' + weather_id + '_delete">Profil entfernen</span></div>');
+                $('#weather_setup_' + weather_id + '_delete').click(function(){
+                  if (confirm("Wollen Sie Ihr Wetter Profil '" + namefield.val() + "' entfernen?") == true) {
+                    var data = {};
+                    var new_web_config = [];
+                    $.each(sr_config["weather#web"], function(i,wp){
+                      if (wp.id != weather_id) {
+                        new_web_config.push(wp);
+                      }
+                    });
+                    data["weather#web"] = JSON.stringify(new_web_config);
+                    data["weather#setup#" + v.value + "#deleted"] = true;
+                    sr_request_mpack('PUT','/',data, function(){
+                      window.location.href = window.location.href;
+                    });
+                  }
+                });
+              });
+            });
+          }
+        });
+      }
     });
 
   });

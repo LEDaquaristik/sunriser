@@ -12,13 +12,29 @@
   <span class="index_function_badge">+</span>
   <div>Sicherung herunterladen</div>
 </a>
+<a class="index_function" href="/upgraded.html">
+  <span class="index_function_badge">+</span>
+  <div>Firmware Update Information nochmal lesen</div>
+</a>
 
 : }
 : override postjs -> {
 
 <script type="text/javascript">
 
-var firmware_info;
+$('body').on('sr_firmwares',function(){
+
+  $("#firmware_list").html(tmpl("firmware_tmpl",{
+    firmwares: sr_firmwares,
+  }));
+  if (!sr_config.showexpert) {
+    $('.old_firmware').hide();
+  }
+  $(".install_firmware").click(function(){
+    download_and_install_firmware(firmware_root + $(this).data("url"));
+  });
+
+});
 
 $('body').on('sr_config',function(){
 
@@ -26,25 +42,6 @@ $('body').on('sr_config',function(){
     mac = values.mac.map(function(m){
       var h = m.toString(16); return h.length == 1 ? '0' + h : h;
     }).join(":");
-  });
-
-  sr_request_mpack('GET','/firmware.mp',undefined,function(values){
-    firmware_info = values;
-
-    var firmware_root = "http://sunriser.ledaquaristik.de/";
-    var firmware_template = "firmware_tmpl";
-
-    $.getJSON(firmware_root + "sunriser_firmware_images.json?" + (new Date().getTime()), function(firmwares) {
-      $("#firmware_list").html(tmpl(firmware_template,{
-        firmwares: firmwares,
-      }));
-      if (!sr_config.showexpert) {
-        $('.old_firmware').hide();
-      }
-      $(".install_firmware").click(function(){
-        download_and_install_firmware(firmware_root + $(this).data("url"));
-      });
-    });
   });
 
 });

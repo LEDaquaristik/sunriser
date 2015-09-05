@@ -188,6 +188,7 @@ sub _build_base_vars {
     qw(
       js/tmpl.js
       js/class.js
+      js/sprintf.js
       js/msgpack-1.05-patched.js
       js/console-emulation.js
       js/moment-locale-de.js

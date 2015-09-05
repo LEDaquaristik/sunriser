@@ -14,6 +14,7 @@
   "useip4", [      "Used fixed IPv4 instead of DHCP", "bool", 0],
   "nohelp", [      "Don't show help",            "bool", 0],
   "showexpert", [  "Show expert form fields",    "bool", 0],
+  "ignoreupgrade", [ "No upgrade banderole display", "bool", 0],
   "nofinder", [    "Deactivate SunRiser Finder", "bool", 0],
   "nomdns", [      "Deactivate mdns",            "bool", 0],
   "enforcenet", [  "Reboot till NTP is not timing out", "bool", 0],
@@ -61,6 +62,7 @@
     "web", [       "Web configuration for the weather profiles", "json"],
     "setup#X",     "Weather simulation setup X", [
       "name", [    "Name of the weather profile", "text"],
+      "deleted", [ "Deleted weather profile", "bool", 0],
       "pwms", [    "[LEGACY] Identification of pwms effected", "array(integer)"],
       "thunder",   "Thunderstorm setup", [
         "activated", ["Produce thunderstorms", "bool", 0],

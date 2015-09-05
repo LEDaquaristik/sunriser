@@ -7,6 +7,11 @@ var sr_config_main_keys = [
   'weather#web','weather#last_setup_id','upgraded0500'
 ];
 
+var firmware_info;
+var firmware_root = "http://sunriser.ledaquaristik.de/";
+var firmware_images_url = firmware_root + "sunriser_firmware_images.json";
+var sr_firmwares;
+
 var current_time;
 var start_time;
 var sr_config_def;
@@ -211,14 +216,29 @@ $('body').on('sr_config_init',function(){
       link.addSearch("weather",get_weather_setup_id);
       $(this).attr('href',link);
     });
+    var got_empty = false;
     $.each(sr_config['weather#web'],function(i,v){
-      weather_profiles.push({
-        value: v.id,
-        name: v.name,
-        label: "#" + v.id + " " + v.name,
-        backgroundcolor: sr_colors[i].color
-      });
+      if (v) {
+        weather_profiles.push({
+          value: v.id,
+          name: v.name,
+          label: "#" + v.id + " " + v.name,
+          backgroundcolor: sr_colors[i].color
+        });
+      } else {
+        got_empty = true;
+      }
     });
+
+    if (got_empty) {
+      var new_weather_config = [];
+      $.each(sr_config['weather#web'],function(i,v){
+        if (v) {
+          new_weather_config.push(v);
+        }
+      });
+      sr_config['weather#web'] = new_weather_config;
+    }
 
     $(".form").not(".noautoload").each(function(){
       var id = $(this).attr('id');
@@ -232,5 +252,23 @@ $('body').on('sr_config_init',function(){
   // if (typeof current_time === 'undefined') {
   //   sr_request_mpack('POST','/',[],function(values){});
   // }
+
+});
+
+$('body').on('sr_config',function(){
+
+  sr_request_mpack('GET','/firmware.mp',undefined,function(values){
+    firmware_info = values;
+    $('body').trigger('sr_firmware');
+    $.getJSON(firmware_root + "sunriser_firmware_images.json?" + (new Date().getTime()), function(firmwares) {
+      sr_firmwares = firmwares;
+      $('body').trigger('sr_firmwares');
+      if (!sr_config.ignoreupgrade) {
+        if (sr_firmwares[0] && sr_firmwares[0].filename != firmware_info.filename) {
+          $('div.main').append('<div class="banderolebox"><a href="/firmware.html" class="sunriserbanderole">Neue Firmware ' + unescape("verf%FCgbar%0A") + '!</a></div>');
+        }
+      }
+    });
+  });
 
 });

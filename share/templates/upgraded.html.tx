@@ -5,6 +5,14 @@
 
 <hr>
 
+<h3>Seit Firmware v0.700:</h3>
+
+<div>
+  Ungenutzte Wetter Profile k&ouml;nnen nun gel&ouml;scht werden. Falls eine neue Firmware verf&uuml;gbar ist, wird dies nun auf jeder Seite vom SunRiser Interface angezeigt. Die Webserver Implementierung wurde weiter verbessert. Die Punkte in der Tagesplanung k&ouml;nnen nun in Textform bearbeitet werden, einfach Zeit und Prozentwert anklicken.
+</div>
+
+<br><hr>
+
 <h3>Seit Firmware v0.600:</h3>
 
 <div>
