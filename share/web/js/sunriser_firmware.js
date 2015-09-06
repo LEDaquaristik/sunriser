@@ -1,4 +1,14 @@
 
+function load_mac() {
+
+  sr_request_mpack('GET','/bootload.mp',undefined,function(values){
+    mac = values.mac.map(function(m){
+      var h = m.toString(16); return h.length == 1 ? '0' + h : h;
+    }).join(":");
+  });
+
+}
+
 function download_and_install_firmware(firmware_url) {
   $('#blockertext').html('Lade neue Firmware aus dem Internet');
   $('body').addClass('screenblocker');

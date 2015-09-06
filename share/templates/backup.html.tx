@@ -25,6 +25,12 @@
 
 <script type="text/javascript">
 
+$('body').on('sr_config',function(){
+
+  load_mac();
+
+});
+
 var backup_reader = new FileReader();
 backup_reader.onload = function(e){
   var bytesarray = new Uint8Array(backup_reader.result);
@@ -33,8 +39,10 @@ backup_reader.onload = function(e){
   if (typeof result === 'object') {
     $.each(result,function(k,v){
       var type = sr_type(k);
+      // we need a new check method... i need to readd old legacy keys
       if (typeof type === 'undefined') {
-        ok = 0;
+        console.log('Unknown key: ' + k, v);
+        // ok = 0;
       }
     });
   } else {

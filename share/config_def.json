@@ -64,13 +64,14 @@
     "setup#X",     "Weather simulation setup X", [
       "name", [    "Name of the weather profile", "text"],
       "deleted", [ "Deleted weather profile", "bool", 0],
-      "pwms", [    "[LEGACY] Identification of pwms effected", "array(integer)"],
+      "pwms", [    "[LEGACY] Identification of pwms effected (Ignored)", "array(integer)"],
       "thunder",   "Thunderstorm setup", [
         "activated", ["Produce thunderstorms", "bool", 0],
         "daychance", ["Percentage for a thunderstorm to happen (Tried per day in daymax amount)", "integer", 10],
         "daymax", ["Maximum amount of thunderstorms per day", "integer", 1],
         "minstorm", ["Minimum length of a storm in minutes", "integer", 10],
         "randstorm", ["Maximum length added to a storm length in minutes", "integer", 50],
+        "nightonly", ["[LEGACY] Ignored", "bool"],
         "zeroonly", ["Thunderstorm only if dayplanner sets pwm to 0", "bool", 0],
         "nozeroonly", ["Thunderstorm only if dayplanner sets pwm to not 0", "bool", 0],
         "weekdays", ["Apply thunderstorms to given weekdays (else always)", "array(weekday)"]

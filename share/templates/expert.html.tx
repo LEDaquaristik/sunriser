@@ -89,6 +89,9 @@ $('#firmware_fileupload').change(function(){
 });
 
 $('body').on('sr_config',function(){
+
+  load_mac();
+
   $('#expertform').each(function(){
     var keys = new Array();
     for (i = 1; i <= sr_config["pwm_count"]; i++) {

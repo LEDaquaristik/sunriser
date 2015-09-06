@@ -23,6 +23,8 @@ var url = new URI();
 var query = url.search(true);
 var get_weather_setup_id = query.weather;
 
+var mac;
+
 var weather_profiles = [{
   value: 0,
   backgroundcolor: '#ffffff',
