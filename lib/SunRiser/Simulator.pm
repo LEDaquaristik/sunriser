@@ -207,6 +207,16 @@ sub get {
   return undef;
 }
 
+sub delete_config {
+  my ( $self, $env ) = @_;
+  if ($self->demo) {
+    delete $env->{'psgix.session'}->{config};
+  } else {
+    $self->c->remove_tree;
+    $self->c->mkpath;
+  }
+}
+
 sub get_config {
   my ( $self, $key, $env ) = @_;
   if ($self->demo) {
@@ -600,7 +610,10 @@ sub _build_psgi {
       if ($path eq '/') {
         # if logged in serve index.html
         if ($logged_in) {
-          if ($method eq 'PUT') {
+          if ($method eq 'DELETE') {
+            $self->delete_config($env);
+            return $self->_web_ok;
+          } elsif ($method eq 'PUT') {
             my $body = $req->raw_body;
             # poloured($body);
             my $data = $self->_mp->unpack($body);

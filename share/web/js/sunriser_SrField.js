@@ -279,6 +279,8 @@ var SrField_Weekday = SrField_CSV.extend({
 
   template: 'weekday',
 
+  transform_value: function(value) { return parseInt(value); },
+
   initjs: function(){
     var self = this;
     var daypicker = $('#' + self.id + '_daypicker');

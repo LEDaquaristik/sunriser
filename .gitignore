@@ -5,6 +5,7 @@ SunRiser-*
 *.swo
 *.swp
 *.swq
+*.swl
 
 *.cdb
 *.cdb.*

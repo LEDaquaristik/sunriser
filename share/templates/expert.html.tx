@@ -1,10 +1,15 @@
-: cascade base { title => "Expertenfunktionen", no_bighelp => 1, help => r("Die Benutzung dieser Funktionen ist auf eigene Gefahr!<br><br> Die Zahlenreihe bei der Tagesplanung stellt die Punkte Ihrer Tagesplanung dar und kann somit einfacher ausgetauscht werden oder getrennt gespeichert werden. Jeder Punkt in Ihrer Tagesplanung hat 2 Zahlenwerte in der Reihe, zuerst die Minute des Tages und dann die gew&uuml;nschte Prozentzahl. Bitte beachten Sie das die Werte hier in der richtigen Reihenfolge sein m&uuml;ssen, andernfalls wird es zu Fehlfunktionen f&uuml;hren. Daher sollten Sie die Punkte am besten immer in der Tagesplanung bearbeiten.") }
+: cascade base { title => "Expertenfunktionen", no_bighelp => 1, help => r("Die Benutzung dieser Funktionen ist auf eigene Gefahr!<br><br> Die Zahlenreihe bei der Tagesplanung stellt die Punkte Ihrer Tagesplanung dar und kann somit einfacher ausgetauscht werden oder getrennt gespeichert werden. Jeder Punkt in Ihrer Tagesplanung hat 2 Zahlenwerte in der Reihe, zuerst die Minute des Tages und dann die gew&uuml;nschte Prozentzahl. Bitte beachten Sie das die Werte hier in der richtigen Reihenfolge sein m&uuml;ssen, andernfalls wird es zu Fehlfunktionen f&uuml;hren. Daher sollten Sie die Punkte am besten immer in der Tagesplanung bearbeiten.<br><br>Das L&ouml;schen der Konfiguration startet nicht den SunRiser neu, dies erm&ouml;glicht Ihnen noch eine korrekte neue <a href='/network.html'>Netzwerk Konfiguration</a> anzulegen, falls dies notwendig ist. Bitte beachten Sie das ein L&ouml;schen der Konfiguration auch den Experten Modus erstmal wieder abschaltet.") }
 : override content -> {
 
 <div class="buttonbloc backupbuttons">
   <div id="custom_firmware" class="bigbutton backupbutton">
     <i class="fa fa-forumbee"></i>
     <div>Eigene Firmware einspielen (EIGENE GEFAHR)</div>
+  </div>
+
+  <div id="config_reset" class="bigbutton backupbutton">
+    <i class="fa fa-gears"></i>
+    <div>Konfiguration l&ouml;schen</div>
   </div>
 </div>
 
@@ -13,6 +18,15 @@
 <div class="form noautoload" id="expertform"></div>
 
 <div class="expert_info">
+</div>
+
+<br>
+
+<div class="index_functions">
+  <div class="index_function" id="index_reboot_sunriser">
+    <span class="index_function_badge">+</span>
+    <div>SunRiser neustarten</div>
+  </div>
 </div>
 
 <input type="file" class="hiddenfileupload" id="firmware_fileupload" />
@@ -54,6 +68,14 @@ $('#custom_firmware').on('dragover',function(e){
   }
 }).click(function(){
   $('#firmware_fileupload').trigger('click');
+});
+
+$('#config_reset').click(function(){
+  if (confirm('Komplette Konfiguration des SunRisers ' + unescape("l%F6schen") + '?') == true) {
+    sr_request_mpack('DELETE','/',undefined,function(){
+      window.location.href = window.location.href;
+    });
+  }
 });
 
 $('#firmware_fileupload').change(function(){

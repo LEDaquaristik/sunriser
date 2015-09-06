@@ -280,6 +280,4 @@ $('body').on('sr_config',function(){
     });
   });
 
-  console.log(sr_config);
-
 });

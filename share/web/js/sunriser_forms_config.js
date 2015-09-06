@@ -58,8 +58,8 @@ var sr_forms = {
     //   name: "ip4_filter", label: "IPv4 Whitelist Filter aktivieren"
     // },{
     //   name: "ip4_whitelist", label: "IPv4 Whitelist"
-    // },{
-    //   name: "webport", label: "Webserver Port"
+    },{
+      name: "webport", label: "Webserver Port"
     }]
   },
   //
@@ -135,8 +135,10 @@ var sr_forms = {
     },{
       name: "randstorm", label: "Maximale zus&auml;tzliche L&auml;nge eines Gewitters in Minuten",
       template: "slider", min: 10, max: 120
-    // },{
-    //   name: "nightonly", label: "Gewitter nur wenn LED Tagesplanung auf 0%"
+    },{
+      name: "zeroonly", label: "Gewitter nur wenn LED Tagesplanung auf 0%"
+    },{
+      name: "nozeroonly", label: "Gewitter nur wenn LED Tagesplanung nicht 0%"
     // },{
     //   name: "mindist", label: "Minimaler Abstand zwischen den Blitzen in Sekunden",
     //   template: "slider", min: 1, max: 60
@@ -145,8 +147,8 @@ var sr_forms = {
     //   template: "slider", min: 10, max: 300
     // },{
     //   name: "fadepercent", label: "Prozentualer Anteil f&uuml;r Ein/Ausblendung des Gewitters"
-    // },{
-    //   name: "weekdays", label: "Nur an diesen Wochentagen gibt es Gewitter (sonst jeden Tag)"
+    },{
+      name: "weekdays", label: "Nur an diesen Wochentagen gibt es Gewitter (sonst jeden Tag)"
     }]
   },
   //
@@ -196,8 +198,8 @@ var sr_forms = {
     },{
       name: "clouddarkness", label: "Maximale Dunkelheit durch die Wolken",
       template: "slider", min: 1, max: 10
-    // },{
-    //   name: "weekdays", label: "Nur an diesen Wochentagen gibt es Wolken (sonst jeden Tag)"
+    },{
+      name: "weekdays", label: "Nur an diesen Wochentagen gibt es Wolken (sonst jeden Tag)"
     }],
     expert_fields: [{
       name: "mincloud", label: "Minimale L&auml;nge einer Wolke in Sekunden",
@@ -231,8 +233,8 @@ var sr_forms = {
     // },{
     //   name: "raincloudshare", label: "Maximaler Anteil von Wolkenfronten am Regentag (wenn Wolken aktiviert sind)",
     //   template: "slider", min: 0, max: 100, percent_sign: true
-    // },{
-    //   name: "weekdays", label: "Nur an diesen Wochentagen gibt es Regen (sonst jeden Tag)"
+    },{
+      name: "weekdays", label: "Nur an diesen Wochentagen gibt es Regen (sonst jeden Tag)"
     }]
   }
 };

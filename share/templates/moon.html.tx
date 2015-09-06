@@ -1,4 +1,4 @@
-: cascade base { title => 'Mondphasen', nav => 'weather', help => mark_raw("Die Mondphasen erhellen die f&uuml;r Wettersimulation bestimmten LED exakt nach den realen Mondphasen. Bitte seien Sie sich bewusst das dies ggf. im Gegensatz zu Ihrer Tagesplanung steht und daher dazu f&uuml;hrt das Ihre LED erhellt, wo eigentlich abgeschaltet sein sollte.") }
+: cascade base { title => 'Mondphasen', nav => 'weather', help => mark_raw("Die Mondphasen erhellen die f&uuml;r Wettersimulation bestimmten LED exakt nach den realen Mondphasen. Bitte seien Sie sich bewusst das dies ggf. im Gegensatz zu Ihrer Tagesplanung steht und daher dazu f&uuml;hrt das Ihre LED erhellt, wo eigentlich abgeschaltet sein sollte.<br><br>Die meisten Kunden benutzen die Mondphasen zumeist auf einer getrennten LED mit einem anderen Farbton.") }
 : override content -> {
 
 <div class="form" id="moon"></div>

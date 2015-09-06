@@ -8,7 +8,7 @@
 <h3>Seit Firmware v0.700:</h3>
 
 <div>
-  Ungenutzte Wetter Profile k&ouml;nnen nun gel&ouml;scht werden. Falls eine neue Firmware verf&uuml;gbar ist, wird dies nun auf jeder Seite vom SunRiser Interface angezeigt. Die Webserver Implementierung wurde weiter verbessert. Die Punkte in der Tagesplanung k&ouml;nnen nun in Textform bearbeitet werden, einfach Zeit und Prozentwert anklicken. Auch haben wir die <a href="http://sunriser.ledaquaristik.de/">SunRiser Finder</a> Seite etwas sch&ouml;ner gemacht.
+  Ungenutzte Wetter Profile k&ouml;nnen nun gel&ouml;scht werden. Falls eine neue Firmware verf&uuml;gbar ist, wird dies nun auf jeder Seite vom SunRiser Interface angezeigt. Die Webserver Implementierung wurde weiter verbessert. Die Punkte in der Tagesplanung k&ouml;nnen nun in Textform bearbeitet werden, einfach Zeit und Prozentwert anklicken. Bei der Wettersimulation haben wir einen Fehler korrigiert, der dazu f&uuml;hrte das sekund&auml;re Wetter Profile nicht korrekt abgearbeitet wurden. Gewitter kann nun beschr&auml;nkt werden um nur zu erscheinen wenn auch die Tagesplanung die LED einschaltet (oder genau umgekehrt). Gewitter, Regen und Wolken k&ouml;nnen nun auf Wochentage beschr&auml;nkt werden. Auch haben wir die <a href="http://sunriser.ledaquaristik.de/">SunRiser Finder</a> Seite etwas sch&ouml;ner gemacht und bei den Expertenfunktionen finden Sie nun eine Option um die Konfiguration des SunRisers zu l&ouml;schen.
 </div>
 
 <br><hr>

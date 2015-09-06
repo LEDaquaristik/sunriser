@@ -71,7 +71,8 @@
         "daymax", ["Maximum amount of thunderstorms per day", "integer", 1],
         "minstorm", ["Minimum length of a storm in minutes", "integer", 10],
         "randstorm", ["Maximum length added to a storm length in minutes", "integer", 50],
-        "nightonly", ["Thunderstorm only if dayplanner sets pwm to 0", "bool", 0],
+        "zeroonly", ["Thunderstorm only if dayplanner sets pwm to 0", "bool", 0],
+        "nozeroonly", ["Thunderstorm only if dayplanner sets pwm to not 0", "bool", 0],
         "weekdays", ["Apply thunderstorms to given weekdays (else always)", "array(weekday)"]
       ],
       "moon", "Moon setup", [

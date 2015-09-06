@@ -42,11 +42,14 @@ function sr_request_mpack(method,url,data,success) {
       if (method == 'PUT') {
         sr_screenblock('Speichern');
       }
+      if (method == 'DELETE') {
+        sr_screenblock(unescape("L%F6schen"));
+      }
     },
     complete: function(xhr,status) {
     },
     success: function(result,status,xhr) {
-      if (method == 'PUT') {
+      if (method == 'PUT' || method == 'DELETE') {
         sr_screenunblock();
         sr_cleanwait();
       }
