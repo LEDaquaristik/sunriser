@@ -4,7 +4,7 @@ var sr_config;
 var sr_config_main_keys = [
   'model','model_id','pwm_count','factory_version','language','timezone',
   'gmtoff','nodst','updated','name','showexpert','nohelp','nofinder','usentp',
-  'weather#web','weather#last_setup_id','upgraded0500','ignoreupgrade'
+  'weather#web','weather#last_setup_id','upgraded0500','ignoreupgrade','webport'
 ];
 
 var firmware_info;
@@ -127,6 +127,10 @@ $(function(){
     }
   });
 
+  if (query.upgraded_review) {
+    $('.upgraded').hide();
+  }
+
   $("#index_reboot_sunriser").click(function(){
     sr_screenblock('<div>Warte auf Neustart</div><div>(ca. 1 Minute)</div>');
     $.get( "/reboot", function(data) {
@@ -209,6 +213,8 @@ $('body').on('sr_config_init',function(){
 
     if (sr_config.showexpert) {
       $('.expert-menu').show();
+    } else {
+      $('.noexpert-hide').hide();
     }
 
     var got_empty = false;

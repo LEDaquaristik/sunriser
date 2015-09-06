@@ -106,8 +106,6 @@ function update_time() {
   }, 1000);
 }
 
-var mac;
-
 function _wait_for_sunriser_loop(target) {
   setTimeout(function(){
     $.ajax({
@@ -145,6 +143,9 @@ function _wait_for_sunriser_loop_mac(target) {
           if (ip) {
             var new_uri = uri.clone();
             new_uri.host(ip);
+            if (sr_config.webport != 80) {
+              new_uri.port(webport);
+            }
             if (!new_uri.equals(uri)) {
               window.location.href = new_uri.toString();
             }
