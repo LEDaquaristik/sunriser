@@ -477,7 +477,7 @@ var SrPath = Class.extend({
     $('.pathedit_edit').click(function(){
       var pos = $(this).data('pos');
       self.clear_current_marker();
-      if (self.current_marker != self.markers[pos]) {
+      // if (self.current_marker != self.markers[pos]) {
         self.current_marker = self.markers[pos];
         $(this).css('background-color', '#ccd7e2');
         $('#markeredit').html(tmpl('markeredit_tmpl',{ marker: self.current_marker }));
@@ -512,7 +512,7 @@ var SrPath = Class.extend({
             self.clear_current_marker();
           }
         });
-      }
+      // }
     });
     $('.pathedit_add').click(function(){
       self.clear_current_marker();
