@@ -144,6 +144,7 @@ var SrDayplanner = Class.extend({
       $('#pwmpicker_' + pwm).click(function(){
         $.each(self.paths,function(curr_pwm,curr_path){
           curr_path.edit(0);
+          curr_path.clear_current_marker();
         });
         $('.pwmpicker').css('background-color','#fff');
         $('#pathedit').html("");
@@ -466,9 +467,49 @@ var SrPath = Class.extend({
 //
 
   clear_current_marker: function() {
+    var self = this;
     $('.pathedit_edit').css('background-color', '');
     self.current_marker = undefined;
     $('#markeredit').html("");
+  },
+
+  set_current_marker: function(pos) {
+    var self = this;
+    self.clear_current_marker();
+    self.current_marker = self.markers[pos];
+    $(this).css('background-color', '#ccd7e2');
+    $('#markeredit').html(tmpl('markeredit_tmpl',{ marker: self.current_marker }));
+    $('#marker_delete').click(function(){
+      if (confirm("Wollen Sie " + self.current_marker.title() + " entfernen?") == true) {
+        self.delete_marker(pos);
+        self.clear_current_marker();
+      }
+    });
+    $('#marker_update').click(function(){
+      var newtime = $('#marker_time').val().split(":");
+      var newdaymin;
+      var newvalue = $('#marker_percent').val();
+      var newpercent;
+      var error = 0;
+      if (!isNaN(newvalue) && newvalue >= 0 && newvalue <= 100) {
+        newpercent = Math.floor(newvalue);
+      } else {
+        error = 1;
+        $('#marker_percent').css('background-color','#E74C3C');
+      }
+      if (!isNaN(newtime[0]) && newtime[0] >= 0 && newtime[0] <= 23 &&
+        !isNaN(newtime[1]) && newtime[1] >= 0 && newtime[1] <= 59) {
+        newdaymin = ( Math.floor(newtime[0]) * 60 ) + Math.floor(newtime[1]);
+      } else {
+        error = 1;
+        $('#marker_time').css('background-color','#E74C3C');
+      }
+      if (!error) {
+        self.delete_marker(pos);
+        self.add_marker(newdaymin,newpercent);
+        self.clear_current_marker();
+      }
+    });
   },
 
   set_pathedit: function() {
@@ -476,42 +517,8 @@ var SrPath = Class.extend({
     $('#pathedit').html(tmpl('pathedit_tmpl',self));
     $('.pathedit_edit').click(function(){
       var pos = $(this).data('pos');
-      self.clear_current_marker();
       // if (self.current_marker != self.markers[pos]) {
-        self.current_marker = self.markers[pos];
-        $(this).css('background-color', '#ccd7e2');
-        $('#markeredit').html(tmpl('markeredit_tmpl',{ marker: self.current_marker }));
-        $('#marker_delete').click(function(){
-          if (confirm("Wollen Sie " + self.current_marker.title() + " entfernen?") == true) {
-            self.delete_marker(pos);
-            self.clear_current_marker();
-          }
-        });
-        $('#marker_update').click(function(){
-          var newtime = $('#marker_time').val().split(":");
-          var newdaymin;
-          var newvalue = $('#marker_percent').val();
-          var newpercent;
-          var error = 0;
-          if (!isNaN(newvalue) && newvalue >= 0 && newvalue <= 100) {
-            newpercent = Math.floor(newvalue);
-          } else {
-            error = 1;
-            $('#marker_percent').css('background-color','#E74C3C');
-          }
-          if (!isNaN(newtime[0]) && newtime[0] >= 0 && newtime[0] <= 23 &&
-            !isNaN(newtime[1]) && newtime[1] >= 0 && newtime[1] <= 59) {
-            newdaymin = ( Math.floor(newtime[0]) * 60 ) + Math.floor(newtime[1]);
-          } else {
-            error = 1;
-            $('#marker_time').css('background-color','#E74C3C');
-          }
-          if (!error) {
-            self.delete_marker(pos);
-            self.add_marker(newdaymin,newpercent);
-            self.clear_current_marker();
-          }
-        });
+      self.set_current_marker(pos);
       // }
     });
     $('.pathedit_add').click(function(){
