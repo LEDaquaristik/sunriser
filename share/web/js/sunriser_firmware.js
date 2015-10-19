@@ -51,3 +51,45 @@ function install_firmware(bytesarray) {
   };
   $.ajax(call_options);
 }
+
+function download_and_install_factory(firmware_url) {
+  $('#blockertext').html('Lade neue Werkszustand Firmware aus dem Internet');
+  $('body').addClass('screenblocker');
+  var call_options = {
+    type: 'GET',
+    url: firmware_url,
+    contentType: 'application/octet-stream',
+    dataType: 'arraybuffer',
+    processData: false,
+    cache: false,
+    error: function (xhr, ajaxOptions, thrownError) {
+      sr_error();
+    },
+    success: function (bytesarray) {
+      install_factory(bytesarray);
+    }
+  };
+  $.ajax(call_options);
+}
+
+function install_factory(bytesarray) {
+  sr_screenblock('Sende neue Werkszustand Firmware an SunRiser');
+  var call_options = {
+    type: 'PUT',
+    url: '/factory',
+    data: bytesarray,
+    contentType: 'application/octet-stream',
+    dataType: 'arraybuffer',
+    processData: false,
+    cache: false,
+    error: function(xhr,error,errorthrown){
+      sr_error();
+    },
+    success: function(data,status,xhr){
+      sr_screenblock('<div>Warte auf Neustart</div><div>Bitte das Ger&auml;t NICHT abschalten!!!</div><div>(ca. 1 Minute)</div>');
+      var target = window.location.href.replace('expert','index');
+      wait_for_sunriser(target);
+    },
+  };
+  $.ajax(call_options);
+}

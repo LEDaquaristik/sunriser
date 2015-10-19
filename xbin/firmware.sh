@@ -20,7 +20,7 @@ if [ ! -f $SUNRISER_MCU/xbin/generate_version_h.pl ]; then
   exit 1
 fi
 
-echo "Releasing v$VERSION..."
+echo "Generating (not releasing) v$VERSION..."
 
 rm -f $LOGFILE
 

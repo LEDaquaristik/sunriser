@@ -98,7 +98,7 @@ $(function(){
 
   //
   $(".form").each(function(){
-    $(this).html('<img class="loader" src="/img/ajaxload.gif">');
+    $(this).html('<img class="loader" src="/img/ajaxload.gif"><div class="centerarrow">Wenn dieser Fisch nicht verschwindet, bitte die Seite neuladen.</div>');
   });
 
   // Menu overlay click functionality

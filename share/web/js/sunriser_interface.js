@@ -2,10 +2,12 @@
 function sr_screenblock(html) {
   $('#blockertext').html(html);
   $('body').addClass('screenblocker');
+  $('.sunriserbanderole').hide();
 }
 
 function sr_screenunblock() {
   $('body').removeClass('screenblocker');
+  $('.sunriserbanderole').show();
 }
 
 function sr_cleanwait() {
