@@ -1,5 +1,9 @@
-: cascade base { title => 'Gewitter', nav => 'weather', no_bighelp => 1, help => r("Wenn ein Wetter Profil &uuml;ber mehrere LED geht, ist es n&ouml;tig das alle auf 0% stehen, bzw. es reicht das nur eine nicht auf 0% steht, damit die entsprechenden Optionen gelten. Generell werden Blitze &uuml;ber alle LED eines Wetter Profils gemeinsam benutzt, d.h. ein Blitz kommt &uuml;ber alle LED parallel heraus w&auml;hrend einer Gewitterfront.<br><br>Die Limitierung auf Wochentage gilt f&uuml;r den Anfang der Gewitterfront, d.h. eine Gewitterfront kann in einen Wochentag hineinlaufen der nicht ausgew&auml;hlt wurde.") }
+: cascade base { title => 'Gewitter', nav => 'weather', no_bighelp => 1, help => r("Wenn ein Wetter Profil &uuml;ber mehrere LED geht, ist es n&ouml;tig das alle auf 0% stehen, bzw. es reicht das nur eine nicht auf 0% steht, damit die entsprechenden Optionen gelten. Generell werden Blitze &uuml;ber alle LED eines Wetter Profils gemeinsam benutzt, d.h. ein Blitz kommt &uuml;ber alle LED parallel heraus w&auml;hrend einer Gewitterfront.<br><br>Die Limitierung auf Wochentage gilt f&uuml;r den Anfang der Gewitterfront, d.h. eine Gewitterfront kann in einen Wochentag hineinlaufen der nicht ausgew&auml;hlt wurde. Das gleiche gilt auch f&uuml;r die Optionen in Bezug auf die Tagesplanung.") }
 : override content -> {
+
+<div id="weathertabs"></div>
+
+<hr>
 
 <div class="form" id="thunderstorm"></div>
 

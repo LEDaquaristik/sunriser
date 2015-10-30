@@ -1,29 +1,29 @@
 
-var sr_weatherprofile_field = function(){
-  var options = [];
-  $.each(weather_profiles,function(i,v){
-    if (v.value) {
-      options.push(v);      
-    }
-  });
-  return {
-    name: 'weather_setup_id',
-    label: 'Wetter Profil',
-    noprefix: true,
-    nosubmit: true,
-    options: options,
-    type: 'select',
-    custom_init: function() {
-      var field = this;
-      field.html_field().val(get_weather_setup_id);
-      field.html_field().change(function(){
-        url.removeSearch("weather");
-        url.addSearch("weather",$(this).val());
-        window.location.href = url;
-      });
-    }
-  };
-};
+// var sr_weatherprofile_field = function(){
+//   var options = [];
+//   $.each(weather_profiles,function(i,v){
+//     if (v.value) {
+//       options.push(v);      
+//     }
+//   });
+//   return {
+//     name: 'weather_setup_id',
+//     label: 'Wetter Profil',
+//     noprefix: true,
+//     nosubmit: true,
+//     options: options,
+//     type: 'select',
+//     custom_init: function() {
+//       var field = this;
+//       field.html_field().val(get_weather_setup_id);
+//       field.html_field().change(function(){
+//         url.removeSearch("weather");
+//         url.addSearch("weather",$(this).val());
+//         window.location.href = url;
+//       });
+//     }
+//   };
+// };
 
 var sr_forms = {
   //
@@ -121,7 +121,7 @@ var sr_forms = {
   thunderstorm: {
     title: "Gewitter Simulation",
     prefix: "weather#setup#X#thunder",
-    fields: [sr_weatherprofile_field,{
+    fields: [{
       name: "activated", label: "Simuliere Gewitter"
     },{
       name: "daychance", label: "Wahrscheinlichkeit eines Gewitters pro maximale Anzahl von Gewittern am Tag",
@@ -161,7 +161,7 @@ var sr_forms = {
   moon: {
     title: "Mondphasen Simulation",
     prefix: "weather#setup#X#moon",
-    fields: [sr_weatherprofile_field,{
+    fields: [{
       name: "activated", label: "Simuliere Mondphasen nach Realit&auml;t"
     // },{
     //   name: "starttime", label: "Fr&uuml;hster Mondaufgang"
@@ -187,7 +187,7 @@ var sr_forms = {
   clouds: {
     title: "Wolken Simulation",
     prefix: "weather#setup#X#clouds",
-    fields: [sr_weatherprofile_field,{
+    fields: [{
       name: "activated", label: "Simuliere Wolken"
     },{
       name: "daychance", label: "Wahrscheinlichkeit eines Wolkentages",
@@ -219,7 +219,7 @@ var sr_forms = {
   rain: {
     title: "Regen Simulation",
     prefix: "weather#setup#X#rain",
-    fields: [sr_weatherprofile_field,{
+    fields: [{
       name: "activated", label: "Simuliere Regen"
     },{
       name: "daychance", label: "Wahrscheinlichkeit eines Regentages",

@@ -1,4 +1,4 @@
-: cascade base { title => "System Einstellungen", nav => "setup" }
+: cascade base { title => "System Einstellungen", nav => "setup", help => r("Bitte beachten Sie das ein Umstellen der Sommerzeit erst mit dem n&auml;chsten Erneuern der Uhrzeit aus dem Internet Ihre Wirkung zeigt. Dies kann etwas dauern.") }
 : override content -> {
 
 <div class="index_functions">

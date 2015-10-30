@@ -226,11 +226,17 @@ $('body').on('sr_config_init',function(){
         if (!first_weather_setup_id) {
           first_weather_setup_id = v.id;
         }
+        var label = "#" + v.id + " " + v.name;
         weather_profiles.push({
           value: v.id,
           name: v.name,
-          label: "#" + v.id + " " + v.name,
+          label: label,
           backgroundcolor: sr_colors[i].color
+        });
+        var profil_url = url.clone();
+        profil_url.removeSearch('weather').addSearch('weather',v.id);
+        $('<div class="daybox" id="weathertab' + v.id + '" style="float:left">' + label + '</div>').appendTo('#weathertabs').click(function(){
+          window.location.href = profil_url.toString();
         });
       } else {
         got_empty = true;
@@ -250,6 +256,8 @@ $('body').on('sr_config_init',function(){
     if (!get_weather_setup_id) {
       get_weather_setup_id = first_weather_setup_id;
     }
+
+    $('#weathertab' + get_weather_setup_id).css('background-color','#dddddd');
 
     $('.weather-profiled').each(function(){
       var link = new URI($(this).attr('href'));

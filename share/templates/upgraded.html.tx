@@ -5,6 +5,14 @@
 
 <hr>
 
+<h3>Seit Firmware v0.710:</h3>
+  Wir haben unsere Netzwerk Library (<a href="http://savannah.nongnu.org/projects/lwip/">lwip</a>) auf den neusten Stand gebracht und somit an Leistung und Stabilit&auml;t gewonnen. In den einzelnen Wettersimulationen (Mond, Regen, Gewitter, Wolken) sind die Wetterprofile nun mittels Tab ausw&auml;hlbar was die &Uuml;bersicht und Einstellung vereinfacht.
+<div>
+
+</div>
+
+<br><hr>
+
 <h3>Seit Firmware v0.701:</h3>
   In den Experten Funktionen besteht nun die Option, die Firmware des Werkszustand zu erneuern.
 <div>

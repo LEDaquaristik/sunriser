@@ -781,6 +781,11 @@ tbody tr:first-child{
   opacity:0.5
 }
 
+#weathertabs{
+  height: 65px;
+  padding: 10px 0;
+}
+
 /**  Hilfe  **/
 
 .hilfe-sidebar{

@@ -1,6 +1,10 @@
 : cascade base { title => 'Regen', nav => 'weather', no_bighelp => 1, help => r("Die Limitierung auf Wochentage gilt f&uuml;r den Anfang der Regenfront, d.h. eine Regenfront kann in einen Wochentag hineinlaufen der nicht ausgew&auml;hlt wurde.") }
 : override content -> {
 
+<div id="weathertabs"></div>
+
+<hr>
+
 <div class="form" id="rain"></div>
 
 : }

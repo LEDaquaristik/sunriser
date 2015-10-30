@@ -20,6 +20,8 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 $DIR/firmware.sh $VERSION
 
+echo "Releasing v$VERSION..."
+
 echo "Upload to target..."
 scp $OBJS_FILE     $TARGET:~/htdocs/objs/
 scp $FIRMWARE_FILE $TARGET:~/htdocs/
