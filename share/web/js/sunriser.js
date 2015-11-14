@@ -242,6 +242,9 @@ $('body').on('sr_config_init',function(){
         got_empty = true;
       }
     });
+    $('<div class="daybox" style="float:left">&nbsp;+&nbsp;</div>').appendTo('#weathertabs').click(function(){
+      window.location.href = '/weather.html';
+    });
 
     if (got_empty) {
       var new_weather_config = [];
@@ -289,7 +292,7 @@ $('body').on('sr_config',function(){
       sr_firmwares = firmwares;
       $('body').trigger('sr_firmwares');
       if (!sr_config.ignoreupgrade) {
-        if (sr_firmwares[0] && sr_firmwares[0].filename != firmware_info.filename) {
+        if (!sr_demo && sr_firmwares[0] && sr_firmwares[0].filename != firmware_info.filename) {
           $('div.main').append('<div class="banderolebox"><a href="/firmware.html" class="sunriserbanderole">Neue Firmware ' + unescape("verf%FCgbar%0A") + '!</a></div>');
         }
       }

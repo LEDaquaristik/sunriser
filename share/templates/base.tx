@@ -4,6 +4,10 @@
       <title><: $title ? $title ~ " | " : "" :>SunRiser von LEDaquaristik.de</title>
       <script type="text/javascript">
         window.loaded = false;
+        var sr_demo = false;
+        <: if $demo { :>
+          sr_demo = true;
+        <: } :>
         setTimeout(function(){ if (!window.loaded) { window.location.href = window.location.href; }}, 15000);
       </script>
       <!-- META -->
