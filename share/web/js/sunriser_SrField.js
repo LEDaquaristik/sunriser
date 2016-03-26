@@ -89,7 +89,7 @@ var SrField_Text = SrField.extend({
 
   transform: function() {
     var value = this.html_value();
-    if (type == 'bool') {
+    if (this.type == 'bool') {
       value = this.value ? '1' : '';
     }
     if (value === "") {
