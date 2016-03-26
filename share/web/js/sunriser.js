@@ -4,7 +4,8 @@ var sr_config;
 var sr_config_main_keys = [
   'model','model_id','pwm_count','factory_version','language','timezone',
   'gmtoff','nodst','updated','name','showexpert','nohelp','nofinder','usentp',
-  'weather#web','weather#last_setup_id','upgraded0500','ignoreupgrade','webport'
+  'weather#web','weather#last_setup_id','ignoreupgrade','webport','save_version',
+  'upgraded0500','factory_version'
 ];
 
 var firmware_info;
@@ -18,6 +19,8 @@ var sr_config_def;
 var sr_config_types = {};
 var sr_color = {};
 var is_changed = false;
+
+var sr_config_version;
 
 var url = new URI();
 var query = url.search(true);
@@ -198,17 +201,16 @@ $('body').on('sr_config_def',function(){
 
 $('body').on('sr_config_init',function(){
 
-  //console.log(sr_config);
+  sr_config_version = sr_config['save_version'] * 1000;
 
-  // $('body').css('background','url("/img/background.jpg") no-repeat fixed center center / 200% 200% #145868;');
-  // $('body').css('background-image','url(/img/background.jpg)');
+  if (!sr_config_version) {
+    sr_config_version = sr_config['factory_version'] * 1000;
+  }
 
-  // ------------------------------------------------ LEGACY ---------
-  // --- generating weather web config for fresh or pre-0.500 SunRiser
-  if (!sr_config['upgraded0500']) {
+  if (sr_config_version <= 500 && !sr_config['upgraded0500']) {
     sr_generate_upgrade_0500();
-  // -----------------------------------------------------------------
   } else {
+
     if (sr_config.nohelp) {
       $('.helparea').hide();
     }

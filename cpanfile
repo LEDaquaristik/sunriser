@@ -2,6 +2,7 @@
 requires 'AnyEvent', '0';
 requires 'CDB::TinyCDB', '0';
 requires 'CSS::Minifier::XS', '0';
+requires 'Compress::Zlib', '0';
 requires 'Data::MessagePack', '0';
 requires 'Data::Printer', '0';
 requires 'Data::Coloured', '0';

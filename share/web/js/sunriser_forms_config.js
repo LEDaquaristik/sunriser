@@ -91,7 +91,24 @@ var sr_forms = {
     },{
       name: "nomdns", label: "mdns deaktivieren"
     //   name: "indexfile", label: "Startseite nach Anmeldung"
-    }]
+    }],
+    loaded: function(){
+      $('#timezone').change(function(){
+        var tz = $('#timezone').val();
+        if (tz != sr_config['timezone']) {
+          var tzo = $('#timezone option:selected');
+          var gmtoff = tzo.data('gmtoff');
+          var nodst = tzo.data('nodst');
+          $('#gmtoff').val(gmtoff);
+          $('#nodst').val(nodst ? true : false);
+          if (nodst) {
+            $('#summertime').parents('tr').hide();
+          } else {
+            $('#summertime').parents('tr').show();
+          }
+        }
+      });
+    },
   },
   //
   //     _/_/_/      _/_/      _/_/_/    _/_/_/  _/          _/    _/_/    _/_/_/    _/_/_/
