@@ -1,1 +1,1 @@
-<input type="hidden" <: include form::idname :> value="<%=field.value%>">
+<input type="hidden" <: include form::idname :> value="<%=field.html_value()%>">

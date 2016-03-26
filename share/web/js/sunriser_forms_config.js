@@ -100,7 +100,7 @@ var sr_forms = {
           var gmtoff = tzo.data('gmtoff');
           var nodst = tzo.data('nodst');
           $('#gmtoff').val(gmtoff);
-          $('#nodst').val(nodst ? true : false);
+          $('#nodst').val(nodst ? 1 : '');
           if (nodst) {
             $('#summertime').parents('tr').hide();
           } else {
