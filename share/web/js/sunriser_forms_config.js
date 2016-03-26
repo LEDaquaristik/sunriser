@@ -86,7 +86,7 @@ var sr_forms = {
   system: {
     title: "System Einstellungen",
     fields: [{
-      name: "timezone", label: "Zeitzone", type: "timezone"
+      name: "timezone", label: "Zeitzone", type: "timezone", integer: true
     },{
       name: "summertime", label: "Sommerzeit"
     },{

@@ -89,9 +89,6 @@ var SrField_Text = SrField.extend({
 
   transform: function() {
     var value = this.html_value();
-    if (this.type == 'bool') {
-      value = this.value ? '1' : '';
-    }
     if (value === "") {
       this.value = undefined;
     } else if (typeof value === 'string') {
@@ -166,8 +163,6 @@ var SrField_Integer = SrField_Text.extend({
   }
 
 });
-
-
 
 var SrField_Password = SrField_Text.extend({
 
@@ -349,6 +344,10 @@ var SrField_Select = SrField.extend({
   integer: false,
   options: undefined,
 
+  html_value: function(){
+    return this.html_field().find('option:selected').val();
+  },
+
   transform: function(){
     if (this.integer) {
       SrField_Integer_Transform.call(this);
@@ -362,16 +361,12 @@ var SrField_Select = SrField.extend({
     if (typeof this.value !== 'undefined') {
       select.val(this.value);      
     }
-    select.find('option').each(function(){
-      if ($(this).prop('selected')) {
-        select.css('background-color',$(this).css('background-color'));
-      }
+    select.find('option:selected').each(function(){
+      select.css('background-color',$(this).css('background-color'));
     });
     select.change(function(){
-      select.find('option').each(function(){
-        if ($(this).prop('selected')) {
-          select.css('background-color',$(this).css('background-color'));
-        }
+      select.find('option:selected').each(function(){
+        select.css('background-color',$(this).css('background-color'));
       });
     });
   }

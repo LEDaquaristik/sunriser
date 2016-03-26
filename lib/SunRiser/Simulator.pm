@@ -632,7 +632,7 @@ sub _build_psgi {
               $values{$key} = $self->get($key,$env);
             }
             $values{'time'} = $self->get_time();
-            # use DDP; p(%values);
+            use DDP; p(%values);
             return $self->_web_serve_msgpack(\%values);
           } else {
             return $self->_web_serve_file('index.html');          
