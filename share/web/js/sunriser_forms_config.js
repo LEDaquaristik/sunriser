@@ -25,6 +25,20 @@
 //   };
 // };
 
+var sr_update_timezone = function(){
+  var tz = $('#timezone').val();
+  var tzo = $('#timezone option:selected');
+  var gmtoff = tzo.data('gmtoff');
+  var nodst = tzo.data('nodst');
+  $('#gmtoff').val(gmtoff);
+  $('#nodst').val(nodst ? 1 : '');
+  if (nodst) {
+    $('#summertime').parents('tr').hide();
+  } else {
+    $('#summertime').parents('tr').show();
+  }
+}
+
 var sr_forms = {
   //
   //     _/      _/  _/_/_/_/  _/_/_/_/_/  _/          _/    _/_/    _/_/_/    _/    _/
@@ -93,20 +107,9 @@ var sr_forms = {
     //   name: "indexfile", label: "Startseite nach Anmeldung"
     }],
     loaded: function(){
+      sr_update_timezone();
       $('#timezone').change(function(){
-        var tz = $('#timezone').val();
-        if (tz != sr_config['timezone']) {
-          var tzo = $('#timezone option:selected');
-          var gmtoff = tzo.data('gmtoff');
-          var nodst = tzo.data('nodst');
-          $('#gmtoff').val(gmtoff);
-          $('#nodst').val(nodst ? 1 : '');
-          if (nodst) {
-            $('#summertime').parents('tr').hide();
-          } else {
-            $('#summertime').parents('tr').show();
-          }
-        }
+        sr_update_timezone();
       });
     },
   },
