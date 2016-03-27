@@ -33,8 +33,8 @@
   "language", [    "Interface language (ISO 639-1)", "text", "de"],
   "timezone", [    "Timezone ID",                "integer", 31],
   "gmtoff", [      "Timezone UTC offset in minutes during standard time", "integer", 60],
-  "nodst", [       "Ignore Daylight Saving Time (TODO)", "bool", 0],
-  "summertime", [  "It is summertime, add an hour", "bool", 1],
+  "nodst", [       "Ignore Daylight Saving Time", "bool", 0],
+  "summertime", [  "It is summertime, add an hour (ignored if nodst is true)", "bool", 1],
   "name", [        "Custom visual name of device", "text"],
   "hostname", [    "Hostname for the device",    "text", "sunriser"],
   "upgraded0500", [ "Upgrade to 0.500 done",     "bool", 0],
@@ -51,12 +51,22 @@
     "type", [      "(TODO) Content type (else defined by file extension)", "text"],
     "parse", [     "(TODO) Data goes through replace engine (else only done on .html)", "bool"],
     "extra_headers", [ "(TODO) Extra headers to add on send out (need to be full)", "text"],
-    "deleted", [   "(TODO) File is deleted",            "bool"]
+    "deleted", [   "(TODO) File is deleted",     "bool"]
   ],
-  "dayplanner",    "Day planner configuration", [
-    "marker#X", [ "Control markers for PWM X (time and percent)", "array(time,percent)"],
-    "randomdeferralmax", ["(TODO) Maximum random deferral (in minutes)", "integer", 0],
-    "deferral", ["(TODO) Fixed deferral (in minutes)", "integer", 0]
+  "dayplanner",  "Day planner configuration", [
+    "last_setup_id", ["Holding the last id used for new setup", "integer", 0],
+    "web", [       "Web configuration for the day planner profiles", "json"],
+    "marker#X", [  "[LEGACY] Control markers for PWM X (time and percent)", "array(time,percent)"],
+    "program#X",   "Program X setup", [
+      "name", [    "Name of the day planner profile", "text"],
+      "deleted", [ "Deleted weather profile", "bool", 0],
+      "marker", [  "Control markers for program X (time and percent)", "array(time,percent)"],
+      "randomdeferralmax", ["(TODO) Maximum random deferral (in minutes)", "integer", 0],
+      "deferral", ["(TODO) Fixed deferral (in minutes)", "integer", 0]
+    ],
+    "pwm#X",   "PWM X day planner setup", [
+      "weekday#X", [ "Program for the weekday X for the given PWM", "integer"],
+    ]
   ],
   "weather",       "Weather simulation configuration", [
     "last_setup_id", ["Holding the last id used for new setup", "integer", 0],

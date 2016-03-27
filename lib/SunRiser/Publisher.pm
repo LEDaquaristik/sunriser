@@ -181,9 +181,9 @@ sub _build_base_vars {
       css/sunriser_dayplanner.css
     )],
     js_files => [
-      $self->versioned ? 'js/jquery-1.11.2.min.js' : 'js/jquery-1.11.2.js',
-      $self->versioned ? 'js/moment-2.9.0.min.js' : 'js/moment-2.9.0.js',
-      $self->versioned ? 'js/snap.svg-0.3.0.min.js' : 'js/snap.svg-0.3.0.js',
+      $self->versioned ? 'js/jquery-1.12.2.min.js' : 'js/jquery-1.12.2.js',
+      $self->versioned ? 'js/moment-2.12.0.min.js' : 'js/moment-2.12.0.js',
+      $self->versioned ? 'js/snap.svg-0.4.1.min.js' : 'js/snap.svg-0.4.1.js',
       $self->versioned ? 'js/interact-1.2.3.min.js' : 'js/interact-1.2.3.js',
     qw(
       js/tmpl.js
