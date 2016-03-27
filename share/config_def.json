@@ -65,7 +65,7 @@
       "deferral", ["(TODO) Fixed deferral (in minutes)", "integer", 0]
     ],
     "pwm#X",   "PWM X day planner setup", [
-      "weekday#X", [ "Program for the weekday X for the given PWM", "integer"],
+      "weekday#X", [ "Program for the weekday X for the given PWM", "integer"]
     ]
   ],
   "weather",       "Weather simulation configuration", [
