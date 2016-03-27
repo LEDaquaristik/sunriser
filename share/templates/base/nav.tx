@@ -2,8 +2,22 @@
   <li title="Status" class="back_home <: if $nav == 'home' { 'selected' } :> first-level">
     <a href="/"><i class="fa fa-home fa-2x"></i></a>
   </li>
-  <li title="Zeitplanung" class="<: if $nav == 'planner' { 'selected' } :> first-level">
-    <a href="/day.html"><i class="fa fa-clock-o fa-2x"></i></a>
+  <li title="Tagesplanung" class="<: if $nav == 'planner' { 'selected' } :> first-level">
+    <div class="navclosemenu"></div>
+    <i class="fa fa-clock-o fa-2x"></i>
+    <ul class="second-nav">
+      <h2 class="second-level"></h2>
+      <li class="second-level">
+        <a href="/day.html">
+          <i class="fa fa-gears"></i>Tagesplanung Profile
+        </a>
+      </li>
+      <li class="second-level">
+        <a href="/weekdays.html">
+          <i class="fa fa-sitemap"></i>Wochentage
+        </a>
+      </li>
+    </ul>
   </li>
   <li title="Wettersimulation" class="<: if $nav == 'weather' { 'selected' } :> first-level">
     <div class="navclosemenu"></div>

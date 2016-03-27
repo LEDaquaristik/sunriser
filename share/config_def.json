@@ -57,7 +57,7 @@
     "last_setup_id", ["Holding the last id used for new setup", "integer", 0],
     "web", [       "Web configuration for the day planner profiles", "json"],
     "marker#X", [  "[LEGACY] Control markers for PWM X (time and percent)", "array(time,percent)"],
-    "program#X",   "Program X setup", [
+    "setup#X",   "Program X setup", [
       "name", [    "Name of the day planner profile", "text"],
       "deleted", [ "Deleted weather profile", "bool", 0],
       "marker", [  "Control markers for program X (time and percent)", "array(time,percent)"],

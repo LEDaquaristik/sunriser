@@ -8,7 +8,7 @@
 <h3>Seit Firmware v0.800:</h3>
 
 <div>
-  Wir haben einige JavaScript Bibliotheken (jQuery, Moment.js und Snap.svg) auf den neusten Stand gebracht.
+  Die Tagesplanung wurde nun komplett umgebaut und beinhaltet die Planung der Wochentage. Wir haben einige JavaScript Bibliotheken (jQuery, Moment.js und Snap.svg) auf den neusten Stand gebracht.
 </div>
 
 <br><hr>

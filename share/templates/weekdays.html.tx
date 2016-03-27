@@ -1,0 +1,43 @@
+: cascade base { title => "Wochentage", nav => "setup", no_bighelp => 1 }
+: override content -> {
+
+<div class="form noautoload" id="weekdays"></div>
+
+: }
+: override postjs -> {
+
+<script type="text/javascript">
+
+// First execute stuff when the form is loaded
+$('body').on('sr_config',function(){
+
+  var keys = new Array();
+  
+  for (i = 1; i <= sr_config["pwm_count"]; i++) { 
+    keys.push('pwm#' + i + '#manager');
+  }
+
+  sr_request_mpack('POST','/',keys,function(values){
+    var dayplanner_pwms = new Array();
+    for (i = 1; i <= sr_config["pwm_count"]; i++) { 
+      var key = 'pwm#' + i + '#manager';
+      if (values[key] == 1) {
+        dayplanner_pwms.push(i);
+      }
+    }
+    if (!dayplanner_pwms.length) {
+      window.location.href = window.location.href.replace("day.html","led.html");
+    } else {
+      var fields = new Array();
+      var expert_fields = new Array();
+
+
+
+    }
+  });
+
+});
+
+</script>
+
+: }

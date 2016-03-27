@@ -1,7 +1,7 @@
-: cascade base { title => "Tagesplanung", nav => "planner", help => r('Hier k&ouml;nnen Sie den Tagesverlauf Ihrer LEDs einfach per Klick einstellen. W&auml;hlen Sie zuerst oben die einzustellende LED aus, und f&uuml;gen Sie dann &uuml;ber die Plus Zeichen unten neue Punkte hinzu. Diese k&ouml;nnen Sie dann im Graphen nach belieben verschieben. Um einen Punkt zu entfernen, dr&uuml;cken Sie einfach auf die Uhrzeit/Prozent Angabe dieses Punktes unten neben den Plus Zeichen. Vergessen Sie nicht nach Ihren &Auml;nderungen auch am Ende der Seite auf \'Speichern\' zu klicken. Bitte beachten Sie das die Prozentangabe hier eine automatische <a href="/faq.html#gamma">Gammakorrektur</a> beinhaltet um sich mehr dem menschlichen Empfinden anzupassen.') }
+: cascade base { title => "Tagesplanung", nav => "planner", help => r('Hier k&ouml;nnen Sie die Programme f&uuml;r die Tagesverl&auml;ufe Ihrer LEDs einfach per Klick einstellen. W&auml;hlen Sie zuerst oben das einzustellende Programm aus (oder erstellen mit dem Plus neben den Programmen ein neues), und f&uuml;gen Sie dann &uuml;ber die Plus Zeichen unten neue Punkte hinzu. Diese k&ouml;nnen Sie dann im Graphen nach belieben verschieben. Um einen Punkt zu entfernen, dr&uuml;cken Sie einfach auf die Uhrzeit/Prozent Angabe dieses Punktes unten neben den Plus Zeichen. Vergessen Sie nicht nach Ihren &Auml;nderungen auch am Ende der Seite auf \'Speichern\' zu klicken. Bitte beachten Sie das die Prozentangabe hier eine automatische <a href="/faq.html#gamma">Gammakorrektur</a> beinhaltet um sich mehr dem menschlichen Empfinden anzupassen.') }
 : override content -> {
 
-<div id="pwmpicker"></div>
+<div id="prgpicker"></div>
 <div class="daysvgbox">
   <div class="percentbar">
     <div class="percent">100%</div>
@@ -28,11 +28,11 @@
     <div class="counttime">18h<div class="countend">0h</div></div>
   </div>
 </script>
-<script type="text/html" id="pwmpicker_tmpl">
+<script type="text/html" id="prgpicker_tmpl">
 
 <% $.each(paths,function(i,path){ %>
-  <div style="float:left" class="daybox pwmpicker" id="pwmpicker_<%=path.pwm%>">
-    LED #<%=path.pwm%>
+  <div style="float:left" class="daybox prgpicker" id="prgpicker_<%=path.prg%>">
+    <%=path.name%>
   </div>
 <% }); %>
 
@@ -67,16 +67,16 @@
 <script type="text/html" id="pathedit_tmpl">
 
 <% if (!(markers.length > 0 && markers[0].daymin == 0)) { %>
-  <div style="float:left" class="daybox pathedit pathedit_add" data-pos="0" data-pwm="<%=pwm%>" id="pathedit_<%=pwm%>_add_0">
+  <div style="float:left" class="daybox pathedit pathedit_add" data-pos="0" data-prg="<%=prg%>" id="pathedit_<%=prg%>_add_0">
     &nbsp;+&nbsp;
   </div>
 <% } %>
 <% $.each(markers,function(i,marker){ %>
-  <div style="float:left" class="daybox pathedit pathedit_edit" data-pos="<%=i%>" data-pwm="<%=pwm%>" id="pathedit_<%=pwm%>_edit_<%=i%>">
+  <div style="float:left" class="daybox pathedit pathedit_edit" data-pos="<%=i%>" data-prg="<%=prg%>" id="pathedit_<%=prg%>_edit_<%=i%>">
     <%=marker.title()%>
   </div>
   <% if (!(i == ( markers.length - 1 ) && markers[i].daymin >= dp.alldaymin - 1) && !(markers[i+1] && markers[i+1].daymin == markers[i].daymin + 1 )) { %>
-    <div style="float:left" class="daybox pathedit pathedit_add" data-pos="<%=i+1%>" data-pwm="<%=pwm%>" id="pathedit_<%=pwm%>_add_<%=i+1%>">
+    <div style="float:left" class="daybox pathedit pathedit_add" data-pos="<%=i+1%>" data-prg="<%=prg%>" id="pathedit_<%=prg%>_add_<%=i+1%>">
       &nbsp;+&nbsp;
     </div>
   <% } %>
@@ -119,7 +119,7 @@ var SrDayplanner = Class.extend({
   current_edit:    undefined,
   current_marker:  undefined,
 
-  init: function(pwm_markers){
+  init: function(prg_markers){
     var self = this;
     self.maxTime = ( self.alldaymin - 1 ) / self.timeScale;
     self.jq = $('#dayplanner');
@@ -127,8 +127,8 @@ var SrDayplanner = Class.extend({
     self.grid_group = self.paper.g();
     self.path_group = self.paper.g();
     self.make_grid();
-    $.each(pwm_markers,function(pwm,markers){
-      self.paths[pwm] = new SrPath(self,pwm,markers);
+    $.each(prg_markers,function(prg,markers){
+      self.paths[prg] = new SrPath(self,prg,markers);
     });
     self.init_picker();
     $(window).resize(function() {
@@ -139,21 +139,21 @@ var SrDayplanner = Class.extend({
 
   init_picker: function(){
     var self = this;
-    $('#pwmpicker').html(tmpl('pwmpicker_tmpl',self));
-    $.each(self.paths,function(pwm,path){
-      $('#pwmpicker_' + pwm).click(function(){
-        $.each(self.paths,function(curr_pwm,curr_path){
+    $('#prgpicker').html(tmpl('prgpicker_tmpl',self));
+    $.each(self.paths,function(prg,path){
+      $('#prgpicker_' + prg).click(function(){
+        $.each(self.paths,function(curr_prg,curr_path){
           curr_path.edit(0);
           curr_path.clear_current_marker();
         });
-        $('.pwmpicker').css('background-color','#fff');
+        $('.prgpicker').css('background-color','#fff');
         $('#pathedit').html("");
-        if (self.current_edit == pwm) {
+        if (self.current_edit == prg) {
           self.current_edit = undefined;
         } else {
           $(this).css('background-color','#CCD7E2');
-          self.current_edit = pwm;
-          self.paths[pwm].edit(1);
+          self.current_edit = prg;
+          self.paths[prg].edit(1);
         }
       });
     });
@@ -259,7 +259,8 @@ var SrPath = Class.extend({
 
   markers: undefined,
   size: undefined,
-  pwm: undefined,
+  prg: undefined,
+  name: undefined,
   dp: undefined,
   path: undefined,
   editmode: false,
@@ -267,13 +268,13 @@ var SrPath = Class.extend({
   lines: [],
   circles: [],
 
-  init: function(dp,pwm,markers) {
+  init: function(dp,prg,name,markers) {
     this.dp       = dp;
-    this.pwm      = pwm;
-    var color_id = $('#pwm_' + pwm + '_color').val();
-    if (sr_color[color_id]) {
-      this.color = sr_color[color_id].color;
-    }
+    this.prg      = prg;
+    this.name     = name;
+
+    // this.color = 
+
     this.markers  = markers;
     this.size     = markers.length;
     this.update_circles();
@@ -333,7 +334,7 @@ var SrPath = Class.extend({
     $.each(self.markers,function(i,marker){
       values.push(marker.daymin,marker.percent);
     });
-    $('#dayplanner_marker_' + self.pwm)
+    $('#dayplanner_marker_' + self.prg)
       .trigger('change').val(values.join(','));
   },
 
@@ -349,7 +350,7 @@ var SrPath = Class.extend({
 
   update_circles: function() {
     var self = this;
-    var pwm = self.pwm;
+    var prg = self.prg;
     $.each(self.circles,function(i,circle){
       circle.remove();
     });
@@ -374,7 +375,7 @@ var SrPath = Class.extend({
           id: id
         });
         $(circle.node).data('title',title);
-        circle.append(Snap.parse("<title>" + "PWM #" + pwm + "\n" + title + "</title>"));
+        circle.append(Snap.parse("<title>" + self.name + "\n" + title + "</title>"));
         if (self.editmode) {
           $(circle.node).data('circle',circle);
           circle.dragger = {
@@ -560,7 +561,7 @@ var SrPath = Class.extend({
 
   update_path: function() {
     var self = this;
-    var pwm = self.pwm;
+    var prg = self.prg;
     if (typeof self.path !== 'undefined') {
       self.path.remove();
     }
@@ -625,6 +626,35 @@ var SrPath = Class.extend({
 
 // First execute stuff when the form is loaded
 $('body').on('sr_config',function(){
+
+  $("#add_dayplanner_profile").click(function(){
+
+    var next_id = sr_config["dayplanner#last_setup_id"] + 1;
+    var next_name = "Neues Profil " + next_id;
+    sr_config["dayplanner#web"].push({
+      id: next_id,
+      name: next_name
+    });
+    var data = {};
+    data["dayplanner#web"] = JSON.stringify(sr_config["dayplanner#web"]);
+    data["dayplanner#setup#" + next_id + "#name"] = next_name;
+    data["dayplanner#setup#" + next_id + "#deleted"] = false;
+    data["dayplanner#last_setup_id"] = next_id;
+    sr_request_mpack('PUT','/',data,function(){
+      window.location.href = window.location.href;
+    });
+
+  });
+
+
+
+
+
+
+
+
+
+
 
   var keys = new Array();
   
