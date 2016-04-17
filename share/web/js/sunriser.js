@@ -5,7 +5,7 @@ var sr_config_main_keys = [
   'model','model_id','pwm_count','factory_version','language','timezone',
   'gmtoff','nodst','updated','name','showexpert','nohelp','nofinder','usentp',
   'weather#web','weather#last_setup_id','ignoreupgrade','webport','save_version',
-  'upgraded0500','factory_version'
+  'factory_version'
 ];
 
 var firmware_info;
@@ -207,8 +207,8 @@ $('body').on('sr_config_init',function(){
     sr_config_version = sr_config['factory_version'] * 1000;
   }
 
-  if (sr_config_version <= 500 && !sr_config['upgraded0500']) {
-    sr_generate_upgrade_0500();
+  if (!sr_config['weather#web']) {
+    sr_generate_weather_setup_one();
   } else {
 
     if (sr_config.nohelp) {
@@ -222,6 +222,7 @@ $('body').on('sr_config_init',function(){
     }
 
     var got_empty = false;
+
     var first_weather_setup_id;
     $.each(sr_config['weather#web'],function(i,v){
       if (v) {
