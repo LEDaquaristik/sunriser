@@ -9,46 +9,47 @@
     <% } %>
   <% } %>
   <table>
-  <% for ( var i = 0; i < fields.length; i++ ) { var field = fields[i]; %>
-    <% if (!field.pre) { %>
-      <tr class="table_separation">
-        <td<% if (field.desc) { %> class="tip" data-tip="<%=field.desc %>"<% } %>>
-          <%=field.label %>:
-        </td>
-        <td>
-          <% if (field.template == 'checkbox') { %>
-            <: include form::checkbox :>
-          <% } else if (field.template == 'timezone') { %>
-            <: include form::timezone :>
-          <% } else if (field.template == 'password') { %>
-            <: include form::password :>
-          <% } else if (field.template == 'weekday') { %>
-            <: include form::weekday :>
-          <% } else if (field.template == 'text') { %>
-            <: include form::text :>
-          <% } else if (field.template == 'slider') { %>
-            <: include form::slider :>
-          <% } else if (field.template == 'time') { %>
-            <: include form::time :>
-          <% } else if (field.template == 'select') { %>
-            <: include form::select :>
-          <% } else { %>
-            Template <%=field.template%> unbekannt
-          <% } %>
-        <td>
-      </tr>
+    <% for ( var i = 0; i < fields.length; i++ ) { var field = fields[i]; %>
+      <% if (!field.pre) { %>
+        <tr class="table_separation">
+          <td<% if (field.desc) { %> class="tip" data-tip="<%=field.desc %>"<% } %>>
+            <%=field.label %>:
+          </td>
+          <td>
+            <% if (field.template == 'checkbox') { %>
+              <: include form::checkbox :>
+            <% } else if (field.template == 'timezone') { %>
+              <: include form::timezone :>
+            <% } else if (field.template == 'password') { %>
+              <: include form::password :>
+            <% } else if (field.template == 'weekday') { %>
+              <: include form::weekday :>
+            <% } else if (field.template == 'text') { %>
+              <: include form::text :>
+            <% } else if (field.template == 'slider') { %>
+              <: include form::slider :>
+            <% } else if (field.template == 'time') { %>
+              <: include form::time :>
+            <% } else if (field.template == 'select') { %>
+              <: include form::select :>
+            <% } else { %>
+              Template <%=field.template%> unbekannt
+            <% } %>
+          <td>
+        </tr>
+        <tr>
+          <td colspan="2" id="<%=field.name%>_error">
+          </td>
+        </tr>
+      <% } %>
+    <% } %>
+    <% if (!no_submit) { %>
       <tr>
-        <td colspan="2" id="<%=field.name%>_error">
+        <td colspan="2">
+          <input type="submit" id="form_formsubmit" value="<%=formsubmit %>">
         </td>
       </tr>
     <% } %>
-  <% } %>
-  <% if (!no_submit) { %>
-    <tr>
-      <td colspan="2">
-        <input type="submit" id="form_formsubmit" value="<%=formsubmit %>">
-      </td>
-    </tr>
-  <% } %>
+  </table>
 </form>
 </script>

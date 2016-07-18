@@ -76,6 +76,7 @@ sub _build_publish_files {
     thunderstorm.html
     upgraded.html
     weather.html
+    weather_info.html
 
     notfound.html
 

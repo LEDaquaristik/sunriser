@@ -35,6 +35,11 @@
           <i class="fa fa-pluie"></i>Regentage
         </a>
       </li>
+      <li class="second-level">
+        <a href="/weather_info.html">
+          <i class="fa fa-info-circle"></i>Status
+        </a>
+      </li>
     </ul>
   </li>
   <li title="Einstellungen" class="<: if $nav == 'setup' { 'selected' } :> first-level">

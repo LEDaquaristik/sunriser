@@ -5,6 +5,14 @@
 
 <hr>
 
+<h3>Seit Firmware v0.730:</h3>
+
+<div>
+  Die DHCP Implementierung wird nun etwas l&auml;nger probieren eine Verbindung herzustellen bei Zeit&uuml;berschreitung. Wir haben die erste Implementierung f&uuml;r den <a href="/weather_info.html">Wetter Status</a> eingebracht, um Ihnen die M&ouml;glichkeit zu geben etwas besser zu verstehen wie die Wetter Funktionen umgesetzt werden. Das Feature wird noch verbessert und ist derzeit noch nicht f&uuml;r jeden Benutzer geeignet.
+</div>
+
+<br><hr>
+
 <h3>Seit Firmware v0.720:</h3>
 
 <div>

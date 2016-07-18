@@ -453,9 +453,11 @@ sub set_service_mode {
 sub _web_state {
   my ( $self, $env ) = @_;
   $self->debug('Sending state');
+  my $uptime = ( $self->get_time() - $self->started() );
   my $state = {
     time => $self->get_time(),
-    uptime => ( $self->get_time() - $self->started() ),
+    tick => ( $uptime * 1000 ),
+    uptime => $uptime,
     %{$self->get_state($env)},
   };
   #use DDP; p($state);
@@ -507,6 +509,30 @@ sub _web_bootload_mp {
     timestamp => ( $stat[9] + ( $self->get('gmtoff') * 60 ) ),
     mac => [18,52,86,120,154,188]
   });
+}
+
+sub _web_weather_info {
+  my ( $self, $env ) = @_;
+  $self->debug('Sending weather info');
+  return $self->_web_serve_msgpack([(map { undef } 1..6),{
+    clouds_next_state_tick => 128659,
+    clouds_state => 3,
+    cloudticks => 17158638,
+    daycount => 0,
+    rainfront_length => 0,
+    rainfront_start => 0,
+    rainmins => 0,
+    rain_next_tick => 0,
+    stormfront_length => 0,
+    stormfront_start => 0,
+    thunder_next_state_tick => 4562245,
+    thunder_state => 0,
+    weather_program_id => 1
+  },{
+    moon_next_state_tick => 1326322,
+    moon_state => 2,
+    weather_program_id => 2
+  }]);
 }
 
 has config => (
@@ -668,6 +694,8 @@ sub _build_psgi {
           return $self->_web_ok;
         } elsif ($path =~ /^\/reboot$/) {
           return $self->_web_ok('REBOOT');
+        } elsif ($path =~ /^\/weather$/) {
+          return $self->_web_weather_info($env);
         } elsif ($path =~ /^\/state$/) {
           return $self->_web_state($env);
         } elsif ($path =~ /^\/firmware\.mp$/) {

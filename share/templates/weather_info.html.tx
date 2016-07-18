@@ -1,0 +1,183 @@
+: cascade base { title => "Wetter Status", nav => "weather_info", no_form => 1, no_bighelp => 1, help => mark_raw("Diese Status Seite ist ein neues Feature und noch nicht vollst&auml;ndig freigegeben. Bitte noch keine Support Anfragen stellen.") }
+: override content -> {
+
+<div id="weather_info"></div>
+
+: }
+: override postjs -> {
+
+<script type="text/javascript">
+
+$('body').on('sr_config',function(){
+
+  sr_request_mpack('GET','/state',undefined,function(state){
+    sr_request_mpack('GET','/weather',undefined,function(weather_infos){
+      $.each(weather_infos,function(i,v){
+        var pwm = i+1;
+        if (v && v.weather_program_id) {
+          var name;
+          $.each(weather_profiles,function(j,p){
+            if (p.value == v.weather_program_id) {
+              name = p.name;
+            }
+          });
+          var wi = {
+            pwm: pwm,
+            weather_program: name,
+            weather_program_id: v.weather_program_id
+          };
+          if (typeof v.cloudticks != "undefined") {
+            wi.clouds_activated = true;
+            wi.cloudmins = Math.floor((v.cloudticks / 1000) / 60);
+          } else {
+            wi.clouds_activated = false;
+          }
+          if (typeof v.daycount != "undefined") {
+            wi.thunder_activated = true;
+            wi.daycount = v.daycount;
+            wi.stormfront_length = v.stormfront_length;
+            wi.stormfront_start = v.stormfront_start * 1000;
+            wi.thunder_next_state_tick = v.thunder_next_state_tick ? Math.floor((v.thunder_next_state_tick - state.tick) / 1000) : 0;
+          } else {
+            wi.thunder_activated = false;
+          }
+          if (typeof v.rainmins != "undefined") {
+            wi.rain_activated = true;
+            wi.rainmins = v.rainmins;
+            wi.rainfront_length = v.rainfront_length;
+            wi.rainfront_start = v.rainfront_start * 1000;
+            wi.rain_next_tick = v.rain_next_tick ? Math.floor((v.rain_next_tick - state.tick) / 1000) : 0;
+          } else {
+            wi.rain_activated = false;
+          }
+          if (typeof v.moon_next_state_tick != "undefined") {
+            wi.moon_activated = true;
+            wi.moon_next_state_tick = v.moon_next_state_tick ? Math.floor((v.moon_next_state_tick - state.tick) / 1000) : 0;
+          } else {
+            wi.moon_activated = false;
+          }
+          var new_div = $('<div/>');
+          new_div.html(tmpl('weather_info_tmpl',wi));
+          $('#weather_info').append(new_div);
+        }
+      });
+    });
+  });
+
+});
+
+</script>
+<script type="text/html" id="weather_info_tmpl">
+  <h2>PWM #<%= pwm %></h2>
+  <table>
+    <tr>
+      <td>
+        Wetter Programm
+      </td>
+      <td>
+        <%= weather_program %>
+      </td>
+    </tr>
+    <% if (clouds_activated) { %>
+      <tr>
+        <td>
+          Wolkenminuten &uuml;brig f&uuml;r heute
+        </td>
+        <td>
+          <%= cloudmins %>
+        </td>
+      </tr>
+    <% } %>
+    <% if (thunder_activated) { %>
+      <tr>
+        <td>
+          Abgelaufene Gewitterchancen
+        </td>
+        <td>
+          <%= daycount %>
+        </td>
+      </tr>
+      <% if (stormfront_start) { %>
+        <tr>
+          <td>
+            N&auml;chste Sturmfront startet
+          </td>
+          <td>
+            <%= moment(stormfront_start).format("LTS") %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            N&auml;chste Sturmfront L&auml;nge in Minuten
+          </td>
+          <td>
+            <%= stormfront_length %>
+          </td>
+        </tr>
+      <% } %>
+      <% if (thunder_next_state_tick) { %>
+        <tr>
+          <td>
+            N&auml;chste Gewitter Status&auml;nderung
+          </td>
+          <td>
+            <%= moment().add(thunder_next_state_tick,'s').format("LTS") %>
+          </td>
+        </tr>
+      <% } %>
+    <% } %>
+    <% if (rain_activated) { %>
+      <tr>
+        <td>
+          Regenminuten &uuml;brig f&uuml;r heute
+        </td>
+        <td>
+          <%= rainmins %>
+        </td>
+      </tr>
+      <% if (rainfront_start) { %>
+        <tr>
+          <td>
+            N&auml;chste Regenfront startet
+          </td>
+          <td>
+            <%= moment(rainfront_start).format("LTS") %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            N&auml;chste Regenfront L&auml;nge in Minuten
+          </td>
+          <td>
+            <%= rainfront_length %>
+          </td>
+        </tr>
+      <% } %>
+      <% if (rain_next_tick) { %>
+        <tr>
+          <td>
+            N&auml;chste Regen Status&auml;nderung
+          </td>
+          <td>
+            <%= moment().add(rain_next_tick,'s').format("LTS") %>
+          </td>
+        </tr>
+      <% } %>
+    <% } %>
+    <% if (moon_activated) { %>
+      <% if (moon_next_state_tick) { %>
+        <tr>
+          <td>
+            N&auml;chste Mond Status&auml;nderung
+          </td>
+          <td>
+            <%= moment().add(moon_next_state_tick,'s').format("LTS") %>
+          </td>
+        </tr>
+      <% } %>
+    <% } %>
+  </table>
+  <hr>
+</script>
+
+: }

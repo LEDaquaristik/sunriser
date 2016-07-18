@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
   <head>
-    <title>SunRiser Factory</title>
+    <title>SunRiser Factory Helper</title>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" />
     <link href="style.css" type="text/css" rel="stylesheet">
@@ -14,10 +14,11 @@
         </section>
       </div>
     </noscript>
-    <h1>SunRiser Finder</h1>
+    <h1>SunRiser Factory Helper</h1>
     <h2 id="not_found" class="hideme">Kein SunRiser gefunden!</h2>
     <h2 id="service_down" class="hideme">Der Service ist gerade nicht verf&uuml;gbar, bitte versuchen Sie es sp&auml;ter nochmal.</h2>
     <h2 id="found"></h2>
+    <hr>
     <h2 id="clear_list" class="hideme">Ihre SunRiser Liste zur&uuml;cksetzen</h2>
     <hr>
     <a href="http://sunriser.ledaquaristik.de/">SunRiser 8 Finder</a> |
@@ -26,11 +27,13 @@
     <script src="jquery-1.11.2.min.js" type="text/javascript"></script>
     <script src="moment-2.9.0.min.js" type="text/javascript"></script>
     <script src="moment-locale-de.js" type="text/javascript"></script>
+    <script src="jquery-ajax-blob-arraybuffer.js" type="text/javascript"></script>
 <script type="text/javascript">
 
 var srf_done_cnt = 0;
 var sr_finder;
 var sr_firmwares;
+var firmware_root = "http://sunriser.ledaquaristik.de/";
 
 function srf_error() {
   $('#service_down').show();
@@ -47,12 +50,12 @@ function srf_done() {
       $.each(sr_finder,function(mac,sr){
         var m = moment(sr.firmware_timestamp * 1000);
         m.utcOffset(0);
-        var text = sr.hostname ? ( sr.hostname + ' [' + mac + ']' ) : mac;
-        html = '<div class="sr_found"><a href="http://' + sr.ip + '/">' + text
-          + '</a> [' + sr.firmware_filename + ' ' + m.format('LLL.ss') + ']'
-          + ( sr.firmware_timestamp < sr_firmwares[0].timestamp
-            ? '<div class="sr_outdated">Achtung, die Firmware von diesem SunRiser ist veraltet.</div>'
-            : '' ) + '</div>';
+        var text = sr.ip + ' ' + ( sr.hostname ? ( sr.hostname + ' [' + mac + ']' ) : mac );
+        html = '<div class="sr_found">'
+          + ( sr.firmware_timestamp < sr_firmwares[0].timestamp ? 'outdated' : 'current' )
+          + ' <a href="http://' + sr.ip + '/">' + text
+          + '</a> [' + sr.firmware_filename + ']'
+          + '</div>';
         $('#found').append(html);
         found_count++;
         ip = sr.ip;
@@ -67,6 +70,45 @@ function srf_done() {
       }
     }
   }
+}
+
+function download_and_install_factory(ip, status) {
+  var firmware_url = firmware_root + sr_firmwares[0].url;
+  var call_options = {
+    type: 'GET',
+    url: firmware_url,
+    contentType: 'application/octet-stream',
+    dataType: 'arraybuffer',
+    processData: false,
+    cache: false,
+    error: function (xhr, ajaxOptions, thrownError) {
+      sr_error();
+    },
+    success: function (bytesarray) {
+      $(status).replaceWith('<div>Installing Factory...</div>');
+      install_factory(bytesarray, ip, status);
+    }
+  };
+  $.ajax(call_options);
+}
+
+function install_factory(bytesarray, ip, status) {
+  var call_options = {
+    type: 'PUT',
+    url: 'http://' + ip + '/factory',
+    data: bytesarray,
+    contentType: 'application/octet-stream',
+    dataType: 'arraybuffer',
+    processData: false,
+    cache: false,
+    error: function(xhr,error,errorthrown){
+      sr_error();
+    },
+    success: function(data,status,xhr){
+      $(status).replaceWith('<div>Factory installation done...</div>');
+    },
+  };
+  $.ajax(call_options);
 }
 
 $(function(){
