@@ -1,7 +1,7 @@
 : cascade base { title => "Wetter Status", nav => "weather_info", no_form => 1, no_bighelp => 1, help => mark_raw("Diese Status Seite ist ein neues Feature und noch nicht vollst&auml;ndig freigegeben. Bitte noch keine Support Anfragen stellen.") }
 : override content -> {
 
-<div id="weather_info"></div>
+<div id="weather_info"><img class="loader" src="/img/ajaxload.gif"><div class="centerarrow">Wenn dieser Fisch nicht verschwindet, bitte die Seite neuladen.</div></div>
 
 : }
 : override postjs -> {
@@ -12,55 +12,66 @@ $('body').on('sr_config',function(){
 
   sr_request_mpack('GET','/state',undefined,function(state){
     sr_request_mpack('GET','/weather',undefined,function(weather_infos){
+      $('#weather_info').empty();
+      var weather_infos_count = 0;
       $.each(weather_infos,function(i,v){
-        var pwm = i+1;
-        if (v && v.weather_program_id) {
-          var name;
-          $.each(weather_profiles,function(j,p){
-            if (p.value == v.weather_program_id) {
-              name = p.name;
-            }
-          });
-          var wi = {
-            pwm: pwm,
-            weather_program: name,
-            weather_program_id: v.weather_program_id
-          };
-          if (typeof v.cloudticks != "undefined") {
-            wi.clouds_activated = true;
-            wi.cloudmins = Math.floor((v.cloudticks / 1000) / 60);
-          } else {
-            wi.clouds_activated = false;
-          }
-          if (typeof v.daycount != "undefined") {
-            wi.thunder_activated = true;
-            wi.daycount = v.daycount;
-            wi.stormfront_length = v.stormfront_length;
-            wi.stormfront_start = v.stormfront_start * 1000;
-            wi.thunder_next_state_tick = v.thunder_next_state_tick ? Math.floor((v.thunder_next_state_tick - state.tick) / 1000) : 0;
-          } else {
-            wi.thunder_activated = false;
-          }
-          if (typeof v.rainmins != "undefined") {
-            wi.rain_activated = true;
-            wi.rainmins = v.rainmins;
-            wi.rainfront_length = v.rainfront_length;
-            wi.rainfront_start = v.rainfront_start * 1000;
-            wi.rain_next_tick = v.rain_next_tick ? Math.floor((v.rain_next_tick - state.tick) / 1000) : 0;
-          } else {
-            wi.rain_activated = false;
-          }
-          if (typeof v.moon_next_state_tick != "undefined") {
-            wi.moon_activated = true;
-            wi.moon_next_state_tick = v.moon_next_state_tick ? Math.floor((v.moon_next_state_tick - state.tick) / 1000) : 0;
-          } else {
-            wi.moon_activated = false;
-          }
-          var new_div = $('<div/>');
-          new_div.html(tmpl('weather_info_tmpl',wi));
-          $('#weather_info').append(new_div);
+        if (v) {
+          count += 1;
         }
       });
+      if (weather_infos_count.length) {
+        $.each(weather_infos,function(i,v){
+          var pwm = i+1;
+          if (v && v.weather_program_id) {
+            var name;
+            $.each(weather_profiles,function(j,p){
+              if (p.value == v.weather_program_id) {
+                name = p.name;
+              }
+            });
+            var wi = {
+              pwm: pwm,
+              weather_program: name,
+              weather_program_id: v.weather_program_id
+            };
+            if (typeof v.cloudticks != "undefined") {
+              wi.clouds_activated = true;
+              wi.cloudmins = Math.floor((v.cloudticks / 1000) / 60);
+            } else {
+              wi.clouds_activated = false;
+            }
+            if (typeof v.daycount != "undefined") {
+              wi.thunder_activated = true;
+              wi.daycount = v.daycount;
+              wi.stormfront_length = v.stormfront_length;
+              wi.stormfront_start = v.stormfront_start * 1000;
+              wi.thunder_next_state_tick = v.thunder_next_state_tick ? Math.floor((v.thunder_next_state_tick - state.tick) / 1000) : 0;
+            } else {
+              wi.thunder_activated = false;
+            }
+            if (typeof v.rainmins != "undefined") {
+              wi.rain_activated = true;
+              wi.rainmins = v.rainmins;
+              wi.rainfront_length = v.rainfront_length;
+              wi.rainfront_start = v.rainfront_start * 1000;
+              wi.rain_next_tick = v.rain_next_tick ? Math.floor((v.rain_next_tick - state.tick) / 1000) : 0;
+            } else {
+              wi.rain_activated = false;
+            }
+            if (typeof v.moon_next_state_tick != "undefined") {
+              wi.moon_activated = true;
+              wi.moon_next_state_tick = v.moon_next_state_tick ? Math.floor((v.moon_next_state_tick - state.tick) / 1000) : 0;
+            } else {
+              wi.moon_activated = false;
+            }
+            var new_div = $('<div/>');
+            new_div.html(tmpl('weather_info_tmpl',wi));
+            $('#weather_info').append(new_div);
+          }
+        });
+      } else {
+        $('#weather_info').append('<div>Keine Wetterkonfiguration geladen, d.h. kein Wetterprofil ist mit einer LED verbunden.</div>');
+      }
     });
   });
 

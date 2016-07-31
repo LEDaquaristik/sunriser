@@ -5,6 +5,14 @@
 
 <hr>
 
+<h3>Seit Firmware v0.731:</h3>
+
+<div>
+  Behebung eines Netzwerk Problems. Externe Bibliotheken auf den neusten Stand gebracht. OPTIONS und HEAD HTTP-Anfragen werden nun korrekt beantwortet, dies sollte zu mehr Kompatibilit&auml;t unter den Web-Browsern f&uuml;hren.
+</div>
+
+<br><hr>
+
 <h3>Seit Firmware v0.730:</h3>
 
 <div>

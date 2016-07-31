@@ -51,12 +51,17 @@ function srf_done() {
         var m = moment(sr.firmware_timestamp * 1000);
         m.utcOffset(0);
         var text = sr.ip + ' ' + ( sr.hostname ? ( sr.hostname + ' [' + mac + ']' ) : mac );
-        html = '<div class="sr_found">'
+        var found_html = $('<div class="sr_found">'
           + ( sr.firmware_timestamp < sr_firmwares[0].timestamp ? 'outdated' : 'current' )
           + ' <a href="http://' + sr.ip + '/">' + text
           + '</a> [' + sr.firmware_filename + ']'
-          + '</div>';
-        $('#found').append(html);
+          + '</div>');
+        var install_html = $('<div>INSTALL LATEST</div>');
+        install_html.click(function(){
+          download_and_install_factory(sr.ip,install_html);
+        });
+        found_html.append(install_html);
+        $('#found').append(found_html);
         found_count++;
         ip = sr.ip;
       });
@@ -74,6 +79,7 @@ function srf_done() {
 
 function download_and_install_factory(ip, status) {
   var firmware_url = firmware_root + sr_firmwares[0].url;
+  $(status).html('<div>Downloading latest firmware "' + sr_firmwares[0].description + '"...</div>');
   var call_options = {
     type: 'GET',
     url: firmware_url,
@@ -81,11 +87,23 @@ function download_and_install_factory(ip, status) {
     dataType: 'arraybuffer',
     processData: false,
     cache: false,
-    error: function (xhr, ajaxOptions, thrownError) {
-      sr_error();
+    error: function(xhr,error,errorthrown){
+      $(status).append('<div>' + xhr.responseText + " //// " + thrownError + '</div>');
     },
+    // xhr: function(){
+    //   var xhr = new window.XMLHttpRequest();
+    //   xhr.addEventListener("progress", function (evt) {
+    //     if (evt.lengthComputable) {
+    //       var percentComplete = evt.loaded / evt.total;
+    //       progressElem.html();
+    //       $(status).html('<div>Downloading Factory... ' + Math.round(percentComplete * 100) + '%</div>');
+    //     }
+    //   }, false);
+    //   console.log(xhr);
+    //   return xhr;
+    // },
     success: function (bytesarray) {
-      $(status).replaceWith('<div>Installing Factory...</div>');
+      $(status).html('<div>Installing Factory...</div>');
       install_factory(bytesarray, ip, status);
     }
   };
@@ -102,10 +120,22 @@ function install_factory(bytesarray, ip, status) {
     processData: false,
     cache: false,
     error: function(xhr,error,errorthrown){
-      sr_error();
+      $(status).append('<div>' + xhr.responseText + " //// " + thrownError + '</div>');
     },
-    success: function(data,status,xhr){
-      $(status).replaceWith('<div>Factory installation done...</div>');
+    // xhr: function(){
+    //   var xhr = new window.XMLHttpRequest();
+    //   xhr.addEventListener("progress", function (evt) {
+    //     if (evt.lengthComputable) {
+    //       var percentComplete = evt.loaded / evt.total;
+    //       progressElem.html();
+    //       $(status).html('<div>Installing Factory... ' + Math.round(percentComplete * 100) + '%</div>');
+    //     }
+    //   }, false);
+    //   console.log(xhr);
+    //   return xhr;
+    // },
+    complete: function(data,xhr_status,xhr){
+      $(status).html('<div>Factory upload finished... Status: ' + xhr_status + '</div>');
     },
   };
   $.ajax(call_options);
@@ -124,7 +154,6 @@ $(function(){
   moment.locale('de');
 
   $.getJSON("sunriser_firmware_images.json?" + (new Date().getTime()), function(firmwares) {
-    console.log(firmwares);
     sr_firmwares = firmwares;
     srf_done();
   }).error(function() { srf_error() });
