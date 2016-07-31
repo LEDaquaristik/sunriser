@@ -16,7 +16,7 @@ $('body').on('sr_config',function(){
       var weather_infos_count = 0;
       $.each(weather_infos,function(i,v){
         if (v) {
-          count += 1;
+          weather_infos_count += 1;
         }
       });
       if (weather_infos_count.length) {
