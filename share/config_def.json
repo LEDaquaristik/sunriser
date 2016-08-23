@@ -18,6 +18,7 @@
   "ignoreupgrade", [ "No upgrade banderole display", "bool", 0],
   "nofinder", [    "Deactivate SunRiser Finder", "bool", 0],
   "nomdns", [      "Deactivate mdns",            "bool", 0],
+  "higherminimum", [ "Higher minimum lightning", "bool", 0],
   "enforcenet", [  "Reboot till NTP is not timing out", "bool", 0],
   "ip4", [         "Set fixed IPv4",             "ip4"],
   "ip4_netmask", [ "IPv4 Netmask",               "ip4"],
@@ -39,7 +40,7 @@
   "hostname", [    "Hostname for the device",    "text", "sunriser"],
   "upgraded0500", [ "Upgrade to 0.500 done",     "bool", 0],
   "pwm#X",       "Main data of PWM X", [
-    "manager", [   "Assigned manager, 0 = unassigned, 1 = dayplanner, 2 = event", "integer", 0],
+    "manager", [   "Assigned manager, 0 = unassigned, 1 = dayplanner, 2 = weekplanner, 3 = fullplanner, 4 = event", "integer", 0],
     "name", [      "Custom name for pwm",        "text"],
     "color", [     "Color definition",           "text"],
     "weather", [   "Weather program assigned",   "integer"]
@@ -51,7 +52,15 @@
     "type", [      "(TODO) Content type (else defined by file extension)", "text"],
     "parse", [     "(TODO) Data goes through replace engine (else only done on .html)", "bool"],
     "extra_headers", [ "(TODO) Extra headers to add on send out (need to be full)", "text"],
-    "deleted", [   "(TODO) File is deleted",            "bool"]
+    "deleted", [   "(TODO) File is deleted",     "bool"]
+  ],
+  "programs",    "Programs configuration", [
+    "marker#X", [ "Control markers for PWM X (time and percent)", "array(time,percent)"],
+    "name#X", [ "Name for program X", "text"],
+    "last_setup_id", ["Holding the last id used for new setup", "integer", 1]
+  ],
+  "weekplanner",    "Week planner configuration", [
+    "programs#X", [ "Programs of the week for PWM X (always 8, first = all day)", "array(integer)"]
   ],
   "dayplanner",    "Day planner configuration", [
     "marker#X", [ "Control markers for PWM X (time and percent)", "array(time,percent)"],

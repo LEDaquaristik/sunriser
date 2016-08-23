@@ -29,6 +29,8 @@ use SunRiser::Publisher;
 use SunRiser::CDB;
 use SunRiser;
 use Data::Coloured;
+use Plack::App::Proxy;
+use Plack::Middleware::BufferedStreaming;
 use Data::Printer;
 
 has versioned => (
@@ -62,6 +64,13 @@ option port => (
   lazy => 1,
   default => sub { 9000 },
   doc => 'port for the webserver',
+);
+
+option sunriserhost => (
+  is => 'ro',
+  format => 's',
+  predicate => 'has_sunriserhost',
+  doc => 'Host/IP of a real sunriser',
 );
 
 option password => (
@@ -584,6 +593,28 @@ sub _build_web {
   return $server;
 }
 
+has sunriser_proxy => (
+  is => 'lazy',
+  init_arg => undef,
+);
+
+sub _build_sunriser_proxy {
+  my ( $self ) = @_;
+  croak("Can't start sunriser proxy without sunriser ip") unless $self->has_sunriserhost;
+  return Plack::App::Proxy->new(
+    remote => 'http://'.$self->sunriserhost.'/',
+    backend => 'LWP',
+    preserve_host_header => 1,
+  );
+}
+
+sub sr_proxy {
+  my ( $self, $env ) = @_;
+  return unless $self->has_sunriserhost;
+  $self->debug('==> SunRiser');
+  Plack::Middleware::BufferedStreaming->wrap($self->sunriser_proxy, force => 1)->($env);
+}
+
 has psgi => (
   is => 'lazy',
   init_arg => undef,
@@ -631,15 +662,15 @@ sub _build_psgi {
       #   $logged_in = 1;
       # }
 
-      # use DDP; p($env->{'psgix.session'});
-
       if ($path eq '/') {
         # if logged in serve index.html
         if ($logged_in) {
           if ($method eq 'DELETE') {
+            return $self->sr_proxy($env) if $self->has_sunriserhost;
             $self->delete_config($env);
             return $self->_web_ok;
           } elsif ($method eq 'PUT') {
+            return $self->sr_proxy($env) if $self->has_sunriserhost;
             my $body = $req->raw_body;
             # poloured($body);
             my $data = $self->_mp->unpack($body);
@@ -650,6 +681,7 @@ sub _build_psgi {
             }
             return $self->_web_ok;
           } elsif ($method eq 'POST') {
+            return $self->sr_proxy($env) if $self->has_sunriserhost;
             my $body = $req->raw_body;
             my $data = $self->_mp->unpack($body);
             my %values;
@@ -691,26 +723,35 @@ sub _build_psgi {
         my ( $file ) = $path =~ m/^\/(.*)/;
 
         if ($path =~ /^\/ok/) {
+          return $self->sr_proxy($env) if $self->has_sunriserhost;
           return $self->_web_ok;
         } elsif ($path =~ /^\/reboot$/) {
+          return $self->sr_proxy($env) if $self->has_sunriserhost;
           return $self->_web_ok('REBOOT');
         } elsif ($path =~ /^\/weather$/) {
+          return $self->sr_proxy($env) if $self->has_sunriserhost;
           return $self->_web_weather_info($env);
         } elsif ($path =~ /^\/state$/) {
+          return $self->sr_proxy($env) if $self->has_sunriserhost;
           return $self->_web_state($env);
         } elsif ($path =~ /^\/firmware\.mp$/) {
+          return $self->sr_proxy($env) if $self->has_sunriserhost;
           return $self->_web_firmware_mp($env);
         } elsif ($path =~ /^\/bootload\.mp$/) {
+          return $self->sr_proxy($env) if $self->has_sunriserhost;
           return $self->_web_bootload_mp($env);
         } elsif ($path =~ /^\/backup$/) {
+          return $self->sr_proxy($env) if $self->has_sunriserhost;
           return $self->_web_backup($env);
         } elsif ($path =~ /^\/factorybackup$/) {
+          return $self->sr_proxy($env) if $self->has_sunriserhost;
           return $self->_web_backup($env);
         }
         # else serve file from storage
         # gives back 200 on success and 404 on not found
         return $self->_web_serve_file($file);
       } elsif ($method eq 'PUT') {
+        return $self->sr_proxy($env) if $self->has_sunriserhost;
         if ($path =~ /^\/state$/) {
           my $body = $req->raw_body;
           my $data = $self->_mp->unpack($body);

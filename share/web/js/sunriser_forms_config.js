@@ -111,7 +111,7 @@ var sr_forms = {
       $('#timezone').change(function(){
         sr_update_timezone();
       });
-    },
+    }
   },
   //
   //     _/_/_/      _/_/      _/_/_/    _/_/_/  _/          _/    _/_/    _/_/_/    _/_/_/

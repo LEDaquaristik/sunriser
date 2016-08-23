@@ -40,6 +40,10 @@ var sr_colors = [{
   "name": "ROYAL BLUE 465nm",
   "color": "#007bff"
 },{
+  "id": "growx5",
+  "name": "GROWx5",
+  "color": "#ff66cc"
+},{
   "id": "custom",
   "name": "Andere Farbe",
   "color": "#ffff00"

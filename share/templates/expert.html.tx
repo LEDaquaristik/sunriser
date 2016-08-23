@@ -1,4 +1,4 @@
-: cascade base { title => "Expertenfunktionen", no_bighelp => 1, help => r("Die Benutzung dieser Funktionen ist auf eigene Gefahr!<br><br> Die Zahlenreihe bei der Tagesplanung stellt die Punkte Ihrer Tagesplanung dar und kann somit einfacher ausgetauscht werden oder getrennt gespeichert werden. Jeder Punkt in Ihrer Tagesplanung hat 2 Zahlenwerte in der Reihe, zuerst die Minute des Tages und dann die gew&uuml;nschte Prozentzahl. Bitte beachten Sie das die Werte hier in der richtigen Reihenfolge sein m&uuml;ssen, andernfalls wird es zu Fehlfunktionen f&uuml;hren. Daher sollten Sie die Punkte am besten immer in der Tagesplanung bearbeiten.<br><br>Das L&ouml;schen der Konfiguration startet nicht den SunRiser neu, dies erm&ouml;glicht Ihnen noch eine korrekte neue <a href='/network.html'>Netzwerk Konfiguration</a> anzulegen, falls dies notwendig ist. Bitte beachten Sie das ein L&ouml;schen der Konfiguration auch den Experten Modus erstmal wieder abschaltet.") }
+: cascade base { title => "Expertenfunktionen", no_bighelp => 1, help => r("Die Benutzung dieser Funktionen ist auf eigene Gefahr!<br><br>Das L&ouml;schen der Konfiguration startet nicht den SunRiser neu, dies erm&ouml;glicht Ihnen noch eine korrekte neue <a href='/network.html'>Netzwerk Konfiguration</a> anzulegen, falls dies notwendig ist. Bitte beachten Sie das ein L&ouml;schen der Konfiguration auch den Experten Modus erstmal wieder abschaltet.") }
 : override content -> {
 
 <div class="index_functions">
@@ -121,7 +121,10 @@ $('body').on('sr_config',function(){
           dayplanner_pwms.push(i);
         }
       }
-      var fields = [];
+      var fields = [{
+        name: "higherminimum",
+        label: "Erh&ouml;hter Minimumwert"
+      }];
       $.each(dayplanner_pwms,function(i,pwm){
         fields.push({
           name: "dayplanner#marker#" + pwm,
