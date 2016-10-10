@@ -28,6 +28,8 @@
               <: include form::text :>
             <% } else if (field.template == 'slider') { %>
               <: include form::slider :>
+            <% } else if (field.template == 'weekprograms') { %>
+              <: include form::weekprograms :>
             <% } else if (field.template == 'time') { %>
               <: include form::time :>
             <% } else if (field.template == 'select') { %>

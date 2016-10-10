@@ -34,6 +34,14 @@
   <br>
 </div>
 <hr>
+<h2 class="hiddencontent" id="lightbug">Lichteinstellungen unterhalb 30% werden nicht berücksichtigt, was ist zu tun?</h2>
+<div class="js-hide" id="lightbugcontent">
+  <p>Diese Problematik kann bei Ger&auml;ten mit Baujahr 2016 auftreten. Bitte aktivieren Sie unter den <a href="/expert.html">Experten Einstellungen</a> den Men&uuml;punkt 'Erh&ouml;hter Minimumwert'</p>
+  <br>
+  <p>Nun wird die Tagessimulation auch Werte unter 30% wie gew&uuml;nscht umsetzen.</p>
+  <br>
+</div>
+<hr>
 <h2 style="text-align:right"><a href="/contact.html">... oder kontaktieren Sie uns :)</a></h2>
 
 : }

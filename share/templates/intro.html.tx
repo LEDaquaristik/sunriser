@@ -218,7 +218,7 @@
           Schnelltasten f&uuml;r Standardfunktionen wie Kehrwoche (Maximale Leistung f&uuml;r eine Reinigungsphase) oder Mittagspause (Dimmen alle Lampen zu einem bestimmten Wert f&uuml;r einen bestimmten definierten Zeitraum)
         </li>
         <li>
-          Genaueres Programm Management f&uuml;r Tagesverlauf und Wetter Profile (Verwaltung, Import, Export, Kopieren und verschiedene Programme für Wochentage oder Monate)
+          Genaueres Programm Management f&uuml;r Tagesverlauf und Wetter Profile (Verwaltung, Import, Export, Kopieren und verschiedene Programme für Saisons)
         </li>
         <li>
           Die Option den original Sonnenaufgang und Sonnenuntergang zu simulieren
@@ -233,9 +233,6 @@
           Cloud Speicherung der Konfiguration. Dadurch k&ouml;nnen Sie dann jederzeit auf jeden alten Stand der Konfiguration zur&uuml;ckgehen, soweit Ihr Computer mit dem Sie auf den <i>SunRiser</i> zugreifen mit dem Internet verbunden ist (der <i>SunRiser</i> selber muss hierf&uuml;r nicht mit dem Internet verbunden sein)
         </li>
         <li>
-          Cloud Platform f&uuml;r den Austausch zwischen den SunRiser Benutzern
-        </li>
-        <li>
           Eine Tagesverlauf Preview, die erm&ouml;glicht das geplante Programm vor dem Speichern mal in Kurzfassung zu sehen, 24 Stunden in 24 Sekunden (nat&uuml;rlich einstellbar)
         </li>
         <li>
@@ -243,9 +240,6 @@
         </li>
         <li>
           Unterst&uuml;tzung der <a href="http://www.amazon.de/EnerGenie-EG-PMS2-LAN-IP-Steckdosenleiste-Überspannungsschutz-LAN-Schnittstelle/dp/B0099AHPQ4/">GemBird LAN IP Steckdosenleiste</a> als Teil der Tagesplanung um Ein/Ausschalten von weiterer Peripherie zu kontrollieren
-        </li>
-        <li>
-          <a href="http://de.wikipedia.org/wiki/IPv6">IPv6</a> Unterst&uuml;tzung
         </li>
       </ul>
       <br>

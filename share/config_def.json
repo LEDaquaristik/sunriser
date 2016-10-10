@@ -55,12 +55,18 @@
     "deleted", [   "(TODO) File is deleted",     "bool"]
   ],
   "programs",    "Programs configuration", [
-    "marker#X", [ "Control markers for PWM X (time and percent)", "array(time,percent)"],
-    "name#X", [ "Name for program X", "text"],
-    "last_setup_id", ["Holding the last id used for new setup", "integer", 1]
+    "setup#X",     "Program X", [
+      "marker",    [ "Control markers (time and percent)", "array(time,percent)"],
+      "name",      [ "Name for program", "text"],
+      "deleted",   [ "Deleted weather profile", "bool", 0]
+    ],
+    "last_setup_id", ["Holding the last id used for new setup", "integer", 0],
+    "web",         [ "Web configuration for programs", "json", "[]"]
   ],
   "weekplanner",    "Week planner configuration", [
-    "programs#X", [ "Programs of the week for PWM X (always 8, first = all day)", "array(integer)"]
+    "programs#X", [ "Programs of the week for PWM X (always 8, first = all day)", "array(integer)"],
+    "randomdeferralmax", ["(TODO) Maximum random deferral (in minutes)", "integer", 0],
+    "deferral", ["(TODO) Fixed deferral (in minutes)", "integer", 0]
   ],
   "dayplanner",    "Day planner configuration", [
     "marker#X", [ "Control markers for PWM X (time and percent)", "array(time,percent)"],

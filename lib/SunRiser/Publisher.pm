@@ -68,6 +68,8 @@ sub _build_publish_files {
     moon.html
     network.html
     password.html
+    program.html
+    programs.html
     rain.html
     service.html
     system.html
@@ -77,6 +79,7 @@ sub _build_publish_files {
     upgraded.html
     weather.html
     weather_info.html
+    week.html
 
     notfound.html
 

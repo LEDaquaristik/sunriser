@@ -110,6 +110,7 @@ var SrField_Text = SrField.extend({
 
 var SrField_Integer_Transform = function() {
   var value = this.html_value();
+  console.log(value);
   if (value.length == 0 && !this.required) {
     this.value = undefined;
   } else {
@@ -147,7 +148,6 @@ var SrField_Integer = SrField_Text.extend({
   initjs: function(){
     var self = this;
     var html_field = self.html_field();
-
     if (html_field.hasClass('sliders')) {
       html_field.hide();
       html_field.parent().find('.sliderbar').on('change',function(){
@@ -273,6 +273,57 @@ var SrField_IP = SrField_CSV.extend({
 
 });
 
+var SrField_Weekprograms = SrField_CSV.extend({
+
+  template: 'weekprograms',
+
+  transform_value: function(value) { return parseInt(value); },
+
+  error_data: function() {
+    this.error("Die Werte sind ung&uuml;ltig, dies k&ouml;nnte ein Problem mit dem Browser sein.");
+  },
+
+  validate: function() {
+    if (this.value.length == 8) {
+      $.each(this.value,function(i,val){
+        if (isNaN(val)) {
+          this.error_data();
+        } else if (val < 0 || val > 8) {
+          this.error_data();
+        }
+      });
+    } else if (this.value.length == 0) {
+      this.value = undefined;
+    } else {
+      this.error_data();
+    }
+  },
+
+  initjs: function(){
+    var self = this;
+    var weekprograms = $('#' + self.id + '_weekprograms');
+    var selects = weekprograms.find('select');
+    $.each(self.value || [0,0,0,0,0,0,0,0],function(i,program){
+      selects.each(function(){
+        if ($(this).data('weekday') == i) {
+          if (program_names[program]) {
+            $(this).val(program);
+          }
+        }
+      });
+    });
+    selects.change(function(){
+      var selected_programs = [undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined];
+      selects.each(function(){
+        selected_programs[$(this).data('weekday')] = $(this).val();
+      });
+      self.html_field().val(selected_programs.join(self.comma));
+    });
+    selects.first().trigger('change');      
+  }
+
+});
+
 var SrField_Weekday = SrField_CSV.extend({
 
   template: 'weekday',
@@ -345,7 +396,7 @@ var SrField_Select = SrField.extend({
   options: undefined,
 
   html_value: function(){
-    return this.html_field().find('option:selected').val();
+    return this.html_field().val();
   },
 
   transform: function(){

@@ -1,0 +1,692 @@
+: cascade base { title => "Programmplanung", nav => "planner", help => r('Hier k&ouml;nnen Sie den Tagesverlauf Ihrer Programme einfach per Klick einstellen. W&auml;hlen Sie zuerst oben das Programm aus, und f&uuml;gen Sie dann &uuml;ber die Plus Zeichen unten neue Punkte hinzu. Diese k&ouml;nnen Sie dann im Graphen nach belieben verschieben. Um einen Punkt zu entfernen, dr&uuml;cken Sie einfach auf die Uhrzeit/Prozent Angabe dieses Punktes unten neben den Plus Zeichen. Vergessen Sie nicht nach Ihren &Auml;nderungen auch am Ende der Seite auf \'Speichern\' zu klicken. Bitte beachten Sie das die Prozentangabe hier eine automatische <a href="/faq.html#gamma">Gammakorrektur</a> beinhaltet um sich mehr dem menschlichen Empfinden anzupassen. Danach k&ouml;nnen Sie unter der <a href="/week.html">Wochenplanung</a> diese Programm Wochentagen zuweisen. Neue Programm k&ouml;nnen &uuml;ber die <a href="/programs.html.tx">Programm Verwaltung</a> hinzugef&uuml;gt werden.') }
+: override content -> {
+
+<div id="programpicker"></div>
+<div class="daysvgbox">
+  <div class="percentbar">
+    <div class="percent">100%</div>
+    <div class="percent">75%</div>
+    <div class="percent">50%</div>
+    <div class="percent">25%</div>
+    <div class="percentlast">0%</div>
+  </div>
+  <svg id="programplanner"></svg>
+</div>
+<div id="program_countbar"></div>
+<div id="pathedit" style="margin-left:auto;margin-right:auto"></div>
+<div id="markeredit" style="height:100px"></div>
+<div class="form noautoload" id="programplan"></div>
+
+<div class="index_functions">
+  <a class="index_function week_link" href="/programs.html">
+    <span class="index_function_badge">+</span>
+    <div>Programme verwalten</div>
+  </a>
+  <a class="index_function week_link" href="/week.html">
+    <span class="index_function_badge">+</span>
+    <div>Zur Wochenplanung</div>
+  </a>
+</div>
+
+: }
+: override postjs -> {
+
+<script type="text/html" id="countbar_tmpl">
+  <div class="countbar">
+    <div class="counttime countfirst">0h</div>
+    <div class="counttime countmiddle">6h</div>
+    <div class="counttime countmiddle">12h</div>
+    <div class="counttime">18h<div class="countend">0h</div></div>
+  </div>
+</script>
+<script type="text/html" id="programpicker_tmpl">
+
+<% $.each(paths,function(i,path){ %>
+  <div style="float:left" class="daybox programpicker" id="programpicker_<%=path.program%>">
+    #<%=path.program%> <%=path.name%>
+  </div>
+<% }); %>
+
+</script>
+<script type="text/html" id="markeredit_tmpl">
+
+<hr>
+
+<div class="form">
+
+  <div style="float:left;margin-top:20px;margin-right:15px" class="daybox" id="marker_delete">
+    Punkt entfernen
+  </div>
+
+  <div style="float:left;margin:5px">
+    Zeit:
+    <input class="daybox" type="text" size="1" id="marker_time" value="<%=marker.time()%>">
+  </div>
+
+  <div style="float:left;margin:5px">
+     &#37; Leistung:
+    <input class="daybox" type="text" size="1" id="marker_percent" value="<%=marker.percent%>">
+  </div>
+
+  <div style="float:left;margin-top:20px;margin-left:15px" class="daybox" id="marker_update">
+    Neue Werte &uuml;bernehmen
+  </div>
+
+</div>
+
+</script>
+<script type="text/html" id="pathedit_tmpl">
+
+<% if (!(markers.length > 0 && markers[0].daymin == 0)) { %>
+  <div style="float:left" class="daybox pathedit pathedit_add" data-pos="0" data-program="<%=program%>" id="pathedit_<%=program%>_add_0">
+    &nbsp;+&nbsp;
+  </div>
+<% } %>
+<% $.each(markers,function(i,marker){ %>
+  <div style="float:left" class="daybox pathedit pathedit_edit" data-pos="<%=i%>" data-program="<%=program%>" id="pathedit_<%=program%>_edit_<%=i%>">
+    <%=marker.title()%>
+  </div>
+  <% if (!(i == ( markers.length - 1 ) && markers[i].daymin >= dp.alldaymin - 1) && !(markers[i+1] && markers[i+1].daymin == markers[i].daymin + 1 )) { %>
+    <div style="float:left" class="daybox pathedit pathedit_add" data-pos="<%=i+1%>" data-program="<%=program%>" id="pathedit_<%=program%>_add_<%=i+1%>">
+      &nbsp;+&nbsp;
+    </div>
+  <% } %>
+<% }); %>
+
+</script>
+<script type="text/javascript">
+
+var programplanner_obj;
+
+//
+//       _/_/_/            _/_/_/                                  _/
+//    _/        _/  _/_/  _/    _/    _/_/_/  _/    _/  _/_/_/    _/    _/_/_/  _/_/_/    _/_/_/      _/_/    _/  _/_/
+//     _/_/    _/_/      _/    _/  _/    _/  _/    _/  _/    _/  _/  _/    _/  _/    _/  _/    _/  _/_/_/_/  _/_/
+//        _/  _/        _/    _/  _/    _/  _/    _/  _/    _/  _/  _/    _/  _/    _/  _/    _/  _/        _/
+// _/_/_/    _/        _/_/_/      _/_/_/    _/_/_/  _/_/_/    _/    _/_/_/  _/    _/  _/    _/    _/_/_/  _/
+//                                              _/  _/
+//                                         _/_/    _/
+//
+
+var SrProgramplanner = Class.extend({
+
+  alldaymin:       1440,
+  zeroX:           0,
+  zeroY:           0,
+  gridSize:        4,
+  maxValue:        100,
+  minValue:        0,
+  timeScale:       5,
+  maxTime:         undefined,
+  minTime:         0,
+  paths:           {},
+
+  jq:              undefined,
+  paper:           undefined,
+  grid_group:      undefined,
+  path_group:      undefined,
+  currScale:       undefined,
+  matrix:          undefined,
+  current_edit:    undefined,
+  current_marker:  undefined,
+
+  init: function(program_markers){
+    var self = this;
+    self.maxTime = ( self.alldaymin - 1 ) / self.timeScale;
+    self.jq = $('#programplanner');
+    self.paper = Snap('#programplanner');
+    self.grid_group = self.paper.g();
+    self.path_group = self.paper.g();
+    self.make_grid();
+    $.each(program_markers,function(program,markers){
+      self.paths[program] = new SrPath(self,program,markers);
+    });
+    self.init_picker();
+    $(window).resize(function() {
+      self.scale();
+    });
+    self.scale();
+  },
+
+  init_picker: function(){
+    var self = this;
+    $('#programpicker').html(tmpl('programpicker_tmpl',self));
+    $.each(self.paths,function(program,path){
+      $('#programpicker_' + program).click(function(){
+        $.each(self.paths,function(curr_program,curr_path){
+          curr_path.edit(0);
+          curr_path.clear_current_marker();
+        });
+        $('.programpicker').css('background-color','#fff');
+        $('#pathedit').html("");
+        if (self.current_edit == program) {
+          self.current_edit = undefined;
+        } else {
+          $(this).css('background-color','#CCD7E2');
+          self.current_edit = program;
+          self.paths[program].edit(1);
+        }
+      });
+    });
+
+  },
+
+//
+//      _/_/_/            _/        _/
+//   _/        _/  _/_/        _/_/_/
+//  _/  _/_/  _/_/      _/  _/    _/
+// _/    _/  _/        _/  _/    _/
+//  _/_/_/  _/        _/    _/_/_/
+//
+
+  make_grid: function(){
+    var self = this;
+    var attrs = {
+      stroke: "#CCD7E2",
+      "stroke-width": "0.3px",
+      "strole-linecap": "round",
+      "stroke-dasharray": "1,1",
+      class: "gridline"
+    };
+    for (var i = 1; i < self.gridSize; i++) {
+      var x = i * ((self.maxTime - self.minTime) / self.gridSize);
+      var xLine = self.paper.line(self.zeroX + x, self.zeroY + self.minValue, self.zeroX + x, self.zeroY + self.maxValue).attr(attrs);
+      self.grid_group.add(xLine);
+    }
+
+    for (var i = 1; i < self.gridSize; i++) {
+      var y = i * ((self.maxValue - self.minValue) / self.gridSize);
+      var yLine = self.paper.line(self.zeroX + self.minTime, self.zeroY + y, self.zeroX + self.maxTime, self.zeroY + y).attr(attrs);
+      self.grid_group.add(yLine);
+    }
+    $('#program_countbar').html(tmpl('countbar_tmpl',self));
+  },
+
+//
+//       _/_/_/                      _/
+//    _/          _/_/_/    _/_/_/  _/    _/_/
+//     _/_/    _/        _/    _/  _/  _/_/_/_/
+//        _/  _/        _/    _/  _/  _/
+// _/_/_/      _/_/_/    _/_/_/  _/    _/_/_/
+//
+
+  scale: function(){
+    var self = this;
+    var curWidth = self.jq.width();
+    if (!self.matrix) {
+      self.matrix = new Snap.Matrix();
+    } else {
+      self.matrix.scale(self.currScale);      
+    }
+    self.currScale = self.maxTime / curWidth;
+    self.matrix.scale(1 / self.currScale);
+    self.grid_group.transform(self.matrix);
+    self.path_group.transform(self.matrix);
+    self.jq.css({ height: Math.ceil(self.grid_group.getBBox().height) });
+  }
+
+});
+
+//
+//       _/_/_/            _/      _/                      _/
+//    _/        _/  _/_/  _/_/  _/_/    _/_/_/  _/  _/_/  _/  _/      _/_/    _/  _/_/
+//     _/_/    _/_/      _/  _/  _/  _/    _/  _/_/      _/_/      _/_/_/_/  _/_/
+//        _/  _/        _/      _/  _/    _/  _/        _/  _/    _/        _/
+// _/_/_/    _/        _/      _/    _/_/_/  _/        _/    _/    _/_/_/  _/
+//
+
+var SrMarker = Class.extend({
+
+  daymin: undefined,
+  percent: undefined,
+
+  init: function(daymin,percent) {
+    this.daymin = daymin;
+    this.percent = percent;
+  },
+
+  time: function() {
+    return sprintf("%2d:%02d", Math.floor( this.daymin / 60), this.daymin % 60);
+  },
+
+  title: function() {
+    var hour = Math.floor( this.daymin / 60);
+    var min = this.daymin - ( hour * 60 );
+    if (hour == 24) { hour = 0 }; // shouldn't happen anymore, but better lets be safe
+    return this.time() + " " + this.percent + "%";    
+  }
+
+});
+
+//
+//       _/_/_/            _/_/_/                _/      _/
+//    _/        _/  _/_/  _/    _/    _/_/_/  _/_/_/_/  _/_/_/
+//     _/_/    _/_/      _/_/_/    _/    _/    _/      _/    _/
+//        _/  _/        _/        _/    _/    _/      _/    _/
+// _/_/_/    _/        _/          _/_/_/      _/_/  _/    _/
+//
+
+var SrPath = Class.extend({
+
+  markers: undefined,
+  size: undefined,
+  program: undefined,
+  name: undefined,
+  dp: undefined,
+  path: undefined,
+  editmode: false,
+  color: '#000',
+  lines: [],
+  circles: [],
+
+  init: function(dp,program,markers) {
+    this.dp       = dp;
+    this.program  = program;
+    this.name     = program_names[program];
+    this.color    = program_colors[program];
+    this.markers  = markers;
+    this.size     = markers.length;
+    this.update_circles();
+  },
+
+  get_color: function() {
+    if (this.editmode) {
+      return '#68D472';
+    } else {
+      return this.color;
+    }
+  },
+
+  edit: function(start) {
+    if (start) {
+      this.editmode = true;
+    } else {
+      this.editmode = false;
+    }
+    this.update_circles();
+  },
+
+  delete_marker: function(i) {
+    var self = this;
+    self.markers.splice(i,1);
+    self.size = self.markers.length;
+    self.update_circles();
+  },
+
+  add_marker: function(daymin,percent) {
+    var self = this;
+    if (self.size) {
+      for (var i = 0; i < self.size; i++) {
+        if (i == 0 && daymin < self.markers[i].daymin) {
+          self.markers.splice(i,0,new SrMarker(daymin,percent));
+          break;
+        } else if (self.markers[i+1]) {
+          if (daymin > self.markers[i].daymin && daymin < self.markers[i+1].daymin) {
+            self.markers.splice(i+1,0,new SrMarker(daymin,percent));
+            break;
+          }
+        } else { // daymin >= self.markers[i] && !self.markers[i+1]
+          self.markers.push(new SrMarker(daymin,percent));
+          break;
+        }
+      }      
+    } else {
+      self.markers.push(new SrMarker(daymin,percent));
+    }
+    self.size = self.markers.length;
+    self.update_circles();
+  },
+
+  update_form: function() {
+    var self = this;
+    var values = [];
+    $.each(self.markers,function(i,marker){
+      values.push(marker.daymin,marker.percent);
+    });
+    $('#programs_setup_' + self.program + '_marker')
+      .trigger('change').val(values.join(','));
+  },
+
+//
+//    _/    _/                  _/            _/_/_/  _/                      _/
+//   _/    _/  _/_/_/      _/_/_/          _/            _/  _/_/    _/_/_/  _/    _/_/      _/_/_/
+//  _/    _/  _/    _/  _/    _/          _/        _/  _/_/      _/        _/  _/_/_/_/  _/_/
+// _/    _/  _/    _/  _/    _/          _/        _/  _/        _/        _/  _/            _/_/
+//  _/_/    _/_/_/      _/_/_/  _/        _/_/_/  _/  _/          _/_/_/  _/    _/_/_/  _/_/_/
+//         _/
+//        _/
+//
+
+  update_circles: function() {
+    var self = this;
+    var program = self.program;
+    $.each(self.circles,function(i,circle){
+      circle.remove();
+    });
+    self.circles = [];
+    var points = self.all_points();
+    if (points.length) {
+      for (var i = 1; i <= self.size; i++) {
+        var time = points[i].time;
+        var value = points[i].value;
+        var title = self.markers[i-1].title();
+        var x = self.dp.zeroX + time;
+        var y = self.dp.zeroY + ( self.dp.maxValue - value );
+        var id = btoa(Math.random()).substring(0,8);
+        var circle = self.dp.paper.circle(x,y,self.editmode ? 4 : 2).attr({
+          fill: ( self.editmode ? '#fff' : self.get_color() ),
+          stroke: ( self.editmode ? '#68D472' : self.get_color() ),
+          "stroke-width": "0.5px",
+          'fill-opacity': 1,
+          class: "daycircle",
+          title: title,
+          point_id: i,
+          id: id
+        });
+        $(circle.node).data('title',title);
+        circle.append(Snap.parse("<title>" + "Program #" + program + "\n" + title + "</title>"));
+        if (self.editmode) {
+          $(circle.node).data('circle',circle);
+          circle.dragger = {
+            prev_marker: ( i > 1 ? self.markers[i-2] : undefined ),
+            next_marker: ( i < self.size ? self.markers[i] : undefined ),
+            marker: self.markers[i-1],
+            orig_x: undefined,
+            orig_y: undefined,
+            orig_daymin: undefined,
+            orig_percent: undefined,
+            move: function (event) {
+              self.clear_current_marker();
+              var x_diff   = event.pageX - this.dragger.orig_x;
+              var y_diff   = this.dragger.orig_y - event.pageY;
+              var time     = x_diff * self.dp.currScale * self.dp.timeScale;
+              var value    = y_diff * self.dp.currScale;
+              value        = ( value > 0 ? Math.ceil(value) : Math.floor(value) );
+              time         = ( time  > 0 ? Math.ceil(time)+1  : Math.floor(time)-1  );
+              var newtime  = this.dragger.orig_daymin + time;
+              var newvalue = this.dragger.orig_percent + value;
+              if (newvalue > self.dp.maxValue) {
+                newvalue = self.dp.maxValue;
+              } else if (newvalue < 0) {
+                newvalue = 0;
+              }
+              if (newtime > (self.dp.alldaymin - 1)) {
+                newtime = self.dp.alldaymin - 1;
+              } else if (newtime < 0) {
+                newtime = 0;
+              }
+              if (typeof this.dragger.prev_marker !== 'undefined') {
+                if (newtime <= this.dragger.prev_marker.daymin) {
+                  newtime = this.dragger.prev_marker.daymin + 1;
+                }
+              }
+              if (typeof this.dragger.next_marker !== 'undefined') {
+                if (newtime >= this.dragger.next_marker.daymin) {
+                  newtime = this.dragger.next_marker.daymin - 1;
+                }
+              }
+              this.dragger.marker.daymin  = newtime;
+              this.dragger.marker.percent = newvalue;
+              var new_x_diff = ( newtime - this.dragger.orig_daymin ) / self.dp.timeScale;
+              var new_y_diff = ( newvalue - this.dragger.orig_percent );
+              this.attr('cx',this.dragger.circle_x + new_x_diff);
+              this.attr('cy',this.dragger.circle_y - new_y_diff);
+              self.update_path();
+            },
+            start: function(ev) {
+              this.dragger.circle_x     = parseInt(this.attr('cx'));
+              this.dragger.circle_y     = parseInt(this.attr('cy'));
+              this.dragger.orig_x       = ev.pageX;
+              this.dragger.orig_y       = ev.pageY;
+              this.dragger.orig_daymin  = this.dragger.marker.daymin;
+              this.dragger.orig_percent = this.dragger.marker.percent;
+            },
+            stop: function(ev) {
+              self.update_circles();
+            }
+          };
+          interact('#' + circle.attr('id')).draggable({
+            onmove: function (event) {
+              var circle = $(event.target).data('circle');
+              circle.dragger.move.call(circle,event);
+            },
+            onstart: function (event) {
+              var circle = $(event.target).data('circle');
+              circle.dragger.start.call(circle,event);
+            },
+            onend: function (event) {
+              var circle = $(event.target).data('circle');
+              circle.dragger.stop.call(circle,event);
+            }
+          });
+        }
+        self.dp.path_group.add(circle);
+        self.circles.push(circle);
+      }
+    }
+    self.update_path();
+    self.update_form();
+  },
+
+//
+//     _/_/_/                _/      _/                        _/  _/    _/
+//    _/    _/    _/_/_/  _/_/_/_/  _/_/_/      _/_/      _/_/_/      _/_/_/_/
+//   _/_/_/    _/    _/    _/      _/    _/  _/_/_/_/  _/    _/  _/    _/
+//  _/        _/    _/    _/      _/    _/  _/        _/    _/  _/    _/
+// _/          _/_/_/      _/_/  _/    _/    _/_/_/    _/_/_/  _/      _/_/
+//
+
+  clear_current_marker: function() {
+    var self = this;
+    $('.pathedit_edit').css('background-color', '');
+    self.current_marker = undefined;
+    $('#markeredit').html("");
+  },
+
+  set_current_marker: function(pos) {
+    var self = this;
+    self.clear_current_marker();
+    self.current_marker = self.markers[pos];
+    $(this).css('background-color', '#ccd7e2');
+    $('#markeredit').html(tmpl('markeredit_tmpl',{ marker: self.current_marker }));
+    $('#marker_delete').click(function(){
+      if (confirm("Wollen Sie " + self.current_marker.title() + " entfernen?") == true) {
+        self.delete_marker(pos);
+        self.clear_current_marker();
+      }
+    });
+    $('#marker_update').click(function(){
+      var newtime = $('#marker_time').val().split(":");
+      var newdaymin;
+      var newvalue = $('#marker_percent').val();
+      var newpercent;
+      var error = 0;
+      if (!isNaN(newvalue) && newvalue >= 0 && newvalue <= 100) {
+        newpercent = Math.floor(newvalue);
+      } else {
+        error = 1;
+        $('#marker_percent').css('background-color','#E74C3C');
+      }
+      if (!isNaN(newtime[0]) && newtime[0] >= 0 && newtime[0] <= 23 &&
+        !isNaN(newtime[1]) && newtime[1] >= 0 && newtime[1] <= 59) {
+        newdaymin = ( Math.floor(newtime[0]) * 60 ) + Math.floor(newtime[1]);
+      } else {
+        error = 1;
+        $('#marker_time').css('background-color','#E74C3C');
+      }
+      if (!error) {
+        self.delete_marker(pos);
+        self.add_marker(newdaymin,newpercent);
+        self.clear_current_marker();
+      }
+    });
+  },
+
+  set_pathedit: function() {
+    var self = this;
+    $('#pathedit').html(tmpl('pathedit_tmpl',self));
+    $('.pathedit_edit').click(function(){
+      var pos = $(this).data('pos');
+      self.set_current_marker(pos);
+    });
+    $('.pathedit_add').click(function(){
+      self.clear_current_marker();
+      var pos = $(this).data('pos');
+      if (self.size == 0) {
+        self.add_marker(self.dp.alldaymin / 2, self.dp.maxValue / 2);
+      } else if (self.size == 1) {
+        self.add_marker(
+          pos == 0 ? Math.ceil(self.markers[0].daymin / 2) : ( self.markers[0].daymin + Math.floor((self.dp.alldaymin - self.markers[0].daymin) / 2) ),
+          self.markers[0].percent
+        );
+      } else {
+        var prev_marker = pos == 0 ? self.markers[self.size - 1] : self.markers[pos - 1];
+        var next_marker = pos == self.size ? self.markers[0] : self.markers[pos];
+        var new_percent = Math.round((next_marker.percent + prev_marker.percent) / 2);
+        var new_time;
+        if (pos == 0) {
+          new_time = Math.floor(next_marker.daymin / 2);
+        } else if (pos == self.size) {
+          new_time = prev_marker.daymin + Math.ceil((self.dp.alldaymin - prev_marker.daymin) / 2);
+        } else {
+          new_time = prev_marker.daymin + Math.ceil((next_marker.daymin - prev_marker.daymin) / 2);
+        }
+        self.add_marker(new_time,new_percent);
+      }
+    });
+  },
+
+//
+//    _/    _/                  _/          _/_/_/                _/      _/
+//   _/    _/  _/_/_/      _/_/_/          _/    _/    _/_/_/  _/_/_/_/  _/_/_/
+//  _/    _/  _/    _/  _/    _/          _/_/_/    _/    _/    _/      _/    _/
+// _/    _/  _/    _/  _/    _/          _/        _/    _/    _/      _/    _/
+//  _/_/    _/_/_/      _/_/_/  _/      _/          _/_/_/      _/_/  _/    _/
+//         _/
+//        _/
+//
+
+  update_path: function() {
+    var self = this;
+    var pwm = self.pwm;
+    if (typeof self.path !== 'undefined') {
+      self.path.remove();
+    }
+    if (self.editmode) {
+      self.set_pathedit();
+    }
+    var points = self.all_points();
+    if (points.length) {
+      var path_points = [];
+      for (var i = 0; i <= self.size + 1; i++) {
+        path_points.push([ self.dp.zeroX + points[i].time, self.dp.zeroY + ( self.dp.maxValue - points[i].value ) ].join(" "));
+      }
+      self.path = self.dp.paper.path(
+        "M " + ( self.dp.zeroX + points[0].time ) + " " + ( self.dp.zeroY + self.dp.maxValue ) + " " +
+        "L " + path_points.join(",") + ", " + ( self.dp.zeroX + points[self.size+1].time ) + " " + ( self.dp.zeroY + self.dp.maxValue ) + "Z"
+      ).attr({
+        fill: self.get_color(),
+        'fill-opacity': 0.3,
+        stroke: self.get_color(),
+        "stroke-width": "0.5px",
+      });
+      self.dp.path_group.add(self.path);
+      $.each(self.circles,function(i,circle){
+        self.path.appendTo(circle);
+      });
+      self.path.prependTo(self.dp.grid_group);      
+    }
+  },
+
+  all_points: function() {
+    var self = this;
+    var points = [];
+    if (self.size == 0) {
+      return points;
+    }
+    var first_time = self.markers[0].daymin;
+    var first_value = self.markers[0].percent;
+    var last_id = self.size - 1;
+    var last_time = self.markers[last_id].daymin;
+    var last_value = self.markers[last_id].percent;
+    points.push({
+      time: Math.ceil(( 0 - ( self.dp.alldaymin - 1 - last_time ) ) / self.dp.timeScale),
+      value: last_value,
+      marker: last_id
+    });
+    for (i = 0; i < self.size; i++) { 
+      points.push({
+        time: Math.ceil(self.markers[i].daymin / self.dp.timeScale),
+        value: self.markers[i].percent,
+        marker: i
+      });
+    }
+    points.push({
+      time: Math.ceil(( self.dp.alldaymin - 1 + first_time ) / self.dp.timeScale),
+      value: first_value,
+      marker: 0
+    });
+    return points;
+  }
+
+});
+
+// First execute stuff when the form is loaded
+$('body').on('sr_config',function(){
+
+  var dayplanner_programs = new Array();
+  $.each(programs,function(i,v){
+    if (v.value > 0) {
+      dayplanner_programs.push(v.value);      
+    }
+  });
+  if (!dayplanner_programs.length) {
+    window.location.href = window.location.href.replace("program.html","programs.html");
+  } else {
+    var fields = new Array();
+    var expert_fields = new Array();
+    $.each(dayplanner_programs,function(i,program){
+      fields.push({
+        name: "programs#setup#" + program + "#marker",
+        transform_value: function(value) { return parseInt(value); },
+        pre: true
+      });
+    });
+    // expert_fields.push({
+    //   name: "dayplanner#randomdeferralmax",
+    //   template: "slider",
+    //   min: 0, max: 1440,
+    //   label: "Maximale zuf&auml;llige Abweichung in Minuten"
+    // },{
+    //   name: "dayplanner#deferral",
+    //   template: "slider",
+    //   min: -1440, max: 1440,
+    //   label: "Feste Abweichung in Minuten"
+    // });
+    var form = new SrForm($('#programplan'),{
+      title: undefined,
+      fields: fields,
+      expert_fields: expert_fields,
+      loaded: function(){
+        var markers = {};
+        var values = this.values();
+        $.each(dayplanner_programs,function(i,program){
+          markers[program] = [];
+          v = values["programs#setup#" + program + "#marker"];
+          if (v) {
+            for (var i = 0; i < v.length; i++, i++) {
+              markers[program].push(new SrMarker(v[i],v[i+1]));
+            }
+          }
+        });
+        programplanner_obj = new SrProgramplanner(markers);
+      }
+    });
+
+  }
+
+});
+
+</script>
+
+: }

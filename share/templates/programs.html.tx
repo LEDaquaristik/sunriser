@@ -1,0 +1,122 @@
+: cascade base { title => "Programme", nav => "planner", no_bighelp => 1, help => r('Hier k&ouml;nnen Sie die Bezeichnungen f&uuml;r die individuellen Programme anlegen, die Sie in der Wochenplanung verwenden m&ouml;chten. Ein Programm repr&auml;sentiert einen bestimmten Tagesablauf. Danach k&ouml;nnen Sie in der <a href="/program.html">Programmplanung</a> den Verlauf der Programme einstellen und am Ende diese &uuml;ber die <a href="/week.html">Wochenplanung</a> mit den LEDs verbinden.') }
+: override content -> {
+
+<div class="index_function" id="add_program">
+  <span class="index_function_badge">+</span>
+  <div>Neues Programm anlegen (&Auml;nderungen gehen verloren)</div>
+</div>
+
+<div class="form noautoload" id="form_programs"></div>
+
+<div class="index_functions">
+  <a class="index_function week_link" href="/program.html">
+    <span class="index_function_badge">+</span>
+    <div>Zur Programmplanung</div>
+  </a>
+  <a class="index_function week_link" href="/week.html">
+    <span class="index_function_badge">+</span>
+    <div>Zur Wochenplanung</div>
+  </a>
+</div>
+
+: }
+: override postjs -> {
+
+<script type="text/javascript">
+
+$('body').on('sr_config',function(){
+
+  $("#add_program").click(function(){
+
+    var next_id = sr_config["programs#last_setup_id"] + 1;
+    var next_name = "Neues Programm " + next_id;
+    sr_config["programs#web"].push({
+      id: next_id,
+      name: next_name
+    });
+    var data = {};
+    data["programs#web"] = JSON.stringify(sr_config["programs#web"]);
+    data["programs#setup#" + next_id + "#name"] = next_name;
+    data["programs#setup#" + next_id + "#deleted"] = false;
+    data["programs#last_setup_id"] = next_id;
+    sr_request_mpack('PUT','/',data,function(){
+      window.location.href = window.location.href;
+    });
+
+  });
+
+  $("#form_programs").each(function(){
+
+    var fields = [{
+      name: "programs#web",
+      getdata: function(data) {
+        var new_data = [];
+        $.each(sr_config['programs#web'],function(i,v){
+          var name_key = "programs#setup#" + v.id + "#name";
+          new_data.push({
+            id: v.id,
+            name: $('[name="' + name_key + '"]').val()
+          });
+        });
+        return new_data;
+      }
+    }];
+
+    $.each(sr_config['programs#web'],function(i,v){
+      fields.push({
+        name: "programs#setup#" + v.id + "#name",
+        label: "Bezeichnung Programm #" + v.id,
+      });
+    });
+
+    if (fields.length) {
+
+      var form = new SrForm(this,{
+        title: "Programme",
+        fields: fields,
+        loaded: function(){
+          var self = this;
+          var values = self.values();
+          $.each(programs, function(i,v){
+            if (!v.used) {
+              var program_id = v.value;
+              var name_key = "programs#setup#" + v.value + "#name";
+              $('#programs_setup_' + v.value + '_name').each(function(){
+                var namefield = $(this);
+                namefield.parent().append('<div style="text-align:right"><span id="programs_setup_' + program_id + '_delete">Programm entfernen</span></div>');
+                $('#programs_setup_' + program_id + '_delete').click(function(){
+                  if (confirm("Wollen Sie Ihr Programm '" + namefield.val() + "' entfernen?") == true) {
+                    var data = {};
+                    var new_web_config = [];
+                    $.each(sr_config["programs#web"], function(i,wp){
+                      if (wp.id != program_id) {
+                        new_web_config.push(wp);
+                      }
+                    });
+                    data["programs#web"] = JSON.stringify(new_web_config);
+                    data["programs#setup#" + v.value + "#deleted"] = true;
+                    sr_request_mpack('PUT','/',data, function(){
+                      window.location.href = window.location.href;
+                    });
+                  }
+                });
+              });
+            }
+          });
+        }
+      });
+
+    } else {
+
+
+
+    }
+
+
+  });
+
+});
+
+</script>
+
+: }

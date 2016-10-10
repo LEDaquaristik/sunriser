@@ -3,6 +3,11 @@
   height: 65px;
 }
 
+#programpicker {
+  padding: 10px 0;
+  height: 65px;
+}
+
 #pathedit {
   padding-top: 10px;
   height: 65px;
@@ -46,6 +51,12 @@
   float:right
 }
 
+svg#programplanner{
+  width:calc(100% - 50px);
+  border:1px solid #CCD7E2;
+  margin:10px 0 0 50px;
+  overflow:hidden
+}
 svg#dayplanner{
   width:calc(100% - 50px);
   border:1px solid #CCD7E2;
@@ -73,6 +84,10 @@ svg#dayplanner{
      display:none
    }
   svg#dayplanner{
+    width:100%;
+    margin:10px 0 0 0;
+  }
+  svg#programplanner{
     width:100%;
     margin:10px 0 0 0;
   }

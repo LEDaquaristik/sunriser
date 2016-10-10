@@ -29,7 +29,7 @@ $('body').on('sr_config',function(){
     for (i = 1; i <= sr_config['pwm_count']; i++) {
       fields.push({
         name: "pwm#" + i + "#color",
-        label: "Farbe LED #" + i,
+        label: "LED #" + i + " Farbe",
         type: "select",
         data: { pwm_id: i },
         options: color_options,
@@ -58,11 +58,21 @@ $('body').on('sr_config',function(){
         }
       });
       fields.push({
-        id: "pwm_" + i + "_dayplan",
-        label: "LED #" + i + " f&uuml;r Tagesplanung",
-        type: "bool",
-        data: { pwm_id: i },
-        initjs: function(){
+        name: "pwm#" + i + "#manager",
+        label: "LED #" + i + " Verlaufsplanung",
+        type: 'select',
+        integer: true,
+        options: [{
+          value: 0,
+          label: 'Kein Verlauf'
+        },{
+          value: 1,
+          label: 'Einfache Tagesplanung'
+        },{
+          value: 2,
+          label: 'Wochenplanung'
+        }]
+        /* initjs: function(){
           var pwm = this.data.pwm_id;
           var checkbox = this.html_field();
           if ($("#pwm_" + pwm + "_manager").val() == 1) {
@@ -71,11 +81,7 @@ $('body').on('sr_config',function(){
           checkbox.change(function(){
             $('#pwm_' + pwm + '_manager').val(checkbox.prop('checked') ? 1 : 0);
           });
-        }
-      });
-      fields.push({
-        name: "pwm#" + i + "#manager",
-        pre: true
+        } */
       });
     }
     var form = new SrForm(this,{

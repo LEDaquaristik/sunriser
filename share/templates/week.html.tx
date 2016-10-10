@@ -1,0 +1,66 @@
+: cascade base { title => "Wochenplanung", nav => "planner", help => r("Hier stellen Sie die Verbindung her zwischen den Programmen und den Tagen der Woche. Vergessen Sie nicht nach der &Auml;nderung dieser Einstellungen am Ende der Seite auf 'Speichern' zu klicken.<br><br>Alltag bedeutet hier, welches Programm an den Tagen laufen soll, welche kein anderes Programm angegeben haben.") }
+: override content -> {
+
+<div class="index_functions">
+  <a class="index_function week_link" href="/programs.html">
+    <span class="index_function_badge">+</span>
+    <div>Programme verwalten</div>
+  </a>
+  <a class="index_function week_link" href="/program.html">
+    <span class="index_function_badge">+</span>
+    <div>Zur Programmplanung</div>
+  </a>
+</div>
+
+<div class="form noautoload" id="week"></div>
+
+: }
+: override postjs -> {
+
+<script type="text/javascript">
+
+// First execute stuff when the form is loaded
+$('body').on('sr_config',function(){
+
+  var keys = new Array();
+  
+  for (i = 1; i <= sr_config["pwm_count"]; i++) { 
+    keys.push('pwm#' + i + '#manager');
+  }
+
+  sr_request_mpack('POST','/',keys,function(values){
+    var weekplanner_pwms = new Array();
+    for (i = 1; i <= sr_config["pwm_count"]; i++) { 
+      var key = 'pwm#' + i + '#manager';
+      if (values[key] == 2) {
+        weekplanner_pwms.push(i);
+      }
+    }
+    if (!weekplanner_pwms.length) {
+      window.location.href = window.location.href.replace("week.html","led.html");
+    } else {
+      $("#week").each(function(){
+        var fields = new Array();
+        $.each(weekplanner_pwms,function(i,v){
+          fields.push({
+            name: "weekplanner#programs#" + v,
+            label: "LED #" + v + " Wochenplanung",
+            type: "weekprograms",
+            options: programs,
+            data: { pwm_id: v },
+          });
+        });
+        var form = new SrForm(this,{
+          title: "Wochenplanung",
+          fields: fields
+        });
+      });
+    }
+  });
+
+
+});
+
+</script>
+
+: }

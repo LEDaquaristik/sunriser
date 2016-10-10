@@ -4,8 +4,8 @@ var sr_config;
 var sr_config_main_keys = [
   'model','model_id','pwm_count','factory_version','language','timezone',
   'gmtoff','nodst','updated','name','showexpert','nohelp','nofinder','usentp',
-  'weather#web','weather#last_setup_id','ignoreupgrade','webport','save_version',
-  'factory_version'
+  'weather#web','weather#last_setup_id','programs#web','programs#last_setup_id',
+  'ignoreupgrade','webport','save_version','factory_version'
 ];
 
 var firmware_info;
@@ -34,6 +34,16 @@ var weather_profiles = [{
   label: "Kein Wetterprogramm",
   name: "Kein Wetterprogramm"
 }];
+
+var programs = [{
+  value: 0,
+  label: "Kein Programm",
+  name: "Kein Programm"
+}];
+var program_names = {};
+var program_colors = {};
+var weekdays = ['Alltag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Sonntag'];
+var weekdays_table_sorting = [0,4,1,5,2,6,3,7];
 
 function daymin_to_time(daymin) {
   var hour = Math.floor(daymin / 60);
@@ -207,6 +217,15 @@ $('body').on('sr_config_init',function(){
     sr_config_version = sr_config['factory_version'] * 1000;
   }
 
+  if (!sr_config['programs#web']) {
+    sr_config['programs#web'] = [];
+    sr_request_mpack('PUT','/',{
+      'programs#web': JSON.stringify([])
+    },function(){
+      window.location.href = window.location.href;
+    });
+  }
+
   if (!sr_config['weather#web']) {
     sr_generate_weather_setup_one();
   } else {
@@ -234,7 +253,7 @@ $('body').on('sr_config_init',function(){
           value: v.id,
           name: v.name,
           label: label,
-          backgroundcolor: sr_colors[i].color
+          backgroundcolor: sr_colors[i % sr_colors.length].color
         });
         var profil_url = url.clone();
         profil_url.removeSearch('weather').addSearch('weather',v.id);
@@ -257,6 +276,38 @@ $('body').on('sr_config_init',function(){
         }
       });
       sr_config['weather#web'] = new_weather_config;
+    }
+
+    got_empty = false;
+
+    var first_programs_setup_id;
+    $.each(sr_config['programs#web'],function(i,v){
+      if (v) {
+        if (!first_programs_setup_id) {
+          first_programs_setup_id = v.id;
+        }
+        var label = "#" + v.id + " " + v.name;
+        programs.push({
+          value: v.id,
+          name: v.name,
+          label: label,
+          backgroundcolor: sr_colors[i % sr_colors.length].color
+        });
+        program_names[v.id] = v.name;
+        program_colors[v.id] = sr_colors[i % sr_colors.length].color;
+      } else {
+        got_empty = true;
+      }
+    });
+
+    if (got_empty) {
+      var new_programs_config = [];
+      $.each(sr_config['programs#web'],function(i,v){
+        if (v) {
+          new_programs_config.push(v);
+        }
+      });
+      sr_config['programs#web'] = new_programs_config;
     }
 
     if (!get_weather_setup_id) {

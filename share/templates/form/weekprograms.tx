@@ -1,0 +1,17 @@
+<br>
+<div class="weekprograms" id="<%=field.id%>_weekprograms">
+  <table border="0">
+    <% for ( var k = 0; k < weekdays.length; k++ ) { var weekday = weekdays[weekdays_table_sorting[k]]; %>
+      <% if (k % 2 == 0) { %><tr><% } %>
+        <th><%=weekday%>:</th>
+        <td><select data-weekday="<%=weekdays_table_sorting[k]%>">
+          <% for ( var j = 0; j < programs.length; j++ ) { var option = programs[j]; %>
+            <option <% if (option.backgroundcolor) { %>style="background-color:<%=option.backgroundcolor%>;"<% } %> value="<%=option.value%>"<% if (field.value == option.value) { %> selected="selected"<% } %>><%=option.label%></option>
+          <% } %>
+        </select></td>
+      <% if (k % 2 == 1) { %></tr><% } %>
+    <% } %>
+  </table>
+</div>
+<input type="hidden" <: include form::idname :> value="<%=field.joined_value()%>">
+<br>

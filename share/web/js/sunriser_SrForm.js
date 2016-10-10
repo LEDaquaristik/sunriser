@@ -134,12 +134,14 @@ var SrForm = Class.extend({
         return new SrField_Timezone(field);
       case 'ip4':
         return new SrField_IP(field);
+      case 'weekprograms':
+        return new SrField_Weekprograms(field);
       case 'bool':
         return new SrField_Checkbox(field);
       case 'array(integer)':
         return new SrField_CSV(field);
       case 'array(time,percent)':
-        return new SrField_CSV(field);      
+        return new SrField_CSV(field);
       case 'integer':
         return new SrField_Integer(field);
       case 'json':

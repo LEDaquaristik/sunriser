@@ -3,7 +3,31 @@
     <a href="/"><i class="fa fa-home fa-2x"></i></a>
   </li>
   <li title="Zeitplanung" class="<: if $nav == 'planner' { 'selected' } :> first-level">
-    <a href="/day.html"><i class="fa fa-clock-o fa-2x"></i></a>
+    <div class="navclosemenu"></div>
+    <i class="fa fa-clock-o fa-2x"></i>
+    <ul class="second-nav">
+      <h2 class="second-level"></h2>
+      <li class="second-level">
+        <a href="/day.html">
+          <i class="fa fa-clock-o"></i>Einfache Tagesplanung
+        </a>
+      </li>
+      <li class="second-level">
+        <a href="/programs.html">
+          <i class="fa fa-gears"></i>Programme verwalten
+        </a>
+      </li>
+      <li class="second-level">
+        <a href="/program.html">
+          <i class="fa fa-clock-o"></i>Programmplanung
+        </a>
+      </li>
+      <li class="second-level">
+        <a href="/week.html">
+          <i class="fa fa-cloud"></i>Wochenplanung
+        </a>
+      </li>
+    </ul>
   </li>
   <li title="Wettersimulation" class="<: if $nav == 'weather' { 'selected' } :> first-level">
     <div class="navclosemenu"></div>
