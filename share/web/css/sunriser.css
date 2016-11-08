@@ -892,6 +892,39 @@ tbody tr:first-child{
   color:rgba(0,0,0,0.4);
 }
 
+/**  Red, Warnarea  **/
+.warnarea{
+  position:relative;
+  background-color:#E74C3C;
+  padding:25px;
+  color:#FFFFFF;
+  margin-bottom:25px;
+  transition-duration:0.2s;
+  overflow:hidden;
+}
+.warnarea.closethewarnarea{
+  height:0px;
+  padding:0 25px;
+  margin:0px;
+}
+.warnareaclose{
+  position:absolute;
+  top:0;
+  right:0;
+  width:30px;
+  height:30px;
+  background-color:#E74C3C;
+  text-align:center;
+  font-size:20px;
+  color:#ffffff;
+  cursor:pointer;
+  padding-top: 3px;
+}
+.warnareaclose:hover{
+  background-color:#E74C3C;
+  color:#ffffff;
+}
+
 /**  DayPicker  **/
 .daypicker{
   border:2px solid #CCD7F2;

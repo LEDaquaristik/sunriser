@@ -124,6 +124,9 @@ $('body').on('sr_config',function(){
       var fields = [{
         name: "higherminimum",
         label: "Erh&ouml;hter Minimumwert"
+      },{
+        name: "enforcenet",
+        label: "Erzwinge Netzwerkverbindung"
       }];
       $.each(dayplanner_pwms,function(i,pwm){
         fields.push({

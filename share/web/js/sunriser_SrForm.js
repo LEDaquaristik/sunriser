@@ -102,7 +102,7 @@ var SrForm = Class.extend({
               reload = true;
             }
           }
-          if ( key == 'weather#web' ) {
+          if ( key == 'weather#web' || key == 'programs#web' ) {
             reload = true;
           }
           sr_config[key] = val;

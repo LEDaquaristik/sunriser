@@ -52,13 +52,9 @@ var sr_forms = {
     fields: [{
       name: "hostname", label: "Hostname im Netzwerk"
     },{
-      name: "usentp", label: "NTP Server benutzen"
-    },{
-      name: "enforcenet", label: "Erzwinge Netzwerkverbindung"
+      name: "ntpserver", label: "Internet-Zeitserver (NTP)"
     }],
     expert_fields: [{
-      name: "ntpserver", label: "NTP Server"
-    },{
       name: "useip4", label: "Feste IPv4 Adresse benutzen"
     },{
       name: "ip4", label: "Feste IPv4 Adresse"
@@ -100,6 +96,8 @@ var sr_forms = {
     }],
     expert_fields: [{
       name: "ignoreupgrade", label: "Ignoriere Verf&uuml;gbarkeit neuer Firmware"
+    },{
+      name: "usentp", label: "Internet-Zeitserver benutzen (NTP)"
     },{
       name: "nofinder", label: "SunRiser Finder deaktivieren"
     },{

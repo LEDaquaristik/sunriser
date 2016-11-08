@@ -94,7 +94,9 @@ $('body').on('sr_config',function(){
                       }
                     });
                     data["programs#web"] = JSON.stringify(new_web_config);
+                    sr_config["programs#web"] = new_web_config;
                     data["programs#setup#" + v.value + "#deleted"] = true;
+                    sr_config["programs#setup#" + v.value + "#deleted"] = true;
                     sr_request_mpack('PUT','/',data, function(){
                       window.location.href = window.location.href;
                     });
@@ -105,10 +107,6 @@ $('body').on('sr_config',function(){
           });
         }
       });
-
-    } else {
-
-
 
     }
 

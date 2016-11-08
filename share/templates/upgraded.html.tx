@@ -5,7 +5,7 @@
 
 <hr>
 
-<h3>Seit Firmware v0.800:</h3>
+<h3>Seit Firmware v0.801:</h3>
 
 <div>
   Wir haben nun die Wochenplanung eingef&uuml;hrt, wie Sie auch bei dem <a href="https://www.ledaquaristik.de/SunRiser4">SunRiser 4</a> schon m&ouml;glich gewesen ist. Sie k&ouml;nnen nun verschiedene <a href="/programs.html">Programme erstellen</a> und mit einem <a href="/program.html">Tagesverlauf versehen</a>, in der selben Form wie bei der Tagesplanung. Danach k&ouml;nnen Sie &uuml;ber die <a href="/week.html">Wochenplanung</a> diese mit bestimmten Wochentagen f&uuml;r bestimmte LEDs verbinden. Vorher m&uuml;ssen Sie noch die <a href="/led.html">LEDs konfigurieren</a> um diese f&uuml;r die Wochenplanung einzusetzen. Die Wochenplanung ist ein getrennter Programmteil und hat keinerlei Auswirkungen auf die Tagesplanung, es wurden auch keine Programm&auml;nderungen an der Tagesplanung hierf&uuml;r vorgenommen.

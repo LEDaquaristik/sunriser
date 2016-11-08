@@ -53,6 +53,9 @@
             <: if $help { :>
               <div class="helparea"><div class="helpareaclose"></div><: $help :></div>
             <: } :>
+            <: if $warn { :>
+              <div class="warnarea"><div class="warnareaclose"></div><: $warn :></div>
+            <: } :>
             <: block content -> { :>
               Diese Seite wurde nicht gefunden!
             <: } :>

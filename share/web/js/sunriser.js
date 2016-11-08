@@ -108,6 +108,11 @@ $(function(){
     $(".helparea").addClass("closethehelparea"); 
     return false; 
   });
+  // Close red warnarea
+  $(".warnareaclose").click(function(){
+    $(".warnarea").addClass("closethewarnarea"); 
+    return false; 
+  });
 
   //
   $(".form").each(function(){
