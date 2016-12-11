@@ -18,7 +18,11 @@ a {
   padding-bottom: 5px;
 }
 
-.hideme{
+.hideme {
   display:none
 }
 
+#not_chrome {
+  background-color:#ff0000;
+  font-size:22px;
+}

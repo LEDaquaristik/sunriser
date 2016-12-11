@@ -101,6 +101,14 @@ body{
     100%{background-position:0% 50%}
 }
 
+#programpicker {
+  display:table;
+}
+
+#pwmpicker {
+  display:table;
+}
+
 h1{
   font-size: 2em;
   color:#f632b;

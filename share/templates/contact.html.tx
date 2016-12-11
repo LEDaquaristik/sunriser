@@ -3,7 +3,7 @@
 
 <h2 class="form_title">Kontaktinformationen</h2>
 
-<h3>Haben Sie schon geschaut, ob die <a href="/intro.html">Einf&uuml;hrung</a> oder die <a href="/faq.html">h&auml;ufig gestellten Fragen</a> Ihnen vielleicht helfen k&ouml;nnen?</h3>
+<h3>Haben Sie schon geschaut, ob die <a href="/intro.html">Einf&uuml;hrung</a> oder die <a href="/faq.html">h&auml;ufig gestellten Fragen</a> Ihnen vielleicht helfen k&ouml;nnen? Achten Sie auch auf Hinweise direkt an den Einstellungen, das aktivieren vom Mond  wird z.B. die Tagesplanung &uuml;berlagern, dies ist auch <a href="/moon.html">dort erkl&auml;rt</a>.</h3>
 
 <hr>
 <br>
@@ -15,13 +15,12 @@
       <td class="contactlabel">Adresse</td>
       <td>
         <span itemprop="name">
-          <a href="http://www.LEDaquaristik.de/">LEDaquaristik.de</a>
+          <a href="http://www.ledaquaristik.de/">LEDaquaristik UG (haftungsbeschr&auml;nkt)</a>
         </span>
         <br>
         <span itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress">
           <span itemprop="streetAddress">
             <p>
-              Dennis R&uuml;sing<br>
               Schierbusch 2<br>
               33161 H&ouml;velhof<br>
               Deutschland
@@ -57,7 +56,7 @@
     <tr>
       <td class="contactlabel">E-Mail</td>
       <td>
-        <a href="mailto:sunriser@LEDaquaristik.de?subject=[SunRiser%208]" rel="nofollow"><span itemprop="email">sunriser@LEDaquaristik.de</span></a><br>
+        <a href="mailto:sunriser@ledaquaristik.de?subject=[SunRiser%208]" rel="nofollow"><span itemprop="email">SunRiser@LEDaquaristik.de</span></a><br>
         (Bitte h&auml;ngen Sie auch eine <a href="/backup.html">Sicherung</a> Ihrer Konfiguration an die E-Mail)
       </td>
     </tr>

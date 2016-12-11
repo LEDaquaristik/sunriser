@@ -42,7 +42,7 @@
 <script type="text/html" id="programpicker_tmpl">
 
 <% $.each(paths,function(i,path){ %>
-  <div style="float:left" class="daybox programpicker" id="programpicker_<%=path.program%>">
+  <div class="daybox programpicker" id="programpicker_<%=path.program%>">
     #<%=path.program%> <%=path.name%>
   </div>
 <% }); %>

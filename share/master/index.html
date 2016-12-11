@@ -16,6 +16,10 @@
       </div>
     </noscript>
     <h1>SunRiser Finder</h1>
+    <h2 id="not_chrome" class="hideme">
+      Achtung: Sie verwenden nicht den <a href="http://www.google.com/chrome/">Google Chrome Browser!</a><br>
+      Beachten Sie bitte, dass der SunRiser 8 mit dem <a href="http://www.google.com/chrome/">Google Chrome Browser</a> entwickelt und optimiert wurde. Eine reibungslose und fehlerfreie Funktion kann nur unter <a href="http://www.google.com/chrome/">Google Chrome</a> gew&auml;hrleistet werden. Zwar sind auch andere Browser weitestgehend kompatibel - sollten Sie allerdings Probleme w&auml;hrend der Nutzung der Benutzeroberfl&auml;che haben - empfehlen wir einen Wechsel zu <a href="http://www.google.com/chrome/">Google Chrome</a>. <a href="http://www.google.com/chrome/">Google Chrome</a> ist f&uuml;r alle g&auml;ngigen Plattformen verf&uuml;gbar.
+    </h2>
     <h2 id="not_found" class="hideme">Wir haben keinen SunRiser gefunden, der sich von Ihrer Internet Adresse gemeldet hat. Bitte achten Sie darauf diese Seite &uuml;ber die gleiche Internet Verbindung zu benutzen, wie die vom SunRiser selbst! &Uuml;berpr&uuml;fen Sie auch nochmal alle Kabel Verbindungen.<br>Falls diese in Ordnung sind und auch nach einer Minute kein SunRiser hier angezeigt wird, drücken Sie bitte kurz den Reset Knopf vorne am SunRiser und warten eine weitere Minute. Diese Seite wird sich alle 10 Sekunden neu laden, um zu pr&uuml;fen ob sich die Situation ge&auml;ndert hat.<hr>Dies ist kein Problem Ihres Web Browsers oder Ihres Computers.</h2>
     <h2 id="service_down" class="hideme">Der Service ist gerade nicht verf&uuml;gbar, bitte versuchen Sie es sp&auml;ter nochmal. (Dies k&ouml;nnte auch eine Fehlfunktion in Ihrem Browser sein, bitte benutzen Sie die neuste Version von <a href="http://www.google.com/chrome/">Chrome</a> oder <a href="https://www.mozilla.org/de/firefox/new/">FireFox</a>. Falls Sie auch nach 24 Stunden diese Meldung bekommen, melden Sie sich bitte beim <a href="http://www.ledaquaristik.de/epages/64355316.sf/de_DE/?ObjectPath=/Shops/64355316/Categories/ContactForm">Support</a>.)</h2>
     <h2 id="found"></h2>
@@ -67,16 +71,20 @@ function srf_done() {
           window.location.href = window.location.href;
         },10000);
       } else if (found_count == 1) {
-        $('#found').append('<div>Nur einen SunRiser gefunden, Sie werden in 10 Sekunden dahin umgeleitet.<hr>Falls Sie einen Netzwerk Fehler erhalten, kommen Sie bitte auf diese Seite zur&uuml;ck, klicken Sie auf "Liste zur&uuml;cksetzen" und bet&auml;tigen den Reset Knopf vorne am Ger&auml;t</div>');
+        $('#found').append('<div>Nur einen SunRiser gefunden, Sie werden in 15 Sekunden dahin umgeleitet.<hr>Falls Sie einen Netzwerk Fehler erhalten, kommen Sie bitte auf diese Seite zur&uuml;ck, klicken Sie auf "Liste zur&uuml;cksetzen" und bet&auml;tigen den Reset Knopf vorne am Ger&auml;t</div>');
         setTimeout(function(){
           window.location.href = 'http://' + ip + '/';
-        },10000);
+        },15000);
       }
     }
   }
 }
 
 $(function(){
+
+  if (!(/chrom(e|ium)/.test(navigator.userAgent.toLowerCase()))) {
+    $('#not_chrome').removeClass('hideme');
+  }
 
   $('#clear_list').click(function(){
     $.get("finder?clear=1",function(){
