@@ -284,18 +284,19 @@ var SrField_Weekprograms = SrField_CSV.extend({
   },
 
   validate: function() {
-    if (this.value.length == 8) {
-      $.each(this.value,function(i,val){
+    var self = this;
+    if (self.value.length == 8) {
+      $.each(self.value,function(i,val){
         if (isNaN(val)) {
-          this.error_data();
+          self.error_data();
         } else if (val < 0 || val > 8) {
-          this.error_data();
+          self.error_data();
         }
       });
-    } else if (this.value.length == 0) {
-      this.value = undefined;
+    } else if (self.value.length == 0) {
+      self.value = undefined;
     } else {
-      this.error_data();
+      self.error_data();
     }
   },
 
@@ -319,7 +320,7 @@ var SrField_Weekprograms = SrField_CSV.extend({
       });
       self.html_field().val(selected_programs.join(self.comma));
     });
-    selects.first().trigger('change');      
+    self.html_field().trigger('change');      
   }
 
 });
