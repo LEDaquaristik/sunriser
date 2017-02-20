@@ -469,7 +469,7 @@ sub _web_state {
     uptime => $uptime,
     %{$self->get_state($env)},
   };
-  #use DDP; p($state);
+  use DDP; p($state);
   return $self->_web_serve_msgpack($state);
 }
 
@@ -755,7 +755,7 @@ sub _build_psgi {
         if ($path =~ /^\/state$/) {
           my $body = $req->raw_body;
           my $data = $self->_mp->unpack($body);
-          #use DDP; p($data);
+          use DDP; p($data);
           if (exists $data->{pwms}) {
             for my $pwm (keys %{$data->{pwms}}) {
               #use DDP; p($data->{pwms}->{$pwm}); p($pwm);

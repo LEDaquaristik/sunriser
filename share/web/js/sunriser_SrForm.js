@@ -81,6 +81,7 @@ var SrForm = Class.extend({
     var self = this;
     var values = {};
     $.each(self.fields,function(i,field){
+      field.error_field().empty();
       field.transform.call(field);
       if (!field.has_errors()) {
         field.validate.call(field);

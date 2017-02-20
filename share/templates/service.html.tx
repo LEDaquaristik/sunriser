@@ -6,18 +6,6 @@
     <span class="index_function_badge">+</span>
     <div>Wartungsarbeiten beenden <span id="service_mode_diff"></span></div>
   </a>
-  <a class="index_function" id="service_full">
-    <span class="index_function_badge">+</span>
-    <div>Volle Leistung</div>
-  </a>
-  <a class="index_function" id="service_half">
-    <span class="index_function_badge">+</span>
-    <div>Niedrige Leistung</div>
-  </a>
-  <a class="index_function" id="service_off">
-    <span class="index_function_badge">+</span>
-    <div>Abschalten</div>
-  </a>
 </div>
 
 <div class="js-hide" id="service_mode_off">
@@ -27,21 +15,22 @@
   </a>
 </div>
 
+<div class="form noautoload" id="service"></div>
+
 : }
 : override postjs -> {
 
 <script type="text/javascript">
 
 var service_mode_time;
+var service_mode;
 
 // First execute stuff when the form is loaded
 $('body').on('sr_config',function(){
 
   $('#start_service_mode').click(function(){
-    sr_request_mpack('PUT','/state',{ service_mode: 1 },function(values){
-      set_all_pwm(1000,function(){
-        window.location.href = window.location.href;
-      });
+    sr_request_mpack('PUT','/state',{ service_mode: 1, service_value: parseInt($('#service_value').val()) },function(values){
+      window.location.href = window.location.href;      
     });
   });
 
@@ -54,8 +43,10 @@ $('body').on('sr_config',function(){
   sr_request_mpack('GET','/state',undefined,function(values){
     if (typeof values.service_mode !== 'undefined') {
       if (values.service_mode == 0) {
+        service_mode = 0;
         $('#service_mode_off').show();
       } else {
+        service_mode = 1;
         service_mode_time = values.service_mode;
         $('#service_mode_on').show();
       }
@@ -64,16 +55,29 @@ $('body').on('sr_config',function(){
     }
   });
 
-  $('#service_full').click(function(){
-    set_all_pwm(1000);
-  });
-
-  $('#service_half').click(function(){
-    set_all_pwm(200);
-  });
-
-  $('#service_off').click(function(){
-    set_all_pwm(0);
+  $("#service").each(function(){
+    var fields = new Array();
+    fields.push({
+      id: "service_value",
+      label: "Leistungswert",
+      type: "integer",
+      template: "slider",
+      value: sr_config['service_value'],
+      min: 0, max: 1000,
+      custom_init: function(){
+        var html_field = this.html_field();
+        html_field.parent().find('.sliderbar').on('dragend',function(){
+          sr_request_mpack('PUT','/',{ service_value: parseInt(html_field.val()) },function(){
+            sr_request_mpack('PUT','/state',{ service_value: parseInt(html_field.val()) },function(){});
+          });
+        });
+      }
+    });
+    var form = new SrForm(this,{
+      title: "Wartungsarbeiten",
+      no_submit: true,
+      fields: fields
+    });
   });
 
 });

@@ -5,6 +5,7 @@
   "model", [       "Firmware made for this model (human)", "text"],
   "model_id", [    "Firmware made for this model (short)", "text"],
   "pwm_count", [   "Amount of pwms",             "integer"],
+  "service_value", [ "Service value used last time", "integer", 1000],
   "created_by", [  "Creator of this image",      "text"],
   "savecount", [   "Count of saves on custom file (autoset by system, always 0 on factory files)", "integer"],
   "updated", [     "Timestamp of last update (autoset by system)", "datetime"],

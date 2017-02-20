@@ -1,4 +1,4 @@
-: cascade base { title => "Wetter Profile", nav => "weather", no_bighelp => 1, help => r("Mit den Wetter Profilen k&ouml;nnen Sie f&uuml;r jede LED individuelle Wetter Einstellungen vornehmen. Ein Programm arbeitet auch als eine Einheit, was z.B. bedeutet das Gewitter und Regen auf allen LED des Profils gemeinsam angewendet werden.") }
+: cascade base { title => "Wetter Profile", nav => "weather", no_bighelp => 1, help => r("Mit den Wetter Profilen k&ouml;nnen Sie f&uuml;r jede LED individuelle Wetter Einstellungen vornehmen. Ein Programm arbeitet auch als eine Einheit, was z.B. bedeutet das Gewitter und Regen auf allen LED des Profils gemeinsam angewendet werden. Bitte beachten Sie, das ein Programm nur entfernt werden kann, wenn es nicht mehr genutzt wird.") }
 : override content -> {
 
 <div class="index_function" id="add_weather_profile">
@@ -74,8 +74,8 @@ $('body').on('sr_config',function(){
       loaded: function(){
         var self = this;
         var values = self.values();
-        for (i = 1; i <= sr_config['pwm_count']; i++) {
-          var weather_id = values['pwm#' + i + '#weather'];
+        for (pwm = 1; pwm <= sr_config['pwm_count']; pwm++) {
+          var weather_id = values['pwm#' + pwm + '#weather'];
           if (weather_id > 0) {
             $.each(weather_profiles, function(i,v){
               if (v.value == weather_id) {
@@ -85,13 +85,30 @@ $('body').on('sr_config',function(){
           }
         }
         $.each(weather_profiles, function(i,v){
-          if (!v.used) {
-            var weather_id = v.value;
-            var name_key = "weather#setup#" + v.value + "#name";
+          var weather_id = v.value;
+          var name_key = "weather#setup#" + v.value + "#name";
+          sr_request_mpack('POST','/',["weather#setup#" + v.value + "#deleted"], function(data){
+            if (data["weather#setup#" + v.value + "#deleted"]) {
+              $('#weather_setup_' + v.value + '_name').each(function(){
+                var namefield = $(this);
+                $(namefield).parent().each(function(){
+                  $(this).append('<div class="error">Dieses Profil ist als gel&ouml;scht markiert! Dies ist ein Fehler, bitte entfernen Sie dieses Profil von den LEDs und l&ouml;schen es erneuert. Der SunRiser w&uuml;rde dieses nicht benutzen.</div>');
+                });
+              });
+            }
+          });
+          if (v.used) {
             $('#weather_setup_' + v.value + '_name').each(function(){
               var namefield = $(this);
               $(namefield).parent().each(function(){
-                $(this).append('<div style="text-align:right"><span id="weather_setup_' + weather_id + '_delete">Profil entfernen</span></div>');
+                $(this).append('<div style="text-align:right">Profil in Benutzung und kann daher nicht entfernt werden.</div>');
+              });
+            });
+          } else {
+            $('#weather_setup_' + v.value + '_name').each(function(){
+              var namefield = $(this);
+              $(namefield).parent().each(function(){
+                $(this).append('<div style="text-align:right"><span style="background-color:#3e8cc0;color:white;padding:5pxsssssssssss" id="weather_setup_' + weather_id + '_delete">Profil entfernen</span></div>');
                 $('#weather_setup_' + weather_id + '_delete').click(function(){
                   if (confirm("Wollen Sie Ihr Wetter Profil '" + namefield.val() + "' entfernen?") == true) {
                     var data = {};

@@ -40,7 +40,7 @@
           <td>
         </tr>
         <tr>
-          <td colspan="2" id="<%=field.name%>_error">
+          <td colspan="2" id="<%=field.id%>_error">
           </td>
         </tr>
       <% } %>

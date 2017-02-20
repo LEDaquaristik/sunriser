@@ -69,6 +69,7 @@ var SrField = Class.extend({
     }
     if (!this.errors) { this.errors = new Array(); }
     this.errors.push(text);
+    console.log(this.error_field());
     this.error_field().trigger('error',text);
     this.error_field().append('<div class="error">' + text + '</div>');
   },
@@ -289,7 +290,7 @@ var SrField_Weekprograms = SrField_CSV.extend({
       $.each(self.value,function(i,val){
         if (isNaN(val)) {
           self.error_data();
-        } else if (val < 0 || val > 8) {
+        } else if (val < 0 || val > sr_config['programs#web'].length) {
           self.error_data();
         }
       });

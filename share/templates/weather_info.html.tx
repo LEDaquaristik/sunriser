@@ -1,4 +1,4 @@
-: cascade base { title => "Wetter Status", nav => "weather_info", no_form => 1, no_bighelp => 1, help => mark_raw("Diese Status Seite ist ein neues Feature und noch nicht vollst&auml;ndig freigegeben. Bitte noch keine Support Anfragen stellen.") }
+: cascade base { title => "Wetter Status", nav => "weather_info", no_form => 1, no_bighelp => 1 }
 : override content -> {
 
 <div class="index_functions">
@@ -7,6 +7,10 @@
     <div>Wetter Status Daten neu laden</div>
   </a>
 </div>
+
+<div class="error">Diese Status Seite ist ein neues Feature und noch nicht vollst&auml;ndig freigegeben. Bitte noch keine Support Anfragen stellen.</div>
+
+<hr>
 
 <div id="weather_info"><img class="loader" src="/img/ajaxload.gif"><div class="centerarrow">Wenn dieser Fisch nicht verschwindet, bitte die Seite neuladen.</div></div>
 
@@ -27,6 +31,7 @@ $('body').on('sr_config',function(){
         }
       });
       if (weather_infos_count) {
+        console.log(weather_infos);
         $.each(weather_infos,function(i,v){
           var pwm = i+1;
           if (v && v.weather_program_id) {

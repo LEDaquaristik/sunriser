@@ -14,18 +14,6 @@ $('body').on('sr_config',function(){
   sr_request_mpack('GET','/state',undefined,function(values){
     $("#test").each(function(){
       var fields = new Array();
-      // var color_options = new Array({
-      //   value: undefined,
-      //   label: 'Nicht benutzt',
-      //   backgroundcolor: '#ffffff'
-      // });
-      // $.each(sr_colors,function(i,color){
-      //   color_options.push({
-      //     value: color.id,
-      //     label: color.name,
-      //     backgroundcolor: color.color
-      //   });
-      // });
       for (i = 1; i <= sr_config['pwm_count']; i++) {
         var pwm_key = "" + i;
         fields.push({
@@ -47,6 +35,22 @@ $('body').on('sr_config',function(){
           }
         });
       }
+      fields.push({
+        id: "pwm_direct_all",
+        label: "Alle setzen",
+        type: "integer",
+        template: "slider",
+        value: values.pwms[1],
+        min: 0, max: 1000,
+        custom_init: function(){
+          var html_field = this.html_field();
+          html_field.parent().find('.sliderbar').on('dragend',function(){
+            set_all_pwm(parseInt(html_field.val()),function(){
+              window.location.href = window.location.href;
+            });
+          });
+        }
+      });
       var form = new SrForm(this,{
         title: "Funktionstest",
         no_submit: true,

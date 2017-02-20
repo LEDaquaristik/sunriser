@@ -5,6 +5,14 @@
 
 <hr>
 
+<h3>Seit Firmware v0.810:</h3>
+
+<div>
+  Korrektur eines Fehlers in der <a href="/week.html">Wochenplanung</a>, der verhinderte das mehr als 8 Programme genutzt werden konnten. Wesentliche Verbesserung der Netzwerkstabilit&auml;t. Gleitender &Uuml;bergang bei Wartungsarbeiten.
+</div>
+
+<br><hr>
+
 <h3>Seit Firmware v0.805:</h3>
 
 <div>

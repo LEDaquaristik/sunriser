@@ -7,4 +7,8 @@
 
 <div class="form" id="moon"></div>
 
+<hr>
+
+<div class="error">Die Mondsteuerung ist derzeit leider unzuverl&auml;ssig und schaltet sich u.U. nicht korrekt ab. Wir versuchen diesen Fehler zu beheben oder ggf. die Funktion komplett neu zu gestalten. Alternativ schlagen wir vor die <a href="/week.html">Wochenplanung</a> zu nutzen um so einen Mond mit voller Kontrolle zu erschaffen (da die bestehende Mond Simulation auch tags&uuml;ber leuchtet).</div>
+
 : }
