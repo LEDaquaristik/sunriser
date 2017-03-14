@@ -57,7 +57,7 @@
       <td class="contactlabel">E-Mail</td>
       <td>
         <a href="mailto:sunriser@ledaquaristik.de?subject=[SunRiser%208]" rel="nofollow"><span itemprop="email">SunRiser@LEDaquaristik.de</span></a><br>
-        (Bitte h&auml;ngen Sie auch eine <a href="/backup.html">Sicherung</a> Ihrer Konfiguration an die E-Mail)
+        <span class="error">(Bitte h&auml;ngen Sie auch eine <a href="/backup.html">Sicherung</a> Ihrer Konfiguration an die E-Mail)</span>
       </td>
     </tr>
   </table>

@@ -1,0 +1,33 @@
+#!/usr/bin/env perl
+# PODNAME: sunriser_dumpconfig
+# ABSTRACT: SunRiser Configuration Dumper
+
+$|=1;
+
+use strict;
+use warnings;
+use Data::MessagePack;
+use Path::Tiny;
+
+use FindBin;
+use lib $FindBin::Dir . "/../lib";
+use SunRiser::Config;
+
+$|=1;
+
+my $filename = shift @ARGV;
+
+my $mp = Data::MessagePack->new;
+$mp->utf8(1);
+my %cfg = %{$mp->unpack(path($filename)->slurp_raw)};
+my $srcfg = SunRiser::Config->new;
+
+for my $k (sort { $a cmp $b } keys %cfg) {
+  my $v = $cfg{$k};
+  my $default = $srcfg->default($k);
+  unless (defined $default and defined $v and $v eq $default) {
+    printf("%s: %s\n",$k,ref $v eq 'ARRAY' ? join(',',@{$v}) : $v) if defined $v;
+  }
+}
+
+exit 0;

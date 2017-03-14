@@ -26,6 +26,36 @@
   <br>
 </div>
 <hr>
+<h2 class="hiddencontent" id="cloudraindays">Wie verh&auml;lt es sich mit den Wolkentagen und Regentagen und der Wahrscheinlichkeit?</h2>
+<div class="js-hide" id="cloudraindayscontent">
+  <p>Die Wahrscheinlichkeit bezieht sich auf den kompletten Tag, d.h. um den ganzen Tag Wolken (oder Regen) zu sehen, m&uuml;ssen Sie die Wahrscheinlichkeit auf 100% setzen. Falls die Wahrscheinlichkeit z.B. auf 50% gesetzt wird, wird vom SunRiser sprichw&ouml;rtlich jeden Tag eine M&uuml;nze geworfen und bei Kopf gibt es Wolken. Es kann immernoch sein das die Menge an Wolken oder Regen an diesen Tagen sehr niedrig bis fast gar nicht vorhanden sein kann.</p>
+  <br>
+</div>
+<hr>
+<h2 class="hiddencontent" id="cloudrainoff">Werden Wolken oder Regen bei ausgeschalteter Beleuchtung simuliert?</h2>
+<div class="js-hide" id="cloudrainoffcontent">
+  <p>Nein, die Wolken und Regen sind nicht sichtbar wenn die Einstellung der Helligkeit auf 0% steht, weil diese nur dadurch funktionieren das die Helligkeit kurzfristig heruntergesetzt wird. Trotzdem versucht der SunRiser eine gewisse Mindesthelligkeit zu erhalten.</p>
+  <br>
+</div>
+<hr>
+<h2 class="hiddencontent" id="cloudrainintensity">Was bedeutet die Einstellung 1-10 bei "maximale Dunkelheit durch Wolken/Regen"?</h2>
+<div class="js-hide" id="cloudrainintensitycontent">
+  <p>Je h&ouml;her der Wert je intensiver verdunkeln Wolken und der Regen die Beleuchtung. Es handelt sich um einen relativen Wert, d.h. es wird immer weniger dunkel wenn die generelle Helligkeit ohnehin niedrig ist.</p>
+  <br>
+</div>
+<hr>
+<h2 class="hiddencontent" id="rainlength">Wie lange kann eine Regensimulation andauern? Handelt es sich um einen tats&auml;chlichen Regentag?</h2>
+<div class="js-hide" id="rainlength">
+  <p>Regen wird genauso wie Gewitter in Fronten gehandelt, d.h. es wird zuf&auml;llig zwischendurch eine Regenfront definiert, da der Regen aber versucht eine bestimmte % an Regenanteil pro Tag abzuarbeiten ist eine Beeinflussung hier durch den User (derzeit) nicht m&ouml;glich. Beachten Sie, dass der Regen immer in Kombination mit dem Gewitter auftritt, soweit ein Gewitter eingestellt ist.</p>
+  <br>
+</div>
+<hr>
+<h2 class="hiddencontent" id="cloudvsrain">Worin unterscheiden sich Reden- und Wolkensimulation?</h2>
+<div class="js-hide" id="cloudvsraincontent">
+  <p>Die Regen Simulation und die Wolken Simulation unterscheiden sich prim&auml;r in der Gemeinsamkeit und in der Dauer der Helligkeits&auml;nderungen. Ein Regentropfen ist eine kurze Verdunklung, w&auml;hrend eine Wolke auch &uuml;ber einen l&auml;ngeren Zeitraum verdunkeln kann. Auch sind bei Wolken alle LED zusammengeschaltet. Wenn 3-4 LED-Leisten der Wolkensimulation zugeordnet sind, dann werden diese alle gemeinsam dunkler. Bei Regen hingegen produzieren alle LED-Leisten eigenst&auml;ndig Regentropfen, um so das Bild eines „chaotischen“ Regens zu unterst&uuml;tzen.</p>
+  <br>
+</div>
+<hr>
 <h2 class="hiddencontent" id="api">Gibt es auch eine API?</h2>
 <div class="js-hide" id="apicontent">
   <p>Das gesamte Web Frontend benutzt eine API um Ihre Konfiguration zu dem SunRiser zu bringen. Diese API erlaubt das Setzen der Konfiguration, Firmware einzuspielen oder alle anderen Funktionen die Sie im Web Interface haben.</p>
@@ -34,7 +64,7 @@
   <br>
 </div>
 <hr>
-<h2 class="hiddencontent" id="lightbug">Lichteinstellungen unterhalb 30% werden nicht berücksichtigt, was ist zu tun?</h2>
+<h2 class="hiddencontent" id="lightbug">Lichteinstellungen unterhalb 30% werden nicht ber&uuml;cksichtigt, was ist zu tun?</h2>
 <div class="js-hide" id="lightbugcontent">
   <p>Diese Problematik kann bei Ger&auml;ten mit Baujahr 2016 auftreten. Bitte aktivieren Sie unter den <a href="/expert.html">Experten Einstellungen</a> den Men&uuml;punkt 'Erh&ouml;hter Minimumwert'</p>
   <br>

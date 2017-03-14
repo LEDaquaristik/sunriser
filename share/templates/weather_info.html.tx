@@ -31,7 +31,7 @@ $('body').on('sr_config',function(){
         }
       });
       if (weather_infos_count) {
-        console.log(weather_infos);
+        // console.log(weather_infos);
         $.each(weather_infos,function(i,v){
           var pwm = i+1;
           if (v && v.weather_program_id) {

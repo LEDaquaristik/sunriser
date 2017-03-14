@@ -69,7 +69,6 @@ var SrField = Class.extend({
     }
     if (!this.errors) { this.errors = new Array(); }
     this.errors.push(text);
-    console.log(this.error_field());
     this.error_field().trigger('error',text);
     this.error_field().append('<div class="error">' + text + '</div>');
   },
@@ -134,7 +133,7 @@ var SrField_Integer = SrField_Text.extend({
     var value = typeof val !== 'undefined' ? ( val ) : ( this.value || 0 );
     value = value / Math.pow(10,this.float_digits);
     if (this.percent_sign) {
-      value = value + " %";
+      value = value + ' %';
     }
     return value;
   },
@@ -149,17 +148,26 @@ var SrField_Integer = SrField_Text.extend({
   initjs: function(){
     var self = this;
     var html_field = self.html_field();
+    var all = self.max - self.min;
     if (html_field.hasClass('sliders')) {
       html_field.hide();
       html_field.parent().find('.sliderbar').on('change',function(){
         var factor = $(this).data('value');
-        var all = self.max - self.min;
         var diff = Math.floor(all * factor);
         var value = self.min + diff;
         html_field.val(value);
         html_field.trigger('change');
         html_field.parent().find('.slider_value').text(self.display_value(value));
       });
+      // html_field.parent().find('.slider_value').on('keyup',function(){
+      //   var value = $(this).val();
+      //   if (value >= min && value <= max) {
+      //     $(this).css('background-color',undefined);
+      //     html_field.parent().find('.sliderbar').data('value', 50);
+      //   } else {
+      //     $(this).css('background-color','yellow');
+      //   }
+      // });
     }
   }
 
@@ -290,7 +298,7 @@ var SrField_Weekprograms = SrField_CSV.extend({
       $.each(self.value,function(i,val){
         if (isNaN(val)) {
           self.error_data();
-        } else if (val < 0 || val > sr_config['programs#web'].length) {
+        } else if (val < 0 || val > sr_config['programs#last_setup_id']) {
           self.error_data();
         }
       });
