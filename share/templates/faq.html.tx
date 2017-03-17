@@ -8,11 +8,13 @@
   <br>
 </div>
 <hr>
-<h2 class="hiddencontent" id="gamma">Warum verhalten sich die LED gesetzten Werte nicht so wie ich es von meiner bisherigen LED Steuerung gewohnt bin? (oder: Was hat es mit der Gammakorrektur auf sich?)</h2>
+<h2 class="hiddencontent" id="gamma">Warum bedeutet ein Wert von z.b. 500 im Funktionstest nicht 50% Leistung/Helligkeit? Warum verhalten sich die LED gesetzten Werte nicht so wie ich es von meiner bisherigen LED Steuerung gewohnt bin? (oder: Was hat es mit der Gammakorrektur auf sich)</h2>
 <div class="js-hide" id="gammacontent">
   <p>Ein bekanntes Problem in vielen Bereich die etwas mit Licht zutun haben, wie z.B. LED Steuerung oder auch Fotografie, ist die subjektive Wahrnehmung von Helligkeit im Verh&auml;ltnis zur tats&auml;chlichen Leistung die das Licht hat. Das Problem hierbei liegt in der Kennlinie des menschlichen Auges. Diese ist nichtlinear, genauer gesagt: sie ist nahezu logarithmisch. Das erm&ouml;glicht die Wahrnehmung eines sehr gro&szlig;en Helligkeitsbereichs, angefangen von Vollmond mit &#188; Lux &uuml;ber eine normale Schreibtischbeleuchtung mit 750 Lux bis zu einem hellen Sommertag mit bis zu 100.000 Lux. Solche hochdynamischen Signale sind nur mit einer logarithmischen Kennlinie in den Griff zu kriegen.</p>
   <br>
   <p>Um diesem Effekt entgegen zu wirken, gibt es die sogenannte <a href="http://de.wikipedia.org/wiki/Gammakorrektur">Gammakorrektur</a>. Mathematisch gesehen handelt es sich bei dieser Funktion um eine Potenzfunktion mit einem oft nur kurz Gamma genannten Exponenten als einzigem Parameter. Wir haben bei der Tagesplanung nun genau diese Funktion hinzugef&uuml;gt, wobei wir hier Vorberechnungen benutzen, die wir auf leistungsst&auml;rkeren Rechnern erstellen, um die Berechnungen viel genauer zu machen, als der kleine Prozessor im Ger&auml;t selber vornehmen kann.</p>
+  <br>
+  <p>Beim Funktionstest arbeiten wir hier mit dem direkten Leistungswert, d.h. der Wert 1 bis 1000 bedeutet die echte Leistung, die die LED aufnimmt, 500 w&uuml;rde also bedeuten das 50% der maximalen Stromleistung aufliegt. Wenn Sie in der Tagesplanung nun 50% angeben, bedeutet dies das die Planung versucht eine 50% Helligkeit zu erzeugen, dies liegt dann ungef&uuml;hr bei dem Wert 32 im Funktionstest (Man kann dies nicht genau sagen, weil der Zeitfaktor hier auch einspielt und daher der Endwert manchmal abweicht um einen sanfteren &Uuml;bergang zu der n&auml;chsten Stufe zu verbessern).</p>
   <br>
   <p>In Planung ist aber, f&uuml;r Benutzer die volle Kontrolle &uuml;ber die Leistung haben wollen, eine Option zu erstellen, die diese Gammakorrektur abschaltet und somit ein absolutes, lineares Leistungs-Fading &uuml;ber den gesetzten Zeitraum vornimmt. Ein weiterer Schritt danach w&auml;re die M&ouml;glichkeit die Gammakorrektur anzupassen, anstelle Sie nur abzuschalten.</p>
   <br>
@@ -50,7 +52,7 @@
   <br>
 </div>
 <hr>
-<h2 class="hiddencontent" id="cloudvsrain">Worin unterscheiden sich Reden- und Wolkensimulation?</h2>
+<h2 class="hiddencontent" id="cloudvsrain">Worin unterscheiden sich Regen- und Wolkensimulation?</h2>
 <div class="js-hide" id="cloudvsraincontent">
   <p>Die Regen Simulation und die Wolken Simulation unterscheiden sich prim&auml;r in der Gemeinsamkeit und in der Dauer der Helligkeits&auml;nderungen. Ein Regentropfen ist eine kurze Verdunklung, w&auml;hrend eine Wolke auch &uuml;ber einen l&auml;ngeren Zeitraum verdunkeln kann. Auch sind bei Wolken alle LED zusammengeschaltet. Wenn 3-4 LED-Leisten der Wolkensimulation zugeordnet sind, dann werden diese alle gemeinsam dunkler. Bei Regen hingegen produzieren alle LED-Leisten eigenst&auml;ndig Regentropfen, um so das Bild eines „chaotischen“ Regens zu unterst&uuml;tzen.</p>
   <br>
