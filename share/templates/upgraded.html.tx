@@ -5,10 +5,18 @@
 
 <hr>
 
-<h3>Seit Firmware v0.811:</h3>
+<h3>Seit Firmware v0.820:</h3>
 
 <div>
-  Korrektur eines Fehlers in der <a href="/week.html">Wochenplanung</a>, der verhinderte das mehr als 8 Programme genutzt werden konnten. Wesentliche Verbesserung der Netzwerkstabilit&auml;t. Gleitender &Uuml;bergang bei Wartungsarbeiten. Neue Antworten bei den <a href="/faq.html">H&auml;ufigen Fragen</a>.
+  Fehlerkorrektur bei der Abarbeitung der Wendepunkte in der <a href="/program.html">Programmplanung</a>. Korrektur eines Fehlers in der Berechnung von <a href="/rain.html">Regenfronten</a>.
+</div>
+
+<br><hr>
+
+<h3>Seit Firmware v0.812:</h3>
+
+<div>
+  Korrektur eines Fehlers in der <a href="/week.html">Wochenplanung</a>, der verhinderte das mehr als 8 Programme genutzt werden konnten. Wesentliche Verbesserung der Netzwerkstabilit&auml;t. Gleitender &Uuml;bergang bei <a href="/service.html">Wartungsarbeiten</a>. Neue Antworten bei den <a href="/faq.html">H&auml;ufigen Fragen</a>.
 </div>
 
 <br><hr>
