@@ -6,8 +6,6 @@
   <div>Neues Programm anlegen (&Auml;nderungen gehen verloren)</div>
 </div>
 
-<div class="form noautoload" id="form_programs"></div>
-
 <div class="index_functions">
   <a class="index_function week_link" href="/program.html">
     <span class="index_function_badge">+</span>
@@ -18,6 +16,8 @@
     <div>Zur Wochenplanung</div>
   </a>
 </div>
+
+<div class="form noautoload" id="form_programs"></div>
 
 : }
 : override postjs -> {
@@ -83,7 +83,7 @@ $('body').on('sr_config',function(){
               var name_key = "programs#setup#" + v.value + "#name";
               $('#programs_setup_' + v.value + '_name').each(function(){
                 var namefield = $(this);
-                namefield.parent().append('<div style="text-align:right"><span id="programs_setup_' + program_id + '_delete">Programm entfernen</span></div>');
+                namefield.parent().append('<div style="text-align:left"><span style="background-color:#3e8cc0;color:white;margin:3px;padding:3px" id="programs_setup_' + program_id + '_delete">Programm entfernen</span></div>');
                 $('#programs_setup_' + program_id + '_delete').click(function(){
                   if (confirm("Wollen Sie Ihr Programm '" + namefield.val() + "' entfernen?") == true) {
                     var data = {};

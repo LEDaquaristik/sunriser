@@ -54,6 +54,8 @@ sub _build_publish_files {
   }
   return [qw(
 
+    fonts.css
+
     backup.html
     clouds.html
     contact.html
@@ -108,7 +110,7 @@ sub render {
   my @parts = split('\.',$file);
   my $ext = pop @parts;
   my $filename = pop @parts;
-  if ($ext eq 'html') {
+  if ($ext eq 'html' or ($ext eq 'css' and $filename eq 'fonts')) {
     $self->info('Generating '.$file.' from template');
     my $template = $file.'.tx';
     my %vars = %{$self->base_vars};
@@ -200,6 +202,7 @@ sub _build_base_vars {
       js/ipaddr-0.1.3.js
       js/URI-1.14.2.min.js
       js/jquery-ajax-blob-arraybuffer.js
+      js/webfontloader.js
 
       js/sunriser_colors_config.js
       js/sunriser_forms_config.js

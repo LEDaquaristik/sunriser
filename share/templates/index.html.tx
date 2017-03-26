@@ -1,6 +1,8 @@
 : cascade base { title => "Startseite", nav => "home", no_form => 1, no_bighelp => 1 }
 : override content -> {
 
+  <div id="browser_check"></div>
+
   <div id="home_not_configured">
     <div class="warningbloc">
       <hr></hr>
@@ -41,9 +43,9 @@
       <span class="index_function_badge">+</span>
       <div>Tagesplanung</div>
     </a>
-    <a class="index_function" href="/program.html">
+    <a class="index_function" href="/programs.html">
       <span class="index_function_badge">+</span>
-      <div>Programmplanung (Wochenplanung)</div>
+      <div>Wochenplanung</div>
     </a>
     <a class="index_function" href="/backup.html">
       <span class="index_function_badge">+</span>

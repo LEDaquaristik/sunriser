@@ -72,16 +72,6 @@ $('body').on('sr_config',function(){
           value: 2,
           label: 'Wochenplanung'
         }]
-        /* initjs: function(){
-          var pwm = this.data.pwm_id;
-          var checkbox = this.html_field();
-          if ($("#pwm_" + pwm + "_manager").val() == 1) {
-            checkbox.prop("checked",true);
-          }
-          checkbox.change(function(){
-            $('#pwm_' + pwm + '_manager').val(checkbox.prop('checked') ? 1 : 0);
-          });
-        } */
       });
     }
     var form = new SrForm(this,{

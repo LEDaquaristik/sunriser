@@ -1,6 +1,17 @@
 : cascade base { title => "Programmplanung", nav => "planner", help => r('Hier k&ouml;nnen Sie den Tagesverlauf Ihrer Programme einfach per Klick einstellen. W&auml;hlen Sie zuerst oben das Programm aus, und f&uuml;gen Sie dann &uuml;ber die Plus Zeichen unten neue Punkte hinzu. Diese k&ouml;nnen Sie dann im Graphen nach belieben verschieben. Um einen Punkt zu entfernen, dr&uuml;cken Sie einfach auf die Uhrzeit/Prozent Angabe dieses Punktes unten neben den Plus Zeichen. Vergessen Sie nicht nach Ihren &Auml;nderungen auch am Ende der Seite auf \'Speichern\' zu klicken. Bitte beachten Sie das die Prozentangabe hier eine automatische <a href="/faq.html#gamma">Gammakorrektur</a> beinhaltet um sich mehr dem menschlichen Empfinden anzupassen. Danach k&ouml;nnen Sie unter der <a href="/week.html">Wochenplanung</a> diese Programm Wochentagen zuweisen. Neue Programm k&ouml;nnen &uuml;ber die <a href="/programs.html.tx">Programm Verwaltung</a> hinzugef&uuml;gt werden.') }
 : override content -> {
 
+<div class="index_functions">
+  <a class="index_function week_link" href="/programs.html">
+    <span class="index_function_badge">+</span>
+    <div>Programme verwalten</div>
+  </a>
+  <a class="index_function week_link" href="/week.html">
+    <span class="index_function_badge">+</span>
+    <div>Zur Wochenplanung</div>
+  </a>
+</div>
+
 <div id="programpicker"></div>
 <div class="daysvgbox">
   <div class="percentbar">
@@ -16,17 +27,6 @@
 <div id="pathedit" style="margin-left:auto;margin-right:auto"></div>
 <div id="markeredit" style="height:100px"></div>
 <div class="form noautoload" id="programplan"></div>
-
-<div class="index_functions">
-  <a class="index_function week_link" href="/programs.html">
-    <span class="index_function_badge">+</span>
-    <div>Programme verwalten</div>
-  </a>
-  <a class="index_function week_link" href="/week.html">
-    <span class="index_function_badge">+</span>
-    <div>Zur Wochenplanung</div>
-  </a>
-</div>
 
 : }
 : override postjs -> {

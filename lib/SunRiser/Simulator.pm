@@ -404,6 +404,7 @@ sub _web_serve_file {
     'Content-Type' => $content_type,
     'Content-Length' => $stat[7],
     'Last-Modified'  => HTTP::Date::time2str( $stat[9] ),
+    'Access-Control-Allow-Origin' => '*',
     @headers
   ], $fh ];
 }
@@ -412,8 +413,7 @@ sub _web_backup {
   my ( $self, $env ) = @_;
   my %values;
   if ($self->demo) {
-    %values = defined $env->{'psgix.session'}->{config}
-      ? %{$env->{'psgix.session'}->{config}} : ();
+    %values = defined $env->{'psgix.session'}->{config} ? %{$env->{'psgix.session'}->{config}} : ();
   } else {
     return $self->_web_servererror; # TODO
   }

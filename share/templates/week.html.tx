@@ -44,7 +44,7 @@ $('body').on('sr_config',function(){
         $.each(weekplanner_pwms,function(i,v){
           fields.push({
             name: "weekplanner#programs#" + v,
-            label: "LED #" + v + " Wochenplanung",
+            label: "LED #" + v,
             type: "weekprograms",
             options: programs,
             data: { pwm_id: v },

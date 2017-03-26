@@ -5,10 +5,10 @@
 
 <hr>
 
-<h3>Seit Firmware v0.820:</h3>
+<h3>Seit Firmware v0.830:</h3>
 
 <div>
-  Fehlerkorrektur bei der Abarbeitung der Wendepunkte in der <a href="/program.html">Programmplanung</a>. Korrektur eines Fehlers in der Berechnung von <a href="/rain.html">Regenfronten</a>.
+  Fehlerkorrektur bei der Abarbeitung der Wendepunkte in der <a href="/program.html">Programmplanung</a>. Korrektur eines Fehlers in der Berechnung von <a href="/rain.html">Regenfronten</a>. Weitere Verbesserung zur Netzwerkstabilit&auml;t. Massive Optimierung der Methode wie unsere Dateien vom Web Interface geladen werden, dadurch wird das Interface wesentlich fl&uuml;ssiger, soweit dieses Zugang zum Internet hat. Wir haben die Darstellung bei der <a href="/week.html">Wochenplanung</a> ver&auml;ndert f&uuml;r eine Benutzbarkeit auch auf kleinen Mobiltelefonen.
 </div>
 
 <br><hr>

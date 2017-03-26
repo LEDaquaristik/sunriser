@@ -53,8 +53,7 @@ body{
     -moz-animation: BackAnim 175s ease infinite;
     animation: BackAnim 175s linear infinite;
   -------------------------------------------------- */  
-  background:url("/img/background.jpg") no-repeat fixed center center / 150% 150% #145868;
-  transform-origin: 50% 400px 0px;
+  background: url("http://srdemo.ledaquaristik.de/img/background.jpg") no-repeat fixed center center / 150% 150% #145868;
 }
 @-o-keyframes BackAnim {
     0%{background-position:0% 50%}

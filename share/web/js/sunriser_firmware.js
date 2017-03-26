@@ -46,7 +46,9 @@ function install_firmware(bytesarray) {
       sr_screenblock('<div>Warte auf Neustart</div><div>Bitte das Ger&auml;t NICHT abschalten!!!</div><div>(ca. 1 Minute)</div>');
       var target = window.location.href.replace('firmware','upgraded');
       target = target.replace('expert','upgraded');
-      wait_for_sunriser(target);
+      setTimeout(function(){
+        wait_for_sunriser(target);
+      }, 3000);
     },
   };
   $.ajax(call_options);
@@ -88,7 +90,9 @@ function install_factory(bytesarray) {
     success: function(data,status,xhr){
       sr_screenblock('<div>Warte auf Neustart</div><div>Bitte das Ger&auml;t NICHT abschalten!!!</div><div>(ca. 1 Minute)</div>');
       var target = window.location.href.replace('expert','index');
-      wait_for_sunriser(target);
+      setTimeout(function(){
+        wait_for_sunriser(target);
+      }, 3000);
     },
   };
   $.ajax(call_options);

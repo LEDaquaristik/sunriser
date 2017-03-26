@@ -44,6 +44,24 @@ var program_names = {};
 var program_colors = {};
 var weekdays = ['Alltag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Sonntag'];
 var weekdays_table_sorting = [0,4,1,5,2,6,3,7];
+var html_sr8_version;
+
+function isChrome() {
+  var isChromium = window.chrome,
+    winNav = window.navigator,
+    vendorName = winNav.vendor,
+    isOpera = winNav.userAgent.indexOf("OPR") > -1,
+    isIEedge = winNav.userAgent.indexOf("Edge") > -1,
+    isIOSChrome = winNav.userAgent.match("CriOS");
+
+  if(isIOSChrome){
+    return true;
+  } else if(isChromium !== null && isChromium !== undefined && vendorName === "Google Inc." && isOpera == false && isIEedge == false) {
+    return true;
+  } else { 
+    return false;
+  }
+}
 
 function daymin_to_time(daymin) {
   var hour = Math.floor(daymin / 60);
@@ -57,7 +75,27 @@ $(function(){
 
   moment.locale('de');
 
-  sr_screenunblock();
+  html_sr8_version = $('meta[name=sr8-version]').attr('content');
+
+  WebFont.load({
+    custom: {
+      families: ['IcoMoon', 'Open Sans', 'DIN1451'],
+      urls: ['/fonts.css']
+    },
+    active: function() {
+      sr_screenunblock();      
+    },
+    fontinactive: function(familyName, fvd) {
+      sr_screenblock('<div>Fehler beim Laden der Schriftarten!</div><div>Bitte die Seite neu laden oder anderen Browser verwenden!</div>');
+    },
+    timeout: 15000
+  });
+
+  $('#browser_check').each(function(){
+    if (!isChrome()) {
+      $(this).html('<div class="warnarea">Achtung! Dieses Interface ist f&uuml;r die Benutzung mit <a href="https://www.google.com/chrome">Google Chrome</a> optimiert!</div>');
+    }
+  });
 
   // All external links in new window
   $("a[href^='http']").not('.noblank').each(function(){
@@ -341,6 +379,7 @@ $('body').on('sr_config_init',function(){
   // }
 
 });
+
 
 $('body').on('sr_config',function(){
 

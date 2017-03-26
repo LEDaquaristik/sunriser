@@ -1,0 +1,32 @@
+
+@font-face {
+  font-family: 'IcoMoon';
+  src: url('/fonts/icomoon.eot?<: $versioned || "dev" :>');
+  src: local('☺'), url('../fonts/icomoon.eot?<: $versioned || "dev" :>#iefix') format('embedded-opentype'),
+    url('/fonts/icomoon.woff?<: $versioned || "dev" :>') format('woff'),
+    url('/fonts/icomoon.ttf?<: $versioned || "dev" :>') format('truetype'),
+    url('/fonts/icomoon.svg?<: $versioned || "dev" :>#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url('/fonts/OpenSans-Regular-webfont.eot?<: $versioned || "dev" :>');
+  src: local('☺'), url('/fonts/OpenSans-Regular-webfont.eot?<: $versioned || "dev" :>#iefix') format('embedded-opentype'),
+    url('/fonts/OpenSans-Regular-webfont.woff?<: $versioned || "dev" :>') format('woff'),
+    url('/fonts/OpenSans-Regular-webfont.ttf?<: $versioned || "dev" :>') format('truetype'),
+    url('/fonts/OpenSans-Regular-webfont.svg?<: $versioned || "dev" :>#open_sansregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DIN1451';
+  src: url('/fonts/din_1451_std_mittelschrift.eot?<: $versioned || "dev" :>');
+  src: local('☺'), url('/fonts/din_1451_std_mittelschrift.woff?<: $versioned || "dev" :>') format('woff'),
+                  url('/fonts/din_1451_std_mittelschrift.ttf?<: $versioned || "dev" :>') format('truetype'),
+                  url('/fonts/din_1451_std_mittelschrift.svg?<: $versioned || "dev" :>') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}

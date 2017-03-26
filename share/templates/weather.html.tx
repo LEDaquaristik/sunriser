@@ -108,7 +108,7 @@ $('body').on('sr_config',function(){
             $('#weather_setup_' + v.value + '_name').each(function(){
               var namefield = $(this);
               $(namefield).parent().each(function(){
-                $(this).append('<div style="text-align:right"><span style="background-color:#3e8cc0;color:white;padding:5pxsssssssssss" id="weather_setup_' + weather_id + '_delete">Profil entfernen</span></div>');
+                $(this).append('<div style="text-align:left"><span style="background-color:#3e8cc0;color:white;margin:3px;padding:3px" id="weather_setup_' + weather_id + '_delete">Profil entfernen</span></div>');
                 $('#weather_setup_' + weather_id + '_delete').click(function(){
                   if (confirm("Wollen Sie Ihr Wetter Profil '" + namefield.val() + "' entfernen?") == true) {
                     var data = {};

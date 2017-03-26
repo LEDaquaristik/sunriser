@@ -47,7 +47,7 @@
 </div>
 <hr>
 <h2 class="hiddencontent" id="rainlength">Wie lange kann eine Regensimulation andauern? Handelt es sich um einen tats&auml;chlichen Regentag?</h2>
-<div class="js-hide" id="rainlength">
+<div class="js-hide" id="rainlengthcontent">
   <p>Regen wird genauso wie Gewitter in Fronten gehandelt, d.h. es wird zuf&auml;llig zwischendurch eine Regenfront definiert, da der Regen aber versucht eine bestimmte % an Regenanteil pro Tag abzuarbeiten ist eine Beeinflussung hier durch den User (derzeit) nicht m&ouml;glich. Beachten Sie, dass der Regen immer in Kombination mit dem Gewitter auftritt, soweit ein Gewitter eingestellt ist.</p>
   <br>
 </div>
