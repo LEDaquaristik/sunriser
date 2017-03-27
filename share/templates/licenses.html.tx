@@ -346,19 +346,19 @@ Patched for Chan FatFs by Torsten Raudssus, &lt;torsten@raudss.us&gt;
 <h2>Microcontroller | <a href="http://elm-chan.org/fsw/ff/00index_e.html">ChaN FatFs</a></h2>
 <hr>
 <pre>
-AGREEMENTS
-
- FatFs module is an open source software to implement FAT file system to
- small embedded systems. This is a free software and is opened for education,
- research and commercial developments under license policy of following trems.
-
-  Copyright (C) 2014, ChaN, all right reserved.
-
- * The FatFs module is a free software and there is NO WARRANTY.
- * No restriction on use. You can use, modify and redistribute it for
-   personal, non-profit or commercial product UNDER YOUR RESPONSIBILITY.
- * Redistributions of source code must retain the above copyright notice.
-
+/ Copyright (C) 2017, ChaN, all right reserved.
+/
+/ FatFs module is an open source software. Redistribution and use of FatFs in
+/ source and binary forms, with or without modification, are permitted provided
+/ that the following condition is met:
+/
+/ 1. Redistributions of source code must retain the above copyright notice,
+/    this condition and the following disclaimer.
+/
+/ This software is provided by the copyright holder and contributors "AS IS"
+/ and any warranties related to this software are DISCLAIMED.
+/ The copyright owner or contributors be NOT LIABLE for any damages caused
+/ by use of this software.
 </pre>
 
 <hr>

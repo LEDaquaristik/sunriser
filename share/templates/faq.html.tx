@@ -28,6 +28,12 @@
   <br>
 </div>
 <hr>
+<h2 class="hiddencontent" id="flicker">Meine LED flackern manchmal unkontrolliert herum! Was tun?</h2>
+<div class="js-hide" id="flickercontent">
+  <p>Dies wird h&ouml;chstwahrscheinlich die <a href="/rain.html">Regen-</a> oder <a href="/clouds.html">Wolken-</a>Simulation sein. Je nachdem wie hoch der derzeitige Wert der Tages oder Wochenplanung ist, kann dies zu einem sehr auff&auml;lligen Flackern f&uuml;hren was einige Kunden schon als Fehlfunktion gemeldet haben. Bitte beim abschalten auch beachten das die Einstellung getrennt f&uuml;r jedes Profil vorhanden ist, Sie m&uuml;ssen also darauf achten die Simulation auch in allen Profilen abzuschalten.</p>
+  <br>
+</div>
+<hr>
 <h2 class="hiddencontent" id="cloudraindays">Wie verh&auml;lt es sich mit den Wolkentagen und Regentagen und der Wahrscheinlichkeit?</h2>
 <div class="js-hide" id="cloudraindayscontent">
   <p>Die Wahrscheinlichkeit bezieht sich auf den kompletten Tag, d.h. um den ganzen Tag Wolken (oder Regen) zu sehen, m&uuml;ssen Sie die Wahrscheinlichkeit auf 100% setzen. Falls die Wahrscheinlichkeit z.B. auf 50% gesetzt wird, wird vom SunRiser sprichw&ouml;rtlich jeden Tag eine M&uuml;nze geworfen und bei Kopf gibt es Wolken. Es kann immernoch sein das die Menge an Wolken oder Regen an diesen Tagen sehr niedrig bis fast gar nicht vorhanden sein kann.</p>
