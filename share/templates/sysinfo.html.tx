@@ -17,7 +17,11 @@
 <table>
   <% $.each(info,function(k,v){ %>
     <tr>
-      <th style="text-align:left"><%=k%></th><td><%=v%></td>
+      <% if (!v) { %>
+        <th style="text-align:left" colspan="2"><%=k%></th>
+      <% } else { %>
+        <th style="text-align:left"><%=k%></th><td><%=v%></td>
+      <% } %>
     </tr>
   <% }); %>
 </table>
@@ -49,7 +53,7 @@ function sr_sysinfo_done() {
     info["Firmware Autor"] = firmware_info.author;
     info["Experimentelle Firmware"] = firmware_info.experimental ? "Ja" : "Nein";
   } else {
-    info["Keine Firmware Informationen!"] = "";
+    info['<div class="warnarea">Keine Firmware Informationen!</div>'] = "";
   }
   if (bootloader_m) {
     info["Bootloader Version"] = bootloader_info.version;
@@ -58,7 +62,7 @@ function sr_sysinfo_done() {
       var h = m.toString(16); return h.length == 1 ? '0' + h : h;
     }).join(":");
   } else {
-    info["Keine Bootloader Informationen!"] = "";
+    info['<div class="warnarea">Keine Bootloader Informationen!</div>'] = "";
   }
   $('#sysinfo').html(tmpl('sysinfo_tmpl',{ model: sr_config.model + " (" + sr_config.model_id + ")", info: info }));
 }

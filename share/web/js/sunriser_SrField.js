@@ -110,7 +110,6 @@ var SrField_Text = SrField.extend({
 
 var SrField_Integer_Transform = function() {
   var value = this.html_value();
-  console.log(value);
   if (value.length == 0 && !this.required) {
     this.value = undefined;
   } else {

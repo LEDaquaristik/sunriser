@@ -5,10 +5,10 @@
 
 <hr>
 
-<h3>Seit Firmware v0.831:</h3>
+<h3>Seit Firmware v0.840:</h3>
 
 <div>
-  Externe Bibiliothek f&uuml;r den Zugriff auf die SD-Karte erneuert. <a href="/sysinfo.html">System Informationen</a> leicht umgestellt.
+  Der SunRiser reagiert nun auf das ziehen vom Netzwerkkabel und versucht nach neuer Verbindung auch erneut per DHCP eine IP zu bekommen. Fehler im Netzwerk korrigiert, der daf&uuml;r sorgte das nach langem Betrieb ein Neustart passierte. Externe Bibliothek f&uuml;r den Zugriff auf die SD-Karte erneuert. <a href="/sysinfo.html">System Informationen</a> leicht umgestellt. Das System wird nun nicht mehr jedesmal die Konfiguration neu laden, wenn es am Anfang beim hochfahren oder sp&auml;ter eine neue Uhrzeit empf&auml;ngt. Dies verhindert das z.B. beim einschalten ein Regen startet und dann doch beim Neuladen der Konfiguration wieder abgeschaltet wird. Die Wochenplanung wurde optimiert.
 </div>
 
 <br><hr>

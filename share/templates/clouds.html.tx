@@ -7,4 +7,6 @@
 
 <div class="form" id="clouds"></div>
 
+<: include base::flickerwarn :>
+
 : }

@@ -909,6 +909,9 @@ tbody tr:first-child{
   transition-duration:0.2s;
   overflow:hidden;
 }
+.warnarea a{
+  color:#ffffff;
+}
 .warnarea.closethewarnarea{
   height:0px;
   padding:0 25px;

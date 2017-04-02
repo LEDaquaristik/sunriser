@@ -86,9 +86,9 @@ $(function(){
       sr_screenunblock();      
     },
     fontinactive: function(familyName, fvd) {
-      sr_screenblock('<div>Fehler beim Laden der Schriftarten!</div><div>Bitte die Seite neu laden oder anderen Browser verwenden!</div>');
+      sr_screenblock('<div>Fehler beim Laden der Schriftarten!</div><div>Bitte die Seite (ggf. mehrmals) neu laden oder anderen Browser verwenden!</div><div>Dieses Interface ist f&uuml;r die Benutzung mit <a href="https://www.google.com/chrome">Google Chrome</a> optimiert!</div>');
     },
-    timeout: 15000
+    timeout: 10000
   });
 
   $('#browser_check').each(function(){

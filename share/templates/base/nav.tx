@@ -61,7 +61,7 @@
       </li>
       <li class="second-level">
         <a href="/weather_info.html">
-          <i class="fa fa-info-circle"></i>Status
+          <i class="fa fa-info-circle"></i>Wetter Status
         </a>
       </li>
     </ul>
