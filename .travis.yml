@@ -4,7 +4,7 @@ before_install:
   - rm .travis.yml
   - git config --global user.name "Dist Zilla Plugin TravisCI"
   - git config --global user.email $HOSTNAME":not-for-mail@travis-ci.org"
-  - cpanm --quiet --notest CDB::TinyCDB
+  - cpanm --quiet --force CDB::TinyCDB
 install:
   - cpanm  --quiet  --notest --skip-installed Dist::Zilla
   - dzil authordeps | grep -ve '^\W' | xargs -n 5 -P 10 cpanm  --quiet   --notest  --skip-installed
