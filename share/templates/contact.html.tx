@@ -17,7 +17,7 @@
       <td class="contactlabel">Adresse</td>
       <td>
         <span itemprop="name">
-          <a href="http://www.ledaquaristik.de/">LEDaquaristik UG (haftungsbeschr&auml;nkt)</a>
+          <a href="https://www.ledaquaristik.de/">LEDaquaristik UG (haftungsbeschr&auml;nkt)</a>
         </span>
         <br>
         <span itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress">
@@ -58,12 +58,16 @@
     <tr>
       <td class="contactlabel">E-Mail</td>
       <td>
-        <a href="mailto:sunriser@ledaquaristik.de?subject=[SunRiser%208]" rel="nofollow"><span itemprop="email">SunRiser@LEDaquaristik.de</span></a><br>
+        <a href="mailto:sunriser@ledaquaristik.de?subject=[SunRiser%208]" target="_blank" rel="nofollow"><span itemprop="email">SunRiser@LEDaquaristik.de</span></a><br>
         <span class="error">(Bitte h&auml;ngen Sie auch eine <a href="/backup.html">Sicherung</a> Ihrer Konfiguration an die E-Mail)</span>
       </td>
     </tr>
   </table>
 
 </div>
+
+<br>
+
+<div class="warnarea">Falls Ihr SunRiser seine Konfiguration verliert, oder diese gar nicht erst speichert, ist dies auf eine defekte SD-Karte zur&uuml;ckzuf&uuml;hren. Bitte kontaktieren Sie in dem Fall <a href="mailto:support@ledaquaristik.de?subject=[SunRiser%208]%20Defekte%20SD-Karte" target="_blank" rel="nofollow">support@LEDaquaristik.de</a> zwecks Austausch. Trotz mehrfachen Funktionstests vor Versand ist ein derartiger Fehler der SD-Karte leider nicht g&auml;nzlich zu vermeiden.</div>
 
 : }

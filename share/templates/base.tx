@@ -1,7 +1,7 @@
 <!DOCTYPE html>
   <html lang="de">
     <head>
-      <title><: $title ? $title ~ " | " : "" :>SunRiser von LEDaquaristik.de</title>
+      <title><: $title ? $title ~ " | " : "" :>SunRiser 8 von LEDaquaristik.de</title>
       <script type="text/javascript">
         window.loaded = false;
         var sr_demo = false;
@@ -16,6 +16,7 @@
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
       <meta name="viewport" content="initial-scale=1.0, maximum-scale=3, width=device-width" />
       <base href="/">
+      <link rel="canonical" href="http://srdemo.ledaquaristik.de/<: $file :>" />
       <: if $versioned { :>
         <link href="/css/all-<: $versioned :>.css" charset="UTF-8" type="text/css" rel="stylesheet">
       <: } else { :>

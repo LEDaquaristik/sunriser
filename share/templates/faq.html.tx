@@ -72,6 +72,12 @@
   <br>
 </div>
 <hr>
+<h2 class="hiddencontent" id="sdbroken">Mein Ger&auml;t verliert st&auml;ndig die Einstellungen! Was stimmt hier nicht?</h2>
+<div class="js-hide" id="sdbrokencontent">
+  <p>Falls Ihr SunRiser seine Konfiguration verliert, oder diese gar nicht erst speichert, ist dies auf eine defekte SD-Karte zur&uuml;ckzuf&uuml;hren. Bitte kontaktieren Sie in dem Fall <a href="mailto:support@ledaquaristik.de?subject=[SunRiser%208]%20Defekte%20SD-Karte" target="_blank" rel="nofollow">support@LEDaquaristik.de</a> zwecks Austausch. Trotz mehrfachen Funktionstests vor Versand ist ein derartiger Fehler der SD-Karte leider nicht g&auml;nzlich zu vermeiden.</p>
+  <br>
+</div>
+<hr>
 <h2 class="hiddencontent" id="lightbug">Lichteinstellungen unterhalb 30% werden nicht ber&uuml;cksichtigt, was ist zu tun?</h2>
 <div class="js-hide" id="lightbugcontent">
   <p>Diese Problematik kann bei Ger&auml;ten mit Baujahr 2016 auftreten. Bitte aktivieren Sie unter den <a href="/expert.html">Experten Einstellungen</a> den Men&uuml;punkt 'Erh&ouml;hter Minimumwert'</p>
