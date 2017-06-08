@@ -1,4 +1,4 @@
-: cascade base { title => "System Einstellungen", nav => "setup", help => r("Bestimmte Zeitzonen benutzen keine Sommerzeit, dort wird diese auch ausgeblendet und im SunRiser auch nicht benutzt.") }
+: cascade base { title => "System Einstellungen", nav => "setup", help => r("Bestimmte Zeitzonen benutzen keine Sommerzeit, dort wird diese auch ausgeblendet und im SunRiser auch nicht benutzt. Durch die Aktivierung der Experten Funktionen werden alle Konfigurationsoptionen auf den Seiten aktiviert und das <a href='/expert.html'>Experten Men&uuml;</a> zum Seiten-Men&uuml; hinzugef&uuml;gt. Bitte beachten das einige der Experten Funktionen die Funktionalit&auml;t oder Erreichbarkeit beeintr&auml;chtigen k&ouml;nnte!") }
 : override content -> {
 
 <div class="index_functions">

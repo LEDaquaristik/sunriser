@@ -121,18 +121,31 @@ $('body').on('sr_config',function(){
           dayplanner_pwms.push(i);
         }
       }
+      var weekplanner_programs = new Array();
+      $.each(programs,function(i,v){
+        if (v.value > 0) {
+          weekplanner_programs.push(v.value);
+        }
+      });
       var fields = [{
         name: "higherminimum",
         label: "Erh&ouml;hter Minimumwert"
       },{
         name: "enforcenet",
-        label: "Erzwinge Netzwerkverbindung"
+        label: "Erzwinge Netzwerkverbindung (bitte deaktivieren)"
       }];
       $.each(dayplanner_pwms,function(i,pwm){
         fields.push({
           name: "dayplanner#marker#" + pwm,
           transform_value: function(value) { return parseInt(value); },
-          label: "Tagesplanung LED " + pwm
+          label: "Tagesplanung LED #" + pwm
+        });
+      });
+      $.each(weekplanner_programs,function(i,program){
+        fields.push({
+          name: "programs#setup#" + program + "#marker",
+          transform_value: function(value) { return parseInt(value); },
+          label: "Wochenplanung Programm #" + program
         });
       });
       if (fields.length) {

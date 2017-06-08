@@ -20,6 +20,12 @@
   <br>
 </div>
 <hr>
+<h2 class="hiddencontent" id="homesystem">Ich w&uuml;rde gerne den SunRiser in meine Haussteuerung einbinden, ist dies m&ouml;glich?</h2>
+<div class="js-hide" id="homesystemcontent">
+  <p>Derzeit haben wir nur eine <a href="https://en.wikipedia.org/wiki/MessagePack">MessagePack</a> basierte HTTP-API am Ger&auml;t, welche leider von keiner (uns bekannten) Haussteuerung unterst&uuml;tzt wird. In naher Zukunft wollen wir hier eine GET-Parameter basierte HTTP-API anbieten die somit von mehr Anlagen unterst&uuml;tzt werden kann. Ein weiteres Problem ist hier die Form der Steuerung, weil wir derzeit hier noch nicht im vollen Umfang wissen was Kunden sich hier als steuerbare Funktionen w&uuml;nschen bzw. welche Konzepte in die Haussteuerungskonzepte hineinpassen. Wir werden Sie auf dem laufenden halten und eine aktiv hinzugef&uuml;gte Unterst&uuml;tzung auch in unseren Update Informationen erw&auml;hnen.</p>
+  <br>
+</div>
+<hr>
 <h2 class="hiddencontent" id="moonday">Eigentlich sollte laut Tagesplanung die LED aus sein, aber trotzdem leuchtet sie, was passiert da?</h2>
 <div class="js-hide" id="moondaycontent">
   <p>Wenn Sie den Mond aktivieren, wird dieser gem&auml;&szlig; der Realit&auml;t leuchten, dies kann auch tags&uuml;ber sein. Dies kann nat&uuml;rlich ein ungew&uuml;nschter Effekt sein. Am besten nutzen Sie f&uuml;r die Mondsimulation eine getrennte LED. Auf <a href="http://www.mondverlauf.de/#/51.16,6.44,5/2015.09.05/08:00/1">http://www.mondverlauf.de/</a> kann nachgeguckt werden, wann der Mond auf- und absteigt, in einer der n&auml;chsten Versionen werden Sie die GPS Koordination f&uuml;r die Berechung selber bestimmen k&ouml;nnen.</p>
@@ -61,6 +67,12 @@
 <h2 class="hiddencontent" id="cloudvsrain">Worin unterscheiden sich Regen- und Wolkensimulation?</h2>
 <div class="js-hide" id="cloudvsraincontent">
   <p>Die Regen Simulation und die Wolken Simulation unterscheiden sich prim&auml;r in der Gemeinsamkeit und in der Dauer der Helligkeits&auml;nderungen. Ein Regentropfen ist eine kurze Verdunklung, w&auml;hrend eine Wolke auch &uuml;ber einen l&auml;ngeren Zeitraum verdunkeln kann. Auch sind bei Wolken alle LED zusammengeschaltet. Wenn 3-4 LED-Leisten der Wolkensimulation zugeordnet sind, dann werden diese alle gemeinsam dunkler. Bei Regen hingegen produzieren alle LED-Leisten eigenst&auml;ndig Regentropfen, um so das Bild eines „chaotischen“ Regens zu unterst&uuml;tzen.</p>
+  <br>
+</div>
+<hr>
+<h2 class="hiddencontent" id="copymarkers">Kann ich ein Programm der Wochenplanung, bzw. eine Tagesplanung auch kopieren?</h2>
+<div class="js-hide" id="copymarkerscontent">
+  <p>Im <a href="/expert.html">Experten Men&uuml;</a> haben wir eine Funktion zur Verf&uuml;gung gestellt die Ihnen erlaubt zwischen den Programmen der Wochenplanung, bzw. der Tagesplanungen hin und her zu kopieren. Die Markierungen im Programm, bzw. der Tagesplanung, werden hier in kommaseparierte Listen umgesetzt mit jeweils Tagesminute und Leistung im Wechsel. Einfach von einem Feld zu einem anderen kopieren. Sie k&ouml;nnen hier auch direkt die Werte editieren, achten Sie nur darauf das die Tagesminute maximal 1439 und die Leistung maximal 100 betragen kann.</p>
   <br>
 </div>
 <hr>

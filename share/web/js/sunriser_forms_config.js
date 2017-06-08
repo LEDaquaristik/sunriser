@@ -101,7 +101,7 @@ var sr_forms = {
     },{
       name: "nofinder", label: "SunRiser Finder deaktivieren"
     },{
-      name: "nomdns", label: "mdns deaktivieren"
+      name: "nomdns", label: "mdns deaktivieren (wird bald abgeschaltet)"
     //   name: "indexfile", label: "Startseite nach Anmeldung"
     }],
     loaded: function(){

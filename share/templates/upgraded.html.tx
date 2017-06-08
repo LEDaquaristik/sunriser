@@ -3,12 +3,14 @@
 
 <h2 class="upgraded">Die Firmware wurde erfolgreich erneuert!</h2>
 
+<div class="warnarea">Achtung! In einer der zuk&uuml;nftigen Versionen werden wir das mdns Feature abschalten. Dieses Feature macht es z.B. m&ouml;glich das Ger&auml;t &uuml;ber <i>sunriser.local</i> zu erreichen. Bitte benutzen Sie den <a href="http://sunriser.ledaquaristik.de/">SunRiser Finder</a> oder z.B. falls Sie eine FritzBox haben, einfach <a href="http://sunriser.fritz.box/">sunriser.fritz.box</a> um Ihr Ger&auml;t zu finden.</div>
+
 <hr>
 
-<h3>Seit Firmware v0.84x:</h3>
+<h3>Seit Firmware v0.845:</h3>
 
 <div>
-  Korrektur der Mond Simulation. Weitere Änderungen am Netzwerk.
+  Korrektur eines Fehler im SunRiser Finder, der Auswirkungen auf die Netzwerk Funktionalit&auml;t hatte. Korrektur an der Mondsimulation, mit Hilfe vom User Wolfgang Breyha, und an der Regenfront Abarbeitung. Wir empfehlen dringend nach dem Aufspielen und dem Testen der Firmware, diese auch als Werkszustand Firmware zu installieren im <a href="/expert.html">Experten Men&uuml;</a>!
 </div>
 
 <br><hr>

@@ -212,19 +212,13 @@
       <p id="todo">Hier mal eine kleine Auflistung aller zuk&uuml;nftiger Funktionen die wir schon auf unserem Radar haben (Sortierung ist nach Priorit&auml;t, dies ist aber nicht in Stein gemeiselt):</p>
       <ul>
         <li>
+          Die Option den original Sonnenaufgang und Sonnenuntergang zu simulieren
+        </li>
+        <li>
           GET Parameter basierte API
         </li>
         <li>
           Schnelltasten f&uuml;r Standardfunktionen wie Kehrwoche (Maximale Leistung f&uuml;r eine Reinigungsphase) oder Mittagspause (Dimmen alle Lampen zu einem bestimmten Wert f&uuml;r einen bestimmten definierten Zeitraum)
-        </li>
-        <li>
-          Genaueres Programm Management f&uuml;r Tagesverlauf und Wetter Profile (Verwaltung, Import, Export, Kopieren und verschiedene Programme für Saisons)
-        </li>
-        <li>
-          Die Option den original Sonnenaufgang und Sonnenuntergang zu simulieren
-        </li>
-        <li>
-          Gammakorrektur optional machbar (und langfristig auch regulierbar)
         </li>
         <li>
           Passwort Schutz f&uuml;r das Administrations Interface (Bitte sagen Sie uns Bescheid, wenn diese Funktion von Ihnen ben&ouml;tigt wird)
@@ -233,13 +227,19 @@
           Cloud Speicherung der Konfiguration. Dadurch k&ouml;nnen Sie dann jederzeit auf jeden alten Stand der Konfiguration zur&uuml;ckgehen, soweit Ihr Computer mit dem Sie auf den <i>SunRiser</i> zugreifen mit dem Internet verbunden ist (der <i>SunRiser</i> selber muss hierf&uuml;r nicht mit dem Internet verbunden sein)
         </li>
         <li>
-          Eine Tagesverlauf Preview, die erm&ouml;glicht das geplante Programm vor dem Speichern mal in Kurzfassung zu sehen, 24 Stunden in 24 Sekunden (nat&uuml;rlich einstellbar)
+          Eine Tagesverlauf bzw. Wochenplanung Preview, die erm&ouml;glicht das geplante Programm vor dem Speichern mal in Kurzfassung zu sehen, quasi Stunden in Sekunden (nat&uuml;rlich einstellbar)
         </li>
         <li>
-          Mehr Optionen f&uuml;r die Wetter Profile, inklusive eine Preview Option um alles vorher mehr anschauen zu k&ouml;nnen.
+          Eine Preview Option f&uuml;r die Wetterfunktionen
+        </li>
+        <li>
+          Tieferes Programm Management f&uuml;r saisonbasierte Wetter und Verlaufsprogramme
         </li>
         <li>
           Unterst&uuml;tzung der <a href="http://www.amazon.de/EnerGenie-EG-PMS2-LAN-IP-Steckdosenleiste-Überspannungsschutz-LAN-Schnittstelle/dp/B0099AHPQ4/">GemBird LAN IP Steckdosenleiste</a> als Teil der Tagesplanung um Ein/Ausschalten von weiterer Peripherie zu kontrollieren
+        </li>
+        <li>
+          Gammakorrektur abschaltbar (und langfristig auch regulierbar)
         </li>
       </ul>
       <br>

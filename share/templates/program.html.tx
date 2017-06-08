@@ -634,18 +634,18 @@ var SrPath = Class.extend({
 // First execute stuff when the form is loaded
 $('body').on('sr_config',function(){
 
-  var dayplanner_programs = new Array();
+  var weekplanner_programs = new Array();
   $.each(programs,function(i,v){
     if (v.value > 0) {
-      dayplanner_programs.push(v.value);      
+      weekplanner_programs.push(v.value);
     }
   });
-  if (!dayplanner_programs.length) {
+  if (!weekplanner_programs.length) {
     window.location.href = window.location.href.replace("program.html","programs.html");
   } else {
     var fields = new Array();
     var expert_fields = new Array();
-    $.each(dayplanner_programs,function(i,program){
+    $.each(weekplanner_programs,function(i,program){
       fields.push({
         name: "programs#setup#" + program + "#marker",
         transform_value: function(value) { return parseInt(value); },
@@ -670,7 +670,7 @@ $('body').on('sr_config',function(){
       loaded: function(){
         var markers = {};
         var values = this.values();
-        $.each(dayplanner_programs,function(i,program){
+        $.each(weekplanner_programs,function(i,program){
           markers[program] = [];
           v = values["programs#setup#" + program + "#marker"];
           if (v) {
