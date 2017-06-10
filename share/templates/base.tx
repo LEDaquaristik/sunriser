@@ -8,7 +8,7 @@
         <: if $demo { :>
           sr_demo = true;
         <: } :>
-        setTimeout(function(){ if (!window.loaded) { window.location.href = window.location.href; }}, 15000);
+        setTimeout(function(){ if (!window.loaded) { window.location.href = window.location.href; }}, 6000);
       </script>
       <!-- META -->
       <meta charset="utf-8">

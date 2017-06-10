@@ -357,6 +357,12 @@ $('body').on('sr_config_init',function(){
       get_weather_setup_id = first_weather_setup_id;
     }
 
+    $('#weathertabs').each(function(){
+      if (!get_weather_setup_id) {
+        window.location.href = '/weather.html';
+      }
+    });
+
     $('#weathertab' + get_weather_setup_id).css('background-color','#dddddd');
 
     $('.weather-profiled').each(function(){

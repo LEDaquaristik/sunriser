@@ -1,5 +1,5 @@
 /**
- * interact.js v1.2.3
+ * interact.js v1.2.6
  *
  * Copyright (c) 2012-2015 Taye Adeyemi <dev@taye.me>
  * Open source under the MIT License.
@@ -7,6 +7,9 @@
  */
 (function (realWindow) {
     'use strict';
+
+    // return early if there's no window to work with (eg. Node.js)
+    if (!realWindow) { return; }
 
     var // get wrapped window if using Shadow DOM polyfill
         window = (function () {
@@ -66,7 +69,7 @@
                 allowFrom     : null,
                 ignoreFrom    : null,
                 _context      : document,
-                rectChecker   : null
+                dropChecker   : null
             },
 
             drag: {
@@ -80,7 +83,7 @@
                 inertia: null,
                 autoScroll: null,
 
-                axis: 'xy',
+                axis: 'xy'
             },
 
             drop: {
@@ -101,7 +104,23 @@
                 autoScroll: null,
 
                 square: false,
-                axis: 'xy'
+                preserveAspectRatio: false,
+                axis: 'xy',
+
+                // use default margin
+                margin: NaN,
+
+                // object with props left, right, top, bottom which are
+                // true/false values to resize when the pointer is over that edge,
+                // CSS selectors to match the handles for each direction
+                // or the Elements for each handle
+                edges: null,
+
+                // a value of 'none' will limit the resize rect to a minimum of 0x0
+                // 'negate' will alow the rect to have negative width/height
+                // 'reposition' will keep the width/height positive by swapping
+                // the top and bottom edges and/or swapping the left and right edges
+                invert: 'none'
             },
 
             gesture: {
@@ -149,7 +168,9 @@
                     zeroResumeDelta  : true,  // if an action is resumed after launch, set dx/dy to 0
                     smoothEndDuration: 300    // animate to snap/restrict endOnly if there's no inertia
                 }
-            }
+            },
+
+            _holdDuration: 600
         },
 
         // Things related to autoScroll
@@ -164,20 +185,33 @@
                     container = options.container || getWindow(autoScroll.interaction.element),
                     now = new Date().getTime(),
                     // change in time in seconds
-                    dt = (now - autoScroll.prevTime) / 1000,
-                    // displacement
-                    s = options.speed * dt;
+                    dtx = (now - autoScroll.prevTimeX) / 1000,
+                    dty = (now - autoScroll.prevTimeY) / 1000,
+                    vx, vy, sx, sy;
 
-                if (s >= 1) {
+                // displacement
+                if (options.velocity) {
+                  vx = options.velocity.x;
+                  vy = options.velocity.y;
+                }
+                else {
+                  vx = vy = options.speed
+                }
+ 
+                sx = vx * dtx;
+                sy = vy * dty;
+
+                if (sx >= 1 || sy >= 1) {
                     if (isWindow(container)) {
-                        container.scrollBy(autoScroll.x * s, autoScroll.y * s);
+                        container.scrollBy(autoScroll.x * sx, autoScroll.y * sy);
                     }
                     else if (container) {
-                        container.scrollLeft += autoScroll.x * s;
-                        container.scrollTop  += autoScroll.y * s;
+                        container.scrollLeft += autoScroll.x * sx;
+                        container.scrollTop  += autoScroll.y * sy;
                     }
 
-                    autoScroll.prevTime = now;
+                    if (sx >=1) autoScroll.prevTimeX = now;
+                    if (sy >= 1) autoScroll.prevTimeY = now;
                 }
 
                 if (autoScroll.isScrolling) {
@@ -186,68 +220,17 @@
                 }
             },
 
-            edgeMove: function (event) {
-                var interaction,
-                    target,
-                    doAutoscroll = false;
-
-                for (var i = 0; i < interactions.length; i++) {
-                    interaction = interactions[i];
-
-                    if (interaction.interacting()
-                        && checkAutoScroll(interaction.target, interaction.prepared.name)) {
-
-                        target = interaction.target;
-                        doAutoscroll = true;
-                        break;
-                    }
-                }
-
-                if (!doAutoscroll) { return; }
-
-                var top,
-                    right,
-                    bottom,
-                    left,
-                    options = target.options[interaction.prepared.name].autoScroll,
-                    container = options.container || getWindow(interaction.element);
-
-                if (isWindow(container)) {
-                    left   = event.clientX < autoScroll.margin;
-                    top    = event.clientY < autoScroll.margin;
-                    right  = event.clientX > container.innerWidth  - autoScroll.margin;
-                    bottom = event.clientY > container.innerHeight - autoScroll.margin;
-                }
-                else {
-                    var rect = getElementRect(container);
-
-                    left   = event.clientX < rect.left   + autoScroll.margin;
-                    top    = event.clientY < rect.top    + autoScroll.margin;
-                    right  = event.clientX > rect.right  - autoScroll.margin;
-                    bottom = event.clientY > rect.bottom - autoScroll.margin;
-                }
-
-                autoScroll.x = (right ? 1: left? -1: 0);
-                autoScroll.y = (bottom? 1:  top? -1: 0);
-
-                if (!autoScroll.isScrolling) {
-                    // set the autoScroll properties to those of the target
-                    autoScroll.margin = options.margin;
-                    autoScroll.speed  = options.speed;
-
-                    autoScroll.start(interaction);
-                }
-            },
-
             isScrolling: false,
-            prevTime: 0,
+            prevTimeX: 0,
+            prevTimeY: 0,
 
             start: function (interaction) {
                 autoScroll.isScrolling = true;
                 cancelFrame(autoScroll.i);
 
                 autoScroll.interaction = interaction;
-                autoScroll.prevTime = new Date().getTime();
+                autoScroll.prevTimeX = new Date().getTime();
+                autoScroll.prevTimeY = new Date().getTime();
                 autoScroll.i = reqFrame(autoScroll.scroll);
             },
 
@@ -280,12 +263,32 @@
             resizex : 'e-resize',
             resizey : 's-resize',
             resizexy: 'se-resize',
+
+            resizetop        : 'n-resize',
+            resizeleft       : 'w-resize',
+            resizebottom     : 's-resize',
+            resizeright      : 'e-resize',
+            resizetopleft    : 'se-resize',
+            resizebottomright: 'se-resize',
+            resizetopright   : 'ne-resize',
+            resizebottomleft : 'ne-resize',
+
             gesture : ''
         } : {
             drag    : 'move',
             resizex : 'ew-resize',
             resizey : 'ns-resize',
             resizexy: 'nwse-resize',
+
+            resizetop        : 'ns-resize',
+            resizeleft       : 'ew-resize',
+            resizebottom     : 'ns-resize',
+            resizeright      : 'ew-resize',
+            resizetopleft    : 'nwse-resize',
+            resizebottomright: 'nwse-resize',
+            resizetopright   : 'nesw-resize',
+            resizebottomleft : 'nesw-resize',
+
             gesture : ''
         },
 
@@ -334,10 +337,9 @@
             supportsTouch &&
             navigator.userAgent.match('Presto'),
 
-        // scrolling doesn't change the result of
-        // getBoundingClientRect/getClientRects on iOS <=7 but it does on iOS 8
-        isIOS7orLower = (/iP(hone|od|ad)/.test(navigator.platform)
-                            && /OS [1-7][^\d]/.test(navigator.appVersion)),
+        // scrolling doesn't change the result of getClientRects on iOS 7
+        isIOS7 = (/iP(hone|od|ad)/.test(navigator.platform)
+                         && /OS 7[^\d]/.test(navigator.appVersion)),
 
         // prefix matchesSelector
         prefixedMatchesSelector = 'matches' in Element.prototype?
@@ -468,6 +470,7 @@
                         for (i = 0; i < len; i++) {
                             remove(element, type, target.events[type][i], Boolean(useCapture));
                         }
+                        return;
                     } else {
                         for (i = 0; i < len; i++) {
                             if (target.events[type][i] === listener) {
@@ -495,9 +498,9 @@
                 }
 
                 if (!target.typeCount) {
-                    targets.splice(elementIndex);
-                    elements.splice(elementIndex);
-                    attachedListeners.splice(elementIndex);
+                    targets.splice(elementIndex, 1);
+                    elements.splice(elementIndex, 1);
+                    attachedListeners.splice(elementIndex, 1);
                 }
             }
 
@@ -536,7 +539,7 @@
             ? o instanceof _window.Element //DOM2
             : o.nodeType === 1 && typeof o.nodeName === "string");
     }
-    function isWindow (thing) { return !!(thing && thing.Window) && (thing instanceof thing.Window); }
+    function isWindow (thing) { return thing === window || !!(thing && thing.Window) && (thing instanceof thing.Window); }
     function isDocFrag (thing) { return !!thing && thing instanceof DocumentFragment; }
     function isArray (thing) {
         return isObject(thing)
@@ -564,6 +567,29 @@
         return dest;
     }
 
+    var prefixedPropREs = {
+      webkit: /(Movement[XY]|Radius[XY]|RotationAngle|Force)$/
+    };
+
+    function pointerExtend (dest, source) {
+        for (var prop in source) {
+          var deprecated = false;
+
+          // skip deprecated prefixed properties
+          for (var vendor in prefixedPropREs) {
+            if (prop.indexOf(vendor) === 0 && prefixedPropREs[vendor].test(prop)) {
+              deprecated = true;
+              break;
+            }
+          }
+
+          if (!deprecated) {
+            dest[prop] = source[prop];
+          }
+        }
+        return dest;
+    }
+
     function copyCoords (dest, src) {
         dest.page = dest.page || {};
         dest.page.x = src.page.x;
@@ -576,15 +602,10 @@
         dest.timeStamp = src.timeStamp;
     }
 
-    function setEventXY (targetObj, pointer, interaction) {
-        if (!pointer) {
-            if (interaction.pointerIds.length > 1) {
-                pointer = touchAverage(interaction.pointers);
-            }
-            else {
-                pointer = interaction.pointers[0];
-            }
-        }
+    function setEventXY (targetObj, pointers, interaction) {
+        var pointer = (pointers.length > 1
+                       ? pointerAverage(pointers)
+                       : pointers[0]);
 
         getPageXY(pointer, tmpXY, interaction);
         targetObj.page.x = tmpXY.x;
@@ -615,6 +636,11 @@
         targetObj.client.vy    = targetObj.client.y / dt;
     }
 
+    function isNativePointer (pointer) {
+        return (pointer instanceof window.Event
+            || (supportsTouch && window.Touch && pointer instanceof window.Touch));
+    }
+
     // Get specified X/Y coords for mouse or event.touches[0]
     function getXY (type, pointer, xy) {
         xy = xy || {};
@@ -626,25 +652,11 @@
         return xy;
     }
 
-    function getPageXY (pointer, page, interaction) {
+    function getPageXY (pointer, page) {
         page = page || {};
 
-        if (pointer instanceof InteractEvent) {
-            if (/inertiastart/.test(pointer.type)) {
-                interaction = interaction || pointer.interaction;
-
-                extend(page, interaction.inertiaStatus.upCoords.page);
-
-                page.x += interaction.inertiaStatus.sx;
-                page.y += interaction.inertiaStatus.sy;
-            }
-            else {
-                page.x = pointer.pageX;
-                page.y = pointer.pageY;
-            }
-        }
         // Opera Mobile handles the viewport and scrolling oddly
-        else if (isOperaMobile) {
+        if (isOperaMobile && isNativePointer(pointer)) {
             getXY('screen', pointer, page);
 
             page.x += window.scrollX;
@@ -657,24 +669,15 @@
         return page;
     }
 
-    function getClientXY (pointer, client, interaction) {
+    function getClientXY (pointer, client) {
         client = client || {};
 
-        if (pointer instanceof InteractEvent) {
-            if (/inertiastart/.test(pointer.type)) {
-                extend(client, interaction.inertiaStatus.upCoords.client);
-
-                client.x += interaction.inertiaStatus.sx;
-                client.y += interaction.inertiaStatus.sy;
-            }
-            else {
-                client.x = pointer.clientX;
-                client.y = pointer.clientY;
-            }
+        if (isOperaMobile && isNativePointer(pointer)) {
+            // Opera Mobile handles the viewport and scrolling oddly
+            getXY('screen', pointer, client);
         }
         else {
-            // Opera Mobile handles the viewport and scrolling oddly
-            getXY(isOperaMobile? 'screen': 'client', pointer, client);
+          getXY('client', pointer, client);
         }
 
         return client;
@@ -708,22 +711,34 @@
         return rootNode.defaultView || rootNode.parentWindow || window;
     }
 
-    function getElementRect (element) {
-        var scroll = isIOS7orLower
-                ? { x: 0, y: 0 }
-                : getScrollXY(getWindow(element)),
-            clientRect = (element instanceof SVGElement)?
-                element.getBoundingClientRect():
-                element.getClientRects()[0];
+    function getElementClientRect (element) {
+        var clientRect = (element instanceof SVGElement
+                            ? element.getBoundingClientRect()
+                            : element.getClientRects()[0]);
 
         return clientRect && {
-            left  : clientRect.left   + scroll.x,
-            right : clientRect.right  + scroll.x,
-            top   : clientRect.top    + scroll.y,
-            bottom: clientRect.bottom + scroll.y,
+            left  : clientRect.left,
+            right : clientRect.right,
+            top   : clientRect.top,
+            bottom: clientRect.bottom,
             width : clientRect.width || clientRect.right - clientRect.left,
-            height: clientRect.heigh || clientRect.bottom - clientRect.top
+            height: clientRect.height || clientRect.bottom - clientRect.top
         };
+    }
+
+    function getElementRect (element) {
+        var clientRect = getElementClientRect(element);
+
+        if (!isIOS7 && clientRect) {
+            var scroll = getScrollXY(getWindow(element));
+
+            clientRect.left   += scroll.x;
+            clientRect.right  += scroll.x;
+            clientRect.top    += scroll.y;
+            clientRect.bottom += scroll.y;
+        }
+
+        return clientRect;
     }
 
     function getTouchPair (event) {
@@ -755,15 +770,27 @@
         return touches;
     }
 
-    function touchAverage (event) {
-        var touches = getTouchPair(event);
-
-        return {
-            pageX: (touches[0].pageX + touches[1].pageX) / 2,
-            pageY: (touches[0].pageY + touches[1].pageY) / 2,
-            clientX: (touches[0].clientX + touches[1].clientX) / 2,
-            clientY: (touches[0].clientY + touches[1].clientY) / 2
+    function pointerAverage (pointers) {
+        var average = {
+            pageX  : 0,
+            pageY  : 0,
+            clientX: 0,
+            clientY: 0,
+            screenX: 0,
+            screenY: 0
         };
+        var prop;
+
+        for (var i = 0; i < pointers.length; i++) {
+            for (prop in average) {
+                average[prop] += pointers[i][prop];
+            }
+        }
+        for (prop in average) {
+            average[prop] /= pointers.length;
+        }
+
+        return average;
     }
 
     function touchBBox (event) {
@@ -1145,8 +1172,9 @@
         this.prevDropElement = null; // the element at the time of checking
 
         this.prepared        = {     // action that's ready to be fired on next move event
-            name: null,
-            axis: null
+            name : null,
+            axis : null,
+            edges: null
         };
 
         this.matches         = [];   // all selectors that are matched by target element
@@ -1155,6 +1183,7 @@
         this.inertiaStatus = {
             active       : false,
             smoothEnd    : false,
+            ending       : false,
 
             startEvent: null,
             upCoords: {},
@@ -1314,7 +1343,7 @@
                                  && !testIgnore(elementInteractable, eventTarget, eventTarget)
                                  && testAllow(elementInteractable, eventTarget, eventTarget)
                                  && validateAction(
-                                     elementInteractable.getAction(pointer, this, eventTarget),
+                                     elementInteractable.getAction(pointer, event, this, eventTarget),
                                      elementInteractable));
 
             if (elementAction && !withinInteractionLimit(elementInteractable, eventTarget, elementAction)) {
@@ -1342,7 +1371,7 @@
             else {
                 interactables.forEachSelector(pushCurMatches);
 
-                if (this.validateSelector(pointer, curMatches, curMatchElements)) {
+                if (this.validateSelector(pointer, event, curMatches, curMatchElements)) {
                     this.matches = curMatches;
                     this.matchElements = curMatchElements;
 
@@ -1378,18 +1407,18 @@
                 var action;
 
                 // update pointer coords for defaultActionChecker to use
-                this.setEventXY(this.curCoords, pointer);
+                this.setEventXY(this.curCoords, [pointer]);
 
                 if (matches) {
-                    action = this.validateSelector(pointer, matches, matchElements);
+                    action = this.validateSelector(pointer, event, matches, matchElements);
                 }
                 else if (target) {
-                    action = validateAction(target.getAction(this.pointers[0], this, this.element), this.target);
+                    action = validateAction(target.getAction(this.pointers[0], event, this, this.element), this.target);
                 }
 
                 if (target && target.options.styleCursor) {
                     if (action) {
-                        target._doc.documentElement.style.cursor = actionCursors[action.name + (action.axis || '')];
+                        target._doc.documentElement.style.cursor = getActionCursor(action);
                     }
                     else {
                         target._doc.documentElement.style.cursor = '';
@@ -1426,7 +1455,7 @@
 
             this.holdTimers[pointerIndex] = setTimeout(function () {
                 that.pointerHold(events.useAttachEvent? eventCopy : pointer, eventCopy, eventTarget, curEventTarget);
-            }, 600);
+            }, defaultOptions._holdDuration);
 
             this.pointerIsDown = true;
 
@@ -1438,7 +1467,7 @@
                     // if this element is the current inertia target element
                     if (element === this.element
                         // and the prospective action is the same as the ongoing one
-                        && validateAction(this.target.getAction(pointer, this, this.element), this.target).name === this.prepared.name) {
+                        && validateAction(this.target.getAction(pointer, event, this, this.element), this.target).name === this.prepared.name) {
 
                         // stop inertia so that the next move will be a normal one
                         cancelFrame(this.inertiaStatus.i);
@@ -1473,7 +1502,8 @@
             }
 
             // update pointer coords for defaultActionChecker to use
-            this.setEventXY(this.curCoords, pointer);
+            this.setEventXY(this.curCoords, [pointer]);
+            this.downEvent = event;
 
             while (isElement(element) && !action) {
                 this.matches = [];
@@ -1481,13 +1511,14 @@
 
                 interactables.forEachSelector(pushMatches);
 
-                action = this.validateSelector(pointer, this.matches, this.matchElements);
+                action = this.validateSelector(pointer, event, this.matches, this.matchElements);
                 element = parentElement(element);
             }
 
             if (action) {
-                this.prepared.name = action.name;
-                this.prepared.axis = action.axis;
+                this.prepared.name  = action.name;
+                this.prepared.axis  = action.axis;
+                this.prepared.edges = action.edges;
 
                 this.collectEventTargets(pointer, event, eventTarget, 'down');
 
@@ -1497,8 +1528,7 @@
                 // do these now since pointerDown isn't being called from here
                 this.downTimes[pointerIndex] = new Date().getTime();
                 this.downTargets[pointerIndex] = eventTarget;
-                this.downEvent = event;
-                extend(this.downPointer, pointer);
+                pointerExtend(this.downPointer, pointer);
 
                 copyCoords(this.prevCoords, this.curCoords);
                 this.pointerWasMoved = false;
@@ -1517,21 +1547,31 @@
             }
 
             this.pointerIsDown = true;
+            this.downEvent = event;
 
             var pointerIndex = this.addPointer(pointer),
                 action;
 
-            // If it is the second touch of a multi-touch gesture, keep the target
-            // the same if a target was set by the first touch
-            // Otherwise, set the target if there is no action prepared
-            if ((this.pointerIds.length < 2 && !this.target) || !this.prepared.name) {
+            // If it is the second touch of a multi-touch gesture, keep the
+            // target the same and get a new action if a target was set by the
+            // first touch
+            if (this.pointerIds.length > 1 && this.target._element === this.element) {
+                var newAction = validateAction(forceAction || this.target.getAction(pointer, event, this, this.element), this.target);
 
+                if (withinInteractionLimit(this.target, this.element, newAction)) {
+                    action = newAction;
+                }
+
+                this.prepared.name = null;
+            }
+            // Otherwise, set the target if there is no action prepared
+            else if (!this.prepared.name) {
                 var interactable = interactables.get(curEventTarget);
 
                 if (interactable
                     && !testIgnore(interactable, curEventTarget, eventTarget)
                     && testAllow(interactable, curEventTarget, eventTarget)
-                    && (action = validateAction(forceAction || interactable.getAction(pointer, this), interactable, eventTarget))
+                    && (action = validateAction(forceAction || interactable.getAction(pointer, event, this, curEventTarget), interactable, eventTarget))
                     && withinInteractionLimit(interactable, curEventTarget, action)) {
                     this.target = interactable;
                     this.element = curEventTarget;
@@ -1541,15 +1581,15 @@
             var target = this.target,
                 options = target && target.options;
 
-            if (target && !this.interacting()) {
-                action = action || validateAction(forceAction || target.getAction(pointer, this), target, this.element);
+            if (target && (forceAction || !this.prepared.name)) {
+                action = action || validateAction(forceAction || target.getAction(pointer, event, this, curEventTarget), target, this.element);
 
-                this.setEventXY(this.startCoords);
+                this.setEventXY(this.startCoords, this.pointers);
 
                 if (!action) { return; }
 
                 if (options.styleCursor) {
-                    target._doc.documentElement.style.cursor = actionCursors[action];
+                    target._doc.documentElement.style.cursor = getActionCursor(action);
                 }
 
                 this.resizeAxes = action.name === 'resize'? action.axis : null;
@@ -1558,18 +1598,18 @@
                     action = null;
                 }
 
-                this.prepared.name = action.name;
-                this.prepared.axis = action.axis;
+                this.prepared.name  = action.name;
+                this.prepared.axis  = action.axis;
+                this.prepared.edges = action.edges;
 
                 this.snapStatus.snappedX = this.snapStatus.snappedY =
                     this.restrictStatus.restrictedX = this.restrictStatus.restrictedY = NaN;
 
                 this.downTimes[pointerIndex] = new Date().getTime();
                 this.downTargets[pointerIndex] = eventTarget;
-                this.downEvent = event;
-                extend(this.downPointer, pointer);
+                pointerExtend(this.downPointer, pointer);
 
-                this.setEventXY(this.prevCoords);
+                copyCoords(this.prevCoords, this.startCoords);
                 this.pointerWasMoved = false;
 
                 this.checkAndPreventDefault(event, target, this.element);
@@ -1577,7 +1617,7 @@
             // if inertia is active try to resume action
             else if (this.inertiaStatus.active
                 && curEventTarget === this.element
-                && validateAction(target.getAction(pointer, this, this.element), target).name === this.prepared.name) {
+                && validateAction(target.getAction(pointer, event, this, this.element), target).name === this.prepared.name) {
 
                 cancelFrame(this.inertiaStatus.i);
                 this.inertiaStatus.active = false;
@@ -1700,10 +1740,22 @@
                 return;
             }
 
-            this.prepared.name = action.name;
-            this.prepared.axis = action.axis;
-            this.target        = interactable;
-            this.element       = element;
+            // if this interaction had been removed after stopping
+            // add it back
+            if (indexOf(interactions, this) === -1) {
+                interactions.push(this);
+            }
+
+            // set the startCoords if there was no prepared action
+            if (!this.prepared.name) {
+                this.setEventXY(this.startCoords);
+            }
+
+            this.prepared.name  = action.name;
+            this.prepared.axis  = action.axis;
+            this.prepared.edges = action.edges;
+            this.target         = interactable;
+            this.element        = element;
 
             this.setStartOffsets(action.name, interactable, element);
             this.setModifications(this.startCoords.page);
@@ -1712,11 +1764,23 @@
         },
 
         pointerMove: function (pointer, event, eventTarget, curEventTarget, preEnd) {
-            this.recordPointer(pointer);
+            if (this.inertiaStatus.active) {
+                var pageUp   = this.inertiaStatus.upCoords.page;
+                var clientUp = this.inertiaStatus.upCoords.client;
 
-            this.setEventXY(this.curCoords, (pointer instanceof InteractEvent)
-                                                ? this.inertiaStatus.startEvent
-                                                : undefined);
+                var inertiaPosition = {
+                    pageX  : pageUp.x   + this.inertiaStatus.sx,
+                    pageY  : pageUp.y   + this.inertiaStatus.sy,
+                    clientX: clientUp.x + this.inertiaStatus.sx,
+                    clientY: clientUp.y + this.inertiaStatus.sy
+                };
+
+                this.setEventXY(this.curCoords, [inertiaPosition]);
+            }
+            else {
+                this.recordPointer(pointer);
+                this.setEventXY(this.curCoords, this.pointers);
+            }
 
             var duplicateMove = (this.curCoords.page.x === this.prevCoords.page.x
                                  && this.curCoords.page.y === this.prevCoords.page.y
@@ -1785,7 +1849,7 @@
                                 if (elementInteractable
                                     && elementInteractable !== this.target
                                     && !elementInteractable.options.drag.manualStart
-                                    && elementInteractable.getAction(this.downPointer, this, element).name === 'drag'
+                                    && elementInteractable.getAction(this.downPointer, this.downEvent, this, element).name === 'drag'
                                     && checkAxis(axis, elementInteractable)) {
 
                                     this.prepared.name = 'drag';
@@ -1800,19 +1864,21 @@
                             // if there's no drag from element interactables,
                             // check the selector interactables
                             if (!this.prepared.name) {
+                                var thisInteraction = this;
+
                                 var getDraggable = function (interactable, selector, context) {
                                     var elements = ie8MatchesSelector
                                         ? context.querySelectorAll(selector)
                                         : undefined;
 
-                                    if (interactable === this.target) { return; }
+                                    if (interactable === thisInteraction.target) { return; }
 
                                     if (inContext(interactable, eventTarget)
                                         && !interactable.options.drag.manualStart
                                         && !testIgnore(interactable, element, eventTarget)
                                         && testAllow(interactable, element, eventTarget)
                                         && matchesSelector(element, selector, elements)
-                                        && interactable.getAction(this.downPointer, this, element).name === 'drag'
+                                        && interactable.getAction(thisInteraction.downPointer, thisInteraction.downEvent, thisInteraction, element).name === 'drag'
                                         && checkAxis(axis, interactable)
                                         && withinInteractionLimit(interactable, element, 'drag')) {
 
@@ -1844,7 +1910,7 @@
                 if (starting
                     && (this.target.options[this.prepared.name].manualStart
                         || !withinInteractionLimit(this.target, this.element, this.prepared))) {
-                    this.stop();
+                    this.stop(event);
                     return;
                 }
 
@@ -1867,7 +1933,7 @@
             copyCoords(this.prevCoords, this.curCoords);
 
             if (this.dragging || this.resizing) {
-                autoScroll.edgeMove(event);
+                this.autoScrollMove(pointer);
             }
         },
 
@@ -1899,7 +1965,7 @@
             var target = this.target,
                 dragEvent  = new InteractEvent(this, event, 'drag', 'move', this.element),
                 draggableElement = this.element,
-                drop = this.getDrop(dragEvent, draggableElement);
+                drop = this.getDrop(dragEvent, event, draggableElement);
 
             this.dropTarget = drop.dropzone;
             this.dropElement = drop.element;
@@ -1921,6 +1987,49 @@
         resizeStart: function (event) {
             var resizeEvent = new InteractEvent(this, event, 'resize', 'start', this.element);
 
+            if (this.prepared.edges) {
+                var startRect = this.target.getRect(this.element);
+
+                /*
+                 * When using the `resizable.square` or `resizable.preserveAspectRatio` options, resizing from one edge
+                 * will affect another. E.g. with `resizable.square`, resizing to make the right edge larger will make
+                 * the bottom edge larger by the same amount. We call these 'linked' edges. Any linked edges will depend
+                 * on the active edges and the edge being interacted with.
+                 */
+                if (this.target.options.resize.square || this.target.options.resize.preserveAspectRatio) {
+                    var linkedEdges = extend({}, this.prepared.edges);
+
+                    linkedEdges.top    = linkedEdges.top    || (linkedEdges.left   && !linkedEdges.bottom);
+                    linkedEdges.left   = linkedEdges.left   || (linkedEdges.top    && !linkedEdges.right );
+                    linkedEdges.bottom = linkedEdges.bottom || (linkedEdges.right  && !linkedEdges.top   );
+                    linkedEdges.right  = linkedEdges.right  || (linkedEdges.bottom && !linkedEdges.left  );
+
+                    this.prepared._linkedEdges = linkedEdges;
+                }
+                else {
+                    this.prepared._linkedEdges = null;
+                }
+
+                // if using `resizable.preserveAspectRatio` option, record aspect ratio at the start of the resize
+                if (this.target.options.resize.preserveAspectRatio) {
+                    this.resizeStartAspectRatio = startRect.width / startRect.height;
+                }
+
+                this.resizeRects = {
+                    start     : startRect,
+                    current   : extend({}, startRect),
+                    restricted: extend({}, startRect),
+                    previous  : extend({}, startRect),
+                    delta     : {
+                        left: 0, right : 0, width : 0,
+                        top : 0, bottom: 0, height: 0
+                    }
+                };
+
+                resizeEvent.rect = this.resizeRects.restricted;
+                resizeEvent.deltaRect = this.resizeRects.delta;
+            }
+
             this.target.fire(resizeEvent);
 
             this.resizing = true;
@@ -1930,6 +2039,94 @@
 
         resizeMove: function (event) {
             var resizeEvent = new InteractEvent(this, event, 'resize', 'move', this.element);
+
+            var edges = this.prepared.edges,
+                invert = this.target.options.resize.invert,
+                invertible = invert === 'reposition' || invert === 'negate';
+
+            if (edges) {
+                var dx = resizeEvent.dx,
+                    dy = resizeEvent.dy,
+
+                    start      = this.resizeRects.start,
+                    current    = this.resizeRects.current,
+                    restricted = this.resizeRects.restricted,
+                    delta      = this.resizeRects.delta,
+                    previous   = extend(this.resizeRects.previous, restricted),
+
+                    originalEdges = edges;
+
+                // `resize.preserveAspectRatio` takes precedence over `resize.square`
+                if (this.target.options.resize.preserveAspectRatio) {
+                    var resizeStartAspectRatio = this.resizeStartAspectRatio;
+
+                    edges = this.prepared._linkedEdges;
+
+                    if ((originalEdges.left && originalEdges.bottom)
+                        || (originalEdges.right && originalEdges.top)) {
+                        dy = -dx / resizeStartAspectRatio;
+                    }
+                    else if (originalEdges.left || originalEdges.right) { dy = dx / resizeStartAspectRatio; }
+                    else if (originalEdges.top || originalEdges.bottom) { dx = dy * resizeStartAspectRatio; }
+                }
+                else if (this.target.options.resize.square) {
+                    edges = this.prepared._linkedEdges;
+
+                    if ((originalEdges.left && originalEdges.bottom)
+                        || (originalEdges.right && originalEdges.top)) {
+                        dy = -dx;
+                    }
+                    else if (originalEdges.left || originalEdges.right) { dy = dx; }
+                    else if (originalEdges.top || originalEdges.bottom) { dx = dy; }
+                }
+
+                // update the 'current' rect without modifications
+                if (edges.top   ) { current.top    += dy; }
+                if (edges.bottom) { current.bottom += dy; }
+                if (edges.left  ) { current.left   += dx; }
+                if (edges.right ) { current.right  += dx; }
+
+                if (invertible) {
+                    // if invertible, copy the current rect
+                    extend(restricted, current);
+
+                    if (invert === 'reposition') {
+                        // swap edge values if necessary to keep width/height positive
+                        var swap;
+
+                        if (restricted.top > restricted.bottom) {
+                            swap = restricted.top;
+
+                            restricted.top = restricted.bottom;
+                            restricted.bottom = swap;
+                        }
+                        if (restricted.left > restricted.right) {
+                            swap = restricted.left;
+
+                            restricted.left = restricted.right;
+                            restricted.right = swap;
+                        }
+                    }
+                }
+                else {
+                    // if not invertible, restrict to minimum of 0x0 rect
+                    restricted.top    = Math.min(current.top, start.bottom);
+                    restricted.bottom = Math.max(current.bottom, start.top);
+                    restricted.left   = Math.min(current.left, start.right);
+                    restricted.right  = Math.max(current.right, start.left);
+                }
+
+                restricted.width  = restricted.right  - restricted.left;
+                restricted.height = restricted.bottom - restricted.top ;
+
+                for (var edge in restricted) {
+                    delta[edge] = restricted[edge] - previous[edge];
+                }
+
+                resizeEvent.edges = this.prepared.edges;
+                resizeEvent.rect = restricted;
+                resizeEvent.deltaRect = delta;
+            }
 
             this.target.fire(resizeEvent);
 
@@ -2002,6 +2199,8 @@
 
             this.collectEventTargets(pointer, event, eventTarget, 'cancel');
             this.pointerEnd(pointer, event, eventTarget, curEventTarget);
+
+            this.removePointer(pointer);
         },
 
         // http://www.quirksmode.org/dom/events/click.html
@@ -2031,7 +2230,7 @@
 
             if (this.interacting()) {
 
-                if (inertiaStatus.active) { return; }
+                if (inertiaStatus.active && !inertiaStatus.ending) { return; }
 
                 var pointerSpeed,
                     now = new Date().getTime(),
@@ -2174,7 +2373,7 @@
                 endEvent = new InteractEvent(this, event, 'drag', 'end', this.element);
 
                 var draggableElement = this.element,
-                    drop = this.getDrop(endEvent, draggableElement);
+                    drop = this.getDrop(endEvent, event, draggableElement);
 
                 this.dropTarget = drop.dropzone;
                 this.dropElement = drop.element;
@@ -2282,7 +2481,7 @@
             }
         },
 
-        getDrop: function (event, dragElement) {
+        getDrop: function (dragEvent, event, dragElement) {
             var validDrops = [];
 
             if (dynamicDrop) {
@@ -2295,7 +2494,7 @@
                     currentElement = this.activeDrops.elements [j],
                     rect           = this.activeDrops.rects    [j];
 
-                validDrops.push(current.dropCheck(this.pointers[0], this.target, dragElement, currentElement, rect)
+                validDrops.push(current.dropCheck(dragEvent, event, this.target, dragElement, currentElement, rect)
                                 ? currentElement
                                 : null);
             }
@@ -2367,6 +2566,8 @@
                     timeStamp    : dragEvent.timeStamp,
                     type         : 'drop'
                 };
+
+                dragEvent.dropzone = this.dropTarget;
             }
             if (dragEvent.type === 'dragstart') {
                 dropEvents.activate = {
@@ -2419,9 +2620,7 @@
         },
 
         clearTargets: function () {
-            if (this.target && !this.target.selector) {
-                this.target = this.element = null;
-            }
+            this.target = this.element = null;
 
             this.dropTarget = this.dropElement = this.prevDropTarget = this.prevDropElement = null;
         },
@@ -2446,23 +2645,19 @@
                 if (this.dragging) {
                     this.activeDrops.dropzones = this.activeDrops.elements = this.activeDrops.rects = null;
                 }
-
-                this.clearTargets();
             }
+
+            this.clearTargets();
 
             this.pointerIsDown = this.snapStatus.locked = this.dragging = this.resizing = this.gesturing = false;
             this.prepared.name = this.prevEvent = null;
             this.inertiaStatus.resumeDx = this.inertiaStatus.resumeDy = 0;
 
-            this.pointerIds .splice(0);
-            this.pointers   .splice(0);
-            this.downTargets.splice(0);
-            this.downTimes  .splice(0);
-            this.holdTimers .splice(0);
-
-            // delete interaction if it's not the only one
-            if (interactions.length > 1) {
-                interactions.splice(indexOf(interactions, this), 1);
+            // remove pointers if their ID isn't in this.pointerIds
+            for (var i = 0; i < this.pointers.length; i++) {
+                if (indexOf(this.pointerIds, getPointerId(this.pointers[i])) === -1) {
+                    this.pointers.splice(i, 1);
+                }
             }
         },
 
@@ -2496,13 +2691,15 @@
                 inertiaStatus.i = reqFrame(this.boundInertiaFrame);
             }
             else {
+                inertiaStatus.ending = true;
+
                 inertiaStatus.sx = inertiaStatus.modifiedXe;
                 inertiaStatus.sy = inertiaStatus.modifiedYe;
 
                 this.pointerMove(inertiaStatus.startEvent, inertiaStatus.startEvent);
-
-                inertiaStatus.active = false;
                 this.pointerEnd(inertiaStatus.startEvent, inertiaStatus.startEvent);
+
+                inertiaStatus.active = inertiaStatus.ending = false;
             }
         },
 
@@ -2520,15 +2717,16 @@
                 inertiaStatus.i = reqFrame(this.boundSmoothEndFrame);
             }
             else {
+                inertiaStatus.ending = true;
+
                 inertiaStatus.sx = inertiaStatus.xe;
                 inertiaStatus.sy = inertiaStatus.ye;
 
                 this.pointerMove(inertiaStatus.startEvent, inertiaStatus.startEvent);
-
-                inertiaStatus.active = false;
-                inertiaStatus.smoothEnd = false;
-
                 this.pointerEnd(inertiaStatus.startEvent, inertiaStatus.startEvent);
+
+                inertiaStatus.smoothEnd =
+                  inertiaStatus.active = inertiaStatus.ending = false;
             }
         },
 
@@ -2552,10 +2750,7 @@
 
             if (index === -1) { return; }
 
-            if (!this.interacting()) {
-                this.pointers   .splice(index, 1);
-            }
-
+            this.pointers   .splice(index, 1);
             this.pointerIds .splice(index, 1);
             this.downTargets.splice(index, 1);
             this.downTimes  .splice(index, 1);
@@ -2563,10 +2758,6 @@
         },
 
         recordPointer: function (pointer) {
-            // Do not update pointers while inertia is active.
-            // The inertia start event should be this.pointers[0]
-            if (this.inertiaStatus.active) { return; }
-
             var index = this.mouse? 0: indexOf(this.pointerIds, getPointerId(pointer));
 
             if (index === -1) { return; }
@@ -2624,7 +2815,7 @@
         },
 
         firePointers: function (pointer, event, eventTarget, targets, elements, eventType) {
-            var pointerIndex = this.mouse? 0 : indexOf(getPointerId(pointer)),
+            var pointerIndex = this.mouse? 0 : indexOf(this.pointerIds, getPointerId(pointer)),
                 pointerEvent = {},
                 i,
                 // for tap events
@@ -2636,9 +2827,9 @@
                 pointerEvent = pointer;
             }
             else {
-                extend(pointerEvent, event);
+                pointerExtend(pointerEvent, event);
                 if (event !== pointer) {
-                    extend(pointerEvent, pointer);
+                    pointerExtend(pointerEvent, pointer);
                 }
 
                 pointerEvent.preventDefault           = preventOriginalDefault;
@@ -2646,11 +2837,12 @@
                 pointerEvent.stopImmediatePropagation = InteractEvent.prototype.stopImmediatePropagation;
                 pointerEvent.interaction              = this;
 
-                pointerEvent.timeStamp     = new Date().getTime();
-                pointerEvent.originalEvent = event;
-                pointerEvent.type          = eventType;
-                pointerEvent.pointerId     = getPointerId(pointer);
-                pointerEvent.pointerType   = this.mouse? 'mouse' : !supportsPointerEvent? 'touch'
+                pointerEvent.timeStamp       = new Date().getTime();
+                pointerEvent.originalEvent   = event;
+                pointerEvent.originalPointer = pointer;
+                pointerEvent.type            = eventType;
+                pointerEvent.pointerId       = getPointerId(pointer);
+                pointerEvent.pointerType     = this.mouse? 'mouse' : !supportsPointerEvent? 'touch'
                                                     : isString(pointer.pointerType)
                                                         ? pointer.pointerType
                                                         : [,,'touch', 'pen', 'mouse'][pointer.pointerType];
@@ -2697,11 +2889,11 @@
             }
         },
 
-        validateSelector: function (pointer, matches, matchElements) {
+        validateSelector: function (pointer, event, matches, matchElements) {
             for (var i = 0, len = matches.length; i < len; i++) {
                 var match = matches[i],
                     matchElement = matchElements[i],
-                    action = validateAction(match.getAction(pointer, this, matchElement), match);
+                    action = validateAction(match.getAction(pointer, event, this, matchElement), match);
 
                 if (action && withinInteractionLimit(match, matchElement, action)) {
                     this.target = match;
@@ -2929,13 +3121,19 @@
             var options = interactable.options,
                 prevent = options.preventDefault;
 
-            if (prevent === 'auto' && element && !/^input$|^textarea$/i.test(element.nodeName)) {
+            if (prevent === 'auto' && element && !/^(input|select|textarea)$/i.test(event.target.nodeName)) {
                 // do not preventDefault on pointerdown if the prepared action is a drag
                 // and dragging can only start from a certain direction - this allows
                 // a touch to pan the viewport if a drag isn't in the right direction
                 if (/down|start/i.test(event.type)
                     && this.prepared.name === 'drag' && options.drag.axis !== 'xy') {
 
+                    return;
+                }
+
+                // with manualStart, only preventDefault while interacting
+                if (options[this.prepared.name] && options[this.prepared.name].manualStart
+                    && !this.interacting()) {
                     return;
                 }
 
@@ -2967,7 +3165,52 @@
             status.one_ve_v0 = 1 - inertiaOptions.endSpeed / status.v0;
         },
 
-        _updateEventTargets: function (currentTarget, target) {
+        autoScrollMove: function (pointer) {
+            if (!(this.interacting()
+                && checkAutoScroll(this.target, this.prepared.name))) {
+                return;
+            }
+
+            if (this.inertiaStatus.active) {
+                autoScroll.x = autoScroll.y = 0;
+                return;
+            }
+
+            var top,
+                right,
+                bottom,
+                left,
+                options = this.target.options[this.prepared.name].autoScroll,
+                container = options.container || getWindow(this.element);
+
+            if (isWindow(container)) {
+                left   = pointer.clientX < autoScroll.margin;
+                top    = pointer.clientY < autoScroll.margin;
+                right  = pointer.clientX > container.innerWidth  - autoScroll.margin;
+                bottom = pointer.clientY > container.innerHeight - autoScroll.margin;
+            }
+            else {
+                var rect = getElementClientRect(container);
+
+                left   = pointer.clientX < rect.left   + autoScroll.margin;
+                top    = pointer.clientY < rect.top    + autoScroll.margin;
+                right  = pointer.clientX > rect.right  - autoScroll.margin;
+                bottom = pointer.clientY > rect.bottom - autoScroll.margin;
+            }
+
+            autoScroll.x = (right ? 1: left? -1: 0);
+            autoScroll.y = (bottom? 1:  top? -1: 0);
+
+            if (!autoScroll.isScrolling) {
+                // set the autoScroll properties to those of the target
+                autoScroll.margin = options.margin;
+                autoScroll.speed  = options.speed;
+
+                autoScroll.start(this);
+            }
+        },
+
+        _updateEventTargets: function (target, currentTarget) {
             this._eventTarget    = target;
             this._curEventTarget = currentTarget;
         }
@@ -2995,12 +3238,6 @@
                     while (element) {
                         // if the element is the interaction element
                         if (element === interaction.element) {
-                            // update the interaction's pointer
-                            if (interaction.pointers[0]) {
-                                interaction.removePointer(interaction.pointers[0]);
-                            }
-                            interaction.addPointer(pointer);
-
                             return interaction;
                         }
                         element = parentElement(element);
@@ -3054,8 +3291,6 @@
             if ((!interaction.prepared.name || (interaction.target.options.gesture.enabled))
                 && !interaction.interacting()
                 && !(!mouseEvent && interaction.mouse)) {
-
-                interaction.addPointer(pointer);
 
                 return interaction;
             }
@@ -3142,7 +3377,9 @@
         client.x -= origin.x;
         client.y -= origin.y;
 
-        if (checkSnap(target, action) && !(starting && interaction.snapOffsets.length)) {
+        var relativePoints = options[action].snap && options[action].snap.relativePoints ;
+
+        if (checkSnap(target, action) && !(starting && relativePoints && relativePoints.length)) {
             this.snap = {
                 range  : snapStatus.range,
                 locked : snapStatus.locked,
@@ -3179,15 +3416,16 @@
         this.clientX   = client.x;
         this.clientY   = client.y;
 
-        this.x0        = interaction.startCoords.page.x;
-        this.y0        = interaction.startCoords.page.y;
-        this.clientX0  = interaction.startCoords.client.x;
-        this.clientY0  = interaction.startCoords.client.y;
+        this.x0        = interaction.startCoords.page.x - origin.x;
+        this.y0        = interaction.startCoords.page.y - origin.y;
+        this.clientX0  = interaction.startCoords.client.x - origin.x;
+        this.clientY0  = interaction.startCoords.client.y - origin.y;
         this.ctrlKey   = event.ctrlKey;
         this.altKey    = event.altKey;
         this.shiftKey  = event.shiftKey;
         this.metaKey   = event.metaKey;
         this.button    = event.button;
+        this.buttons   = event.buttons;
         this.target    = element;
         this.t0        = interaction.downTimes[0];
         this.type      = action + (phase || '');
@@ -3206,7 +3444,7 @@
         }
 
         // end event dx, dy is difference between start and end points
-        if (ending || action === 'drop') {
+        if (ending) {
             if (deltaSource === 'client') {
                 this.dx = client.x - interaction.startCoords.client.x;
                 this.dy = client.y - interaction.startCoords.client.y;
@@ -3245,7 +3483,7 @@
             this.dx = this.dy = 0;
         }
 
-        if (action === 'resize') {
+        if (action === 'resize' && interaction.resizeAxes) {
             if (options.resize.square) {
                 if (interaction.resizeAxes === 'y') {
                     this.dx = this.dy;
@@ -3380,28 +3618,117 @@
         this.originalEvent.preventDefault();
     }
 
+    function getActionCursor (action) {
+        var cursor = '';
+
+        if (action.name === 'drag') {
+            cursor =  actionCursors.drag;
+        }
+        if (action.name === 'resize') {
+            if (action.axis) {
+                cursor =  actionCursors[action.name + action.axis];
+            }
+            else if (action.edges) {
+                var cursorKey = 'resize',
+                    edgeNames = ['top', 'bottom', 'left', 'right'];
+
+                for (var i = 0; i < 4; i++) {
+                    if (action.edges[edgeNames[i]]) {
+                        cursorKey += edgeNames[i];
+                    }
+                }
+
+                cursor = actionCursors[cursorKey];
+            }
+        }
+
+        return cursor;
+    }
+
+    function checkResizeEdge (name, value, page, element, interactableElement, rect, margin) {
+        // false, '', undefined, null
+        if (!value) { return false; }
+
+        // true value, use pointer coords and element rect
+        if (value === true) {
+            // if dimensions are negative, "switch" edges
+            var width = isNumber(rect.width)? rect.width : rect.right - rect.left,
+                height = isNumber(rect.height)? rect.height : rect.bottom - rect.top;
+
+            if (width < 0) {
+                if      (name === 'left' ) { name = 'right'; }
+                else if (name === 'right') { name = 'left' ; }
+            }
+            if (height < 0) {
+                if      (name === 'top'   ) { name = 'bottom'; }
+                else if (name === 'bottom') { name = 'top'   ; }
+            }
+
+            if (name === 'left'  ) { return page.x < ((width  >= 0? rect.left: rect.right ) + margin); }
+            if (name === 'top'   ) { return page.y < ((height >= 0? rect.top : rect.bottom) + margin); }
+
+            if (name === 'right' ) { return page.x > ((width  >= 0? rect.right : rect.left) - margin); }
+            if (name === 'bottom') { return page.y > ((height >= 0? rect.bottom: rect.top ) - margin); }
+        }
+
+        // the remaining checks require an element
+        if (!isElement(element)) { return false; }
+
+        return isElement(value)
+                    // the value is an element to use as a resize handle
+                    ? value === element
+                    // otherwise check if element matches value as selector
+                    : matchesUpTo(element, value, interactableElement);
+    }
+
     function defaultActionChecker (pointer, interaction, element) {
         var rect = this.getRect(element),
-            right,
-            bottom,
+            shouldResize = false,
             action = null,
             resizeAxes = null,
+            resizeEdges,
             page = extend({}, interaction.curCoords.page),
             options = this.options;
 
         if (!rect) { return null; }
 
         if (actionIsEnabled.resize && options.resize.enabled) {
-            right  = options.resize.axis !== 'y' && page.x > (rect.right  - margin);
-            bottom = options.resize.axis !== 'x' && page.y > (rect.bottom - margin);
+            var resizeOptions = options.resize;
+
+            resizeEdges = {
+                left: false, right: false, top: false, bottom: false
+            };
+
+            // if using resize.edges
+            if (isObject(resizeOptions.edges)) {
+                for (var edge in resizeEdges) {
+                    resizeEdges[edge] = checkResizeEdge(edge,
+                                                        resizeOptions.edges[edge],
+                                                        page,
+                                                        interaction._eventTarget,
+                                                        element,
+                                                        rect,
+                                                        resizeOptions.margin || margin);
+                }
+
+                resizeEdges.left = resizeEdges.left && !resizeEdges.right;
+                resizeEdges.top  = resizeEdges.top  && !resizeEdges.bottom;
+
+                shouldResize = resizeEdges.left || resizeEdges.right || resizeEdges.top || resizeEdges.bottom;
+            }
+            else {
+                var right  = options.resize.axis !== 'y' && page.x > (rect.right  - margin),
+                    bottom = options.resize.axis !== 'x' && page.y > (rect.bottom - margin);
+
+                shouldResize = right || bottom;
+                resizeAxes = (right? 'x' : '') + (bottom? 'y' : '');
+            }
         }
 
-        resizeAxes = (right?'x': '') + (bottom?'y': '');
-
-        action = resizeAxes
+        action = shouldResize
             ? 'resize'
             : actionIsEnabled.drag && options.drag.enabled
-                ?  'drag'
+                ? 'drag'
                 : null;
 
         if (actionIsEnabled.gesture
@@ -3413,7 +3740,8 @@
         if (action) {
             return {
                 name: action,
-                axis: resizeAxes
+                axis: resizeAxes,
+                edges: resizeEdges
             };
         }
 
@@ -3447,7 +3775,7 @@
             'dragStart', 'dragMove', 'resizeStart', 'resizeMove', 'gestureStart', 'gestureMove',
             'pointerOver', 'pointerOut', 'pointerHover', 'selectorDown',
             'pointerDown', 'pointerMove', 'pointerUp', 'pointerCancel', 'pointerEnd',
-            'addPointer', 'removePointer', 'recordPointer',
+            'addPointer', 'removePointer', 'recordPointer', 'autoScrollMove'
         ];
 
     for (var i = 0, len = interactionListeners.length; i < len; i++) {
@@ -3762,13 +4090,18 @@
             if (isObject(options)) {
                 this.options.drop.enabled = options.enabled === false? false: true;
                 this.setOnEvents('drop', options);
-                this.accept(options.accept);
 
                 if (/^(pointer|center)$/.test(options.overlap)) {
                     this.options.drop.overlap = options.overlap;
                 }
                 else if (isNumber(options.overlap)) {
                     this.options.drop.overlap = Math.max(Math.min(1, options.overlap), 0);
+                }
+                if ('accept' in options) {
+                  this.options.drop.accept = options.accept;
+                }
+                if ('checker' in options) {
+                  this.options.drop.checker = options.checker;
                 }
 
                 return this;
@@ -3783,30 +4116,21 @@
             return this.options.drop;
         },
 
-        /*\
-         * Interactable.dropCheck
-         [ method ]
-         *
-         * The default function to determine if a dragend event occured over
-         * this Interactable's element. Can be overridden using
-         * @Interactable.dropChecker.
-         *
-         - pointer (MouseEvent | PointerEvent | Touch) The event that ends a drag
-         - draggable (Interactable) The Interactable being dragged
-         - draggableElement (Element) The actual element that's being dragged
-         - dropElement (Element) The dropzone element
-         - rect (object) #optional The rect of dropElement
-         = (boolean) whether the pointer was over this Interactable
-        \*/
-        dropCheck: function (pointer, draggable, draggableElement, dropElement, rect) {
+        dropCheck: function (dragEvent, event, draggable, draggableElement, dropElement, rect) {
+            var dropped = false;
+
+            // if the dropzone has no rect (eg. display: none)
+            // call the custom dropChecker or just return false
             if (!(rect = rect || this.getRect(dropElement))) {
-                return false;
+                return (this.options.drop.checker
+                    ? this.options.drop.checker(dragEvent, event, dropped, this, dropElement, draggable, draggableElement)
+                    : false);
             }
 
             var dropOverlap = this.options.drop.overlap;
 
             if (dropOverlap === 'pointer') {
-                var page = getPageXY(pointer),
+                var page = getPageXY(dragEvent),
                     origin = getOriginXY(draggable, draggableElement),
                     horizontal,
                     vertical;
@@ -3817,7 +4141,7 @@
                 horizontal = (page.x > rect.left) && (page.x < rect.right);
                 vertical   = (page.y > rect.top ) && (page.y < rect.bottom);
 
-                return horizontal && vertical;
+                dropped = horizontal && vertical;
             }
 
             var dragRect = draggable.getRect(draggableElement);
@@ -3826,7 +4150,7 @@
                 var cx = dragRect.left + dragRect.width  / 2,
                     cy = dragRect.top  + dragRect.height / 2;
 
-                return cx >= rect.left && cx <= rect.right && cy >= rect.top && cy <= rect.bottom;
+                dropped = cx >= rect.left && cx <= rect.right && cy >= rect.top && cy <= rect.bottom;
             }
 
             if (isNumber(dropOverlap)) {
@@ -3834,31 +4158,64 @@
                                   * Math.max(0, Math.min(rect.bottom, dragRect.bottom) - Math.max(rect.top , dragRect.top ))),
                     overlapRatio = overlapArea / (dragRect.width * dragRect.height);
 
-                return overlapRatio >= dropOverlap;
+                dropped = overlapRatio >= dropOverlap;
             }
+
+            if (this.options.drop.checker) {
+                dropped = this.options.drop.checker(dragEvent, event, dropped, this, dropElement, draggable, draggableElement);
+            }
+
+            return dropped;
         },
 
         /*\
          * Interactable.dropChecker
          [ method ]
          *
+         * DEPRECATED. Use interactable.dropzone({ checker: function... }) instead.
+         *
          * Gets or sets the function used to check if a dragged element is
-         * over this Interactable. See @Interactable.dropCheck.
+         * over this Interactable.
          *
-         - checker (function) #optional
-         * The checker is a function which takes a mouseUp/touchEnd event as a
-         * parameter and returns true or false to indicate if the the current
-         * draggable can be dropped into this Interactable
-         *
+         - checker (function) #optional The function that will be called when checking for a drop
          = (Function | Interactable) The checker function or this Interactable
+         *
+         * The checker function takes the following arguments:
+         *
+         - dragEvent (InteractEvent) The related dragmove or dragend event
+         - event (TouchEvent | PointerEvent | MouseEvent) The user move/up/end Event related to the dragEvent
+         - dropped (boolean) The value from the default drop checker
+         - dropzone (Interactable) The dropzone interactable
+         - dropElement (Element) The dropzone element
+         - draggable (Interactable) The Interactable being dragged
+         - draggableElement (Element) The actual element that's being dragged
+         *
+         > Usage:
+         | interact(target)
+         | .dropChecker(function(dragEvent,         // related dragmove or dragend event
+         |                       event,             // TouchEvent/PointerEvent/MouseEvent
+         |                       dropped,           // bool result of the default checker
+         |                       dropzone,          // dropzone Interactable
+         |                       dropElement,       // dropzone elemnt
+         |                       draggable,         // draggable Interactable
+         |                       draggableElement) {// draggable element
+         |
+         |   return dropped && event.target.hasAttribute('allow-drop');
+         | }
         \*/
         dropChecker: function (checker) {
             if (isFunction(checker)) {
-                this.dropCheck = checker;
+                this.options.drop.checker = checker;
 
                 return this;
             }
-            return this.dropCheck;
+            if (checker === null) {
+                delete this.options.getRect;
+
+                return this;
+            }
+
+            return this.options.drop.checker;
         },
 
         /*\
@@ -3918,7 +4275,26 @@
          |     onmove : function (event) {},
          |     onend  : function (event) {},
          |
-         |     axis   : 'x' || 'y' || 'xy' // default is 'xy',
+         |     edges: {
+         |       top   : true,       // Use pointer coords to check for resize.
+         |       left  : false,      // Disable resizing from left edge.
+         |       bottom: '.resize-s',// Resize if pointer target matches selector
+         |       right : handleEl    // Resize if pointer target is the given Element
+         |     },
+         |
+         |     // Width and height can be adjusted independently. When `true`, width and
+         |     // height are adjusted at a 1:1 ratio.
+         |     square: false,
+         |
+         |     // Width and height can be adjusted independently. When `true`, width and
+         |     // height maintain the aspect ratio they had when resizing started.
+         |     preserveAspectRatio: false,
+         |
+         |     // a value of 'none' will limit the resize rect to a minimum of 0x0
+         |     // 'negate' will allow the rect to have negative width/height
+         |     // 'reposition' will keep the width/height positive by swapping
+         |     // the top and bottom edges and/or swapping the left and right edges
+         |     invert: 'none' || 'negate' || 'reposition'
          |
          |     // limit multiple resizes.
          |     // See the explanation in the @Interactable.draggable example
@@ -3939,7 +4315,10 @@
                     this.options.resize.axis = defaultOptions.resize.axis;
                 }
 
-                if (isBool(options.square)) {
+                if (isBool(options.preserveAspectRatio)) {
+                    this.options.resize.preserveAspectRatio = options.preserveAspectRatio;
+                }
+                else if (isBool(options.square)) {
                     this.options.resize.square = options.square;
                 }
 
@@ -4240,11 +4619,11 @@
             return ret.drag;
         },
 
-        getAction: function (pointer, interaction, element) {
+        getAction: function (pointer, event, interaction, element) {
             var action = this.defaultActionChecker(pointer, interaction, element);
 
             if (this.options.actionChecker) {
-                return this.options.actionChecker(pointer, action, this, element, interaction);
+                return this.options.actionChecker(pointer, event, action, this, element, interaction);
             }
 
             return action;
@@ -4259,14 +4638,25 @@
          * Gets or sets the function used to check action to be performed on
          * pointerDown
          *
-         - checker (function | null) #optional A function which takes a pointer event, defaultAction string, interactable, element and interaction as parameters and returns an object with name property 'drag' 'resize' or 'gesture' and optionally an axis 'x', 'y', or 'xy'; or null.
+         - checker (function | null) #optional A function which takes a pointer event, defaultAction string, interactable, element and interaction as parameters and returns an object with name property 'drag' 'resize' or 'gesture' and optionally an `edges` object with boolean 'top', 'left', 'bottom' and right props.
          = (Function | Interactable) The checker function or this Interactable
          *
-         | interact('.resize-horiz').actionChecker(function (defaultAction, interactable) {
-         |   return {
-         |     name: 'resize',
-         |     axis: 'x'
-         |   };
+         | interact('.resize-drag')
+         |   .resizable(true)
+         |   .draggable(true)
+         |   .actionChecker(function (pointer, event, action, interactable, element, interaction) {
+         |
+         |   if (interact.matchesSelector(event.target, '.drag-handle') {
+         |     // force drag with handle target
+         |     action.name = drag;
+         |   }
+         |   else {
+         |     // resize from the top and right edges
+         |     action.name  = 'resize';
+         |     action.edges = { top: true, right: true };
+         |   }
+         |
+         |   return action;
          | });
         \*/
         actionChecker: function (checker) {
@@ -4847,7 +5237,7 @@
          *
          * Reset the options of this Interactable
          - options (object) The new settings to apply
-         = (object) This Interactablw
+         = (object) This Interactable
         \*/
         set: function (options) {
             if (!isObject(options)) {
@@ -4874,7 +5264,7 @@
             var settings = [
                     'accept', 'actionChecker', 'allowFrom', 'deltaSource',
                     'dropChecker', 'ignoreFrom', 'origin', 'preventDefault',
-                    'rectChecker'
+                    'rectChecker', 'styleCursor'
                 ];
 
             for (i = 0, len = settings.length; i < len; i++) {
@@ -4900,7 +5290,7 @@
          = (object) @interact
         \*/
         unset: function () {
-            events.remove(this, 'all');
+            events.remove(this._element, 'all');
 
             if (!isString(this.selector)) {
                 events.remove(this, 'all');
@@ -4964,6 +5354,15 @@
          'Interactable#inertia is deprecated. See the new documentation for inertia at http://interactjs.io/docs/inertia');
     Interactable.prototype.autoScroll = warnOnce(Interactable.prototype.autoScroll,
          'Interactable#autoScroll is deprecated. See the new documentation for autoScroll at http://interactjs.io/docs/#autoscroll');
+    Interactable.prototype.squareResize = warnOnce(Interactable.prototype.squareResize,
+         'Interactable#squareResize is deprecated. See http://interactjs.io/docs/#resize-square');
+
+    Interactable.prototype.accept = warnOnce(Interactable.prototype.accept,
+         'Interactable#accept is deprecated. use Interactable#dropzone({ accept: target }) instead');
+    Interactable.prototype.dropChecker = warnOnce(Interactable.prototype.dropChecker,
+         'Interactable#dropChecker is deprecated. use Interactable#dropzone({ dropChecker: checkerFunction }) instead');
+    Interactable.prototype.context = warnOnce(Interactable.prototype.context,
+         'Interactable#context as a method is deprecated. It will soon be a DOM Node instead');
 
     /*\
      * interact.isSet
@@ -5190,26 +5589,32 @@
             pointerMove           : listeners.pointerMove,
             pointerHover          : listeners.pointerHover,
 
+            eventTypes            : eventTypes,
+
             events                : events,
             globalEvents          : globalEvents,
-            delegatedEvents       : delegatedEvents
+            delegatedEvents       : delegatedEvents,
+
+            prefixedPropREs       : prefixedPropREs
         };
     };
 
     // expose the functions used to calculate multi-touch properties
-    interact.getTouchAverage  = touchAverage;
+    interact.getPointerAverage = pointerAverage;
     interact.getTouchBBox     = touchBBox;
     interact.getTouchDistance = touchDistance;
     interact.getTouchAngle    = touchAngle;
 
-    interact.getElementRect   = getElementRect;
-    interact.matchesSelector  = matchesSelector;
-    interact.closest          = closest;
+    interact.getElementRect         = getElementRect;
+    interact.getElementClientRect   = getElementClientRect;
+    interact.matchesSelector        = matchesSelector;
+    interact.closest                = closest;
 
     /*\
      * interact.margin
      [ method ]
      *
+     * Deprecated. Use `interact(target).resizable({ margin: number });` instead.
      * Returns or sets the margin for autocheck resizing used in
      * @Interactable.getAction. That is the distance from the bottom and right
      * edges of an element clicking in which will start resizing
@@ -5217,14 +5622,15 @@
      - newValue (number) #optional
      = (number | interact) The current margin value or interact
     \*/
-    interact.margin = function (newvalue) {
+    interact.margin = warnOnce(function (newvalue) {
         if (isNumber(newvalue)) {
             margin = newvalue;
 
             return interact;
         }
         return margin;
-    };
+    },
+    'interact.margin is deprecated. Use interact(target).resizable({ margin: number }); instead.') ;
 
     /*\
      * interact.supportsTouch
@@ -5256,7 +5662,7 @@
      = (object) interact
     \*/
     interact.stop = function (event) {
-        for (var i = interactions.length - 1; i > 0; i--) {
+        for (var i = interactions.length - 1; i >= 0; i--) {
             interactions[i].stop(event);
         }
 
@@ -5389,7 +5795,7 @@
             events.add(doc, pEventTypes.cancel, listeners.pointerCancel);
 
             // autoscroll
-            events.add(doc, pEventTypes.move, autoScroll.edgeMove);
+            events.add(doc, pEventTypes.move, listeners.autoScrollMove);
         }
         else {
             events.add(doc, 'mousedown', listeners.selectorDown);
@@ -5404,8 +5810,8 @@
             events.add(doc, 'touchcancel', listeners.pointerCancel);
 
             // autoscroll
-            events.add(doc, 'mousemove', autoScroll.edgeMove);
-            events.add(doc, 'touchmove', autoScroll.edgeMove);
+            events.add(doc, 'mousemove', listeners.autoScrollMove);
+            events.add(doc, 'touchmove', listeners.autoScrollMove);
         }
 
         events.add(win, 'blur', endAllInteractions);
@@ -5426,6 +5832,21 @@
         catch (error) {
             interact.windowParentError = error;
         }
+
+        // prevent native HTML5 drag on interact.js target elements
+        events.add(doc, 'dragstart', function (event) {
+            for (var i = 0; i < interactions.length; i++) {
+                var interaction = interactions[i];
+
+                if (interaction.element
+                    && (interaction.element === event.target
+                        || nodeContains(interaction.element, event.target))) {
+
+                    interaction.checkAndPreventDefault(event, interaction.target, interaction.element);
+                    return;
+                }
+            }
+        });
 
         if (events.useAttachEvent) {
             // For IE's lack of Event#preventDefault
@@ -5552,4 +5973,4 @@
         realWindow.interact = interact;
     }
 
-} (window));
+} (typeof window === 'undefined'? undefined : window));

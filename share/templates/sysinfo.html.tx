@@ -11,10 +11,15 @@
 
 <script type="text/html" id="sysinfo_tmpl">
 
-<h2>Modell: <%=model%></h2>
-<h3>Betriebszeit: <span class="sunriser_uptime"></span></h3>
-
 <table>
+  <tr>
+    <td><h2>Modell</h2></td>
+    <td><h2><%=model%></h2></td>
+  </tr>
+  <tr>
+    <td><h3>Betriebszeit</h3></td>
+    <td><h3><span class="sunriser_uptime"></span></h3></td>
+  </tr>
   <% $.each(info,function(k,v){ %>
     <tr>
       <% if (!v) { %>

@@ -181,16 +181,18 @@ sub _build_base_vars {
     demo => $self->demo,
     css_files => [qw(
       css/reset.css
-      css/tipr-1.0.1.css
+      css/tipr-3.1.css
       css/icomoon.css
       css/sunriser.css
       css/sunriser_dayplanner.css
     )],
     js_files => [
       $self->versioned ? 'js/jquery-1.11.2.min.js' : 'js/jquery-1.11.2.js',
-      $self->versioned ? 'js/moment-2.9.0.min.js' : 'js/moment-2.9.0.js',
-      $self->versioned ? 'js/snap.svg-0.3.0.min.js' : 'js/snap.svg-0.3.0.js',
-      $self->versioned ? 'js/interact-1.2.3.min.js' : 'js/interact-1.2.3.js',
+      $self->versioned ? 'js/moment-2.18.1.min.js' : 'js/moment-2.18.1.js',
+      $self->versioned ? 'js/snap.svg-0.5.1.min.js' : 'js/snap.svg-0.5.1.js',
+      $self->versioned ? 'js/interact-1.2.6.min.js' : 'js/interact-1.2.6.js',
+      $self->versioned ? 'js/tipr-3.1.min.js' : 'js/tipr-3.1.js',
+      $self->versioned ? 'js/URI-1.18.10.min.js' : 'js/URI-1.18.10.js',
     qw(
       js/tmpl.js
       js/class.js
@@ -198,9 +200,7 @@ sub _build_base_vars {
       js/msgpack-1.05-patched.js
       js/console-emulation.js
       js/moment-locale-de.js
-      js/tipr-1.0.1.js
       js/ipaddr-0.1.3.js
-      js/URI-1.14.2.min.js
       js/jquery-ajax-blob-arraybuffer.js
       js/webfontloader.js
 
