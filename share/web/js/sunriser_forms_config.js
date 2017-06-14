@@ -1,30 +1,4 @@
 
-// var sr_weatherprofile_field = function(){
-//   var options = [];
-//   $.each(weather_profiles,function(i,v){
-//     if (v.value) {
-//       options.push(v);      
-//     }
-//   });
-//   return {
-//     name: 'weather_setup_id',
-//     label: 'Wetter Profil',
-//     noprefix: true,
-//     nosubmit: true,
-//     options: options,
-//     type: 'select',
-//     custom_init: function() {
-//       var field = this;
-//       field.html_field().val(get_weather_setup_id);
-//       field.html_field().change(function(){
-//         url.removeSearch("weather");
-//         url.addSearch("weather",$(this).val());
-//         window.location.href = url;
-//       });
-//     }
-//   };
-// };
-
 var sr_update_timezone = function(){
   var tz = $('#timezone').val();
   var tzo = $('#timezone option:selected');
@@ -100,8 +74,6 @@ var sr_forms = {
       name: "usentp", label: "Internet-Zeitserver benutzen (NTP)"
     },{
       name: "nofinder", label: "SunRiser Finder deaktivieren"
-    },{
-      name: "nomdns", label: "mdns deaktivieren (wird bald abgeschaltet)"
     //   name: "indexfile", label: "Startseite nach Anmeldung"
     }],
     loaded: function(){

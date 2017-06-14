@@ -132,7 +132,7 @@ $('body').on('sr_config',function(){
         label: "Erh&ouml;hter Minimumwert"
       },{
         name: "enforcenet",
-        label: "Erzwinge Netzwerkverbindung (bitte deaktivieren)"
+        label: "Erzwinge DHCP"
       }];
       $.each(dayplanner_pwms,function(i,pwm){
         fields.push({

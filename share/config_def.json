@@ -67,7 +67,7 @@
     "web",         [ "Web configuration for programs", "json", "[]"]
   ],
   "weekplanner",    "Week planner configuration", [
-    "programs#X", [ "Programs of the week for PWM X (always 8, first = all day)", "array(integer)"],
+    "programs#X", [ "Programs of the week for PWM X (always 8, last = all day)", "array(integer)"],
     "randomdeferralmax", ["(TODO) Maximum random deferral (in minutes)", "integer", 0],
     "deferral", ["(TODO) Fixed deferral (in minutes)", "integer", 0]
   ],

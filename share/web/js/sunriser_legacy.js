@@ -1,3 +1,4 @@
+
 function sr_generate_weather_setup_one(return_only) {
   var legacy_keys = [
     "weather#setup#0#pwms",
@@ -48,6 +49,56 @@ function sr_generate_weather_setup_one(return_only) {
       return weather_setup_one; 
     } else {
       sr_request_mpack('PUT','/',weather_setup_one,function(){
+        window.location.href = window.location.href;
+      });
+    }
+  });
+}
+
+function sr_update_weekplanner_legacy() {
+  var keys = new Array();
+  for (i = 1; i <= sr_config["pwm_count"]; i++) { 
+    keys.push('pwm#' + i + '#manager');
+  }
+  sr_request_mpack('POST','/',keys,function(values){
+    var weekplanner_pwms = new Array();
+    for (i = 1; i <= sr_config["pwm_count"]; i++) { 
+      var key = 'pwm#' + i + '#manager';
+      if (values[key] == 2) {
+        weekplanner_pwms.push(i);
+      }
+    }
+    if (weekplanner_pwms.length) {
+      sr_request_mpack('POST','/',keys,function(values){
+        var keys = new Array();
+        $.each(values,function(i,v){
+          if (i.includes('manager') && i.includes('pwm')) {
+            keys.push("weekplanner#programs#" + v);
+          }
+        });
+        sr_request_mpack('POST','/',keys,function(values){
+          var new_values = {};
+          $.each(values,function(i,v){
+            if (i.includes('weekplanner')) {
+              new_values[i] = [
+                v[7],
+                v[1],
+                v[2],
+                v[3],
+                v[4],
+                v[5],
+                v[6],
+                v[0]
+              ];
+            }
+          });
+          sr_request_mpack('PUT','/',new_values,function(){
+            window.location.href = window.location.href;
+          });
+        });
+      });
+    } else {
+      sr_request_mpack('PUT','/',{},function(){
         window.location.href = window.location.href;
       });
     }

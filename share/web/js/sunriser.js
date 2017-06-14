@@ -42,8 +42,7 @@ var programs = [{
 }];
 var program_names = {};
 var program_colors = {};
-var weekdays = ['Alltag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Sonntag'];
-var weekdays_table_sorting = [0,4,1,5,2,6,3,7];
+var weekdays = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Alltag'];
 var html_sr8_version;
 
 function isChrome() {
@@ -267,9 +266,9 @@ $('body').on('sr_config_init',function(){
     },function(){
       window.location.href = window.location.href;
     });
-  }
-
-  if (!sr_config['weather#web']) {
+  } else if (sr_config_version < 850 && sr_config['programs#web'] && sr_config['programs#web'].length) {
+    sr_update_weekplanner_legacy();
+  } else if (!sr_config['weather#web']) {
     sr_generate_weather_setup_one();
   } else {
 

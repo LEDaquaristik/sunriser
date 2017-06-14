@@ -7,10 +7,20 @@
 
 <hr>
 
+<h3>Seit Firmware v0.850:</h3>
+
+<div>
+  Wir haben die JavaScript Bibliotheken, die wir im Interface verwenden, erneuert. Auch wurde die Bibliothek f&uuml;r den Zugriff auf das Dateisystem der SD-Karte erneuert. Ein &Uuml;berlauf Problem bei der Wolkenbearbeitung wurde auch beseitigt, welches st&auml;ndig zuviele Wolken erzeugte. Eine weitere Umstellung der Webserver Implementierung macht diese nun stabil und massiv absturzsicherer. Die Abarbeitung der Wochentagslimitierungen beim Wetter sind nun korrigiert, auch hier wieder dank an unseren User Wolfgang Breyha. Wir haben auch einen Fehler in der Wochenplanung korrigiert, der damit zusammenhing.
+</div><div>
+  Wir empfehlen dringend nach dem Aufspielen und dem Testen der Firmware, diese auch als Werkszustand Firmware zu installieren im <a href="/expert.html">Experten Men&uuml;</a>!
+</div>
+
+<br><hr>
+
 <h3>Seit Firmware v0.845:</h3>
 
 <div>
-  Korrektur eines Fehler im SunRiser Finder, der Auswirkungen auf die Netzwerk Funktionalit&auml;t hatte. Korrektur an der Mondsimulation, mit Hilfe vom User Wolfgang Breyha, und an der Regenfront Abarbeitung. Wir empfehlen dringend nach dem Aufspielen und dem Testen der Firmware, diese auch als Werkszustand Firmware zu installieren im <a href="/expert.html">Experten Men&uuml;</a>!
+  Korrektur eines Fehler im SunRiser Finder, der Auswirkungen auf die Netzwerk Funktionalit&auml;t hatte. Korrektur an der Mondsimulation, mit Hilfe vom User Wolfgang Breyha, und an der Regenfront Abarbeitung.
 </div>
 
 <br><hr>
