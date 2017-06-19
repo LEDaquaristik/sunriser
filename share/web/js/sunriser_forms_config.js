@@ -74,7 +74,6 @@ var sr_forms = {
       name: "usentp", label: "Internet-Zeitserver benutzen (NTP)"
     },{
       name: "nofinder", label: "SunRiser Finder deaktivieren"
-    //   name: "indexfile", label: "Startseite nach Anmeldung"
     }],
     loaded: function(){
       sr_update_timezone();

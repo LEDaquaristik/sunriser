@@ -3,16 +3,22 @@
 
 <h2 class="upgraded">Die Firmware wurde erfolgreich erneuert!</h2>
 
-<div class="warnarea">Achtung! In einer der zuk&uuml;nftigen Versionen werden wir das mdns Feature abschalten. Dieses Feature macht es z.B. m&ouml;glich das Ger&auml;t &uuml;ber <i>sunriser.local</i> zu erreichen. Bitte benutzen Sie den <a href="http://sunriser.ledaquaristik.de/">SunRiser Finder</a> oder z.B. falls Sie eine FritzBox haben, einfach <a href="http://sunriser.fritz.box/">sunriser.fritz.box</a> um Ihr Ger&auml;t zu finden.</div>
-
 <hr>
+
+<h3>Seit Firmware v0.860:</h3>
+
+<div>
+  Wir haben die Netzwerk Bibliothek auf dem SunRiser erneuert. Weiterhin haben wir den mdns nun abgeschaltet und somit auch die gesamte IGMP (Multicast) Behandlung in unserer Netzwerk Bibliothek abgeschaltet. Auch wurde eine Prozedur hingef&uuml;gt die unsere tempor&auml;ren Dateien vom Webserver regelm&auml;&szlig;ig bereinigt.
+</div><div>
+  Wir empfehlen dringend nach dem Aufspielen und dem Testen der Firmware, diese auch als Werkszustand Firmware zu installieren im <a href="/expert.html">Experten Men&uuml;</a>!
+</div>
+
+<br><hr>
 
 <h3>Seit Firmware v0.850:</h3>
 
 <div>
   Wir haben die JavaScript Bibliotheken, die wir im Interface verwenden, erneuert. Auch wurde die Bibliothek f&uuml;r den Zugriff auf das Dateisystem der SD-Karte erneuert. Ein &Uuml;berlauf Problem bei der Wolkenbearbeitung wurde auch beseitigt, welches st&auml;ndig zuviele Wolken erzeugte. Eine weitere Umstellung der Webserver Implementierung macht diese nun stabil und massiv absturzsicherer. Die Abarbeitung der Wochentagslimitierungen beim Wetter sind nun korrigiert, auch hier wieder dank an unseren User Wolfgang Breyha. Wir haben auch einen Fehler in der Wochenplanung korrigiert, der damit zusammenhing.
-</div><div>
-  Wir empfehlen dringend nach dem Aufspielen und dem Testen der Firmware, diese auch als Werkszustand Firmware zu installieren im <a href="/expert.html">Experten Men&uuml;</a>!
 </div>
 
 <br><hr>
