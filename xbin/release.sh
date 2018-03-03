@@ -20,6 +20,12 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 $DIR/firmware.sh $VERSION
 
+echo "Tagging code with v$VERSION..."
+
+cd $SUNRISER_MCU
+git tag -a v$VERSION
+cd $WORKDIR
+
 echo "Releasing v$VERSION..."
 
 echo "Upload to target..."
