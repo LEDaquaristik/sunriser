@@ -197,7 +197,7 @@ sub _build_base_vars {
       js/tmpl.js
       js/class.js
       js/sprintf.js
-      js/msgpack-1.05-patched.js
+      js/msgpack-0.1.26.min.js
       js/console-emulation.js
       js/moment-locale-de.js
       js/ipaddr-0.1.3.js
@@ -219,6 +219,8 @@ sub _build_base_vars {
     )],
   };
 }
+
+# js/msgpack-1.05-patched.js
 
 has template_path => (
   is => 'lazy',

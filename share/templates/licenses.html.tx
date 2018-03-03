@@ -295,14 +295,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 </pre>
 
 <hr>
-<h2>Frontend | <a href="https://www.flickr.com/photos/s_fox/358214800/">Background Image</a></h2>
+<h2>Frontend | <a href="https://www.shutterstock.com/de/image-photo/rising-sun-sky-cloud-sunrise-abstract-597834437">Background Image</a></h2>
 <hr>
-<a href="https://www.flickr.com/photos/s_fox/358214800/">
-  <img class="img_resp" src="/img/background.jpg" style="width:500px;height:333px">
-</a>
+<img class="img_resp" src="/img/background.jpg" style="width:500px;height:333px">
 <pre>
-Source: fox_kiyo via Flickr (CC BY-SA 2.0)
-<a href="https://www.flickr.com/photos/s_fox/358214800/">https://www.flickr.com/photos/s_fox/358214800/</a>
+  Source: <a href="https://www.shutterstock.com/de/image-photo/rising-sun-sky-cloud-sunrise-abstract-597834437">"The rising sun, sky cloud sunrise abstract, background"</a> by <a href="https://www.shutterstock.com/de/g/prakarn%20chiaosarkorn">ojoel</a> at <a href="https://www.shutterstock.com/">Shutterstock.com</a>
 </pre>
 
 <hr>
@@ -446,39 +443,6 @@ See <a href="https://github.com/libopencm3/libopencm3/blob/master/COPYING.LGPL3"
   CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE.
-</pre>
-
-<hr>
-<h2>Microcontroller | <a href="http://git.savannah.gnu.org/cgit/lwip/lwip-contrib.git/tree/apps/sntp">lwIP NTP server</a></h2>
-<hr>
-<pre>
-/*
- * Redistribution and use in source and binary forms, with or without modification, 
- * are permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
- * 3. The name of the author may not be used to endorse or promote products
- *    derived from this software without specific prior written permission. 
- *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED 
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT 
- * SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, 
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT 
- * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING 
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY 
- * OF SUCH DAMAGE.
- *
- * This file is part of the lwIP TCP/IP stack.
- * 
- * Author: Simon Goldschmidt (lwIP raw API part)
- */
 </pre>
 
 <hr>

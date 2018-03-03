@@ -200,13 +200,19 @@ sub _build_cdbs {
   ];
 }
 
+my $minimum_factory = '0.850';
+
 sub get {
   my ( $self, $key, $env ) = @_;
+  if ($key eq 'factory_version') {
+    return $self->versioned || $minimum_factory;
+  }
   my @val = $self->get_config($key, $env);
   return $val[0] if scalar @val == 1;
   if ($self->has_systemdb) {
     for my $cdb (@{$self->cdbs}) {
-      return $cdb->get($key) if $cdb->exists($key);
+      my $return = $cdb->get($key);
+      return $return if $cdb->exists($key);
     }
   } else {
     my $default = $self->config->default($key);
@@ -740,6 +746,10 @@ sub _build_psgi {
         } elsif ($path =~ /^\/bootload\.mp$/) {
           return $self->sr_proxy($env) if $self->has_sunriserhost;
           return $self->_web_bootload_mp($env);
+        } elsif ($path =~ /^\/errors$/) {
+          return $self->sr_proxy($env) if $self->has_sunriserhost;
+        } elsif ($path =~ /^\/log$/) {
+          return $self->sr_proxy($env) if $self->has_sunriserhost;
         } elsif ($path =~ /^\/backup$/) {
           return $self->sr_proxy($env) if $self->has_sunriserhost;
           return $self->_web_backup($env);

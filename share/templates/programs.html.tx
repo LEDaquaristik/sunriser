@@ -1,11 +1,6 @@
 : cascade base { title => "Programme", nav => "planner", no_bighelp => 1, help => r('Hier k&ouml;nnen Sie die Bezeichnungen f&uuml;r die individuellen Programme anlegen, die Sie in der Wochenplanung verwenden m&ouml;chten. Ein Programm repr&auml;sentiert einen bestimmten Tagesablauf. Danach k&ouml;nnen Sie in der <a href="/program.html">Programmplanung</a> den Verlauf der Programme einstellen und am Ende diese &uuml;ber die <a href="/week.html">Wochenplanung</a> mit den LEDs verbinden.') }
 : override content -> {
 
-<div class="index_function" id="add_program">
-  <span class="index_function_badge">+</span>
-  <div>Neues Programm anlegen (&Auml;nderungen gehen verloren)</div>
-</div>
-
 <div class="index_functions">
   <a class="index_function week_link" href="/program.html">
     <span class="index_function_badge">+</span>
@@ -15,6 +10,11 @@
     <span class="index_function_badge">+</span>
     <div>Zur Wochenplanung</div>
   </a>
+</div>
+
+<div class="index_function" id="add_program">
+  <span class="index_function_badge">+</span>
+  <div>Neues Programm anlegen (&Auml;nderungen gehen verloren)</div>
 </div>
 
 <div class="form noautoload" id="form_programs"></div>
@@ -83,7 +83,7 @@ $('body').on('sr_config',function(){
               var name_key = "programs#setup#" + v.value + "#name";
               $('#programs_setup_' + v.value + '_name').each(function(){
                 var namefield = $(this);
-                namefield.parent().append('<div style="text-align:left"><span style="background-color:#3e8cc0;color:white;margin:3px;padding:3px" id="programs_setup_' + program_id + '_delete">Programm entfernen</span></div>');
+                namefield.parent().append('<div style="text-align:left"><div class="delete-button" id="programs_setup_' + program_id + '_delete">Programm entfernen</div></div>');
                 $('#programs_setup_' + program_id + '_delete').click(function(){
                   if (confirm("Wollen Sie Ihr Programm '" + namefield.val() + "' entfernen?") == true) {
                     var data = {};

@@ -18,7 +18,7 @@ my $mp = Data::MessagePack->new;
 $mp->utf8(1);
 my $data = $mp->unpack(path($filename)->slurp_raw);
 
-for (qw( useip4 ip4 ip4_dns ip4_gateway ip4_netmask )) {
+for (qw( useip4 ip4 ip4_dns ip4_gateway ip4_netmask ntpserver )) {
   delete $data->{$_} if exists $data->{$_};  
 }
 

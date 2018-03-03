@@ -1,6 +1,21 @@
-: cascade base { title => 'Netzwerk Einstellungen', nav => 'setup', help => r("Falls Sie Schwierigkeiten mit der Erreichbarkeit Ihres SunRisers haben, aktivieren Sie die 'Erzwinge Netzwerkverbindung' Option. Bitte beachten Sie aber, das daf&uuml;r der NTP-Server benutzt werden muss und Ihr SunRiser mit dem Internet verbunden sein muss.<span class='noexpert-hide'><br><br>Bitte beachten Sie das ein Umstellen des Webserver Ports leider es Ihnen nicht mehr erm&ouml;glicht &uuml;ber den <a href='http://sunriser.ledaquaristik.de/'>SunRiser Finder</a> auf Ihren SunRiser weitergeleitet zu werden. Dieser wird Sie immer auf Port 80 weiterleiten.</span>") }
+: cascade base { title => 'Netzwerk Einstellungen', nav => 'setup', help => r("Bitte beachten Sie aber, das daf&uuml;r der Internet-Zeit-Server benutzt werden muss und Ihr SunRiser mit dem Internet verbunden sein muss.<span class='noexpert-hide'><br><br>Bitte beachten Sie das ein Umstellen des Webserver Ports leider es Ihnen nicht mehr erm&ouml;glicht &uuml;ber den <a href='http://sunriser.ledaquaristik.de/'>SunRiser Finder</a> auf Ihren SunRiser weitergeleitet zu werden. Dieser wird Sie immer auf Port 80 weiterleiten.</span>") }
 : override content -> {
 
 <div class="form" id="network"></div>
+
+<hr>
+
+<div class="warnarea">
+  Bitte beachten, das eine &Auml;nderung in den Netzwerk Einstellungen nicht direkt ausgef&uuml;hrt wird. Bitte hierf&uuml;r entweder die Netzwerk Verbindung neu einstecken oder das Ger&auml;t neustarten.
+</div>
+
+<br>
+
+<div class="index_functions">
+  <div class="index_function" id="index_reboot_sunriser">
+    <span class="index_function_badge">+</span>
+    <div>SunRiser neustarten</div>
+  </div>
+</div>
 
 : }

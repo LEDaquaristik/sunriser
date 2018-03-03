@@ -45,6 +45,7 @@ function sr_generate_weather_setup_one(return_only) {
     }]);
     weather_setup_one["weather#setup#1#name"] = weather_setup_one_name;
     weather_setup_one["weather#last_setup_id"] = 1;
+    console.log(weather_setup_one);
     if (return_only) {
       return weather_setup_one; 
     } else {
@@ -80,16 +81,18 @@ function sr_update_weekplanner_legacy() {
           var new_values = {};
           $.each(values,function(i,v){
             if (i.includes('weekplanner')) {
-              new_values[i] = [
-                v[7],
-                v[1],
-                v[2],
-                v[3],
-                v[4],
-                v[5],
-                v[6],
-                v[0]
-              ];
+              if (v) {
+                new_values[i] = [
+                  v[7],
+                  v[1],
+                  v[2],
+                  v[3],
+                  v[4],
+                  v[5],
+                  v[6],
+                  v[0]
+                ];
+              }
             }
           });
           sr_request_mpack('PUT','/',new_values,function(){

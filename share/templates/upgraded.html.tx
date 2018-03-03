@@ -5,12 +5,18 @@
 
 <hr>
 
+<h3>Seit Firmware v0.870:</h3>
+
+<div>
+  Wir haben die meisten der Bibliotheken die SunRiser benutzt erneuert. Wir haben einen Fehler im Netzwerk korrigiert, besonders zu beachten ist dabei, da&szlig; die Korrektur dieses Fehler ggf. dazu f&uuml;hrt das Ihr SunRiser eine neue IP Adresse bekommt, soweit DHCP benutzt wird. Es wurde nun der Zugang zu dem Fehler Logbuch erm&ouml;glicht und die M&ouml;glichkeit gegeben das Betriebs Logbuch zu aktivieren und unter den Systeminformationen anzuschauen. Auch wurde die Wochenplanung wieder funktionsf&auml;hig gemacht. Wir haben im HTTP Server einen Fehler korrigiert der, auf den Systemen die nicht Windows sind (wie z.B. auf Android), dazu f&uuml;hrte das bei vielen Seiten h&auml;ufig der Lade-Fisch geblieben ist. Wir haben auch den Mond &#x263E; wieder korrigiert und ihn auf seine Bahn gebracht, sowie bei Regen und Wolken die Abl&auml;ufe ein wenig modifiziert.
+</div>
+
+<br><hr>
+
 <h3>Seit Firmware v0.860:</h3>
 
 <div>
   Wir haben die Netzwerk Bibliothek auf dem SunRiser erneuert. Weiterhin haben wir den mdns nun abgeschaltet und somit auch die gesamte IGMP (Multicast) Behandlung in unserer Netzwerk Bibliothek abgeschaltet. Auch wurde eine Prozedur hingef&uuml;gt die unsere tempor&auml;ren Dateien vom Webserver regelm&auml;&szlig;ig bereinigt.
-</div><div>
-  Wir empfehlen dringend nach dem Aufspielen und dem Testen der Firmware, diese auch als Werkszustand Firmware zu installieren im <a href="/expert.html">Experten Men&uuml;</a>!
 </div>
 
 <br><hr>

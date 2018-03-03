@@ -34,7 +34,7 @@ $('body').on('sr_config',function(){
 var backup_reader = new FileReader();
 backup_reader.onload = function(e){
   var bytesarray = new Uint8Array(backup_reader.result);
-  result = msgpack.unpack(bytesarray);
+  result = msgpack.decode(bytesarray);
   var ok = 1;
   if (typeof result === 'object') {
     $.each(result,function(k,v){

@@ -47,6 +47,10 @@
       <span class="index_function_badge">+</span>
       <div>Wochenplanung</div>
     </a>
+    <a class="index_function" href="/weather.html">
+      <span class="index_function_badge">+</span>
+      <div>Wettersimulation</div>
+    </a>
     <a class="index_function" href="/backup.html">
       <span class="index_function_badge">+</span>
       <div>Sicherung</div>

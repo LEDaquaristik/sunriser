@@ -5,7 +5,8 @@ var sr_config_main_keys = [
   'model','model_id','pwm_count','factory_version','language','timezone',
   'gmtoff','nodst','updated','name','showexpert','nohelp','nofinder','usentp',
   'weather#web','weather#last_setup_id','programs#web','programs#last_setup_id',
-  'ignoreupgrade','webport','save_version','factory_version','service_value'
+  'ignoreupgrade','webport','save_version','factory_version','service_value',
+  'no_error_logging','info_logging'
 ];
 
 var firmware_info;

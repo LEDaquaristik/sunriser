@@ -47,4 +47,8 @@ var sr_colors = [{
   "id": "custom",
   "name": "Andere Farbe",
   "color": "#ffff00"
+},{
+  "id": "custom",
+  "name": "Minipumpe",
+  "color": "#ababab"
 }];

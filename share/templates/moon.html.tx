@@ -1,4 +1,4 @@
-: cascade base { title => 'Mondphasen', nav => 'weather', help => mark_raw("Die Mondphasen erhellen die f&uuml;r Wettersimulation bestimmten LED exakt nach den realen Mondphasen. Bitte seien Sie sich bewusst das dies ggf. im Gegensatz zu Ihrer Tagesplanung steht und daher dazu f&uuml;hrt das Ihre LED erhellt, wo eigentlich abgeschaltet sein sollte.<br><br>Die meisten Kunden benutzen die Mondphasen zumeist auf einer getrennten LED mit einem anderen Farbton.") }
+: cascade base { title => 'Mondphasen', nav => 'weather', help => mark_raw("Die Mondphasen erhellen die f&uuml;r Wettersimulation bestimmten LED exakt nach den realen Mondphasen. Bitte seien Sie sich bewusst das dies ggf. im Gegensatz zu Ihrer Tagesplanung steht und daher dazu f&uuml;hrt das Ihre LED erhellt, wo eigentlich abgeschaltet sein sollte.<br><br>Bitte auch beachten das unsere Mondsimulation auch leuchtet wenn der Mond tags&uuml;ber aufgeht, d.h. es ist keine Funktion f&uuml;r einen Mondschimmer in der Nacht, daf&uuml;r empfehlen wir die <a href='/week.html'>Wochenplanung</a>.<br><br>Die meisten Kunden benutzen die Mondphasen zumeist auf einer getrennten LED mit einem anderen Farbton.") }
 : override content -> {
 
 <div id="weathertabs"></div>
@@ -6,9 +6,5 @@
 <hr>
 
 <div class="form" id="moon"></div>
-
-<hr>
-
-<div class="warnarea">Die Mondsteuerung ist derzeit leider unzuverl&auml;ssig und schaltet sich u.U. nicht korrekt ab. Wir versuchen diesen Fehler zu beheben oder ggf. die Funktion komplett neu zu gestalten. Alternativ schlagen wir vor die <a href="/week.html">Wochenplanung</a> zu nutzen um so einen Mond mit voller Kontrolle zu erschaffen (da die bestehende Mond Simulation auch tags&uuml;ber leuchtet).</div>
 
 : }

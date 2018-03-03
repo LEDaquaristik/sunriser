@@ -45,15 +45,15 @@ body{
   color:#444;
   font-family:'DIN1451', 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   transition-duration:0.2s;
-  /*background: linear-gradient(270deg, #184c6f, #0f705d);*/
-  /*background:url(../img/background.jpg) no-repeat fixed center center / cover #145868;*/
+  /* background: linear-gradient(270deg, #184c6f, #0f705d); */
+  background:url(../img/background.jpg) no-repeat fixed center center / cover #145868;
   /* for now deactivated ---------------------------
     -o-animation: BackAnim 175s ease infinite;
     -webkit-animation: BackAnim 175s ease infinite;
     -moz-animation: BackAnim 175s ease infinite;
     animation: BackAnim 175s linear infinite;
   -------------------------------------------------- */  
-  background: url("http://srdemo.ledaquaristik.de/img/background.jpg") no-repeat fixed center center / 150% 150% #145868;
+  /* background: url("http://srdemo.ledaquaristik.de/img/background.jpg") no-repeat fixed center center / 150% 150% #145868; */
 }
 @-o-keyframes BackAnim {
     0%{background-position:0% 50%}
@@ -140,6 +140,14 @@ hr{
   padding:0 50px;
 }
 
+.code {
+/*  height:250px;*/
+  border:1px solid #ccc;
+  overflow:auto;
+  background-color:#101010;
+  color:#ffffff;  
+}
+
 /***  FORMS  ***/
 
 .error{
@@ -157,7 +165,6 @@ header{
 }
 .sunriser{
   font-size:30px;
-  color:white;
   float:left;
   white-space: nowrap;
   width: auto;
@@ -165,17 +172,18 @@ header{
   text-overflow: ellipsis;
   line-height: 32px;
   text-shadow: 0 0 5px rgba(0,0,0,0.5);
+  color:#0087f7;
 }
 .sunriser a{
-  color:white;
+  color:#0087f7;
   text-decoration:none;
 }
 #sunriser_datetime_header{
   font-size:24px;
-  color:white;
   float:right;
   padding-top: 2px;
   opacity:0.75;
+  color:#0087f7;
 }
 /**Control center**/
 
@@ -397,8 +405,18 @@ nav h2{
   border-radius:3px;
   width:100%;
 }
+.sunriser_content .delete-button {
+  background-color:#0087f7;
+  color:white;
+  margin:3px;
+  padding:5px;
+  display: inline-block;
+}
+.sunriser_content .delete-button:hover {
+  background-color:#32A5F7;
+}
 .sunriser_content input[type='submit']{
-  background-color:#2980b9;
+  background-color:#0087F7;
   border:none;
   padding:12px;
   bottom:11px;
@@ -411,10 +429,10 @@ nav h2{
   z-index:1;
 }
 .sunriser_content input[type='submit']:hover{
-  background-color:#3e8cc0;
+  background-color:#32A5F7;
 }
 .sunriser_content input[type='submit']:active{
-  background-color:#10679f;
+  background-color:#32A5F7;
 }
 .pleasewait:before{
   content:"Please Wait...";
@@ -845,7 +863,7 @@ tbody tr:first-child{
   padding: 9px 12px 13px;
 }
 .hilfe-more:hover{
-  background-color:#3e8cc0;
+  background-color:#0087f7;
 }
 .hilfe-more:active{
   background-color:#10679f;
@@ -1236,7 +1254,8 @@ tbody tr:first-child{
 a.index_function,div.index_function {
   color: #fff;
   border:none;
-  background-color: #5399c7;
+  background-color: #0087f7;
+
   display: inline-block;
   width: 100%;
   transition-duration: 0.2s;
@@ -1244,7 +1263,7 @@ a.index_function,div.index_function {
   margin-bottom:25px
 }
 a.index_function:hover,div.index_function:hover {
-  background-color: #69a6ce;
+  background-color: #32A5F7;
 }
 
 a.index_function:active,div.index_function:active {
@@ -1731,7 +1750,7 @@ td.contactlabel {
   .back_home{
     width:170px
   }
-  .sunriser{
+  .sunriser {
     width:100%;
     font-size:20px;
     text-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
@@ -1751,7 +1770,7 @@ td.contactlabel {
   }
   .sunriser span,
   #sunriser_datetime_header {
-    display:none
+    display:none;
   }
   .back_home{
     position:absolute;

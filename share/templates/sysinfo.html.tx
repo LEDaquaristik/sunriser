@@ -1,10 +1,12 @@
-: cascade base { title => "System Informationen", nav => "info", no_bighelp => 1, no_form => 1 }
+: cascade base { title => "System Informationen", nav => "info", no_bighelp => 1, no_form => 1, help => r("Bitte beachten Sie, dass die Logb&uuml;cher nur ein 'New Line' am Zeilenende haben. Dies macht z.B. im Notepad von Windows Probleme in der Darstellung, aber Sie k&ouml;nnen die Datei einfach wieder in Ihren Browser ziehen, dieser wird die Datei korrekt darstellen.") }
 : override content -> {
 
-<h2>System Informationen</h2>
+<div id="all_sysinfo">
+<h2>System Informationen <a href="/sysinfo.html">Neu Laden</a></h2>
 <hr><br>
 <div id="sysinfo"><img class="loader" src="/img/ajaxload.gif"><div class="centerarrow">Wenn dieser Fisch nicht verschwindet, bitte die Seite neuladen.</div></div>
 <br><hr>
+</div>
 
 : }
 : override postjs -> {
@@ -29,6 +31,14 @@
       <% } %>
     </tr>
   <% }); %>
+  <tr>
+    <td colspan="2" id="sr_error_log">
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" id="sr_info_log">
+    </td>
+  </tr>
 </table>
 
 </script>
@@ -37,6 +47,9 @@
 var bootloader_info = undefined;
 var state = undefined;
 var sr_sysinfo_request_count = 0;
+
+var sr_error_log;
+var sr_info_log;
 
 function sr_sysinfo_done() {
   var bootloader_m;
@@ -70,6 +83,54 @@ function sr_sysinfo_done() {
     info['<div class="warnarea">Keine Bootloader Informationen!</div>'] = "";
   }
   $('#sysinfo').html(tmpl('sysinfo_tmpl',{ model: sr_config.model + " (" + sr_config.model_id + ")", info: info }));
+  sr_load_error_log();
+  sr_load_info_log();
+}
+
+function sr_load_error_log() {
+  if (!sr_config["no_error_logging"]) {
+    $.ajax({
+      url: '/errors',
+      dataType: 'text',
+      type: 'GET',
+      async: true,
+      statusCode: {
+        404: function (response) { $('#sr_error_log').append('<h3>Kein Fehler Logbuch</h3>'); },
+        200: function (response) { sr_error_log = response; $('#sr_error_log').append('<hr><h3>Fehler Logbuch <a href="/errors">Herunterladen</a> <a href="#" id="show_sr_error_log">Anzeigen</a></h3>'); }
+      },
+      complete: function(){
+        $('.code').each(function(){ $(this).scrollTop($(this)[0].scrollHeight); });
+        $('#show_sr_error_log').click(function(e){
+          e.preventDefault();
+          $('#all_sysinfo').html('<h2>Fehler Logbuch <a href="/sysinfo.html">Zur&uuml;ck</a></h2><pre class="code">' + sr_error_log + '</pre><hr><h2>Fehler Logbuch <a href="/sysinfo.html">Zur&uuml;ck</a></h2>');
+          $('body').scrollTop($('body')[0].scrollHeight);
+        });
+      }
+    });
+  }
+}
+
+function sr_load_info_log() {
+  if (sr_config["info_logging"]) {
+    $.ajax({
+      url: '/log',
+      dataType: 'text',
+      type: 'GET',
+      async: true,
+      statusCode: {
+        404: function (response) { $('#sr_info_log').append('<h3>Kein Betriebs Logbuch</h3>'); },
+        200: function (response) { sr_info_log = response; $('#sr_info_log').append('<hr><h3>Betriebs Logbuch <a href="/log">Herunterladen</a> <a href="#" id="show_sr_info_log">Anzeigen</a></h3><pre class="code" style="height:250px">' + response + '</div>'); }
+      },
+      complete: function(){
+        $('.code').each(function(){ $(this).scrollTop($(this)[0].scrollHeight); });
+        $('#show_sr_info_log').click(function(e){
+          e.preventDefault();
+          $('#all_sysinfo').html('<h2>Betriebs Logbuch <a href="/sysinfo.html">Zur&uuml;ck</a></h2><pre class="code">' + sr_info_log + '</pre><hr><h2>Betriebs Logbuch <a href="/sysinfo.html">Zur&uuml;ck</a></h2>');
+          $('body').scrollTop($('body')[0].scrollHeight);
+        });
+      }
+    });
+  }
 }
 
 function sr_sysinfo_request_state() {

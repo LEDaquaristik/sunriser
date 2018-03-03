@@ -7,7 +7,7 @@ function sr_request_mpack(method,url,data,success) {
   if (method == 'PUT' && url == '/' && sr_config && sr_config.factory_version) {
     data['save_version'] = sr_config.factory_version;
   }
-  var mpack = msgpack.pack(data);
+  var mpack = msgpack.encode(data);
   var bytesarray = new Uint8Array(mpack.length);
   for (var i = 0; i < mpack.length; i++) {
     bytesarray[i] = mpack[i];
@@ -55,7 +55,7 @@ function sr_request_mpack(method,url,data,success) {
       }
       if (xhr.getResponseHeader('content-type') == 'application/x-msgpack') {
         var bytearray = new Uint8Array(result);
-        result = msgpack.unpack(bytearray);
+        result = msgpack.decode(bytearray);
         if (typeof result.time !== 'undefined' && typeof current_time === 'undefined') {
           current_time = result.time;
           update_time();
@@ -69,9 +69,8 @@ function sr_request_mpack(method,url,data,success) {
       if (method == 'PUT') {
         sr_finished();
       }
-      // console.log(method + ' ' + url);
-      // console.log(data);
-      // console.log(result);
+      // console.log(xhr);
+      // console.log(result);      
       if (success) {
         success.call(this,result,status,xhr);
       }

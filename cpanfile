@@ -21,6 +21,7 @@ requires 'MooX::Role::Logger', '0';
 requires 'Path::Tiny', '0';
 requires 'Plack', '0';
 requires 'Plack::Middleware::Session', '0';
+requires 'Server::Starter', '0';
 requires 'Starman', '0';
 requires 'Term::ReadKey', '0';
 requires 'Test::Tester', '0';

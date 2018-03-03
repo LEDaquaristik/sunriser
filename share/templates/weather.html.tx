@@ -98,17 +98,17 @@ $('body').on('sr_config',function(){
             }
           });
           if (v.used) {
-            $('#weather_setup_' + v.value + '_name').each(function(){
+            $('#weather_setup_' + weather_id + '_name').each(function(){
               var namefield = $(this);
               $(namefield).parent().each(function(){
                 $(this).append('<div style="text-align:right">Profil in Benutzung und kann daher nicht entfernt werden.</div>');
               });
             });
           } else {
-            $('#weather_setup_' + v.value + '_name').each(function(){
+            $('#weather_setup_' + weather_id + '_name').each(function(){
               var namefield = $(this);
               $(namefield).parent().each(function(){
-                $(this).append('<div style="text-align:left"><span style="background-color:#3e8cc0;color:white;margin:3px;padding:3px" id="weather_setup_' + weather_id + '_delete">Profil entfernen</span></div>');
+                $(this).append('<div style="text-align:left"><div class="delete-button" id="weather_setup_' + weather_id + '_delete">Profil entfernen</div></div>');
                 $('#weather_setup_' + weather_id + '_delete').click(function(){
                   if (confirm("Wollen Sie Ihr Wetter Profil '" + namefield.val() + "' entfernen?") == true) {
                     var data = {};
@@ -119,7 +119,7 @@ $('body').on('sr_config',function(){
                       }
                     });
                     data["weather#web"] = JSON.stringify(new_web_config);
-                    data["weather#setup#" + v.value + "#deleted"] = true;
+                    data["weather#setup#" + weather_id + "#deleted"] = true;
                     sr_request_mpack('PUT','/',data, function(){
                       window.location.href = window.location.href;
                     });
