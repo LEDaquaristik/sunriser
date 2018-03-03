@@ -23,7 +23,7 @@ $DIR/firmware.sh $VERSION
 echo "Tagging code with v$VERSION..."
 
 cd $SUNRISER_MCU
-git tag -a v$VERSION
+git tag -a v$VERSION -m "SunRiser Release v$VERSION $CURRENT_DATE_FILENAME"
 cd $WORKDIR
 
 echo "Releasing v$VERSION..."
