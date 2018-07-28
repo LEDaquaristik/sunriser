@@ -5,6 +5,14 @@
 
 <hr>
 
+<h3>Seit Firmware v0.880:</h3>
+
+<div>
+  Die Geschwindigkeit mit der die LEDs nachlassen f&uuml;r Wartungsarbeiten wurde erh&ouml;ht. Die Bibliotheken f&uuml;r das Netzwerk und f&uuml;r den Prozessor wurden erneuert, sowie fast alle JavaScript Bibliotheken der Benutzeroberfl&auml;che. Die Wolken und Regen Simulation haben neue Parameter bekommen, einige davon sind nur im Expertenmodus verf&uuml;gbar. Wir pr&uuml;fen nur noch jeden Tag ob eine neue Firmware Version vorliegt, anstelle wie bisher bei jeder Anfrage an den SunRiser, dadurch wird die Ladezeit der Seiten optimiert. Die Anfragen an den Webserver werden nun in den meisten F&auml;llen ohne die Nutzung der SD Karte bearbeitet, auch dies optimiert die Ladezeiten. Verbesserung der Stabilit&auml;t bei nicht angeschlossenem Netzwerk bzw. einem wechselnden Zustand.
+</div>
+
+<br><hr>
+
 <h3>Seit Firmware v0.870:</h3>
 
 <div>

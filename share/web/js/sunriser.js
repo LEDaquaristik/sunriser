@@ -386,13 +386,44 @@ $('body').on('sr_config_init',function(){
 
 });
 
-
 $('body').on('sr_config',function(){
 
-  sr_request_mpack('GET','/firmware.mp',undefined,function(values){
-    firmware_info = values;
+  var ts = Math.round((new Date()).getTime() / 1000);
+
+  var storage_firmware_version = store.get('sr_firmware_version');
+  var storage_firmware_info = store.get('sr_firmware_info');
+  var storage_firmware_info_time = store.get('sr_firmware_info_time');
+
+  if (storage_firmware_version && storage_firmware_info && storage_firmware_info_time &&
+    storage_firmware_info_time > (ts - (60 * 60)) && storage_firmware_version == html_sr8_version) {
+    firmware_info = storage_firmware_info;
     $('body').trigger('sr_firmware');
+  } else {
+    sr_request_mpack('GET','/firmware.mp',undefined,function(values){
+      store.set('sr_firmware_version',html_sr8_version);
+      store.set('sr_firmware_info',values);
+      store.set('sr_firmware_info_time',ts);
+      firmware_info = values;
+      $('body').trigger('sr_firmware');
+    });
+  }
+
+});
+
+$('body').on('sr_firmware',function(){
+
+  var ts = Math.round((new Date()).getTime() / 1000);
+
+  var storage_firmwares = store.get('sr_firmwares');
+  var storage_firmwares_time = store.get('sr_firmwares_time');
+
+  if (storage_firmwares && storage_firmwares_time && storage_firmwares_time > (ts - (24 * 60 * 60))) {
+    sr_firmwares = storage_firmwares;
+    $('body').trigger('sr_firmwares');
+  } else {
     $.getJSON(firmware_root + "sunriser_firmware_images.json?" + (new Date().getTime()), function(firmwares) {
+      store.set('sr_firmwares',firmwares);
+      store.set('sr_firmwares_time',ts);
       sr_firmwares = firmwares;
       $('body').trigger('sr_firmwares');
       if (!sr_config.ignoreupgrade) {
@@ -401,6 +432,6 @@ $('body').on('sr_config',function(){
         }
       }
     });
-  });
+  }
 
 });

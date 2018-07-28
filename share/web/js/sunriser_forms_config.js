@@ -115,7 +115,7 @@ var sr_forms = {
     title: "Gewitter Simulation",
     prefix: "weather#setup#X#thunder",
     fields: [{
-      name: "activated", label: "Simuliere Gewitter"
+      name: "activated", label: "Simuliere Gewitter in diesem Profil"
     },{
       name: "daychance", label: "Wahrscheinlichkeit eines Gewitters pro maximale Anzahl von Gewittern am Tag",
       template: "slider", min: 1, max: 100
@@ -181,9 +181,12 @@ var sr_forms = {
     title: "Wolken Simulation",
     prefix: "weather#setup#X#clouds",
     fields: [{
-      name: "activated", label: "Simuliere Wolken"
+      name: "activated", label: "Simuliere Wolken in diesem Profil"
     },{
       name: "daychance", label: "Wahrscheinlichkeit eines Wolkentages",
+      template: "slider", min: 0, max: 100, percent_sign: true
+    },{
+      name: "mincloudshare", label: "Minimaler Anteil von Wolken am Wolkentag",
       template: "slider", min: 0, max: 100, percent_sign: true
     },{
       name: "cloudshare", label: "Maximaler Anteil von Wolken am Wolkentag",
@@ -213,21 +216,31 @@ var sr_forms = {
     title: "Regen Simulation",
     prefix: "weather#setup#X#rain",
     fields: [{
-      name: "activated", label: "Simuliere Regen"
+      name: "activated", label: "Simuliere Regen in diesem Profil"
     },{
       name: "daychance", label: "Wahrscheinlichkeit eines Regentages",
       template: "slider", min: 0, max: 100, percent_sign: true
     },{
-      name: "rainshare", label: "Maximaler Anteil von Regenfronten am Regentag",
+      name: "minrainshare", label: "Minimaler Anteil von Regenfronten am Regentag",
       template: "slider", min: 0, max: 100, percent_sign: true
     },{
-      name: "dropdarkness", label: "Maximale Dunkelheit durch die Regentropfen",
-      template: "slider", min: 1, max: 10
+      name: "rainshare", label: "Maximaler Anteil von Regenfronten am Regentag",
+      template: "slider", min: 0, max: 100, percent_sign: true
     // },{
     //   name: "raincloudshare", label: "Maximaler Anteil von Wolkenfronten am Regentag (wenn Wolken aktiviert sind)",
     //   template: "slider", min: 0, max: 100, percent_sign: true
     },{
       name: "weekdays", label: "Nur an diesen Wochentagen gibt es Regen (sonst jeden Tag)"
+    }],
+    expert_fields: [{
+      name: "minrain", label: "Minimale Dauer einer Regenfront in Minuten",
+      template: "slider", min: 0, max: 240
+    },{
+      name: "randrain", label: "Maximale zus&auml;tzliche Dauer einer Regenfront in Minuten",
+      template: "slider", min: 0, max: 480
+    },{
+      name: "dropdarkness", label: "Maximale Dunkelheit durch die Regentropfen",
+      template: "slider", min: 1, max: 10
     }]
   }
 };

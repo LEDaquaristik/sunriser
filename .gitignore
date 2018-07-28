@@ -6,7 +6,8 @@ SunRiser-*
 *.swp
 *.swq
 *.swl
-
+*.BEE
+*.Bee
 *.cdb
 *.cdb.*
 *.bee

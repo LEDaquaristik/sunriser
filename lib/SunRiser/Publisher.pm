@@ -187,10 +187,10 @@ sub _build_base_vars {
       css/sunriser_dayplanner.css
     )],
     js_files => [
-      $self->versioned ? 'js/jquery-1.11.2.min.js' : 'js/jquery-1.11.2.js',
-      $self->versioned ? 'js/moment-2.18.1.min.js' : 'js/moment-2.18.1.js',
+      $self->versioned ? 'js/jquery-1.12.4.min.js' : 'js/jquery-1.12.4.js',
+      $self->versioned ? 'js/moment-2.22.2.min.js' : 'js/moment-2.22.2.js',
       $self->versioned ? 'js/snap.svg-0.5.1.min.js' : 'js/snap.svg-0.5.1.js',
-      $self->versioned ? 'js/interact-1.2.6.min.js' : 'js/interact-1.2.6.js',
+      $self->versioned ? 'js/interact-1.3.4.min.js' : 'js/interact-1.3.4.js',
       $self->versioned ? 'js/tipr-3.1.min.js' : 'js/tipr-3.1.js',
       $self->versioned ? 'js/URI-1.18.10.min.js' : 'js/URI-1.18.10.js',
     qw(
@@ -198,6 +198,7 @@ sub _build_base_vars {
       js/class.js
       js/sprintf.js
       js/msgpack-0.1.26.min.js
+      js/store.modern-2.0.12.min.js
       js/console-emulation.js
       js/moment-locale-de.js
       js/ipaddr-0.1.3.js
@@ -219,8 +220,6 @@ sub _build_base_vars {
     )],
   };
 }
-
-# js/msgpack-1.05-patched.js
 
 has template_path => (
   is => 'lazy',

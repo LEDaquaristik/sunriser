@@ -43,7 +43,7 @@
   "hostname", [    "Hostname for the device",    "text", "sunriser"],
   "upgraded0500", [ "Upgrade to 0.500 done",     "bool", 0],
   "pwm#X",       "Main data of PWM X", [
-    "manager", [   "Assigned manager, 0 = unassigned, 1 = dayplanner, 2 = weekplanner, 3 = fullplanner, 4 = event", "integer", 0],
+    "manager", [   "Assigned manager, 0 = unassigned, 1 = dayplanner, 2 = weekplanner, 3 = moon, 4 = sun", "integer", 0],
     "name", [      "Custom name for pwm",        "text"],
     "color", [     "Color definition",           "text"],
     "weather", [   "Weather program assigned",   "integer"]
@@ -102,6 +102,7 @@
       "clouds", "Clouds setup", [
         "activated", ["Show clouds", "bool", 0],
         "daychance", ["Chance that it is a day with clouds", "integer", 10],
+        "mincloudshare", ["Minimum percentage share of cloud on a cloudy day", "integer", 10],
         "cloudshare", ["Maximum percentage share of cloud on a cloudy day", "integer", 30],
         "clouddarkness", ["Maximum darkness applied through cloud", "integer", 10],
         "mincloud", ["Minimum length of cloud in seconds", "integer", 2],
@@ -111,9 +112,12 @@
       "rain", "Rain setup", [
         "activated", ["Make rainy days", "bool", 0],
         "daychance", ["Chance that the day is rainy (with clouds activated, also day with clouds automatically)", "integer", 10],
+        "minrainshare", ["Minimum percentage share of rain on a rainy day", "integer", 10],
         "rainshare", ["Maximum percentage share of rain on a rainy day", "integer", 30],
         "raincloudshare", ["Maximum percentage share of cloud on a rainy day", "integer", 80],
         "dropdarkness", ["Maximum darkness applied through rain drop", "integer", 10],
+        "minrain", ["Minimum length of rain in minutes", "integer", 5],
+        "randrain", ["Maximum added length of rain in minutes", "integer", 240],
         "weekdays", ["Weekdays who may have rain (else every day)", "array(weekday)"]
       ]
     ]

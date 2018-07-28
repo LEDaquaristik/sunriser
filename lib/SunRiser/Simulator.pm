@@ -173,8 +173,13 @@ sub _build_state {
   return {
     pwmloop_stopped => 0,
     service_mode => 0,
+    uptime => 12345,
+    time => 123456,
+    tick => 12345000,
+    logsize => 0,
+    errsize => 1000,
     # PWM name is a number but must be treated like a string
-    pwms => { map { $_."", 100 } 1..$pwms }
+    pwms => { map { $_."", 100 } 1..$pwms },
   };
 }
 
@@ -608,9 +613,9 @@ sub _build_sunriser_proxy {
   my ( $self ) = @_;
   croak("Can't start sunriser proxy without sunriser ip") unless $self->has_sunriserhost;
   return Plack::App::Proxy->new(
-    remote => 'http://'.$self->sunriserhost.'/',
+    remote => 'http://'.$self->sunriserhost,
     backend => 'LWP',
-    preserve_host_header => 1,
+    # preserve_host_header => 1,
   );
 }
 

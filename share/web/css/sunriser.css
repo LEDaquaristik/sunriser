@@ -46,7 +46,12 @@ body{
   font-family:'DIN1451', 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   transition-duration:0.2s;
   /* background: linear-gradient(270deg, #184c6f, #0f705d); */
-  background:url(../img/background.jpg) no-repeat fixed center center / cover #145868;
+  background-image: url(/img/background.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  /* background: no-repeat fixed center center / cover #145868; */
   /* for now deactivated ---------------------------
     -o-animation: BackAnim 175s ease infinite;
     -webkit-animation: BackAnim 175s ease infinite;
