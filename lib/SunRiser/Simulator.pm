@@ -174,10 +174,11 @@ sub _build_state {
     pwmloop_stopped => 0,
     service_mode => 0,
     uptime => 12345,
-    time => 123456,
+    time => 1539301534,
     tick => 12345000,
     logsize => 0,
     errsize => 1000,
+    timewarp => 0,
     # PWM name is a number but must be treated like a string
     pwms => { map { $_."", 100 } 1..$pwms },
   };
@@ -467,6 +468,18 @@ sub set_service_mode {
     $env->{'psgix.session'}->{state}->{service_mode} = $value;
   } else {
     $self->state->{service_mode} = $value;
+  }
+}
+
+sub set_timewarp {
+  my ( $self, $env, $value ) = @_;
+  if ($self->demo) {
+    if (!defined $env->{'psgix.session'}->{state}) {
+      $env->{'psgix.session'}->{state} = $self->state;
+    }
+    $env->{'psgix.session'}->{state}->{timewarp} = $value;
+  } else {
+    $self->state->{timewarp} = $value;
   }
 }
 
@@ -779,6 +792,9 @@ sub _build_psgi {
           }
           if (exists $data->{service_mode}) {
             $self->set_service_mode($env, $data->{service_mode} ? $self->get_time : 0);
+          }
+          if (exists $data->{timewarp}) {
+            $self->set_timewarp($env, $data->{timewarp} ? 10000 : 0);
           }
           return $self->_web_ok;
         } elsif ($path =~ /^\/restore$/) {

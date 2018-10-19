@@ -78,6 +78,7 @@ sub _build_publish_files {
     sysinfo.html
     test.html
     thunderstorm.html
+    timelapse.html
     upgraded.html
     weather.html
     weather_info.html

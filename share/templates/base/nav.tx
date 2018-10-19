@@ -27,6 +27,11 @@
           <i class="fa fa-cloud"></i>Wochenplanung
         </a>
       </li>
+      <li class="second-level">
+        <a href="/timelapse.html">
+          <i class="fa fa-clock-o"></i>Zeitraffer
+        </a>
+      </li>
     </ul>
   </li>
   <li title="Wettersimulation" class="<: if $nav == 'weather' { 'selected' } :> first-level">

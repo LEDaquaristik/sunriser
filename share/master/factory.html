@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html lang="de">
   <head>
-    <title>SunRiser Factory Helper</title>
+    <title>SunRiser Werkszustand</title>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" />
     <link href="style.css" type="text/css" rel="stylesheet">
+    <link href="jquery.lineProgressbar.min.css" type="text/css" rel="stylesheet">
+    <script src="jquery-1.12.4.min.js" type="text/javascript"></script>
+    <script src="jquery.lineProgressbar.js" type="text/javascript"></script>
+    <script src="moment-2.22.2.min.js" type="text/javascript"></script>
+    <script src="moment-locale-de.js" type="text/javascript"></script>
+    <script src="jquery-ajax-blob-arraybuffer.js" type="text/javascript"></script>
   </head>
   <body>
     <noscript>
@@ -14,72 +20,268 @@
         </section>
       </div>
     </noscript>
-    <h1>SunRiser Factory Helper</h1>
-    <h2 id="not_found" class="hideme">Kein SunRiser gefunden!</h2>
-    <h2 id="service_down" class="hideme">Der Service ist gerade nicht verf&uuml;gbar, bitte versuchen Sie es sp&auml;ter nochmal.</h2>
-    <h2 id="found"></h2>
-    <hr>
-    <h2 id="clear_list" class="hideme">Ihre SunRiser Liste zur&uuml;cksetzen</h2>
-    <hr>
-    <a href="http://sunriser.ledaquaristik.de/">SunRiser 8 Finder</a> |
-    <a href="http://www.ledaquaristik.de/SunRiser-8-Tagessimulation-und-Lichtsteuerung">SunRiser 8 Verkaufsseite</a> |
-    <a href="http://srdemo.ledaquaristik.de/">SunRiser 8 Demo</a>
-    <script src="jquery-1.11.2.min.js" type="text/javascript"></script>
-    <script src="moment-2.9.0.min.js" type="text/javascript"></script>
-    <script src="moment-locale-de.js" type="text/javascript"></script>
-    <script src="jquery-ajax-blob-arraybuffer.js" type="text/javascript"></script>
+    <h1 class="header">SunRiser Werkszustand</h1>
+    <div class="content">
+      <h2 id="not_found" class="hideme">Kein SunRiser gefunden! (Seite wird automatisch neu geladen)</h2>
+      <h2 id="service_down" class="hideme">Der Service ist gerade nicht verf&uuml;gbar oder ein Fehler ist aufgetreten, bitte versuchen Sie es sp&auml;ter nochmal.</h2>
+      <div id="picked"></div>
+      <div id="step"></div>
+      <div id="progress"></div>
+      <h2 id="please_wait" class="hideme">Bitte warten...</h2>
+    </div>
+    <div class="footer">
+      <a href="http://sunriser.ledaquaristik.de/">SunRiser 8 Finder</a> |
+      <a href="http://www.ledaquaristik.de/SunRiser-8-Tagessimulation-und-Lichtsteuerung">SunRiser 8 Verkaufsseite</a> |
+      <a href="http://srdemo.ledaquaristik.de/">SunRiser 8 Demo</a>
+    </div>
 <script type="text/javascript">
 
 var srf_done_cnt = 0;
+var srf_reboot_tries = 0;
 var sr_finder;
 var sr_firmwares;
 var firmware_root = "http://sunriser.ledaquaristik.de/";
 
-function srf_error() {
-  $('#service_down').show();
+var format_sd;
+var picked_ip;
+var loaded_configuration;
+var picked_firmware;
+var loaded_firmware;
+
+var step;
+var picked;
+var progress;
+var srf_log_string = '';
+
+function srf_http_errmsg(jqXHR, exception){
+  if (jqXHR.status === 0) {
+    return 'Keine Verbindung. Netzwerk ueberpruefen';
+  } else if (jqXHR.status == 404) {
+    return 'Seite nicht gefunden [404]';
+  } else if (jqXHR.status == 500) {
+    return 'Webserver meldet Fehler [500]';
+  } else if (exception === 'parsererror') {
+    return 'Parsen der JSON Antwort gescheitert';
+  } else if (exception === 'timeout') {
+    return 'Zeitueberschreitung';
+  } else if (exception === 'abort') {
+    return 'Anfrage wurde abgebrochen';
+  } else {
+    return 'Fehler: ' + jqXHR.responseText;
+  }
 }
 
-function srf_done() {
-  srf_done_cnt = srf_done_cnt + 1;
+function srf_open_log_window() {
+  var seconds = new Date().getTime() / 1000;
+  var srf_log_window = window.open('', 'srf_log_window_' + seconds, 'width=800,height=600');
+  srf_log_window.document.write('<html><head><title>SunRiser Werkszustand Log</title></head><body style="color:#dddddd;background-color:#000000"><pre>' + srf_log_string + '</pre></body></html>');
+  srf_log_window.document.close();
+}
+
+function srf_log() {
+  var args = Array.prototype.slice.call(arguments);
+  srf_log_string += moment().format('x') + ': ' + args.join('|') + '\n';
+  if (window.console && typeof window.console.log === 'function') {
+    console.log.apply(this, arguments);
+  }
+}
+
+function srf_error(where, what) {
+  var error_message = $('<h2 style="background-color:red">Fehler ' + where + '! Seite nochmal laden!</h2>');
+  error_message.click(function(){
+    window.location.href = window.location.href;
+  });
+  var error_debug = $('<div>' + what + '</div>');
+  error_debug.click(function(){
+    srf_open_log_window();
+  });
+  step.empty();
+  step.append(error_message);
+  step.append(error_debug);
+}
+
+function srf_update_picked() {
+  srf_log('Updating picked information...');
+  picked.empty();
+  if (picked_ip) {
+    picked.append('<div class="picked">' + picked_ip + '</div>');
+  }
+  if (typeof format_sd !== 'undefined' && format_sd) {
+    picked.append('<div class="picked">Formatieren</div>');
+  }
+  if (typeof picked_firmware !== 'undefined') { 
+    picked.append('<div class="picked">' + sr_firmwares[picked_firmware].description + '</div>');
+  }
+  if (loaded_configuration) {
+    picked.append('<div class="picked">Alte Konfiguration geladen (' + loaded_configuration.byteLength + ' bytes)</div>');
+  }
+}
+
+function srf_service_error() {
+  $('#service_down').show();
+  step.empty();
+}
+
+function srf_reset_finder() {
+  srf_log('Resetting finder requested...');
+  $.get(firmware_root + "finder?clear=1&ts=" + (new Date().getTime()),function(){
+    srf_log('Finder cleared...');
+    setTimeout(function(){
+      window.location.href = window.location.href;
+    },2000);
+  }).error(function(){
+    srf_error('beim zuruecksetzen der SunRiser Finder Liste');
+  });
+}
+
+function srf_pick_sr() {
+  srf_done_cnt += 1;
   if (srf_done_cnt == 2) {
     if (typeof sr_finder === 'undefined' || typeof sr_firmwares === 'undefined') {
-      srf_error();
+      srf_log('No sr_finder and no sr_firmwares!!!');
+      srf_service_error();
     } else {
+      srf_log('Showing device picker...');
+      step.html('<h2>Welcher SunRiser soll auf Werkszustand gesetzt werden?</h2>');
       var found_count = 0;
       var ip;
       $.each(sr_finder,function(mac,sr){
         var m = moment(sr.firmware_timestamp * 1000);
         m.utcOffset(0);
-        var text = sr.ip + ' ' + ( sr.hostname ? ( sr.hostname + ' [' + mac + ']' ) : mac );
-        var found_html = $('<div class="sr_found">'
-          + ( sr.firmware_timestamp < sr_firmwares[0].timestamp ? 'outdated' : 'current' )
-          + ' <a href="http://' + sr.ip + '/">' + text
-          + '</a> [' + sr.firmware_filename + ']'
-          + '</div>');
-        var install_html = $('<div>INSTALL LATEST</div>');
-        install_html.click(function(){
-          download_and_install_factory(sr.ip,install_html);
+        var text = sr.ip + ' ' + ( sr.hostname ? ( sr.hostname + ' [' + mac + ']' ) : mac ) + ' ' + sr.firmware_filename;
+        var found_html = $('<div class="clickable">' + text + '</div>');
+        found_html.click(function(){
+          srf_log('IP ' + sr.ip + ' picked...');
+          picked_ip = sr.ip;
+          srf_update_picked();
+          srf_pick_format_sd();
         });
-        found_html.append(install_html);
-        $('#found').append(found_html);
+        step.append(found_html);
         found_count++;
         ip = sr.ip;
       });
       if (found_count > 0) {
-        $('#clear_list').show();        
+        var clearer_button = $('<div class="clickable">Liste l&ouml;schen</div>');
+        clearer_button.click(function(){
+          srf_reset_finder();
+        });
+        step.append(clearer_button);
       } else {
         $('#not_found').show();
+        step.html('');
         setTimeout(function(){
           window.location.href = window.location.href;
-        },2000);
+        },5000);
       }
     }
   }
 }
 
-function download_and_install_factory(ip, status) {
-  var firmware_url = firmware_root + sr_firmwares[0].url;
-  $(status).html('<div>Downloading latest firmware "' + sr_firmwares[0].description + '"...</div>');
+function srf_pick_format_sd() {
+  srf_log('Showing format picker...');
+  step.html('<h2>Soll die SD Karte formatiert werden?</h2>');
+  var yes_html = $('<div class="clickable">Ja</div>');
+  yes_html.click(function(){
+    srf_log('User picked to format...');
+    format_sd = true;
+    srf_update_picked();
+    srf_pick_firmware();
+  });
+  step.append(yes_html);
+  var no_html = $('<div class="clickable">Nein</div>');
+  no_html.click(function(){
+    srf_log('User picked to not format...');
+    format_sd = false;
+    srf_update_picked();
+    srf_pick_firmware();
+  });
+  step.append(no_html);
+}
+
+function srf_pick_firmware() {
+  srf_log('Showing firmware picker...');
+  step.html('<h2>Welche Firmware soll installiert werden?</h2>');
+  $.each(sr_firmwares,function(i,sr_firmware){
+    var extra = '';
+    if (i == 0) {
+      extra = ' (Aktuell)';
+    }
+    var firmware_html = $('<div class="clickable">' + sr_firmware.description + extra + '</div>');
+    firmware_html.click(function(){
+      srf_log('User picked ' + sr_firmware.description + ' as firmware...');
+      picked_firmware = i;
+      srf_update_picked();
+      srf_pick_configuration();
+    });
+    step.append(firmware_html);
+  });
+}
+
+function srf_pick_configuration() {
+  srf_log('Showing configuration picker...');
+  step.html('<h2>Ihre aktuelle Konfiguration vom SunRiser laden und wiederherstellen?</h2>');
+  var yes_html = $('<div class="clickable">Ja</div>');
+  yes_html.click(function(){
+    srf_log('User picked to load configuration...');
+    step.html('<h2>Lade Konfiguration vom SunRiser... <img src="ajaxload.gif"></h2>');
+    var call_options = {
+      type: 'GET',
+      url: 'http://' + picked_ip + '/backup',
+      contentType: 'application/octet-stream',
+      dataType: 'arraybuffer',
+      processData: false,
+      cache: false,
+      error: function(jqXHR, exception){
+        var msg = srf_http_errmsg(jqXHR, exception);
+        srf_log('Error while loading configuration: ' + msg + ' !!!');
+        srf_error('beim Laden der Konfiguration! Sollte der Ladevorgang mehrfach scheitern, bitte mit der Auswahl "nein" beim Laden der Konfiguration fortfahren',msg);
+      },
+      success: function (bytesarray) {
+        srf_log('Old configuration successfully loaded...');
+        loaded_configuration = bytesarray;
+        srf_update_picked();
+        srf_sure();
+      }
+    };
+    $.ajax(call_options);
+  });
+  step.append(yes_html);
+  var no_html = $('<div class="clickable">Nein</div>');
+  no_html.click(function(){
+    srf_log('User picked to ignore configuration...');
+    srf_sure();
+  });
+  step.append(no_html);
+}
+
+function srf_sure() {
+  srf_log('Asking to start process...');
+  step.html('<h2>Vorgang starten?</h2>');
+  var yes_html = $('<div class="clickable">Ja</div>');
+  yes_html.click(function(){
+    srf_log('Starting process...');
+    $('#please_wait').show();
+    progress.LineProgressbar({
+      percentage: 0,
+      fillBackgroundColor: '#f1c40f',
+      height: '50px',
+      ShowProgressCount: false,
+      duration: 500
+    });
+    srf_download_factory();
+  });
+  step.append(yes_html);
+  var no_html = $('<div class="clickable">Nein</div>');
+  no_html.click(function(){
+    window.location.href = window.location.href;
+  });
+  step.append(no_html);
+}
+
+function srf_download_factory() {
+  srf_log('Starting loading firmware...');
+  var firmware_url = firmware_root + sr_firmwares[picked_firmware].url;
+  step.html('<h2>Lade Firmware "' + sr_firmwares[picked_firmware].description + '"... <img src="ajaxload.gif"></h2>');
   var call_options = {
     type: 'GET',
     url: firmware_url,
@@ -87,80 +289,224 @@ function download_and_install_factory(ip, status) {
     dataType: 'arraybuffer',
     processData: false,
     cache: false,
-    error: function(xhr,error,errorthrown){
-      $(status).append('<div>' + xhr.responseText + " //// " + thrownError + '</div>');
+    error: function(jqXHR, exception){
+      var msg = srf_http_errmsg(jqXHR, exception);
+      srf_log('Error while loading firmware: ' + msg + ' !!!');
+      srf_error('beim Herunterladen der Firmware',msg);
     },
-    // xhr: function(){
-    //   var xhr = new window.XMLHttpRequest();
-    //   xhr.addEventListener("progress", function (evt) {
-    //     if (evt.lengthComputable) {
-    //       var percentComplete = evt.loaded / evt.total;
-    //       progressElem.html();
-    //       $(status).html('<div>Downloading Factory... ' + Math.round(percentComplete * 100) + '%</div>');
-    //     }
-    //   }, false);
-    //   console.log(xhr);
-    //   return xhr;
-    // },
     success: function (bytesarray) {
-      $(status).html('<div>Installing Factory...</div>');
-      install_factory(bytesarray, ip, status);
+      srf_log('Successfully loaded firmware...');
+      progress.progressTo(10);
+      loaded_firmware = bytesarray;
+      srf_start();
     }
   };
   $.ajax(call_options);
 }
 
-function install_factory(bytesarray, ip, status) {
+function srf_start() {
+  if (format_sd) {
+    srf_log('Starting formatting device...');
+    step.html('<h2>Formatiere SunRiser... <img src="ajaxload.gif"></h2>');
+    var error_function = function(msg) {
+      srf_log('Error while formatting device: ' + msg + ' !!!');
+      srf_error('beim formatieren',msg);
+    };
+    $.get('http://' + picked_ip + '/sdformat', function(response) {
+      if (response == 'OK') {
+        progress.progressTo(30);
+        srf_reboot(function(){
+          progress.progressTo(40);
+          srf_install_factory();
+        });
+      } else {
+        error_function.call(this,'Response not OK.');
+      }
+    }).error(function(jqXHR, exception){
+      var msg = srf_http_errmsg(jqXHR, exception);
+      error_function.call(this,msg);
+    });    
+  } else {
+    srf_log('No format requested, directly going to install factory...');
+    progress.progressTo(40);
+    srf_install_factory();
+  }
+}
+
+function srf_reboot(success) {
+  var srf_reboot_network_error_count = 0;
+  srf_log('Rebooting device...');
+  step.html('<h2>SunRiser wird neu gestartet... <img src="ajaxload.gif"></h2>');
+  setTimeout(function(){
+    var error_function = function(msg) {
+      srf_log('Error while rebooting device: ' + msg + ' !!!');
+      srf_error('beim neu starten',msg);
+    }
+    $.get('http://' + picked_ip + '/reboot', function(response) {
+      if (response == 'REBOOT') {
+        srf_reboot_tries = 0;
+        setTimeout(function(){
+          srf_reboot_done(success);
+        },5000);
+      } else {
+        error_function.call(this,'Response not REBOOT.');
+      }
+    }).error(function(jqXHR, exception){
+      var call_error = true;
+      var msg = srf_http_errmsg(jqXHR, exception);
+      if (jqXHR.status === 0) {
+        srf_reboot_network_error_count++;
+        if (srf_reboot_network_error_count < 5) {
+          srf_log('Network error, retrying reboot...');
+          call_error = false;
+          srf_reboot(success);
+        }
+      }
+      if (call_error) {
+        error_function.call(this,msg);
+      }
+    });
+  },3000);
+}
+
+function srf_reboot_done(success) {
+  srf_reboot_tries++;
+  step.html('<h2>Warte auf SunRiser... (' + srf_reboot_tries + ') <img src="ajaxload.gif"></h2>');
+  var is_done = 0;
+  setTimeout(function(){
+    $.ajax({
+      cache: false,
+      type: 'GET',
+      url: 'http://' + picked_ip + '/ok',
+      timeout: 1000,
+      error: function() {
+        srf_reboot_done(success);
+      },
+      success: function(data, textStatus, XMLHttpRequest) {
+        if (!is_done) {
+          if (data == 'OK') {
+            is_done = 1;
+            srf_log('Rebooting successful...');
+            setTimeout(function(){
+              success.call(this);
+            },3000);
+          } else {
+            srf_reboot_done(success);
+          }
+        }
+      }
+    });
+  },1000);
+}
+
+function srf_install_factory() {
+  srf_log('Starting installing firmware as factory...');
+  step.html('<h2>Installiere Firmware... <img src="ajaxload.gif"></h2>');
   var call_options = {
     type: 'PUT',
-    url: 'http://' + ip + '/factory',
-    data: bytesarray,
+    url: 'http://' + picked_ip + '/factory',
+    data: loaded_firmware,
     contentType: 'application/octet-stream',
     dataType: 'arraybuffer',
     processData: false,
     cache: false,
-    error: function(xhr,error,errorthrown){
-      $(status).append('<div>' + xhr.responseText + " //// " + thrownError + '</div>');
+    error: function(jqXHR, exception) {
+      var msg = srf_http_errmsg(jqXHR, exception);
+      srf_log('Error while installing firmware: ' + msg + ' !!!');
+      srf_error('beim Installieren der Firmware',msg);
     },
-    // xhr: function(){
-    //   var xhr = new window.XMLHttpRequest();
-    //   xhr.addEventListener("progress", function (evt) {
-    //     if (evt.lengthComputable) {
-    //       var percentComplete = evt.loaded / evt.total;
-    //       progressElem.html();
-    //       $(status).html('<div>Installing Factory... ' + Math.round(percentComplete * 100) + '%</div>');
-    //     }
-    //   }, false);
-    //   console.log(xhr);
-    //   return xhr;
-    // },
-    complete: function(data,xhr_status,xhr){
-      $(status).html('<div>Factory upload finished... Status: ' + xhr_status + '</div>');
+    success: function(data,xhr_status,xhr){
+      srf_log('Successfully installed firmware as factory...');
+      progress.progressTo(60);
+      setTimeout(function(){
+        if (loaded_configuration) {
+          srf_reboot(function(){
+            progress.progressTo(80);
+            setTimeout(function(){
+              step.html('<h2>Installiere alte Konfiguration... <img src="ajaxload.gif"></h2>');
+              var call_options = {
+                type: 'PUT',
+                url: 'http://' + picked_ip + '/restore',
+                data: loaded_configuration,
+                contentType: 'application/octet-stream',
+                dataType: 'arraybuffer',
+                processData: false,
+                cache: false,
+                error: function (jqXHR, exception) {
+                  var msg = srf_http_errmsg(jqXHR, exception);
+                  srf_log('Error while installing old configuration: ' + msg + ' !!!');
+                  srf_error('beim Installieren der alten Konfiguration',msg);
+                },
+                success: function(data,status,xhr){
+                  srf_log('Successfully installed old configuration...');
+                  setTimeout(function(){
+                    srf_finished();
+                  },2500);
+                },
+              };
+              $.ajax(call_options);
+            },2500);
+          });
+        } else {
+          srf_finished();
+        }
+      },2500);
     },
   };
   $.ajax(call_options);
 }
 
+function srf_finished() {
+  srf_reboot(function(){
+    srf_finished_done();
+  });
+}
+
+function srf_finished_done() {
+  progress.progressTo(100);
+  srf_log('Done!');
+  step.html('<h2>SunRiser ist nun auf Werkszustand! Sie werden in 10 Sekunden dahin weitergeleitet</h2>');
+  step.click(function(){
+    srf_open_log_window();
+  });
+  setTimeout(function(){
+    window.location.href = 'http://' + picked_ip + '/';
+  },10000);
+}
+
+function srf_init() {
+  srf_log('Loading finder information and firmware versions...');
+  step.html('<h2>Lade SunRiser Finder Informationen und Firmware Versionen... <img src="ajaxload.gif"></h2>');
+  picked.empty();
+  picked_ip = undefined;
+  picked_firmware = undefined;
+  keep_configuration = undefined;
+  loaded_firmware = undefined;
+  format_sd = undefined;
+
+  progress.empty();
+
+  $.getJSON(firmware_root + "sunriser_firmware_images.json?" + (new Date().getTime()), function(firmwares) {
+    srf_log('Successfully loaded firmware versions...');
+    sr_firmwares = firmwares;
+    srf_pick_sr();
+  }).error(function() { srf_service_error() });
+
+  $.getJSON(firmware_root + "finder?" + (new Date().getTime()), function(finder) {
+    srf_log('Successfully loaded finder information...');
+    sr_finder = finder;
+    srf_pick_sr();
+  }).error(function() { srf_service_error() });
+}
+
 $(function(){
 
-  $('#clear_list').click(function(){
-    $.get("finder?clear=1&ts=" + (new Date().getTime()),function(){
-      window.location.href = window.location.href;
-    }).error(function(){
-      $('#clear_list').text('Fehler beim zuruecksetzen! Nochmal probieren?');
-    });
-  });
-
+  step = $('#step');
+  picked = $('#picked');
+  progress = $('#progress');
   moment.locale('de');
 
-  $.getJSON("sunriser_firmware_images.json?" + (new Date().getTime()), function(firmwares) {
-    sr_firmwares = firmwares;
-    srf_done();
-  }).error(function() { srf_error() });
-  $.getJSON("finder?" + (new Date().getTime()), function(finder) {
-    sr_finder = finder;
-    srf_done();
-  }).error(function() { srf_error() });
+  srf_init();
 
 });
 

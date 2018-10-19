@@ -22,19 +22,35 @@ a {
   display:none
 }
 
+.picked {
+  background-color: #ff8708;
+  font-weight: bold;
+  font-size: 18px;
+  padding: 5px;
+  margin: 5px;
+}
+
+.clickable {
+  background-color: #238c1c;
+  cursor: pointer;
+  padding: 5px;
+  margin: 5px;
+}
+
 .header {
-  background-color:#0087F7;
+  background-color: #0087F7;
 }
 
 .content {
-  background-color:#0087F7;
+  background-color: #0087F7;
+  padding: 8px;
 }
 
 .footer {
-  background-color:#0087F7;
+  background-color: #0087F7;
 }
 
 #not_chrome {
-  background-color:#ff0000;
+  background-color: #ff0000;
   font-size:22px;
 }

@@ -1,0 +1,71 @@
+: cascade base { title => "Zeitraffer", nav => "timelapse", no_bighelp => 1, help => r("Der Zeitraffer erm&ouml;glicht es einen schnellen Ablauf der Tages- und Wochenplanung zu sehen. Das Wetter ist w&auml;hrend diese Funktion l&auml;uft deaktiviert. W&auml;hrend der Zeitraffer l&auml;uft wird in einer Sekunde etwas mehr als eine halbe Stunde der Zeit ablaufen. Das hei&szlig;t, ein Tag vergeht im Zeitraffer etwa alle &frac34; Minute. Leider ist der &Uuml;bergang dadurch nicht so gut wie von uns vorgesehen, erlaubt aber einen guten Einblick in die Einstellungen.") }
+: override content -> {
+
+<h1 id="timelapse_info" style="margin:20px"><img src="/img/ajaxload.gif"></h1>
+
+<div class="index_functions">
+  <div class="index_function js-hide" id="start_timelapse" href="#">
+    <span class="index_function_badge">+</span>
+    <div>Starte Zeitraffer</div>
+  </div>
+  <div class="index_function js-hide" id="stop_timelapse" href="#">
+    <span class="index_function_badge">+</span>
+    <div>Stoppe Zeitraffer</div>
+  </div>
+</div>
+
+: }
+: override postjs -> {
+
+<script type="text/javascript">
+
+var timewarp_start;
+
+function sr_update_state_timelapse() {
+  sr_request_mpack('GET','/state',undefined,function(values){
+    if (values["timewarp"] > 0) {
+      var seconds = Math.floor( ( values["tick"] - values["timewarp"] ) / 1000 );
+      timewarp_start = moment().add(seconds, 'seconds');
+      setTimeout(function(){ sr_update_timelapse_info() }, 1500);
+      $('#stop_timelapse').show();
+      $('#start_timelapse').hide();
+    } else {
+      timewarp_start = undefined;
+      $('#timelapse_info').html('Zeitraffer nicht aktiv');
+      $('#start_timelapse').show();
+      $('#stop_timelapse').hide();
+    }
+  });
+}
+
+function sr_update_timelapse_info() {
+  if (timewarp_start) {
+    var now = new moment();
+    var duration = moment.duration(timewarp_start.diff(now));
+    $('#timelapse_info').html('Zeitraffer gestartet ' + duration.humanize(true));
+    setTimeout(function(){ sr_update_timelapse_info() }, 1000);
+  }
+}
+
+// First execute stuff when the form is loaded
+$('body').on('sr_config',function(){
+
+  $('#start_timelapse').click(function(){
+    sr_request_mpack('PUT','/state',{ timewarp: 1 },function(){
+      sr_update_state_timelapse();
+    });
+  });
+
+  $('#stop_timelapse').click(function(){
+    sr_request_mpack('PUT','/state',{ timewarp: 0 },function(){
+      sr_update_state_timelapse();
+    });
+  });
+
+  sr_update_state_timelapse();
+
+});
+
+</script>
+
+: }

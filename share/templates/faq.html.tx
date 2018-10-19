@@ -20,17 +20,23 @@
   <br>
 </div>
 <hr>
-<h2 class="hiddencontent" id="homesystem">Ich w&uuml;rde gerne den SunRiser in meine Haussteuerung einbinden, ist dies m&ouml;glich?</h2>
-<div class="js-hide" id="homesystemcontent">
-  <p>Derzeit haben wir nur eine <a href="https://en.wikipedia.org/wiki/MessagePack">MessagePack</a> basierte HTTP-API am Ger&auml;t, welche leider von keiner (uns bekannten) Haussteuerung unterst&uuml;tzt wird. In naher Zukunft wollen wir hier eine GET-Parameter basierte HTTP-API anbieten die somit von mehr Anlagen unterst&uuml;tzt werden kann. Ein weiteres Problem ist hier die Form der Steuerung, weil wir derzeit hier noch nicht im vollen Umfang wissen was Kunden sich hier als steuerbare Funktionen w&uuml;nschen bzw. welche Konzepte in die Haussteuerungskonzepte hineinpassen. Wir werden Sie auf dem laufenden halten und eine aktiv hinzugef&uuml;gte Unterst&uuml;tzung auch in unseren Update Informationen erw&auml;hnen.</p>
-  <br>
-</div>
-<hr>
 <h2 class="hiddencontent" id="moonday">Eigentlich sollte laut Tagesplanung die LED aus sein, aber trotzdem leuchtet sie, was passiert da?</h2>
 <div class="js-hide" id="moondaycontent">
   <p>Wenn Sie den Mond aktivieren, wird dieser gem&auml;&szlig; der Realit&auml;t leuchten, dies kann auch tags&uuml;ber sein. Dies kann nat&uuml;rlich ein ungew&uuml;nschter Effekt sein. Am besten nutzen Sie f&uuml;r die Mondsimulation eine getrennte LED. Auf <a href="http://www.mondverlauf.de/#/51.16,6.44,5/2015.09.05/08:00/1">http://www.mondverlauf.de/</a> kann nachgeguckt werden, wann der Mond auf- und absteigt, in einer der n&auml;chsten Versionen werden Sie die GPS Koordination f&uuml;r die Berechung selber bestimmen k&ouml;nnen.</p>
   <br>
   <p>Eine weitere helfende Option, die wir bald hinzuf&uuml;gen, ist die Einstellung des Zeitraums des Tages wo ein Mondaufgang nur passieren kann.</p>
+  <br>
+</div>
+<hr>
+<h2 class="hiddencontent" id="sdbroken">Mein Ger&auml;t verliert st&auml;ndig die Einstellungen, erlaubt mir nicht eine neue Firmware zu installieren oder ein Sicherung einzuspielen! Was stimmt hier nicht?</h2>
+<div class="js-hide" id="sdbrokencontent">
+  <p>Falls Ihr SunRiser seine Konfiguration verliert, oder diese gar nicht erst speichert, ist dies auf eine defekte MicroSD-Karte zur&uuml;ckzuf&uuml;hren. Trotz mehrfachen Funktionstests vor Versand ist ein derartiger Fehler der MicroSD-Karte leider nicht g&auml;nzlich zu vermeiden. H&auml;ufig kann dieses Problem mit unserem <a href="http://sunriser.ledaquaristik.de/factory.html">Werkszustand Tool</a> gel&ouml;st werden, welches die MicroSD-Karte neu formattiert und somit den Defekt erstmal umgeht. Leider kann es sein das trotz dieser Formattierung das Problem immer wieder auftritt, dann w&uuml;rde ein Austausch der MicroSD-Karte doch n&ouml;tig sein. Bitte kontaktieren Sie in dem Fall <a href="mailto:support@ledaquaristik.de?subject=[SunRiser%208]%20Defekte%20MicroSD-Karte" target="_blank" rel="nofollow">support@LEDaquaristik.de</a> zwecks Austausch.</p>
+  <br>
+</div>
+<hr>
+<h2 class="hiddencontent" id="homesystem">Ich w&uuml;rde gerne den SunRiser in meine Haussteuerung einbinden, ist dies m&ouml;glich?</h2>
+<div class="js-hide" id="homesystemcontent">
+  <p>Derzeit haben wir nur eine <a href="https://en.wikipedia.org/wiki/MessagePack">MessagePack</a> basierte HTTP-API am Ger&auml;t, welche leider von keiner (uns bekannten) Haussteuerung unterst&uuml;tzt wird. In naher Zukunft wollen wir hier eine GET-Parameter basierte HTTP-API anbieten die somit von mehr Anlagen unterst&uuml;tzt werden kann. Ein weiteres Problem ist hier die Form der Steuerung, weil wir derzeit hier noch nicht im vollen Umfang wissen was Kunden sich hier als steuerbare Funktionen w&uuml;nschen bzw. welche Konzepte in die Haussteuerungskonzepte hineinpassen. Wir werden Sie auf dem laufenden halten und eine aktiv hinzugef&uuml;gte Unterst&uuml;tzung auch in unseren Update Informationen erw&auml;hnen.</p>
   <br>
 </div>
 <hr>
@@ -81,12 +87,6 @@
   <p>Das gesamte Web Frontend benutzt eine API um Ihre Konfiguration zu dem SunRiser zu bringen. Diese API erlaubt das Setzen der Konfiguration, Firmware einzuspielen oder alle anderen Funktionen die Sie im Web Interface haben.</p>
   <br>
   <p>Die Kommunikaton daf&uuml;r l&auml;uft als <a href="http://msgpack.org/">MessagePack</a> &uuml;ber HTTP vom SunRiser. Wir planen hier wenigstens eine weitere API &uuml;ber GET Parameter hinzuzuf&uuml;gen um z.B. in Systeme wie <a href="http://fhem.de/">Fhem</a> eingebunden zu werden. Auf Anfrage werden wir auch gern die MessagePack API dokumentieren, planen aber soweit dies nur f&uuml;r die GET API zutun.</p>
-  <br>
-</div>
-<hr>
-<h2 class="hiddencontent" id="sdbroken">Mein Ger&auml;t verliert st&auml;ndig die Einstellungen! Was stimmt hier nicht?</h2>
-<div class="js-hide" id="sdbrokencontent">
-  <p>Falls Ihr SunRiser seine Konfiguration verliert, oder diese gar nicht erst speichert, ist dies auf eine defekte SD-Karte zur&uuml;ckzuf&uuml;hren. Bitte kontaktieren Sie in dem Fall <a href="mailto:support@ledaquaristik.de?subject=[SunRiser%208]%20Defekte%20SD-Karte" target="_blank" rel="nofollow">support@LEDaquaristik.de</a> zwecks Austausch. Trotz mehrfachen Funktionstests vor Versand ist ein derartiger Fehler der SD-Karte leider nicht g&auml;nzlich zu vermeiden.</p>
   <br>
 </div>
 <hr>

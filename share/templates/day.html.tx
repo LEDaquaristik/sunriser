@@ -31,7 +31,7 @@
 <script type="text/html" id="pwmpicker_tmpl">
 
 <% $.each(paths,function(i,path){ %>
-  <div style="float:left" class="daybox pwmpicker" id="pwmpicker_<%=path.pwm%>">
+  <div style="float:left;background-color:<%=path.color%>" class="daybox pwmpicker" id="pwmpicker_<%=path.pwm%>">
     LED #<%=path.pwm%>
   </div>
 <% }); %>
@@ -145,8 +145,8 @@ var SrDayplanner = Class.extend({
         $.each(self.paths,function(curr_pwm,curr_path){
           curr_path.edit(0);
           curr_path.clear_current_marker();
+          $('#pwmpicker_' + curr_pwm).css('background-color',curr_path.color);
         });
-        $('.pwmpicker').css('background-color','#fff');
         $('#pathedit').html("");
         if (self.current_edit == pwm) {
           self.current_edit = undefined;
