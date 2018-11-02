@@ -3,7 +3,6 @@ function sr_request_mpack(method,url,data,success) {
   if (method == 'PUT') {
     sr_pleasewait();
   }
-  var failed = 0;
   if (method == 'PUT' && url == '/' && sr_config && sr_config.factory_version) {
     data['save_version'] = sr_config.factory_version;
   }
@@ -21,23 +20,6 @@ function sr_request_mpack(method,url,data,success) {
     processData: false,
     cache: false,
     timeout: 10000,
-    error: function(xhr,error,errorthrown) {
-      failed = failed + 1;
-      console.log('Error on mpack request #' + failed);
-      if (failed > 2) {
-        if (method == 'PUT') {
-          sr_failed();
-        }
-        if (method == 'POST') {
-          sr_error();
-        }
-      } else {
-        $.ajax(call_options);
-      }
-      // console.log(method + ' ' + url);
-      // console.log(data);
-      // console.log('Errored: ' + error);
-    },
     beforeSend: function(xhr,settings) {
       if (method == 'PUT') {
         sr_screenblock('Speichern');
@@ -46,8 +28,7 @@ function sr_request_mpack(method,url,data,success) {
         sr_screenblock(unescape("L%F6schen"));
       }
     },
-    complete: function(xhr,status) {
-    },
+    complete: function(xhr,status) {},
     success: function(result,status,xhr) {
       if (method == 'PUT' || method == 'DELETE') {
         sr_screenunblock();
@@ -69,8 +50,6 @@ function sr_request_mpack(method,url,data,success) {
       if (method == 'PUT') {
         sr_finished();
       }
-      // console.log(xhr);
-      // console.log(result);      
       if (success) {
         success.call(this,result,status,xhr);
       }
@@ -79,7 +58,14 @@ function sr_request_mpack(method,url,data,success) {
   if (typeof data !== 'undefined') {
     call_options.data = bytesarray;
   }
-  $.ajax(call_options);
+  $.ajax(call_options).retry({ times: 4 }).fail(function(){
+    if (method == 'PUT') {
+      sr_failed();
+    }
+    if (method == 'POST') {
+      sr_error();
+    }
+  });
 }
 
 function update_time() {
@@ -111,7 +97,7 @@ function _wait_for_sunriser_loop(target) {
       cache: false,
       type: 'GET',
       url: '/ok',
-      timeout: 1000,
+      timeout: 500,
       complete: function() {
         _wait_for_sunriser_loop(target);
       },

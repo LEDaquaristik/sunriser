@@ -194,6 +194,7 @@ sub _build_base_vars {
       $self->versioned ? 'js/interact-1.3.4.min.js' : 'js/interact-1.3.4.js',
       $self->versioned ? 'js/tipr-3.1.min.js' : 'js/tipr-3.1.js',
       $self->versioned ? 'js/URI-1.18.10.min.js' : 'js/URI-1.18.10.js',
+      $self->versioned ? 'js/jquery.ajax-retry.min.js' : 'js/jquery.ajax-retry.js',
     qw(
       js/tmpl.js
       js/class.js

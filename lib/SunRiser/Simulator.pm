@@ -33,6 +33,8 @@ use Plack::App::Proxy;
 use Plack::Middleware::BufferedStreaming;
 use Data::Printer;
 
+#use LWP::ConsoleLogger::Everywhere ();
+
 has versioned => (
   is => 'lazy',
 );
@@ -628,6 +630,7 @@ sub _build_sunriser_proxy {
   return Plack::App::Proxy->new(
     remote => 'http://'.$self->sunriserhost,
     backend => 'LWP',
+    # backend => 'AnyEvent::HTTP',
     # preserve_host_header => 1,
   );
 }
@@ -636,6 +639,7 @@ sub sr_proxy {
   my ( $self, $env ) = @_;
   return unless $self->has_sunriserhost;
   $self->debug('==> SunRiser');
+  delete $env->{HTTP_COOKIE} if defined $env->{HTTP_COOKIE};
   Plack::Middleware::BufferedStreaming->wrap($self->sunriser_proxy, force => 1)->($env);
 }
 

@@ -68,9 +68,7 @@ $.ajaxTransport("+*", function(options, originalOptions, jqXHR){
         }
         xhr.send(data);
       },
-      abort: function(){
-        jqXHR.abort();
-      }
+      abort: function(){}
     };
   }
 });

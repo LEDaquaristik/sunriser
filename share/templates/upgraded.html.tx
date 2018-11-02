@@ -5,6 +5,14 @@
 
 <hr>
 
+<h3>Seit Firmware v0.881:</h3>
+
+<div>
+  Wir haben die Kommunikation zwischen ihrem Browser und dem SunRiser nochmal optimiert, weil hier durch die neue Version z.b. die Wartungsarbeiten nicht erreichbar waren. Auch haben wir eine Korrektur am Zeitraffer gemacht, weil dieser oft nicht korrekt beendet wurde.
+</div>
+
+<br><hr>
+
 <h3>Seit Firmware v0.880:</h3>
 
 <div>
