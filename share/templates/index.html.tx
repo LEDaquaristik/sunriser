@@ -37,7 +37,7 @@
   <div id="home_configured">
     <a class="index_function" href="/led.html">
       <span class="index_function_badge">+</span>
-      <div>LED einstellen</div>
+      <div>LEDs verwalten</div>
     </a>
     <a class="index_function" href="/day.html">
       <span class="index_function_badge">+</span>
@@ -72,7 +72,7 @@
     </a>
     <div class="index_function" id="index_reboot_sunriser">
       <span class="index_function_badge">+</span>
-      <div>SunRiser neustarten</div>
+      <div>SunRiser neu starten</div>
     </div>
   </div>
 
