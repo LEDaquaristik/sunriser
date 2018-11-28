@@ -32,7 +32,7 @@
     <div class="screenblockertext">
       <div class="blocking">
         <div class="anim"></div>
-        <div id="blockertext">Seite wird noch geladen</div>
+        <div id="blockertext">Die Seite wird noch geladen</div>
       </div>
     </div>
     <div class="main">
