@@ -1,4 +1,4 @@
-: cascade base { title => "Firmware aktualisieren", nav => "setup", no_form => 1, no_bighelp => 1, help => mark_raw("Hier k&ouml;nnen Sie die so genannte Firmware vom SunRiser auf den neusten Stand bringen. Die Firmware beinhaltet alles was den SunRiser ausmacht, die Software und die Webseiten wie diese hier. Einfach auf 'Installiere Firmware' klicken und Ihr Browser &uuml;bernimmt den Rest, dieser l&auml;dt aus dem Internet die gew&uuml;nschte Firmware runter, sendet diese an Ihren SunRiser, welcher dann ungef&auml;hr eine Minute braucht um diese zu installieren und wieder hochzufahren.<br><br>Falls Ihr SunRiser nach dem Firmware Upgrade nicht wieder seine gewohnte Funktion aufnimmt, versuchen Sie zuerst einfach auf den Reset Knopf zu dr&uuml;cken, und falls dies erfolglos ist, die Stromversorgung einmal trennen und wieder zu verbinden. Falls alle Versuche scheitern m&uuml;ssen Sie einen 'Factory-Reset' bei Ihrem SunRiser durchf&uuml;hren, durch dr&uuml;cken des Reset Knopfs in den ersten 5 Sekunden nachdem der SunRiser frisch mit der Stromversorgung verbunden ist. Dies dauert dann auch eine Minute und sollte in allen F&auml;llen wieder ein funktionst&uuml;chtiges Ger&auml;t hervorbringen. Achten Sie darauf das bei einem 'Factory-Reset' die gesamte Konfiguration gel&ouml;scht wird, aber diese kann dann &uuml;ber <a href='/backup.html'>Sicherung</a> wieder hergestellt werden. Eine vorige <a href='/backup.html'>Sicherung</a> ist nicht notwendig, sollte aber nach jeder Konfigurations &Auml;nderung trotzdem angelegt werden.<br><br>Bitte w&auml;hrend dieser Zeit nicht den SunRiser abschalten.") }
+: cascade base { title => "Firmware aktualisieren", nav => "setup", no_form => 1, no_bighelp => 1, help => mark_raw("Hier k&ouml;nnen Sie die so genannte Firmware vom SunRiser auf den neuesten Stand bringen. Die Firmware beinhaltet alles was den SunRiser ausmacht, die Software und die Webseiten wie diese hier. Einfach auf 'Installiere Firmware' klicken und Ihr Browser &uuml;bernimmt den Rest. Die gew&uuml;nschte Firmware wird aus dem Internet geladen und an Ihren SunRiser gesendet, welcher dann ungef&auml;hr eine Minute braucht um diese zu installieren und wieder neu zu starten.<br><br>Falls Ihr SunRiser nach dem Firmware Upgrade nicht wieder seine gewohnte Funktion aufnimmt, versuchen Sie zuerst einfach auf den Reset Knopf zu dr&uuml;cken, und falls dies erfolglos ist, die Stromversorgung einmal trennen und wieder zu verbinden. Falls alle Versuche scheitern m&uuml;ssen Sie einen 'Factory-Reset' bei Ihrem SunRiser durchf&uuml;hren, durch dr&uuml;cken des Reset Knopfs in den ersten 5 Sekunden nachdem der SunRiser frisch mit der Stromversorgung verbunden ist. Dies dauert etwa eine Minute und sollte in allen F&auml;llen wieder ein funktionst&uuml;chtiges Ger&auml;t hervorbringen. Achten Sie darauf, dass bei einem 'Factory-Reset' die gesamte Konfiguration gel&ouml;scht wird, aber &uuml;ber <a href='/backup.html'>Sicherung</a> wieder hergestellt werden kann. Eine vorherige <a href='/backup.html'>Sicherung</a> ist nicht notwendig, sollte aber nach jeder Konfigurations &Auml;nderung dennoch angelegt werden.<br><br>Bitte w&auml;hrenddessen den SunRiser nicht abschalten.") }
 : override content -> {
 
 <div id="firmware_list">
@@ -10,11 +10,11 @@
 
 <a class="index_function" href="/backup">
   <span class="index_function_badge">+</span>
-  <div>Sicherung herunterladen</div>
+  <div>Sicherung erstellen und herunterladen</div>
 </a>
 <a class="index_function" href="/upgraded.html?upgraded_review=1">
   <span class="index_function_badge">+</span>
-  <div>Firmware Update Information nochmal lesen</div>
+  <div>Firmware Update Information erneut anzeigen</div>
 </a>
 
 : }
