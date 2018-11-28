@@ -1,10 +1,10 @@
-: cascade base { title => "Expertenfunktionen", no_bighelp => 1, help => r("Die Benutzung dieser Funktionen ist auf eigene Gefahr!<br><br>Das L&ouml;schen der Konfiguration startet nicht den SunRiser neu, dies erm&ouml;glicht Ihnen noch eine korrekte neue <a href='/network.html'>Netzwerk Konfiguration</a> anzulegen, falls dies notwendig ist. Bitte beachten Sie das ein L&ouml;schen der Konfiguration auch den Experten Modus erstmal wieder abschaltet.") }
+: cascade base { title => "Expertenfunktionen", no_bighelp => 1, help => r("Benutzung dieser Funktionen auf eigene Gefahr!<br><br>Das L&ouml;schen der Konfiguration f&uuml;hrt nicht zu einem Neustart des SunRisers. So kann bei Bedarf zuvor eine korrekte neue <a href='/network.html'>Netzwerk Konfiguration</a> angelegt werden. Bitte beachten Sie das ein L&ouml;schen der Konfiguration den Experten Modus ausschaltet.") }
 : override content -> {
 
 <div class="index_functions">
   <div class="index_function" id="index_reboot_sunriser">
     <span class="index_function_badge">+</span>
-    <div>SunRiser neustarten</div>
+    <div>SunRiser neu starten</div>
   </div>
 </div>
 
@@ -23,7 +23,7 @@
 
   <div id="update_factory" class="bigbutton backupbutton">
     <i class="fa fa-gear"></i>
-    <div>Werkszustand Firmware erneuern (und gleichzeitig auf neuen Werkszustand setzen!)</div>
+    <div>Firmware für Werkszustand erneuern (und gleichzeitig auf neuen Werkszustand zurücksetzen!)</div>
   </div>
 </div>
 
@@ -86,11 +86,11 @@ $('#config_reset').click(function(){
 
 $('#update_factory').click(function(){
   if (sr_firmwares[0].timestamp == firmware_info.timestamp) {
-    if (confirm('Werkszustand Firmware erneuern und damit komplette Konfiguration des SunRisers ' + unescape("l%F6schen") + '?') == true) {
+    if (confirm('Werkszustand Firmware erneuern und damit die komplette Konfiguration des SunRisers ' + unescape("l%F6schen") + '?') == true) {
       download_and_install_factory(firmware_root + sr_firmwares[0].url);
     }
   } else {
-    alert('Bitte erst die neuste Firmware installieren!');    
+    alert('Bitte zuvor die neueste Firmware installieren!');    
   }
 });
 
