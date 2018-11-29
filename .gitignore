@@ -15,8 +15,11 @@ SunRiser-*
 *.bin
 *.log
 *.tar.gz
+*.zip
 *.mp
 *#
+
+NEW.*
 
 *firmware_images.json*
 
