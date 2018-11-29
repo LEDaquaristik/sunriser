@@ -5,10 +5,10 @@
 
 <hr>
 
-<h3>Seit Firmware v0.883:</h3>
+<h3>Seit Firmware v0.884:</h3>
 
 <div>
-  Wir mussten die Netzwerk Bibliothek erneuern wegen einem Fehler in der zuletzt verwendenten Version. Weiterhin haben wir ein Problem in der Tagesplanung korrigiert der manche SunRiser betroffen hat. Auch beim Funktionstest mussten wir eine Korrektur vornehmen.
+  Wir mussten die Netzwerk Bibliothek erneuern wegen einem Fehler in der zuletzt verwendeten Version. Weiterhin haben wir ein Problem in der Tagesplanung korrigiert der manche SunRiser betroffen hat, sowie beim Funktionstest.
 </div>
 
 <br><hr>
