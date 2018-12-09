@@ -22,6 +22,7 @@
   "nofinder", [    "Deactivate SunRiser Finder", "bool", 0],
   "nomdns", [      "[LEGACY] Deactivate mdns",   "bool", 0],
   "higherminimum", [ "Higher minimum lightning", "bool", 0],
+  "oldfade", [     "Use first concept for fade", "bool", 0],
   "enforcenet", [  "Reboot till DHCP is not timing out", "bool", 0],
   "ip4", [         "Set fixed IPv4",             "ip4"],
   "ip4_netmask", [ "IPv4 Netmask",               "ip4"],

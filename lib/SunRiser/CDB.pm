@@ -164,6 +164,11 @@ sub add_factory {
     $self->debug('Adding raw ___firmware');
     $self->cdb->put_replace('___firmware',scalar $main->slurp_raw);
   }
+  my $bootloader = path('bootloader.bin');
+  if (-f $bootloader) {
+    $self->debug('Adding raw ___bootloader');
+    $self->cdb->put_replace('___bootloader',scalar $bootloader->slurp_raw);
+  }
   return 1;
 }
 

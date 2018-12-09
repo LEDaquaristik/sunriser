@@ -131,6 +131,9 @@ $('body').on('sr_config',function(){
         name: "higherminimum",
         label: "Erh&ouml;hter Minimumwert"
       },{
+        name: "oldfade",
+        label: "Alter Fading Algorithmus"
+      },{
         name: "enforcenet",
         label: "Erzwinge DHCP"
       }];
