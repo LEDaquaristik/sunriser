@@ -8,7 +8,7 @@
 <h3>Seit Firmware v0.885:</h3>
 
 <div>
-  ....
+  Feintuning des SunRiser- Algorithmus f&uuml;r eine verbesserte Simulation im 1-10% Helligkeitsbereich. Ein vorhandener Fehler beim PWM Wert 1 wurde in dem Zusammenhang beseitigt. Update der Zeitrafferfunktion. 
 </div>
 
 <br><hr>
