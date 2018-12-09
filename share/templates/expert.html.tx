@@ -129,10 +129,10 @@ $('body').on('sr_config',function(){
       });
       var fields = [{
         name: "higherminimum",
-        label: "Erh&ouml;hter Minimumwert"
+        label: "Erh&ouml;hter Minimumwert (Standard = Aus) Diese Funktion &auml;ndert den SunRiser-Agorithmus im unteren Bereich der Dimmkurve, um auch Einstellungen unter 30% abbilden zu k&ouml;nnen. Notwendig nur f&uuml;r Ger&auml;te aus dem Baujahr 2016 (in der Regel zu erkennen am komplett silbernen Geh&auml;use)."
       },{
         name: "oldfade",
-        label: "Alter Fading Algorithmus"
+        label: "Urspr&uuml;nglicher SunRiser-Algorithmus (Standard = Aus) Dieser wurde standardm&auml;&szlig;ig bis 12/2018 verwendet, Helligkeitsbereich 1-10% wom&ouml;glich ungenau) "
       },{
         name: "enforcenet",
         label: "Erzwinge DHCP"
