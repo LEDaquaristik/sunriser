@@ -405,6 +405,8 @@ sub _web_serve_file {
       $content_type = 'application/zip';
     } elsif ($ext eq 'ico') {
       $content_type = 'image/x-icon';
+    } elsif ($ext eq 'mp') {
+      $content_type = 'application/x-msgpack';
     } else {
       $content_type = 'text/plain; charset=utf-8'
     }
