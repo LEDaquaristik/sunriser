@@ -22,7 +22,8 @@ $('body').on('sr_config',function(){
       color_options.push({
         value: color.id,
         label: color.name,
-        backgroundcolor: color.color
+        backgroundcolor: color.color,
+        replace_me_with: color.replace_me_with
       });
     });
 
@@ -34,10 +35,11 @@ $('body').on('sr_config',function(){
         data: { pwm_id: i },
         options: color_options,
         initjs: function(){
-          var select = this.html_field();
+          var self = this;
+          var select = self.html_field();
           select.find('option').each(function(){
             if ($(this).prop('selected')) {
-              $.each(color_options,function(i,color){
+              $.each(color_options,function(x,color){
                 if (select.val() == color.value) {
                   select.css('background-color',color.backgroundcolor);
                 }
@@ -47,9 +49,19 @@ $('body').on('sr_config',function(){
           select.change(function(){
             select.find('option').each(function(){
               if ($(this).prop('selected')) {
-                $.each(color_options,function(i,color){
+                $.each(color_options,function(x,color){
                   if (select.val() == color.value) {
-                    select.css('background-color',color.backgroundcolor);
+                    if (color.replace_me_with) {
+                      $.each(color.replace_me_with,function(y,next_color){
+                        var next_pwm = self.data.pwm_id + y;
+                        console.log(next_pwm);
+                        if (next_pwm <= sr_config['pwm_count']) {
+                          $('#pwm_' + next_pwm + '_color').val(next_color).trigger('change');
+                        }
+                      });
+                    } else {
+                      select.css('background-color',color.backgroundcolor);
+                    }
                   }
                 });
               }

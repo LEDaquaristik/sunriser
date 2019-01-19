@@ -25,7 +25,7 @@
 $('body').on('sr_firmwares',function(){
 
   $("#firmware_list").html(tmpl("firmware_tmpl",{
-    firmwares: sr_firmwares,
+    firmwares: sr_firmwares
   }));
   if (!sr_config.showexpert) {
     $('.old_firmware').hide();

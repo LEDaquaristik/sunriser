@@ -87,6 +87,11 @@
         </a>
       </li>
       <li class="second-level">
+        <a href="/demo.html">
+          <i class="fa fa-flash"></i>Beispielkonfigurationen
+        </a>
+      </li>
+      <li class="second-level">
         <a href="/backup.html">
           <i class="fa fa-medkit"></i>Sicherung
         </a>

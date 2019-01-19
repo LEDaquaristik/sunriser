@@ -60,6 +60,7 @@ sub _build_publish_files {
     clouds.html
     contact.html
     day.html
+    demo.html
     expert.html
     faq.html
     firmware.html
@@ -85,6 +86,12 @@ sub _build_publish_files {
     week.html
 
     notfound.html
+
+    demo/african_sun.mp
+    demo/seawater.mp
+    demo/amazon_grow.mp
+    demo/freshwater.mp
+    demo/standard.mp
 
   ), @versioned];
 }
@@ -121,6 +128,9 @@ sub render {
     my $func = 'json_'.$filename;
     $self->info('Generating '.$file.' from function '.$func);
     return encode_json($self->$func());
+  } elsif ($ext eq 'mp') {
+    my $share = path(dist_dir('SunRiser'),'web');
+    return $share->child($file)->slurp;
   } elsif ($ext eq 'css') {
     return $self->render_all_css();
   } elsif ($ext eq 'js') {

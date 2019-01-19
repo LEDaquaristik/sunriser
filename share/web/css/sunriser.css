@@ -996,12 +996,12 @@ tbody tr:first-child{
   color:white
 }
 /**  Firmeware  **/
-.firmware{
+.firmware,.demo{
   padding: 10px 0;
   display: table;
   width: 100%;
 }
-.firmware:last-child{
+.firmware:last-child,.demo:last-child{
   border-bottom: 0px solid transparent;
 }
 .firmware_description{
@@ -1009,7 +1009,7 @@ tbody tr:first-child{
   padding-top: 10px;
 }
 
-.firmware_button {
+.firmware_button,.demo_button {
   height: 50px;
   width: auto;
   border: medium none;

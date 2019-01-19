@@ -83,9 +83,11 @@ function sr_sysinfo_done() {
     info['<div class="warnarea">Keine Bootloader Informationen!</div>'] = "";
   }
   $('#sysinfo').html(tmpl('sysinfo_tmpl',{ model: sr_config.model + " (" + sr_config.model_id + ")", info: info }));
-  console.log(state);
   sr_load_error_log();
   sr_load_info_log();
+  setTimeout(function(){
+    sr_sysinfo_request_state();
+  }, 60000);
 }
 
 function sr_load_error_log() {

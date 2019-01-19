@@ -674,8 +674,29 @@ $('body').on('sr_config',function(){
           markers[program] = [];
           v = values["programs#setup#" + program + "#marker"];
           if (v) {
+            var last_time = 0;
             for (var i = 0; i < v.length; i++, i++) {
-              markers[program].push(new SrMarker(v[i],v[i+1]));
+              var time = v[i];
+              var percent = v[i+1];
+              if (time < last_time) {
+                time = last_time;
+              }
+              if (time < 0) {
+                time = last_time;
+              } else if (time > 1440) {
+                time = 1440;
+              }
+              if (typeof percent == "number") {
+                if (percent < 0) {
+                  percent = 0;
+                } else if (percent > 100) {
+                  percent = 100;
+                }
+              } else {
+                percent = 0;
+              }
+              last_time = time;
+              markers[program].push(new SrMarker(time,percent));
             }
           }
         });

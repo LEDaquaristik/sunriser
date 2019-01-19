@@ -1,0 +1,104 @@
+: cascade base { title => "Beispielkonfiguration", nav => "setup", no_form => 1, no_bighelp => 1, help => r("Sie k&ouml;nnen hier die Konfiguration runterladen und dann &uuml;ber die <a href='/backup.html'>Sicherung</a> wieder einspielen! Falls Sie die Konfiguration vorher betrachten wollen, ohne Sie auf Ihren SunRiser aufzuspielen, benutzen Sie einfach unser <a href='http://srdemo.ledaquaristik.de/'>Demo</a>!") }
+: override content -> {
+
+<div id="demo_list">
+</div>
+
+<br><br>
+
+<a class="index_function" href="/backup">
+  <span class="index_function_badge">+</span>
+  <div>Sicherung erstellen und herunterladen</div>
+</a>
+
+: }
+: override postjs -> {
+
+<script type="text/javascript">
+
+// function install_demo_config(demo, demo_name) {
+
+//   sr_screenblock('Lade Beispielkonfiguration "' + demo_name + '"');
+
+//   $.ajax({
+//     type: 'GET',
+//     url: '/demo/' + demo + '.mp',
+//     cache: false,
+//     error: function(xhr,error,errorthrown){
+//       // TODO error handling
+//     },
+//     success: function(data,status,xhr){
+//       var buf = new ArrayBuffer(data.length);
+//       var bytesarray = new Uint8Array(buf);
+//       for (var i=0; i < data.length; i++) {
+//         bytesarray[i] = data.charCodeAt(i);
+//       }
+//       sr_screenblock('Sende Beispielkonfiguration "' + demo_name + '" an SunRiser');
+//       $.ajax({
+//         type: 'PUT',
+//         url: '/restore',
+//         contentType: 'application/octet-stream',
+//         dataType: 'arraybuffer',
+//         processData: false,
+//         data: bytesarray,
+//         cache: false,
+//         error: function(xhr,error,errorthrown){
+//           // TODO error handling
+//         },
+//         success: function(data,status,xhr){
+//           console.log(data,status,xhr);
+//           sr_screenblock('<div>Warte auf Neustart</div><div>Bitte das Ger&auml;t NICHT abschalten!!!</div>');
+//           wait_for_sunriser();
+//         }
+//       });
+//     }    
+//   });
+
+// }
+
+var demos = [{
+  "id": "standard",
+  "name": "Standard Konfiguration"
+},{
+  "id": "african_sun",
+  "name": "AquaLUMix AFRICAN-SUN"
+},{
+  "id": "amazon_grow",
+  "name": "AquaLUMix AMAZON-GROW"
+},{
+  "id": "freshwater",
+  "name": "AquaLUMix FRESHWATER"
+},{
+  "id": "seawater",
+  "name": "AquaLUMix SEAWATER"
+}];
+
+$('body').on('sr_config',function(){
+
+  $("#demo_list").html(tmpl("demo_tmpl",{
+    demos: demos
+  }));
+  $(".install_demo").click(function(){
+    install_demo_config($(this).data("demo"),$(this).data("demoname"));
+  });
+
+});
+
+</script>
+<script type="text/html" id="demo_tmpl">
+
+<% for ( var i = 0; i < demos.length; i++ ) { %>
+  <div class="demo" id="demo_<%=demos[i].id%>">
+    <div class="demo_description"><b>
+      <i class="fa fa-forumbee"></i><%=demos[i].name%></b>
+    </div>
+    <a class="install_demo" style="float:right" href="/demo/<%=demos[i].id%>.mp" data-demo="<%=demos[i].id%>" data-demoname="<%=demos[i].name%>">
+      <i class="firmdown"></i>Lade Konfiguration
+    </a>
+  </div>
+  <hr>
+<% } %>
+
+</script>
+
+: }

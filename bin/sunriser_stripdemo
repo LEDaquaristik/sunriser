@@ -1,0 +1,49 @@
+#!/usr/bin/env perl
+# PODNAME: sunriser_stripdemo
+# ABSTRACT: SunRiser Strip Configuration for preconfiguration
+
+$|=1;
+
+use strict;
+use warnings;
+use Data::MessagePack;
+use Path::Tiny;
+use DDP;
+
+my $filename = shift @ARGV;
+my $target = shift @ARGV || $filename.'_demo';
+
+my $mp = Data::MessagePack->new;
+$mp->canonical->utf8->prefer_integer;
+my $data = $mp->unpack(path($filename)->slurp_raw);
+
+for (qw( useip4 ip4 ip4_dns ip4_gateway ip4_netmask ntpserver )) {
+  delete $data->{$_} if exists $data->{$_};  
+}
+
+if ($ENV{SUNRISER_STRIP_WEATHER}) {
+  for (keys %{$data}) {
+    if ($_ =~ m/^weather\#/) {
+      delete $data->{$_};
+    }
+  }
+}
+
+for (1..8) {
+  my $marker = "dayplanner#marker#".$_;
+  if (exists $data->{$marker} && !$data->{$marker}) {
+    delete $data->{$marker};
+  }
+  my $color = "pwm#".$_."#color";
+  if (exists $data->{$color} && !$data->{$color}) {
+    delete $data->{$color}
+  }
+}
+
+my %new = %{$data};
+
+p(%new);
+
+path($target)->spew_raw($mp->pack({ %new }));
+
+exit 0;
