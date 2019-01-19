@@ -87,12 +87,6 @@ sub _build_publish_files {
 
     notfound.html
 
-    demo/african_sun.mp
-    demo/seawater.mp
-    demo/amazon_grow.mp
-    demo/freshwater.mp
-    demo/standard.mp
-
   ), @versioned];
 }
 
