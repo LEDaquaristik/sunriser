@@ -28,6 +28,12 @@ has demo => (
 
 sub _build_demo { 0 }
 
+has simulator => (
+  is => 'lazy',
+);
+
+sub _build_simulator { 1 }
+
 has config => (
   is => 'lazy',
 );
@@ -103,21 +109,23 @@ sub publish_to {
   for my $filename (@files) {
     my $file = path($dir,$filename);
     $file->parent->mkpath unless -d $file->parent;
-    $file->spew_utf8($self->render($filename));
+    $file->spew_utf8($self->render($filename, 1));
   }
 }
 
 sub render {
-  my ( $self, $file ) = @_;
+  my ( $self, $file, $static ) = @_;
   my @parts = split('\.',$file);
   my $ext = pop @parts;
   my $filename = pop @parts;
   if ($ext eq 'html' or ($ext eq 'css' and $filename eq 'fonts')) {
     $self->info('Generating '.$file.' from template');
     my $template = $file.'.tx';
-    my %vars = %{$self->base_vars};
-    $vars{file} = $file;
-    return $self->template_engine->render($template,\%vars);    
+    return $self->template_engine->render($template,{
+      file => $file,
+      static => $static,
+      %{$self->base_vars},
+    });
   } elsif ($ext eq 'json') {
     my $func = 'json_'.$filename;
     $self->info('Generating '.$file.' from function '.$func);

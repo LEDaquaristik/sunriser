@@ -74,6 +74,12 @@
       <span class="index_function_badge">+</span>
       <div>SunRiser neu starten</div>
     </div>
+: if $simulator {
+    <div class="index_function" href="/sdcard_config">
+      <span class="index_function_badge">+</span>
+      <div>Konfiguration f&uuml;r SD-Karte</div>
+    </div>
+: }
   </div>
 
 : }

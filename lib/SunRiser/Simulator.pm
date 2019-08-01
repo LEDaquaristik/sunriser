@@ -439,6 +439,11 @@ sub _web_backup {
   );
 }
 
+sub _web_sdcard_config {
+  my ( $self ) = @_;
+
+}
+
 sub get_state {
   my ( $self, $env ) = @_;
   if ($self->demo) {
@@ -595,6 +600,7 @@ sub _build_publisher {
   return SunRiser::Publisher->new(
     config => $self->config,
     demo => $self->demo,
+    simulator => 1,
   );
 }
 
@@ -739,17 +745,15 @@ sub _build_psgi {
           # if no post or password not accepted, show login.html
           return $self->_web_serve_file('login.html');
         }
-      }
-
-      if ($path =~ /^\/logout(.*)$/) {
+      } elsif ($path =~ /^\/logout(.*)$/) {
         # Trick to simulate logout with instead of deleting cookie
         # just garbage it with a wrong session id (safe method)
         return $self->_web_serve_file('login.html',
           'Set-Cookie' => 'sid=x'
         );
-      }
-
-      if ($method eq 'GET') {
+      } elsif ($path eq '/sdcard_config') {
+        return $self->_web_sdcard_config;
+      } elsif ($method eq 'GET') {
         my ( $file ) = $path =~ m/^\/(.*)/;
 
         if ($path =~ /^\/ok/) {

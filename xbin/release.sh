@@ -41,6 +41,8 @@ ssh $TARGET "(
   echo Deleting demo cache... && \
   rm -rf .srdemocache && \
   echo Waiting... && sleep 5 && \
+  echo Copy current image to NEW.BEE... && \
+  cp -a ~/htdocs/$FIRMWARE_FILE ~/htdocs/NEW.BEE \
   echo Install distribution, upgrade images file... && \
   cpanm $RELEASE_FILE && cd htdocs && sunriser_generatemaster && cd .. && \
   echo Extracting sunriser.psgi && \
