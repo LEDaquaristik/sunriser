@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
-# PODNAME: sunriser_cdb
-# ABSTRACT: Debugging tool for msgpack cdbs of SunRiser
+# PODNAME: sunriser
+# ABSTRACT: SunRiser CLI tool
 
 $|=1;
 
