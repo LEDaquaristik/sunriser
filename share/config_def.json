@@ -46,6 +46,7 @@
   "pwm#X",       "Main data of PWM X", [
     "manager", [   "Assigned manager, 0 = unassigned, 1 = dayplanner, 2 = weekplanner, 3 = moon, 4 = sun", "integer", 0],
     "max", [       "Custom maximum value",        "integer", 1000],
+    "switch", [    "PWM only on/off",            "bool", 0],
     "name", [      "Custom name for pwm",        "text"],
     "color", [     "Color definition",           "text"],
     "weather", [   "Weather program assigned",   "integer"]
