@@ -142,6 +142,29 @@ var sr_forms = {
     //   name: "fadepercent", label: "Prozentualer Anteil f&uuml;r Ein/Ausblendung des Gewitters"
     },{
       name: "weekdays", label: "Nur an diesen Wochentagen gibt es Gewitter (sonst jeden Tag)"
+    }],
+    expert_fields: [{
+      name: "min_secs_before_stormfront", label: "min_secs_before_stormfront", template: "slider", min: 0, max: 10000
+    },{
+      name: "max_secs_before_stormfront", label: "max_secs_before_stormfront", template: "slider", min: 0, max: 10000
+    },{
+      name: "min_rainfront_length_extra_minutes", label: "min_rainfront_length_extra_minutes", template: "slider", min: 0, max: 10000
+    },{
+      name: "max_rainfront_length_extra_minutes", label: "max_rainfront_length_extra_minutes", template: "slider", min: 0, max: 10000
+    },{
+      name: "preflash_duration_ms", label: "preflash_duration_ms", template: "slider", min: 0, max: 10000
+    },{
+      name: "pause_duration_ms", label: "pause_duration_ms", template: "slider", min: 0, max: 10000
+    },{
+      name: "full_flash_duration_ms", label: "full_flash_duration_ms", template: "slider", min: 0, max: 10000
+    },{
+      name: "deload_flash_duration_ms", label: "deload_flash_duration_ms", template: "slider", min: 0, max: 10000
+    },{
+      name: "deload_pause_duration_ms", label: "deload_pause_duration_ms", template: "slider", min: 0, max: 10000
+    },{
+      name: "min_secs_between_lightnings", label: "min_secs_between_lightnings", template: "slider", min: 0, max: 10000
+    },{
+      name: "max_secs_between_lightnings", label: "max_secs_between_lightnings", template: "slider", min: 0, max: 10000
     }]
   },
   //

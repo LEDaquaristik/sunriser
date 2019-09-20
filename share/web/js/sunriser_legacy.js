@@ -19,6 +19,17 @@ function sr_generate_weather_setup_one(return_only) {
     "weather#setup#0#thunder#minstorm",
     "weather#setup#0#thunder#randstorm",
     "weather#setup#0#thunder#nightonly",
+    "weather#setup#0#thunder#min_secs_before_stormfront",
+    "weather#setup#0#thunder#max_secs_before_stormfront",
+    "weather#setup#0#thunder#min_rainfront_length_extra_minutes",
+    "weather#setup#0#thunder#max_rainfront_length_extra_minutes",
+    "weather#setup#0#thunder#preflash_duration_ms",
+    "weather#setup#0#thunder#pause_duration_ms",
+    "weather#setup#0#thunder#full_flash_duration_ms",
+    "weather#setup#0#thunder#deload_flash_duration_ms",
+    "weather#setup#0#thunder#deload_pause_duration_ms",
+    "weather#setup#0#thunder#min_secs_between_lightnings",
+    "weather#setup#0#thunder#max_secs_between_lightnings",
     "weather#setup#0#moon#activated",
     "weather#setup#0#moon#maximum"
   ];
