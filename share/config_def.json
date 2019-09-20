@@ -107,6 +107,11 @@
         "deload_pause_duration_ms", ["deload_pause_duration_ms", "integer", 500],
         "min_secs_between_lightnings", ["min_secs_between_lightnings", "integer", 60],
         "max_secs_between_lightnings", ["max_secs_between_lightnings", "integer", 120],
+        "preflash_strength", ["Strength of the lightning preflash", "integer", 8],
+        "max_flash_strength", ["Strength of the main lightning flash", "integer", 16],
+        "load_min", ["Minimum amount of deload flashes", "integer", 1],
+        "load_max", ["Maximum amount of deload flashes", "integer", 4],
+        "static_deload_flash_strength", ["Same strength for all deload flashes if set higher than 0", "integer", 0],
       ],
       "moon", "Moon setup", [
         "activated", ["Show moonphase based on reality", "bool", 0],

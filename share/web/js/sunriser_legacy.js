@@ -30,6 +30,11 @@ function sr_generate_weather_setup_one(return_only) {
     "weather#setup#0#thunder#deload_pause_duration_ms",
     "weather#setup#0#thunder#min_secs_between_lightnings",
     "weather#setup#0#thunder#max_secs_between_lightnings",
+    "weather#setup#0#thunder#preflash_strength",
+    "weather#setup#0#thunder#max_flash_strength",
+    "weather#setup#0#thunder#load_min",
+    "weather#setup#0#thunder#load_max",
+    "weather#setup#0#thunder#static_deload_flash_strength",
     "weather#setup#0#moon#activated",
     "weather#setup#0#moon#maximum"
   ];

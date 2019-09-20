@@ -165,6 +165,16 @@ var sr_forms = {
       name: "min_secs_between_lightnings", label: "min_secs_between_lightnings", template: "slider", min: 0, max: 10000
     },{
       name: "max_secs_between_lightnings", label: "max_secs_between_lightnings", template: "slider", min: 0, max: 10000
+    },{
+      name: "preflash_strength", label: "Strength of the lightning preflash", template: "slider", min: 0, max: 10000
+    },{
+      name: "max_flash_strength", label: "Strength of the main lightning flash", template: "slider", min: 0, max: 10000
+    },{
+      name: "load_min", label: "Minimum amount of deload flashes", template: "slider", min: 0, max: 10000
+    },{
+      name: "load_max", label: "Maximum amount of deload flashes", template: "slider", min: 0, max: 10000
+    },{
+      name: "static_deload_flash_strength", label: "Same strength for all deload flashes if set higher than 0", template: "slider", min: 0, max: 100
     }]
   },
   //
