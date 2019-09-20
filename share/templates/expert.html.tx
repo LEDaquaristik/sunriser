@@ -1,4 +1,4 @@
-: cascade base { title => "Expertenfunktionen", no_bighelp => 1, help => r("Benutzung dieser Funktionen auf eigene Gefahr!<br><br>Das L&ouml;schen der Konfiguration f&uuml;hrt nicht zu einem Neustart des SunRisers. So kann bei Bedarf zuvor eine korrekte neue <a href='/network.html'>Netzwerk Konfiguration</a> angelegt werden. Bitte beachten Sie das ein L&ouml;schen der Konfiguration den Experten Modus ausschaltet.") }
+: cascade base { title => "Expertenfunktionen", no_bighelp => 1, help => r("Benutzung dieser Funktionen auf eigene Gefahr!<br><br>Das L&ouml;schen der Konfiguration f&uuml;hrt nicht zu einem Neustart des SunRisers. So kann bei Bedarf zuvor eine korrekte neue <a href='/network.html'>Netzwerk Konfiguration</a> angelegt werden. Bitte beachten Sie das ein L&ouml;schen der Konfiguration den Experten Modus ausschaltet. Bitte beachten das unsere Programme weiterhin nur bis 1000 als maximal Wert berechnen, unabh&auml;nging von dem gesetzten maximal Wert einer LED, dieses wird erst nach der Berechnung angewendet.") }
 : override content -> {
 
 <div class="index_functions">
@@ -112,7 +112,25 @@ $('body').on('sr_config',function(){
     var keys = new Array();
     for (i = 1; i <= sr_config["pwm_count"]; i++) {
       keys.push('pwm#' + i + '#manager');
+      keys.push('pwm#' + i + '#max');
     }
+
+    var keys = new Array();
+    var fields = [];
+    for (i = 1; i <= sr_config["pwm_count"]; i++) {
+      keys.push('pwm#' + i + '#max');
+    }
+    sr_request_mpack('POST','/',keys,function(values){
+      if (fields.length) {
+        var form = new SrForm($('#maxform'),{
+          title: "Maximaler PWM Leistungswert",
+          fields: fields
+        });
+      } else {
+        $('#maxform').html("");
+      }
+    });
+
     sr_request_mpack('POST','/',keys,function(values){
       var dayplanner_pwms = new Array();
       for (i = 1; i <= sr_config["pwm_count"]; i++) {
@@ -151,6 +169,14 @@ $('body').on('sr_config',function(){
           label: "Wochenplanung Programm #" + program
         });
       });
+      for (i = 1; i <= sr_config["pwm_count"]; i++) {
+        fields.push({
+          name: 'pwm#' + i + '#max',
+          template: "slider", min: 10, max: 1000,
+          transform_value: function(value) { return parseInt(value); },
+          label: "Maximum Wert LED #" + i
+        });
+      }
       if (fields.length) {
         var form = new SrForm($('#expertform'),{
           title: undefined,

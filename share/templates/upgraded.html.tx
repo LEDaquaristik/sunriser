@@ -5,6 +5,14 @@
 
 <hr>
 
+<h3>Seit Firmware v0.900:</h3>
+
+<div>
+  Wir haben neue Parameter beim Wetter hinzugef&uuml;gt, teilweise auch im Experten Modus. Im Experten Modus ist es nun auch m&ouml;glich eine LED bei den Einstellungen darauf einzustellen nur an oder aus zu gehen und keine PWM Funktion zu benutzen, dies kann z.b. f&uuml;r Pumpen oder &auml;hnlichem genutzt werden. Diese LEDs werden auch aus dem Wetter ausgeschlossen. Sie k&ouml;nnen dann einfach Tagesplanung oder Wochenplanung nutzen und die LED wird immer auf stehen, wenn der Wert der Planung nicht 0 ist.
+</div>
+
+<br><hr>
+
 <h3>Seit Firmware v0.886:</h3>
 
 <div>

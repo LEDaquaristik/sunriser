@@ -13,6 +13,7 @@ $('body').on('sr_config',function(){
 
   $("#led").each(function(){
     var fields = new Array();
+    var expert_fields = new Array();
     var color_options = new Array({
       value: undefined,
       label: 'Nicht benutzt',
@@ -54,7 +55,6 @@ $('body').on('sr_config',function(){
                     if (color.replace_me_with) {
                       $.each(color.replace_me_with,function(y,next_color){
                         var next_pwm = self.data.pwm_id + y;
-                        console.log(next_pwm);
                         if (next_pwm <= sr_config['pwm_count']) {
                           $('#pwm_' + next_pwm + '_color').val(next_color).trigger('change');
                         }
@@ -85,10 +85,15 @@ $('body').on('sr_config',function(){
           label: 'Wochenplanung'
         }]
       });
+      expert_fields.push({
+        name: "pwm#" + i + "#onoff",
+        label: "LED #" + i + " nur Aus/An (z.b. Pumpe)",
+      });
     }
     var form = new SrForm(this,{
       title: "LED Farben einstellen",
-      fields: fields
+      fields: fields,
+      expert_fields: expert_fields
     });
   });
 
