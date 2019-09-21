@@ -8,7 +8,7 @@
 <h3>Seit Firmware v0.900:</h3>
 
 <div>
-  Wir haben neue Parameter beim Wetter hinzugef&uuml;gt, teilweise auch im Experten Modus. Im Experten Modus ist es nun auch m&ouml;glich eine LED bei den Einstellungen darauf einzustellen nur an oder aus zu gehen und keine PWM Funktion zu benutzen, dies kann z.b. f&uuml;r Pumpen oder &auml;hnlichem genutzt werden. Diese LEDs werden auch aus dem Wetter ausgeschlossen. Sie k&ouml;nnen dann einfach Tagesplanung oder Wochenplanung nutzen und die LED wird immer auf stehen, wenn der Wert der Planung nicht 0 ist.
+  Wir haben neue Parameter beim Wetter hinzugef&uuml;gt, teilweise auch im Experten Modus. Im Experten Modus ist es nun auch m&ouml;glich eine LED bei den Einstellungen darauf einzustellen nur an oder aus zu gehen und keine PWM Funktion zu benutzen, dies kann z.b. f&uuml;r Pumpen oder &auml;hnlichem genutzt werden. Diese LEDs werden auch aus dem Wetter ausgeschlossen. Sie k&ouml;nnen dann einfach Tagesplanung oder Wochenplanung nutzen und die LED wird immer auf stehen, wenn der Wert der Planung nicht 0 ist. Korrektur eines Fehlers im Netzwerk, wenn man den SunRiser Finder nicht benutzt hat. Neues Verfahren bei der Formattierung der MicroSD Karte um Wiederbenutzung der gleichen Bereiche zu verhindern. Ein Backup kann nun auf die MicroSD Karte kopiert werden als <i>CONFIG.MP</i> um beim starten eingelesen zu werden.
 </div>
 
 <br><hr>
