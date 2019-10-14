@@ -32,6 +32,7 @@ echo "Upload to target..."
 scp $OBJS_FILE     $TARGET:~/htdocs/objs/
 scp $FIRMWARE_FILE $TARGET:~/htdocs/
 scp $RELEASE_FILE  $TARGET:~/
+scp $RELEASE_FILE  $TARGET:~/htdocs/NEW.BEE
 
 ssh $TARGET "(
   echo Killing old demo server... && \
@@ -41,8 +42,6 @@ ssh $TARGET "(
   echo Deleting demo cache... && \
   rm -rf .srdemocache && \
   echo Waiting... && sleep 5 && \
-  echo Copy current image to NEW.BEE... && \
-  cp -a ~/htdocs/$FIRMWARE_FILE ~/htdocs/NEW.BEE \
   echo Install distribution, upgrade images file... && \
   cpanm $RELEASE_FILE && cd htdocs && sunriser_generatemaster && cd .. && \
   echo Extracting sunriser.psgi && \
