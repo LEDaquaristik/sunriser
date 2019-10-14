@@ -85,15 +85,16 @@ $('body').on('sr_config',function(){
           label: 'Wochenplanung'
         }]
       });
-      expert_fields.push({
-        name: "pwm#" + i + "#onoff",
-        label: "LED #" + i + " nur Aus/An (z.b. Pumpe)",
-      });
+      if (sr_config.showexpert) {
+        fields.push({
+          name: "pwm#" + i + "#onoff",
+          label: "LED #" + i + " nur Aus/An (z.b. Pumpe)",
+        });
+      }
     }
     var form = new SrForm(this,{
       title: "LED Farben einstellen",
-      fields: fields,
-      expert_fields: expert_fields
+      fields: fields
     });
   });
 

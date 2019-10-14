@@ -62,7 +62,7 @@ backup_reader.onload = function(e){
         // TODO error handling
       },
       success: function(data,status,xhr){
-        sr_screenblock('<div>Warte auf Neustart</div><div>Bitte das Ger&auml;t NICHT abschalten!!!</div>');
+        sr_screenblock('<div>Warte auf Laden der Konfiguration</div><div>Bitte das Ger&auml;t NICHT abschalten!!!</div>');
         wait_for_sunriser();
       }
     };

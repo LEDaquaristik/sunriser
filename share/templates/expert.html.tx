@@ -110,16 +110,12 @@ $('body').on('sr_config',function(){
 
   $('#expertform').each(function(){
     var keys = new Array();
+    var fields = [];
     for (i = 1; i <= sr_config["pwm_count"]; i++) {
       keys.push('pwm#' + i + '#manager');
       keys.push('pwm#' + i + '#max');
     }
 
-    var keys = new Array();
-    var fields = [];
-    for (i = 1; i <= sr_config["pwm_count"]; i++) {
-      keys.push('pwm#' + i + '#max');
-    }
     sr_request_mpack('POST','/',keys,function(values){
       if (fields.length) {
         var form = new SrForm($('#maxform'),{

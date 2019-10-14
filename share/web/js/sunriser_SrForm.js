@@ -14,16 +14,29 @@ var SrForm = Class.extend({
   init: function(target,config_param) {
     var self = this;
     var config = {}; $.extend(config,config_param);
-    var fields = config.fields; delete config.fields;
-    if (typeof config.expert_fields !== 'undefined' && sr_config.showexpert) {
-      fields.push.apply(fields, config.expert_fields);
+    var fields = config.fields.slice(); delete config.fields;
+    var expert_fields = config.expert_fields ? config.expert_fields.slice() : undefined; delete config.expert_fields;
+    if (expert_fields) {
+      $.each(expert_fields,function(i,expert_field){
+        var field = {}; $.extend(field,expert_field);
+        if (!sr_config.showexpert) {
+          field.hidden = true;
+        }
+        fields.push(field);
+      });
     }
+    //   if (sr_config.showexpert) {
+    //     fields.push.apply(fields, expert_fields);
+    //   } else {
+    //   }
+    // }
     self.target = target;
     self.fields = new Array();
-    $.each(fields,function(i,field){
-      if (typeof field === 'function') {
-        field = field.call(self,i);
+    $.each(fields,function(i,srcfield){
+      if (typeof srcfield === 'function') {
+        srcfield = srcfield.call(self,i);
       }
+      var field = {}; $.extend(field,srcfield);
       if (typeof field.name !== 'undefined') {
         if (typeof config.prefix !== 'undefined' && !field.noprefix) {
           field.name = config.prefix + '#' + field.name;
@@ -156,7 +169,7 @@ var SrForm = Class.extend({
     var keys = [];
     $.each(this.fields,function(i,field){
       if (typeof field.name !== 'undefined') {
-        keys.push(field.name);        
+        keys.push(field.name);
       }
     });
     return keys;

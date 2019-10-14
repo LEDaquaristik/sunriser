@@ -5,6 +5,13 @@
 
 <hr>
 
-<div class="form" id="thunderstorm"></div>
+<div class="form" id="thunder"></div>
+
+<div class="js-hide expert-only">
+  <hr>
+  <a href="/img/thunderflow.png">
+    <img style="width:100%" src="/img/thunderflow.png">
+  </a>
+</div>
 
 : }

@@ -8,7 +8,13 @@
 <h3>Seit Firmware v0.900:</h3>
 
 <div>
-  Wir haben neue Parameter beim Wetter hinzugef&uuml;gt, teilweise auch im Experten Modus. Im Experten Modus ist es nun auch m&ouml;glich eine LED bei den Einstellungen darauf einzustellen nur an oder aus zu gehen und keine PWM Funktion zu benutzen, dies kann z.b. f&uuml;r Pumpen oder &auml;hnlichem genutzt werden. Diese LEDs werden auch aus dem Wetter ausgeschlossen. Sie k&ouml;nnen dann einfach Tagesplanung oder Wochenplanung nutzen und die LED wird immer auf stehen, wenn der Wert der Planung nicht 0 ist. Korrektur eines Fehlers im Netzwerk, wenn man den SunRiser Finder nicht benutzt hat. Neues Verfahren bei der Formattierung der MicroSD Karte um Wiederbenutzung der gleichen Bereiche zu verhindern. Ein Backup kann nun auf die MicroSD Karte kopiert werden als <i>CONFIG.MP</i> um beim starten eingelesen zu werden.
+- Die Wettersimulation, insbesondere das Gewitter, wurde tiefgreifend &uuml;berarbeitet. So kann das Gewitter nun mit einer Vielzahl an zus&auml;tzlichen Parametern (Bei eingeschaltetem Expertenmodus) individuell angepasst werden. Der zeitliche Ablauf der Effekte wurde optimiert, so dass ein Ergebnis deutlich schneller zu sehen ist.<br>
+- Die Wolkensimulation wurde ebenfalls im zeitlichen Ablauf optimiert, zudem aber auch hinsichtlich der Helligkeitsdifferenz zwischen freiem Himmel und Wolke was zu einer deutlich ansprechenderen und auff&auml;lligeren Simulation f&uuml;hrt.<br>
+- Die Regensimulation (blinken der LEDs) wurde ebenfalls komplett neugestaltet und ber&uuml;cksichtigt nun auch die Anzahl an zugewiesenen LEDs.<br>
+- Bei den LED Einstellungen (im Expertenmodus) ist es nun m&ouml;glich einen Kanal so einzustellen, dass er nur zum AN/AUS schalten genutzt werden kann, eine PWM Dimmung sowie eine Ber&uuml;cksichtigung dieses Kanals in der Wettersimulation ist dann nicht mehr gegeben. Dies ist besonders interessant bei Nutzung unserer Minipumpe zur Wasserk&uuml;hlung oder unserem CO2 Magnetventil. Konkret bedeutet das, wenn Sie die Tagesplanung oder Wochenplanung nutzen ist dieser Kanal immer auf (voll) AN sofern der Wert in der Planung nicht auf 0% steht.<br>
+- Korrektur eines Netzwerkfehlers, der auftrat, wenn man den SunRiser Finder nicht benutzt hat.<br>
+- Neues Verfahren bei der Formatierung der MicroSD Karte um eine Wiederbenutzung der gleichen Bereiche und somit Schreib- und Lesefehler zu verhindern.<br>
+- Ein Backup kann nun auf die MicroSD Karte kopiert werden als <u>CONFIG.MP</u> und wird beim Starten des SunRisers eingelesen.
 </div>
 
 <br><hr>

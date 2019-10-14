@@ -1410,7 +1410,7 @@ a.index_function:active,div.index_function:active {
   display: inline-block;
 }
 .browserscreen{
-  background:url(../img/ledsetting.png) no-repeat;
+  background:url(../img/ledsetting.jpg) no-repeat;
   width: 350px;
   height: 310px;
   border-radius: 0 0 0 3px;
@@ -1493,7 +1493,7 @@ a.index_function:active,div.index_function:active {
   display:table;
 }
 .dayplannerimg{
-  background:url(../img/dayplanner.png) no-repeat;
+  background:url(../img/dayplanner.jpg) no-repeat;
   width: 400px;
   height: 357px;
   margin:25px 0;
@@ -1592,7 +1592,7 @@ a.index_function:active,div.index_function:active {
   margin-top:-4px;
 }
 .moretocomeimg .browserscreen{
-  background:url(../img/ledaqua.png) no-repeat;
+  background:url(../img/ledaqua.jpg) no-repeat;
   width: 690px;
   height: 260px;
   border-radius: 0px;

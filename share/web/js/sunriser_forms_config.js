@@ -111,7 +111,7 @@ var sr_forms = {
   //  _/      _/    _/  _/    _/  _/    _/_/  _/    _/  _/        _/    _/
   // _/      _/    _/    _/_/    _/      _/  _/_/_/    _/_/_/_/  _/    _/
   //
-  thunderstorm: {
+  thunder: {
     title: "Gewitter Simulation",
     prefix: "weather#setup#X#thunder",
     fields: [{
@@ -126,8 +126,8 @@ var sr_forms = {
       name: "minstorm", label: "Minimum L&auml;nge eines Gewittersturms in Minuten",
       template: "slider", min: 2, max: 10
     },{
-      name: "randstorm", label: "Maximale zus&auml;tzliche L&auml;nge eines Gewitters in Minuten",
-      template: "slider", min: 10, max: 120
+      name: "randstorm", label: "Maximum zuf&auml;llig hinzugef&uuml;gte L&auml;nge eines Gewitters in Minuten",
+      template: "slider", min: 0, max: 120
     },{
       name: "zeroonly", label: "Gewitter nur wenn LED Planung auf 0%"
     },{
@@ -142,39 +142,35 @@ var sr_forms = {
     //   name: "fadepercent", label: "Prozentualer Anteil f&uuml;r Ein/Ausblendung des Gewitters"
     },{
       name: "weekdays", label: "Nur an diesen Wochentagen gibt es Gewitter (sonst jeden Tag)"
+    },{
+      name: "fixdeload", label: "Nachblitz mit fester St&auml;rke (0 = dynamisch)", template: "slider", min: 0, max: 16
     }],
     expert_fields: [{
-      name: "min_secs_before_stormfront", label: "min_secs_before_stormfront", template: "slider", min: 0, max: 10000
+      name: "minrainextra", label: "Minimum L&auml;nge in Minuten als Regen nach Gewitter", template: "slider", min: 0, max: 120
     },{
-      name: "max_secs_before_stormfront", label: "max_secs_before_stormfront", template: "slider", min: 0, max: 10000
+      name: "randrainextra", label: "Maximum zuf&auml;llig hinzugef&uuml;gte L&auml;nge in Minuten als Regen nach Gewitter", template: "slider", min: 0, max: 120
     },{
-      name: "min_rainfront_length_extra_minutes", label: "min_rainfront_length_extra_minutes", template: "slider", min: 0, max: 10000
+      name: "preflashlength", label: "L&auml;nge des Vorblitzes in Millisekunden", template: "slider", min: 100, max: 1000
     },{
-      name: "max_rainfront_length_extra_minutes", label: "max_rainfront_length_extra_minutes", template: "slider", min: 0, max: 10000
+      name: "pauselength", label: "L&auml;nge der Pause zwischen Vorblitz und Hauptblitz in Millisekunden", template: "slider", min: 0, max: 1000
     },{
-      name: "preflash_duration_ms", label: "preflash_duration_ms", template: "slider", min: 0, max: 10000
+      name: "fullflashlength", label: "L&auml;nge des Hauptblitzes in Millisekunden", template: "slider", min: 100, max: 2000
     },{
-      name: "pause_duration_ms", label: "pause_duration_ms", template: "slider", min: 0, max: 10000
+      name: "deloadflashlength", label: "L&auml;nge der Nachblitze in Millisekunden", template: "slider", min: 100, max: 1000
     },{
-      name: "full_flash_duration_ms", label: "full_flash_duration_ms", template: "slider", min: 0, max: 10000
+      name: "deloadpauselength", label: "L&auml;nge der Pause zwischen den Nachblitzen", template: "slider", min: 0, max: 1000
     },{
-      name: "deload_flash_duration_ms", label: "deload_flash_duration_ms", template: "slider", min: 0, max: 10000
+      name: "minflashpause", label: "Minimum L&auml;nge der Pause zwischen den Blitzen in Sekunden", template: "slider", min: 30, max: 600
     },{
-      name: "deload_pause_duration_ms", label: "deload_pause_duration_ms", template: "slider", min: 0, max: 10000
+      name: "randflashpause", label: "Maximum zuf&auml;llig hinzugef&uuml;gte L&auml;nge der Pause zwischen den Blitzen in Sekunden", template: "slider", min: 0, max: 600
     },{
-      name: "min_secs_between_lightnings", label: "min_secs_between_lightnings", template: "slider", min: 0, max: 10000
+      name: "preflash", label: "St&auml;rke des Vorblitzes", template: "slider", min: 1, max: 16
     },{
-      name: "max_secs_between_lightnings", label: "max_secs_between_lightnings", template: "slider", min: 0, max: 10000
+      name: "flash", label: "St&auml;rke des Hauptblitzes", template: "slider", min: 0, max: 16
     },{
-      name: "preflash_strength", label: "Strength of the lightning preflash", template: "slider", min: 0, max: 10000
+      name: "mindeload", label: "Minimum Menge an Nachblitzen", template: "slider", min: 0, max: 10
     },{
-      name: "max_flash_strength", label: "Strength of the main lightning flash", template: "slider", min: 0, max: 10000
-    },{
-      name: "load_min", label: "Minimum amount of deload flashes", template: "slider", min: 0, max: 10000
-    },{
-      name: "load_max", label: "Maximum amount of deload flashes", template: "slider", min: 0, max: 10000
-    },{
-      name: "static_deload_flash_strength", label: "Same strength for all deload flashes if set higher than 0", template: "slider", min: 0, max: 100
+      name: "randdeload", label: "Maximum zuf&auml;llig hinzugef&uuml;gte an Nachblitzen", template: "slider", min: 0, max: 10
     }]
   },
   //

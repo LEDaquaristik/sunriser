@@ -11,7 +11,7 @@
   <table>
     <% for ( var i = 0; i < fields.length; i++ ) { var field = fields[i]; %>
       <% if (!field.pre) { %>
-        <tr class="table_separation">
+        <tr class="table_separation" <% if (field.hidden) { %>style="display:none"<% } %>>
           <td<% if (field.desc) { %> class="tip" data-tip="<%=field.desc %>"<% } %>>
             <%=field.label %>:
           </td>

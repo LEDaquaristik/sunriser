@@ -1,4 +1,22 @@
 
+function sr_request_send_config(sr_values, success) {
+  var values = {};
+  $.each(sr_values,function(k,v){
+    if (sr_type(k)) {
+      if (typeof sr_values[k] === 'undefined') {
+        values[k] = sr_default(k);
+      } else if (sr_type(k) == 'json') {
+        values[k] = JSON.stringify(sr_values[k]);
+      } else {
+        values[k] = sr_values[k];
+      }
+    }
+  });
+  sr_request_mpack('PUT','/',values,function(){
+    success.call(this,values);
+  });
+}
+
 function sr_request_mpack(method,url,data,success) {
   if (method == 'PUT') {
     sr_pleasewait();
@@ -91,26 +109,30 @@ function update_time() {
   }, 1000);
 }
 
-function _wait_for_sunriser_loop(target) {
+function _wait_for_sunriser_loop(target,success_count) {
   setTimeout(function(){
     $.ajax({
       cache: false,
       type: 'GET',
       url: '/ok',
-      timeout: 500,
-      complete: function() {
-        _wait_for_sunriser_loop(target);
+      timeout: 1000,
+      error: function() {
+        _wait_for_sunriser_loop(target,success_count);
       },
       success: function(data, textStatus, XMLHttpRequest) {
-        if (data == 'OK') {
-          window.location.href = target;
+        if (success_count < 3) {
+          _wait_for_sunriser_loop(target,success_count + 1);
+        } else {
+          if (data == 'OK') {
+            window.location.href = target;
+          }
         }
       }
     });
-  },2000);
+  }, 2500);
 }
 
-function _wait_for_sunriser_loop_mac(target) {
+function _wait_for_sunriser_loop_mac(target,success_count) {
   var uri = new URI(target);
   setTimeout(function(){
     $.ajax({
@@ -118,22 +140,28 @@ function _wait_for_sunriser_loop_mac(target) {
       dataType: "json",
       type: 'GET',
       url: 'http://sunriser.ledaquaristik.de/finder',
-      timeout: 3000,
-      complete: function() {
-        _wait_for_sunriser_loop_mac(target);
+      timeout: 1000,
+      error: function() {
+        _wait_for_sunriser_loop_mac(target,success_count);
       },
       success: function(data, textStatus, XMLHttpRequest) {
-        if (data && data[mac]) {
-          var ip = data[mac].ip;
-          if (ip) {
-            var new_uri = uri.clone();
-            new_uri.host(ip);
-            if (sr_config.webport != 80) {
-              new_uri.port(webport);
+        if (success_count < 3) {
+          _wait_for_sunriser_loop_mac(target,success_count + 1);
+        } else {
+          if (data && data[mac]) {
+            var ip = data[mac].ip;
+            if (ip) {
+              var new_uri = uri.clone();
+              new_uri.host(ip);
+              if (sr_config.webport != 80) {
+                new_uri.port(webport);
+              }
+              if (!new_uri.equals(uri)) {
+                window.location.href = new_uri.toString();
+              }
             }
-            if (!new_uri.equals(uri)) {
-              window.location.href = new_uri.toString();
-            }
+          } else {
+            _wait_for_sunriser_loop_mac(target,success_count);
           }
         }
       }
@@ -146,9 +174,9 @@ function wait_for_sunriser(target) {
     target = window.location.href;
   }
   if (mac && !sr_config.nofinder) {
-    _wait_for_sunriser_loop_mac(target);
+    _wait_for_sunriser_loop_mac(target,0);
   }
-  _wait_for_sunriser_loop(target);
+  _wait_for_sunriser_loop(target,0);
 }
 
 function set_all_pwm(value, success) {

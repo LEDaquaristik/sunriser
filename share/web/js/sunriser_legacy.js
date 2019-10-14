@@ -1,5 +1,5 @@
 
-function sr_generate_weather_setup_one(return_only) {
+function sr_generate_weather_setup_one(success) {
   var legacy_keys = [
     "weather#setup#0#pwms",
     "weather#setup#0#rain#activated",
@@ -19,22 +19,6 @@ function sr_generate_weather_setup_one(return_only) {
     "weather#setup#0#thunder#minstorm",
     "weather#setup#0#thunder#randstorm",
     "weather#setup#0#thunder#nightonly",
-    "weather#setup#0#thunder#min_secs_before_stormfront",
-    "weather#setup#0#thunder#max_secs_before_stormfront",
-    "weather#setup#0#thunder#min_rainfront_length_extra_minutes",
-    "weather#setup#0#thunder#max_rainfront_length_extra_minutes",
-    "weather#setup#0#thunder#preflash_duration_ms",
-    "weather#setup#0#thunder#pause_duration_ms",
-    "weather#setup#0#thunder#full_flash_duration_ms",
-    "weather#setup#0#thunder#deload_flash_duration_ms",
-    "weather#setup#0#thunder#deload_pause_duration_ms",
-    "weather#setup#0#thunder#min_secs_between_lightnings",
-    "weather#setup#0#thunder#max_secs_between_lightnings",
-    "weather#setup#0#thunder#preflash_strength",
-    "weather#setup#0#thunder#max_flash_strength",
-    "weather#setup#0#thunder#load_min",
-    "weather#setup#0#thunder#load_max",
-    "weather#setup#0#thunder#static_deload_flash_strength",
     "weather#setup#0#moon#activated",
     "weather#setup#0#moon#maximum"
   ];
@@ -55,24 +39,17 @@ function sr_generate_weather_setup_one(return_only) {
       });
     }
     var weather_setup_one_name = "Standard Wetterprofil";
-    weather_setup_one["weather#web"] = JSON.stringify([{
+    weather_setup_one["weather#web"] = [{
       id: 1,
       name: weather_setup_one_name
-    }]);
+    }];
     weather_setup_one["weather#setup#1#name"] = weather_setup_one_name;
     weather_setup_one["weather#last_setup_id"] = 1;
-    console.log(weather_setup_one);
-    if (return_only) {
-      return weather_setup_one; 
-    } else {
-      sr_request_mpack('PUT','/',weather_setup_one,function(){
-        window.location.href = window.location.href;
-      });
-    }
+    success.call(this,weather_setup_one);
   });
 }
 
-function sr_update_weekplanner_legacy() {
+function sr_update_weekplanner_legacy(success) {
   var keys = new Array();
   for (i = 1; i <= sr_config["pwm_count"]; i++) { 
     keys.push('pwm#' + i + '#manager');
@@ -111,15 +88,57 @@ function sr_update_weekplanner_legacy() {
               }
             }
           });
-          sr_request_mpack('PUT','/',new_values,function(){
-            window.location.href = window.location.href;
-          });
+          success.call(this, new_values);
         });
       });
     } else {
-      sr_request_mpack('PUT','/',{},function(){
-        window.location.href = window.location.href;
-      });
+      success.call(this);
     }
   });
+}
+
+function sr_update_weather_fields(success){
+  var weather_types = ['thunder','moon','clouds','rain'];
+  var weather_keys = new Array();
+  $.each(weather_types,function(i,weather_type){
+    var all_fields = sr_forms[weather_type].fields.slice();
+    if (sr_forms[weather_type].expert_fields) {
+      all_fields.push.apply(all_fields,sr_forms[weather_type].expert_fields.slice());
+    }
+    $.each(all_fields,function(i,v){
+      weather_keys.push(weather_type + '#' + v.name);
+    });
+  });
+  var all_weather_keys = new Array();
+  if (sr_config["weather#web"]) {
+    $.each(sr_config["weather#web"],function(i,v){
+      $.each(weather_keys,function(j,k){
+        all_weather_keys.push('weather#setup#' + v.id + '#' + k);
+      });
+    });
+    sr_request_mpack('POST','/',all_weather_keys,function(values){
+      var has_new_value = false;
+      var new_values = {};
+      $.each(sr_config["weather#web"],function(i,v){
+        $.each(weather_types,function(j,weather_type){
+          if (values['weather#setup#' + v.id + '#' + weather_type + '#activated']) {
+            var all_fields = sr_forms[weather_type].fields.slice();
+            if (sr_forms[weather_type].expert_fields) {
+              all_fields.push.apply(all_fields,sr_forms[weather_type].expert_fields.slice());
+            }
+            $.each(all_fields,function(h,v){
+              var weather_key = weather_type + '#' + v.name;
+              if (!weather_key in values || typeof values[weather_key] === 'undefined' || values[weather_key] === null) {
+                has_new_value = true;
+                new_values[weather_key] = sr_default(weather_key);
+              }
+            });
+          }
+        });
+      });
+      success.call(this,new_values);
+    });
+  } else {
+    success.call(this);
+  }
 }

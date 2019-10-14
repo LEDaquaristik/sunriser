@@ -706,22 +706,21 @@ sub _build_psgi {
             $self->delete_config($env);
             return $self->_web_ok;
           } elsif ($method eq 'PUT') {
-            return $self->sr_proxy($env) if $self->has_sunriserhost;
             my $body = $req->raw_body;
-            # poloured($body);
             my $data = $self->_mp->unpack($body);
             p($data);
+            return $self->sr_proxy($env) if $self->has_sunriserhost;
             for my $k (keys %{$data}) {
               $self->debug('Setting key '.$k);
               $self->set($k,$data->{$k},$env);
             }
             return $self->_web_ok;
           } elsif ($method eq 'POST') {
-            return $self->sr_proxy($env) if $self->has_sunriserhost;
             my $body = $req->raw_body;
             my $data = $self->_mp->unpack($body);
             my %values;
-            $self->debug('Requested keys: '.join(',',@{$data}));
+            $self->debug('Requested keys: '.join(' ',@{$data}));
+            return $self->sr_proxy($env) if $self->has_sunriserhost;
             for my $key (@{$data}) {
               $values{$key} = $self->get($key,$env);
             }
