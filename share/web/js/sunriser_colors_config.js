@@ -41,7 +41,7 @@ var sr_colors = [{
   "color": "#66a3ff"
 },{
   "id": "growx5",
-  "name": "GROWx5",
+  "name": "PLANT-GROW / GROWx5",
   "color": "#ff66cc"
 },{
   "id": "aqualumix_freshwater",
