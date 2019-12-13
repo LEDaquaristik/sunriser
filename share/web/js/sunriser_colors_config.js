@@ -69,8 +69,24 @@ var sr_colors = [{
   "color": "#ababab"
 },{
   "id": "custom",
-  "name": "Andere Farbe",
+  "name": "Andere Farbe 1",
   "color": "#ffff00"
+},{
+  "id": "custompink",
+  "name": "Andere Farbe 2",
+  "color": "#ff00ff"
+},{
+  "id": "customcyan",
+  "name": "Andere Farbe 3",
+  "color": "#00ffff"
+},{
+  "id": "customblue",
+  "name": "Andere Farbe 4",
+  "color": "#0000ff"
+},{
+  "id": "customred",
+  "name": "Andere Farbe 5",
+  "color": "#ff0000"
 },{
   "id": "aqualumix_freshwater_day_tropic",
   "name": "AquaLUMix FRESHWATER #1 DAY/TROPIC",

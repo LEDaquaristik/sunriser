@@ -124,7 +124,7 @@ var sr_forms = {
       template: "slider", min: 1, max: 24
     },{
       name: "minstorm", label: "Minimum L&auml;nge eines Gewittersturms in Minuten",
-      template: "slider", min: 2, max: 10
+      template: "slider", min: 2, max: 30
     },{
       name: "randstorm", label: "Maximum zuf&auml;llig hinzugef&uuml;gte L&auml;nge eines Gewitters in Minuten",
       template: "slider", min: 0, max: 120
@@ -132,14 +132,6 @@ var sr_forms = {
       name: "zeroonly", label: "Gewitter nur wenn LED Planung auf 0%"
     },{
       name: "nozeroonly", label: "Gewitter nur wenn LED Planung nicht 0%"
-    // },{
-    //   name: "mindist", label: "Minimaler Abstand zwischen den Blitzen in Sekunden",
-    //   template: "slider", min: 1, max: 60
-    // },{
-    //   name: "maxdist", label: "Maximaler Abstand zwischen den Blitzen",
-    //   template: "slider", min: 10, max: 300
-    // },{
-    //   name: "fadepercent", label: "Prozentualer Anteil f&uuml;r Ein/Ausblendung des Gewitters"
     },{
       name: "weekdays", label: "Nur an diesen Wochentagen gibt es Gewitter (sonst jeden Tag)"
     },{
@@ -170,7 +162,7 @@ var sr_forms = {
     },{
       name: "mindeload", label: "Minimum Menge an Nachblitzen", template: "slider", min: 0, max: 10
     },{
-      name: "randdeload", label: "Maximum zuf&auml;llig hinzugef&uuml;gte an Nachblitzen", template: "slider", min: 0, max: 10
+      name: "randdeload", label: "Maximum zuf&auml;llig hinzugef&uuml;gte Nachblitze", template: "slider", min: 0, max: 10
     }]
   },
   //

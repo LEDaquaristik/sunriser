@@ -76,9 +76,11 @@ function sr_sysinfo_done() {
   if (bootloader_m) {
     info["Bootloader Version"] = bootloader_info.version;
     info["Bootloader Zeitstempel"] = bootloader_m.format('LLL.ss');
-    info["Netzwerk MAC Adresse"] = bootloader_info.mac.map(function(m){
-      var h = m.toString(16); return h.length == 1 ? '0' + h : h;
-    }).join(":");
+    if (bootloader_info.mac) {
+      info["Netzwerk MAC Adresse"] = bootloader_info.mac.map(function(m){
+        var h = m.toString(16); return h.length == 1 ? '0' + h : h;
+      }).join(":");
+    }
   } else {
     info['<div class="warnarea">Keine Bootloader Informationen!</div>'] = "";
   }

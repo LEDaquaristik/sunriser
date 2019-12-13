@@ -1,0 +1,31 @@
+<div class="daypicker" id="<%=field.id%>_daypicker">
+  <div class="monday day">
+    <input type="checkbox" id="monday-check" value="1"></input>
+    <label for="monday-check">MO</label>
+  </div>
+  <div class="tuesday day">
+    <input type="checkbox" id="tuesday-check" value="2"></input>
+    <label for="tuesday-check">DI</label>
+  </div>
+  <div class="wednesday day">
+    <input type="checkbox" id="wednesday-check" value="3"></input>
+    <label for="wednesday-check">MI</label>
+  </div>
+  <div class="thursday day"> 
+    <input type="checkbox" id="thursday-check" value="4"></input>
+    <label for="thursday-check">DO</label>
+  </div>
+  <div class="friday day">
+    <input type="checkbox" id="friday-check" value="5"></input>
+    <label for="friday-check">FR</label>
+  </div>
+  <div class="saturday day">
+    <input type="checkbox" id="saturday-check" value="6"></input>
+    <label for="saturday-check">SA</label>
+  </div>
+  <div class="sunday day">
+    <input type="checkbox" id="sunday-check" value="0"></input>
+    <label for="sunday-check">SO</label>
+  </div>
+</div>
+<input type="hidden" <: include form::idname :> value="<%=field.joined_value()%>">

@@ -172,12 +172,13 @@ has state => (
 sub _build_state {
   my ( $self ) = @_;
   my $pwms = $self->model_info->{pwm_count};
+  my $time = time();
   return {
     pwmloop_stopped => 0,
     service_mode => 0,
-    uptime => 12345,
-    time => 1539301534,
-    tick => 12345000,
+    uptime => 80000,
+    time => $time,
+    tick => ( 80000 * 1000 ),
     logsize => 0,
     errsize => 1000,
     timewarp => 0,
@@ -437,11 +438,6 @@ sub _web_backup {
   return $self->_web_serve_msgpack(\%values,
     'Content-Disposition' => sprintf('attachment;filename=SunRiser8_Backup_%04u%02u%02u_%02u%02u%02u.mp', $year+1900,$mon+1,$mday,$hour,$min,$sec)
   );
-}
-
-sub _web_sdcard_config {
-  my ( $self ) = @_;
-
 }
 
 sub get_state {
@@ -750,8 +746,6 @@ sub _build_psgi {
         return $self->_web_serve_file('login.html',
           'Set-Cookie' => 'sid=x'
         );
-      } elsif ($path eq '/sdcard_config') {
-        return $self->_web_sdcard_config;
       } elsif ($method eq 'GET') {
         my ( $file ) = $path =~ m/^\/(.*)/;
 

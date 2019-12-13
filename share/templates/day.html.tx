@@ -13,6 +13,7 @@
   <svg id="dayplanner"></svg>
 </div>
 <div id="day_countbar"></div>
+<div id="pathcolor"></div>
 <div id="pathedit" style="margin-left:auto;margin-right:auto"></div>
 <div id="markeredit" style="height:100px"></div>
 <div class="form noautoload" id="dayplan"></div>
@@ -36,6 +37,11 @@
   </div>
 <% }); %>
 
+</script>
+<script type="text/html" id="pathcolor_tmpl">
+  <div style="width:100%;background-color:<%=sr_color.color%>;text-align:center;padding:5px;border:1px solid black" class="pathcolor">
+    LED #<%=pwm%> [<%=sr_color.name%>]
+  </div>
 </script>
 <script type="text/html" id="markeredit_tmpl">
 
@@ -263,7 +269,7 @@ var SrPath = Class.extend({
   dp: undefined,
   path: undefined,
   editmode: false,
-  color: '#000',
+  color: '#222',
   lines: [],
   circles: [],
 
@@ -272,6 +278,7 @@ var SrPath = Class.extend({
     this.pwm      = pwm;
     var color_id = $('#pwm_' + pwm + '_color').val();
     if (sr_color[color_id]) {
+      this.sr_color = sr_color[color_id];
       this.color = sr_color[color_id].color;
     }
     this.markers  = markers;
@@ -515,6 +522,7 @@ var SrPath = Class.extend({
   set_pathedit: function() {
     var self = this;
     $('#pathedit').html(tmpl('pathedit_tmpl',self));
+    $('#pathcolor').html(tmpl('pathcolor_tmpl',self));
     $('.pathedit_edit').click(function(){
       var pos = $(this).data('pos');
       // if (self.current_marker != self.markers[pos]) {

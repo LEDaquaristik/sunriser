@@ -88,8 +88,8 @@
       "pwms", [    "[LEGACY] Identification of pwms effected (Ignored)", "array(integer)"],
       "thunder",   "Thunderstorm setup", [
         "activated", ["Produce thunderstorms", "bool", 0],
-        "daychance", ["Percentage for a thunderstorm to happen (Tried per day in daymax amount)", "integer", 10],
-        "daymax", ["Maximum amount of thunderstorms per day", "integer", 1],
+        "daychance", ["Percentage for a thunderstorm to happen (Tried per day in daymax amount)", "integer", 30],
+        "daymax", ["Maximum amount of thunderstorms per day", "integer", 3],
         "minstorm", ["Minimum length of a storm in minutes", "integer", 10],
         "randstorm", ["Maximum length added to a storm length in minutes", "integer", 50],
         "nightonly", ["[LEGACY] Ignored", "bool"],
@@ -118,7 +118,7 @@
       ],
       "clouds", "Clouds setup", [
         "activated", ["Show clouds", "bool", 0],
-        "daychance", ["Chance that it is a day with clouds", "integer", 10],
+        "daychance", ["Chance that it is a day with clouds", "integer", 30],
         "mincloudshare", ["Minimum percentage share of cloud on a cloudy day", "integer", 10],
         "cloudshare", ["Maximum percentage share of cloud on a cloudy day", "integer", 30],
         "clouddarkness", ["Maximum darkness applied through cloud", "integer", 10],
@@ -128,7 +128,7 @@
       ],
       "rain", "Rain setup", [
         "activated", ["Make rainy days", "bool", 0],
-        "daychance", ["Chance that the day is rainy (with clouds activated, also day with clouds automatically)", "integer", 10],
+        "daychance", ["Chance that the day is rainy (with clouds activated, also day with clouds automatically)", "integer", 30],
         "minrainshare", ["Minimum percentage share of rain on a rainy day", "integer", 10],
         "rainshare", ["Maximum percentage share of rain on a rainy day", "integer", 30],
         "raincloudshare", ["Maximum percentage share of cloud on a rainy day", "integer", 80],
