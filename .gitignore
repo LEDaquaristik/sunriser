@@ -19,6 +19,8 @@ SunRiser-*
 *.mp
 *#
 
+!share/web/demo/*
+
 NEW.*
 CONFIG.MP
 

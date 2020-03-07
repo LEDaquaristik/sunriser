@@ -51,6 +51,7 @@ $('body').on('sr_config',function(){
           });
         });
         var form = new SrForm(this,{
+          no_reset: true,
           title: "Wochenplanung",
           fields: fields
         });

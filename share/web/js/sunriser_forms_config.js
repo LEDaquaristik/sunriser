@@ -121,13 +121,13 @@ var sr_forms = {
       template: "slider", min: 1, max: 100
     },{
       name: "daymax", label: "Maximale Anzahl von Gewittern pro Tag",
-      template: "slider", min: 1, max: 24
+      template: "slider", min: 1, max: 50
     },{
       name: "minstorm", label: "Minimum L&auml;nge eines Gewittersturms in Minuten",
-      template: "slider", min: 2, max: 30
+      template: "slider", min: 2, max: 240
     },{
       name: "randstorm", label: "Maximum zuf&auml;llig hinzugef&uuml;gte L&auml;nge eines Gewitters in Minuten",
-      template: "slider", min: 0, max: 120
+      template: "slider", min: 0, max: 240
     },{
       name: "zeroonly", label: "Gewitter nur wenn LED Planung auf 0%"
     },{
@@ -148,13 +148,13 @@ var sr_forms = {
     },{
       name: "fullflashlength", label: "L&auml;nge des Hauptblitzes in Millisekunden", template: "slider", min: 100, max: 2000
     },{
-      name: "deloadflashlength", label: "L&auml;nge der Nachblitze in Millisekunden", template: "slider", min: 100, max: 1000
+      name: "deloadflashlength", label: "L&auml;nge der Nachblitze in Millisekunden", template: "slider", min: 100, max: 2000
     },{
-      name: "deloadpauselength", label: "L&auml;nge der Pause zwischen den Nachblitzen", template: "slider", min: 0, max: 1000
+      name: "deloadpauselength", label: "L&auml;nge der Pause zwischen den Nachblitzen in Millisekunden", template: "slider", min: 0, max: 2000
     },{
-      name: "minflashpause", label: "Minimum L&auml;nge der Pause zwischen den Blitzen in Sekunden", template: "slider", min: 30, max: 600
+      name: "minflashpause", label: "Minimum L&auml;nge der Pause zwischen den Blitzen in Sekunden", template: "slider", min: 1, max: 300
     },{
-      name: "randflashpause", label: "Maximum zuf&auml;llig hinzugef&uuml;gte L&auml;nge der Pause zwischen den Blitzen in Sekunden", template: "slider", min: 0, max: 600
+      name: "randflashpause", label: "Maximum zuf&auml;llig hinzugef&uuml;gte L&auml;nge der Pause zwischen den Blitzen in Sekunden", template: "slider", min: 0, max: 300
     },{
       name: "preflash", label: "St&auml;rke des Vorblitzes", template: "slider", min: 1, max: 16
     },{
@@ -163,6 +163,8 @@ var sr_forms = {
       name: "mindeload", label: "Minimum Menge an Nachblitzen", template: "slider", min: 0, max: 10
     },{
       name: "randdeload", label: "Maximum zuf&auml;llig hinzugef&uuml;gte Nachblitze", template: "slider", min: 0, max: 10
+    },{
+      name: "permanent", label: "Dauerhaft Gewitter, keine Pause"
     }]
   },
   //
@@ -208,10 +210,10 @@ var sr_forms = {
       template: "slider", min: 0, max: 100, percent_sign: true
     },{
       name: "mincloudshare", label: "Minimaler Anteil von Wolken am Wolkentag",
-      template: "slider", min: 0, max: 100, percent_sign: true
+      template: "slider", min: 1, max: 100, percent_sign: true, maxfield: "weather#setup#X#clouds#cloudshare"
     },{
       name: "cloudshare", label: "Maximaler Anteil von Wolken am Wolkentag",
-      template: "slider", min: 0, max: 100, percent_sign: true
+      template: "slider", min: 1, max: 100, percent_sign: true, minfield: "weather#setup#X#clouds#mincloudshare"
     },{
       name: "clouddarkness", label: "Maximale Dunkelheit durch die Wolken",
       template: "slider", min: 1, max: 10
@@ -239,14 +241,11 @@ var sr_forms = {
     fields: [{
       name: "activated", label: "Simuliere Regen in diesem Profil"
     },{
-      name: "daychance", label: "Wahrscheinlichkeit eines Regentages",
-      template: "slider", min: 0, max: 100, percent_sign: true
+      name: "daychance", label: "Wahrscheinlichkeit eines Regentages", template: "slider", min: 0, max: 100, percent_sign: true
     },{
-      name: "minrainshare", label: "Minimaler Anteil von Regenfronten am Regentag",
-      template: "slider", min: 0, max: 100, percent_sign: true
+      name: "minrainshare", label: "Minimaler Anteil von Regenfronten am Regentag", template: "slider", min: 1, max: 100, percent_sign: true, maxfield: "weather#setup#X#rain#rainshare"
     },{
-      name: "rainshare", label: "Maximaler Anteil von Regenfronten am Regentag",
-      template: "slider", min: 0, max: 100, percent_sign: true
+      name: "rainshare", label: "Maximaler Anteil von Regenfronten am Regentag", template: "slider", min: 1, max: 100, percent_sign: true, minfield: "weather#setup#X#rain#minrainshare"
     // },{
     //   name: "raincloudshare", label: "Maximaler Anteil von Wolkenfronten am Regentag (wenn Wolken aktiviert sind)",
     //   template: "slider", min: 0, max: 100, percent_sign: true
@@ -254,14 +253,13 @@ var sr_forms = {
       name: "weekdays", label: "Nur an diesen Wochentagen gibt es Regen (sonst jeden Tag)"
     }],
     expert_fields: [{
-      name: "minrain", label: "Minimale Dauer einer Regenfront in Minuten",
-      template: "slider", min: 0, max: 240
+      name: "minrain", label: "Minimale Dauer einer Regenfront in Minuten", template: "slider", min: 1, max: 240
     },{
-      name: "randrain", label: "Maximale zus&auml;tzliche Dauer einer Regenfront in Minuten",
-      template: "slider", min: 0, max: 480
+      name: "randrain", label: "Maximale zus&auml;tzliche Dauer einer Regenfront in Minuten", template: "slider", min: 0, max: 360
     },{
-      name: "dropdarkness", label: "Maximale Dunkelheit durch die Regentropfen",
-      template: "slider", min: 1, max: 10
+      name: "dropdarkness", label: "Maximale Dunkelheit durch die Regentropfen", template: "slider", min: 1, max: 10
+    // },{
+    //   name: "permanent", label: "Dauerhaft Regen, keine Pause"
     }]
   }
 };

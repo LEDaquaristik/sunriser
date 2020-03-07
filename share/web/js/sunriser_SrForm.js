@@ -3,10 +3,12 @@ var SrForm = Class.extend({
 
   template: "form_std_tmpl",
   formsubmit: "Speichern",
+  formreset: "Standard Werte wiederherstellen",
   prefix: undefined,
   title: undefined,
-  no_values: false,
   loaded: undefined,
+  no_values: false,
+  no_reset: false,
   no_submit: false,
 
   error: false,
@@ -32,6 +34,7 @@ var SrForm = Class.extend({
     // }
     self.target = target;
     self.fields = new Array();
+    self.fields_by_name = new Object();
     $.each(fields,function(i,srcfield){
       if (typeof srcfield === 'function') {
         srcfield = srcfield.call(self,i);
@@ -45,7 +48,8 @@ var SrForm = Class.extend({
         field.name = field.name.replace('weather#setup#X#','weather#setup#' + get_weather_setup_id + '#');
         // -------------------------        
       }
-      self.fields.push(self.get_field(field));
+      self.fields_by_name[field.name] = self.get_field(field);
+      self.fields.push(self.fields_by_name[field.name]);
     });
     $.extend(this,config);
     sr_request_mpack('POST','/',self.keys(),function(values){
@@ -83,6 +87,18 @@ var SrForm = Class.extend({
       e.preventDefault();
       self.reset();
       self.submit();
+    });
+    $(self.target).find('#form_formreset').click(function(e){
+      var values = {};
+      $.each(self.fields,function(i,field){
+        if (typeof field.name !== 'undefined' && !field.nosubmit) {
+          values[field.name] = sr_default(field.name);
+        }
+      });
+      sr_request_mpack('PUT','/',values,function(){
+        sr_screenblock('Seite neu laden');
+        window.location.href = window.location.href;
+      });
     });
     if (typeof self.loaded === 'function') {
       self.loaded();

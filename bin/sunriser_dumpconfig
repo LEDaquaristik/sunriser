@@ -25,9 +25,7 @@ my $srcfg = SunRiser::Config->new;
 for my $k (sort { $a cmp $b } keys %cfg) {
   my $v = $cfg{$k};
   my $default = $srcfg->default($k);
-  unless (defined $default and defined $v and $v eq $default) {
-    printf("%s: %s\n",$k,ref $v eq 'ARRAY' ? join(',',@{$v}) : $v) if defined $v;
-  }
+  printf("%s: %s\n",$k,ref $v eq 'ARRAY' ? join(',',@{$v}) : $v) if defined $v;
 }
 
 exit 0;

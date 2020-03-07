@@ -420,23 +420,24 @@ nav h2{
 .sunriser_content .delete-button:hover {
   background-color:#32A5F7;
 }
-.sunriser_content input[type='submit']{
+.sunriser_content input[type='submit'], .sunriser_content button{
   background-color:#0087F7;
   border:none;
   padding:12px;
+  padding-left:20px;
+  padding-right:20px;
+  margin-left:10px;
   bottom:11px;
   right:40px;
-  width:150px;
-  position:absolute;
   font-size: 18px;
   color: white;
   border-radius: 2px;
   z-index:1;
 }
-.sunriser_content input[type='submit']:hover{
+.sunriser_content input[type='submit']:hover, .sunriser_content button:hover{
   background-color:#32A5F7;
 }
-.sunriser_content input[type='submit']:active{
+.sunriser_content input[type='submit']:active, .sunriser_content button:active{
   background-color:#32A5F7;
 }
 .pleasewait:before{

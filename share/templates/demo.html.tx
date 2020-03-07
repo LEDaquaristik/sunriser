@@ -16,61 +16,67 @@
 
 <script type="text/javascript">
 
-// function install_demo_config(demo, demo_name) {
+function install_demo_config(demo, demo_name) {
 
-//   sr_screenblock('Lade Beispielkonfiguration "' + demo_name + '"');
+  sr_screenblock('Lade Beispielkonfiguration "' + demo_name + '"');
 
-//   $.ajax({
-//     type: 'GET',
-//     url: '/demo/' + demo + '.mp',
-//     cache: false,
-//     error: function(xhr,error,errorthrown){
-//       // TODO error handling
-//     },
-//     success: function(data,status,xhr){
-//       var buf = new ArrayBuffer(data.length);
-//       var bytesarray = new Uint8Array(buf);
-//       for (var i=0; i < data.length; i++) {
-//         bytesarray[i] = data.charCodeAt(i);
-//       }
-//       sr_screenblock('Sende Beispielkonfiguration "' + demo_name + '" an SunRiser');
-//       $.ajax({
-//         type: 'PUT',
-//         url: '/restore',
-//         contentType: 'application/octet-stream',
-//         dataType: 'arraybuffer',
-//         processData: false,
-//         data: bytesarray,
-//         cache: false,
-//         error: function(xhr,error,errorthrown){
-//           // TODO error handling
-//         },
-//         success: function(data,status,xhr){
-//           console.log(data,status,xhr);
-//           sr_screenblock('<div>Warte auf Neustart</div><div>Bitte das Ger&auml;t NICHT abschalten!!!</div>');
-//           wait_for_sunriser();
-//         }
-//       });
-//     }    
-//   });
+  $.ajax({
+    type: 'GET',
+    url: '/demo/' + demo + '.mp',
+    contentType: 'application/octet-stream',
+    dataType: 'arraybuffer',
+    processData: false,
+    cache: false,
+    error: function(xhr,error,errorthrown){
 
-// }
+    },
+    success: function(data,status,xhr){
+      var bytesarray = new Uint8Array(data);
+      for (var i=0; i < data.length; i++) {
+        bytesarray[i] = data.charCodeAt(i);
+      }
+      sr_screenblock('Sende Beispielkonfiguration "' + demo_name + '" an SunRiser');
+      $.ajax({
+        type: 'PUT',
+        url: '/restore',
+        data: bytesarray,
+        contentType: 'application/octet-stream',
+        dataType: 'arraybuffer',
+        processData: false,
+        cache: false,
+        error: function(xhr,error,errorthrown){
+
+        },
+        success: function(data,status,xhr){
+          sr_screenblock('<div>Warte auf Neustart</div><div>Bitte das Ger&auml;t NICHT abschalten!!!</div>');
+          wait_for_sunriser();
+        }
+      });
+    }    
+  });
+
+}
 
 var demos = [{
   "id": "standard",
-  "name": "Standard Konfiguration"
+  "name": "Standard",
+  "description": ["LED #1 - DAY 5500K", "LED #2 - POLAR 7500K", "LED #3 - SUNSET 3500K", "LED #4 - ROYAL BLUE 465nm"]
 },{
   "id": "african_sun",
-  "name": "AquaLUMix AFRICAN-SUN"
+  "name": "AquaLUMix AFRICAN-SUN",
+  "description": ["LED #1 bis #4 - <a href='https://www.ledaquaristik.de/epages/64355316.sf/de_DE/?ObjectPath=/Shops/64355316/Products/052-xxxx'>AquaLUMix AFRICAN-SUN</a>"]
 },{
   "id": "amazon_grow",
-  "name": "AquaLUMix AMAZON-GROW"
+  "name": "AquaLUMix AMAZON-GROW",
+  "description": ["LED #1 bis #4 - <a href='https://www.ledaquaristik.de/epages/64355316.sf/de_DE/?ObjectPath=/Shops/64355316/Products/051-xxxx'>AquaLUMix AMAZON-GROW</a>"]
 },{
   "id": "freshwater",
-  "name": "AquaLUMix FRESHWATER"
+  "name": "AquaLUMix FRESHWATER",
+  "description": ["LED #1 bis #4 - <a href='https://www.ledaquaristik.de/epages/64355316.sf/de_DE/?ObjectPath=/Shops/64355316/Products/050-xxxx'>AquaLUMix FRESHWATER</a>"]
 },{
   "id": "seawater",
-  "name": "AquaLUMix SEAWATER"
+  "name": "AquaLUMix SEAWATER",
+  "description": ["LED #1 bis #4 - <a href='https://www.ledaquaristik.de/epages/64355316.sf/de_DE/?ObjectPath=/Shops/64355316/Products/053-xxxx'>AquaLUMix SEAWATER</a>"]
 }];
 
 $('body').on('sr_config',function(){
@@ -78,7 +84,8 @@ $('body').on('sr_config',function(){
   $("#demo_list").html(tmpl("demo_tmpl",{
     demos: demos
   }));
-  $(".install_demo").click(function(){
+  $(".install_demo").click(function(e){
+    e.preventDefault();
     install_demo_config($(this).data("demo"),$(this).data("demoname"));
   });
 
@@ -89,12 +96,20 @@ $('body').on('sr_config',function(){
 
 <% for ( var i = 0; i < demos.length; i++ ) { %>
   <div class="demo" id="demo_<%=demos[i].id%>">
-    <div class="demo_description"><b>
-      <i class="fa fa-forumbee"></i><%=demos[i].name%></b>
-    </div>
     <a class="install_demo" style="float:right" href="/demo/<%=demos[i].id%>.mp" data-demo="<%=demos[i].id%>" data-demoname="<%=demos[i].name%>">
-      <i class="firmdown"></i>Lade Konfiguration
+      <i class="firmdown"></i>Installiere <%=demos[i].name%> Konfiguration
     </a>
+    <div class="demo_name">
+      <b><i class="fa fa-forumbee"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%=demos[i].name%></b>
+    </div>
+    <% if (demos[i].description) { %>
+      <div class="demo_description">
+        <div>&nbsp;</div>
+        <% for ( var j = 0; j < demos[i].description.length; j++ ) { %>
+          <div><%=demos[i].description[j] %></div>
+        <% } %>
+      </div>
+    <% } %>
   </div>
   <hr>
 <% } %>

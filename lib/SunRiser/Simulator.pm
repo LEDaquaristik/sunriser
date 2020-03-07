@@ -9,6 +9,7 @@ with 'SunRiser::Role::Logger';
 
 sub _build__logger_category { 'SR_SIMULATOR' }
 
+use DDP;
 use AnyEvent;
 use Twiggy::Server;
 use Plack::Builder;
@@ -24,6 +25,7 @@ use File::Temp qw/ tempfile tempdir tmpnam /;
 use bytes;
 use Carp qw( croak );
 use Data::MessagePack;
+use Data::MessagePack::Stream;
 use CDB::TinyCDB;
 use SunRiser::Publisher;
 use SunRiser::CDB;
@@ -292,6 +294,30 @@ sub set {
   }
 }
 
+sub _web_backup {
+  my ( $self, $env ) = @_;
+  my %values;
+  if ($self->demo) {
+    %values = defined $env->{'psgix.session'}->{config} ? %{$env->{'psgix.session'}->{config}} : ();
+  } else {
+    for my $path (path($self->c)->children) {
+      my $unpacker = Data::MessagePack::Stream->new;
+      $unpacker->feed($path->slurp_raw());
+      while ($unpacker->next) {
+        my $key = $unpacker->data;
+        if ($unpacker->next) {
+          my $data = $unpacker->data;
+          $values{$key} = $data;
+        }
+      }
+    }
+  }
+  my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
+  return $self->_web_serve_msgpack(\%values,
+    'Content-Disposition' => sprintf('attachment;filename=SunRiser8_Backup_%04u%02u%02u_%02u%02u%02u.mp', $year+1900,$mon+1,$mday,$hour,$min,$sec)
+  );
+}
+
 sub _web_ok { $_[0]->debug("Sending OK"); [
   200,
   [ "Content-Type" => "text/plain" ],
@@ -426,20 +452,6 @@ sub _web_serve_file {
   ], $fh ];
 }
 
-sub _web_backup {
-  my ( $self, $env ) = @_;
-  my %values;
-  if ($self->demo) {
-    %values = defined $env->{'psgix.session'}->{config} ? %{$env->{'psgix.session'}->{config}} : ();
-  } else {
-    return $self->_web_servererror; # TODO
-  }
-  my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
-  return $self->_web_serve_msgpack(\%values,
-    'Content-Disposition' => sprintf('attachment;filename=SunRiser8_Backup_%04u%02u%02u_%02u%02u%02u.mp', $year+1900,$mon+1,$mday,$hour,$min,$sec)
-  );
-}
-
 sub get_state {
   my ( $self, $env ) = @_;
   if ($self->demo) {
@@ -498,7 +510,7 @@ sub _web_state {
     uptime => $uptime,
     %{$self->get_state($env)},
   };
-  use DDP; p($state);
+  p($state);
   return $self->_web_serve_msgpack($state);
 }
 
@@ -671,7 +683,7 @@ sub _build_psgi {
       my ( $env ) = @_;
       my $req = Plack::Request->new($env);
 
-      # use DDP; p($env);
+      # p($env);
 
       if ($self->demo) {
         if (exists $env->{'psgix.session'}->{state}) {
@@ -721,7 +733,7 @@ sub _build_psgi {
               $values{$key} = $self->get($key,$env);
             }
             $values{'time'} = $self->get_time();
-            use DDP; p(%values);
+            p(%values);
             return $self->_web_serve_msgpack(\%values);
           } else {
             return $self->_web_serve_file('index.html');          
@@ -786,10 +798,10 @@ sub _build_psgi {
         if ($path =~ /^\/state$/) {
           my $body = $req->raw_body;
           my $data = $self->_mp->unpack($body);
-          use DDP; p($data);
+          p($data);
           if (exists $data->{pwms}) {
             for my $pwm (keys %{$data->{pwms}}) {
-              #use DDP; p($data->{pwms}->{$pwm}); p($pwm);
+              # p($data->{pwms}->{$pwm}); p($pwm);
               $self->set_pwm($pwm, $data->{pwms}->{$pwm}, $env);
             }
           }
@@ -803,7 +815,7 @@ sub _build_psgi {
         } elsif ($path =~ /^\/restore$/) {
           my $body = $req->raw_body;
           my $data = $self->_mp->unpack($body);
-          # use DDP; p($data); 1;
+          # p($data); 1;
           for my $k (keys %{$data}) {
             $self->debug('Setting key '.$k);
             $self->set($k,$data->{$k},$env) unless ($self->demo && $k eq 'password');
@@ -811,7 +823,7 @@ sub _build_psgi {
           return $self->_web_ok;
         } else {
           my $l = length($req->raw_body);
-          # use DDP; p($l);
+          # p($l);
           return $self->_web_ok;
         }
       }

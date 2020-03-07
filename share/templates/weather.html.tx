@@ -71,6 +71,7 @@ $('body').on('sr_config',function(){
     var form = new SrForm(this,{
       title: "Wetter Profile",
       fields: fields,
+      no_reset: true,
       loaded: function(){
         var self = this;
         var values = self.values();

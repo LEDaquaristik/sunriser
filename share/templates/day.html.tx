@@ -678,6 +678,7 @@ $('body').on('sr_config',function(){
       var form = new SrForm($('#dayplan'),{
         title: undefined,
         fields: fields,
+        no_reset: true,
         expert_fields: expert_fields,
         loaded: function(){
           var markers = {};

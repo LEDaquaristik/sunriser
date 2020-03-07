@@ -57,6 +57,9 @@ var SrField = Class.extend({
     } else {
       this.value = value;
     }
+    if ("new_val" in this && typeof this.new_val === 'function') {
+      this.new_val();
+    }
   },
 
   has_errors: function() {
@@ -125,6 +128,8 @@ var SrField_Integer = SrField_Text.extend({
 
   min: undefined,
   max: undefined,
+  minfield: undefined,
+  maxfield: undefined,
   float_digits: 0,
   percent_sign: false,
   transform: SrField_Integer_Transform,
@@ -154,6 +159,22 @@ var SrField_Integer = SrField_Text.extend({
         var factor = $(this).data('value');
         var diff = Math.floor(all * factor);
         var value = self.min + diff;
+        // if (this.minfield) {
+        //   var minfieldname = this.minfield.replace('weather#setup#X#','weather#setup#' + get_weather_setup_id + '#');
+        //   var minfield = this.form.fields_by_name[minfieldname];
+        //   var minval = minfield.value;
+        //   if (minval > value) {
+        //     minfield.val(value);
+        //   }
+        // }
+        // if (this.maxfield) {
+        //   var maxfieldname = this.maxfield.replace('weather#setup#X#','weather#setup#' + get_weather_setup_id + '#');
+        //   var maxfield = this.form.fields_by_name[maxfieldname];
+        //   var maxval = maxfield.value;
+        //   if (maxval < value) {
+        //     maxfield.val(value);
+        //   }
+        // }
         html_field.val(value);
         html_field.trigger('change');
         html_field.parent().find('.slider_value').text(self.display_value(value));

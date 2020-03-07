@@ -48,7 +48,15 @@
     <% if (!no_submit) { %>
       <tr>
         <td colspan="2">
-          <input type="submit" id="form_formsubmit" value="<%=formsubmit %>">
+          <hr>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <% if (!no_reset) { %>
+            <button type="button" id="form_formreset"><%=formreset %></button>
+          <% } %>
+          <input style="float:right" type="submit" id="form_formsubmit" value="<%=formsubmit %>">
         </td>
       </tr>
     <% } %>

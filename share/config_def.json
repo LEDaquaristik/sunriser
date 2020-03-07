@@ -88,28 +88,29 @@
       "pwms", [    "[LEGACY] Identification of pwms effected (Ignored)", "array(integer)"],
       "thunder",   "Thunderstorm setup", [
         "activated", ["Produce thunderstorms", "bool", 0],
-        "daychance", ["Percentage for a thunderstorm to happen (Tried per day in daymax amount)", "integer", 30],
+        "daychance", ["Percentage for a thunderstorm to happen (Tried per day in daymax amount)", "integer", 35],
         "daymax", ["Maximum amount of thunderstorms per day", "integer", 3],
-        "minstorm", ["Minimum length of a storm in minutes", "integer", 10],
-        "randstorm", ["Maximum length added to a storm length in minutes", "integer", 50],
+        "minstorm", ["Minimum length of a storm in minutes", "integer", 30],
+        "randstorm", ["Maximum length added to a storm length in minutes", "integer", 120],
         "nightonly", ["[LEGACY] Ignored", "bool"],
         "zeroonly", ["Thunderstorm only if dayplanner sets pwm to 0", "bool", 0],
         "nozeroonly", ["Thunderstorm only if dayplanner sets pwm to not 0", "bool", 0],
         "weekdays", ["Apply thunderstorms to given weekdays (else always)", "array(weekday)"],
-        "minrainextra", ["Minimum rainfront length extra in minutes", "integer", 1],
-        "randrainextra", ["Maximum rainfront length extra added in minutes", "integer", 5],
-        "preflashlength", ["Length of preflash in milliseconds", "integer", 200],
-        "pauselength", ["Pause between preflash and main flash", "integer", 300],
-        "fullflashlength", ["Length of main flash in milliseconds", "integer", 600],
-        "deloadflashlength", ["Length of postflashs in milliseconds", "integer", 250],
-        "deloadpauselength", ["Pause between postflashs in milliseconds", "integer", 500],
-        "minflashpause", ["Minimum seconds between lightnings", "integer", 60],
+        "minrainextra", ["Minimum rainfront length extra in minutes", "integer", 2],
+        "randrainextra", ["Maximum rainfront length extra added in minutes", "integer", 10],
+        "preflashlength", ["Length of preflash in milliseconds", "integer", 150],
+        "pauselength", ["Pause between preflash and main flash", "integer", 200],
+        "fullflashlength", ["Length of main flash in milliseconds", "integer", 300],
+        "deloadflashlength", ["Length of postflashs in milliseconds", "integer", 150],
+        "deloadpauselength", ["Pause between postflashs in milliseconds", "integer", 200],
+        "minflashpause", ["Minimum seconds between lightnings", "integer", 30],
         "randflashpause", ["Maximum seconds added between lightnings", "integer", 120],
         "preflash", ["Strength of the lightning preflash", "integer", 8],
         "flash", ["Strength of the main lightning flash", "integer", 16],
-        "mindeload", ["Minimum amount of deloads", "integer", 1],
-        "randdeload", ["Maximum random amount of deloads added", "integer", 4],
-        "fixdeload", ["Same strength for all deload flashes if set higher than 0", "integer", 0]
+        "mindeload", ["Minimum amount of deloads", "integer", 2],
+        "randdeload", ["Maximum random amount of deloads added", "integer", 2],
+        "fixdeload", ["Same strength for all deload flashes if set higher than 0", "integer", 0],
+        "permanent", ["Permanent thunderstorms", "bool", 0]
       ],
       "moon", "Moon setup", [
         "activated", ["Show moonphase based on reality", "bool", 0],
@@ -134,8 +135,9 @@
         "raincloudshare", ["Maximum percentage share of cloud on a rainy day", "integer", 80],
         "dropdarkness", ["Maximum darkness applied through rain drop", "integer", 10],
         "minrain", ["Minimum length of rain in minutes", "integer", 5],
-        "randrain", ["Maximum added length of rain in minutes", "integer", 240],
-        "weekdays", ["Weekdays who may have rain (else every day)", "array(weekday)"]
+        "randrain", ["Maximum added length of rain in minutes", "integer", 60],
+        "weekdays", ["Weekdays who may have rain (else every day)", "array(weekday)"],
+        "permanent", ["Permanent rain", "bool", 0]
       ]
     ]
   ]

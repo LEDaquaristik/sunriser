@@ -76,6 +76,7 @@ $('body').on('sr_config',function(){
     var form = new SrForm(this,{
       title: "Wartungsarbeiten",
       no_submit: true,
+      no_reset: true,
       fields: fields
     });
   });
