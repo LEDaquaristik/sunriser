@@ -90,6 +90,10 @@ $('body').on('sr_config',function(){
           name: "pwm#" + i + "#onoff",
           label: "LED #" + i + " nur Aus/An (z.b. Pumpe)",
         });
+        fields.push({
+          name: "pwm#" + i + "#nosmart",
+          label: "LED #" + i + " SmartControl abschalten",
+        });
       }
     }
     var form = new SrForm(this,{

@@ -84,6 +84,22 @@ function sr_sysinfo_done() {
   } else {
     info['<div class="warnarea">Keine Bootloader Informationen!</div>'] = "";
   }
+  if (state) {
+    console.log(state);
+    if (Object.keys(state.sensors).length > 0) {
+      var sensors = [];
+      if (state.sensors["ds1822"]) {
+        sensors.push("Temperatur (DS1822)");
+      }
+      info["Sensoren"] = sensors.join(", ");
+      if (state.sensors["ds1822"]) {
+        var ds1822 = parseInt(state.sensors["ds1822"]) / 10;
+        info["Temperatur"] = ds1822 + "&deg;";
+      }
+    } else {
+      info["Sensoren"] = "Keine";
+    }
+  }
   $('#sysinfo').html(tmpl('sysinfo_tmpl',{ model: sr_config.model + " (" + sr_config.model_id + ")", info: info }));
   sr_load_error_log();
   sr_load_info_log();
