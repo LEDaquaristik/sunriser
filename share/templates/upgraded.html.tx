@@ -12,7 +12,13 @@
 - Die Wolkensimulation wurde angepasst, so dass auch bei maximaler Einstellung der Verdunkelung, das Licht nicht komplett abschaltet sondern noch minimal leuchtet.<br>
 - Der SunRiser reagiert nun durch eine Verbesserung unseres Debugging Konzepts merklich performanter, die Benutzeroberfl&auml;che l&auml;sst sich fl&uuml;ssiger bedienen.
 </div>
- 
+
+<hr>
+
+<div class="warnarea">
+  Beim Seitenwechsel von Wetter, Wochen und Sensor Einstellungen kann es zu Ladefehler im Chrome Browser kommen. Wir arbeiten an einer L&ouml;sung des Problems. Bis dahin k&ouml;nnen Sie entweder bei dem Auftreten des Fehlers einfach in die Addresszeile klicken und dort die Seite neu laden, das funktioniert dann meist (ein einfaches neu laden funktioniert leider nicht). Oder Sie benutzen kurzfristig den <a href="https://www.mozilla.org/de/firefox/new/">FireFox</a> Browser der jetzt ohne Warnung benutzt werden kann.
+</div>
+
 <hr>
 
 <h3>Seit Firmware v0.910:</h3>

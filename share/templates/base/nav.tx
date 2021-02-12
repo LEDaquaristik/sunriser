@@ -164,6 +164,11 @@
         </a>
       </li>
       <li class="second-level">
+        <a href="/upgraded.html?upgraded_review=1">
+          <i class="fa fa-forumbee"></i>Versions Informationen
+        </a>
+      </li>
+      <li class="second-level">
         <a href="/sysinfo.html">
           <i class="fa fa-info-circle"></i>System Informationen
         </a>

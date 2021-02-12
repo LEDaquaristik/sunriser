@@ -108,11 +108,11 @@ $(function(){
     timeout: 10000
   });
 
-  $('#browser_check').each(function(){
-    if (!isChrome()) {
-      $(this).html('<div class="warnarea">Achtung! Dieses Interface ist f&uuml;r die Benutzung mit <a href="https://www.google.com/chrome">Google Chrome</a> optimiert!</div>');
-    }
-  });
+  // $('#browser_check').each(function(){
+  //   if (!isChrome()) {
+  //     $(this).html('<div class="warnarea">Achtung! Dieses Interface ist f&uuml;r die Benutzung mit <a href="https://www.google.com/chrome">Google Chrome</a> optimiert!</div>');
+  //   }
+  // });
 
   // All external links in new window
   $("a[href^='http']").not('.noblank').each(function(){
