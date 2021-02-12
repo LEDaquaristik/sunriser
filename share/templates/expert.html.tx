@@ -90,7 +90,7 @@ $('#update_factory').click(function(){
       download_and_install_factory(firmware_root + sr_firmwares[0].url);
     }
   } else {
-    alert('Bitte zuvor die neueste Firmware installieren!');    
+    alert('Bitte zuvor die neueste Firmware installieren!');
   }
 });
 
@@ -143,13 +143,16 @@ $('body').on('sr_config',function(){
       });
       var fields = [{
         name: "higherminimum",
-        label: "Erh&ouml;hter Minimumwert [Diese Funktion &auml;ndert den SunRiser-Algorithmus im unteren Bereich der Dimmkurve, um auch Einstellungen unter 30% abbilden zu k&ouml;nnen. Notwendig nur f&uuml;r Ger&auml;te aus dem Baujahr 2016, in der Regel zu erkennen am komplett silbernen Geh&auml;use] (Standard = Aus)"
+        label: "Erh&ouml;hter Einschaltpunkt (Ehemals Erh&ouml;hter Minimumwert)",
+        description: "Diese Funktion &auml;ndert den SunRiser-Algorithmus im unteren Bereich der Dimmkurve, um auch Einstellungen unter 30% abbilden zu k&ouml;nnen. Notwendig nur f&uuml;r Ger&auml;te aus dem Baujahr 2016, in der Regel zu erkennen am komplett silbernen Geh&auml;use (Standard = Aus)"
       },{
         name: "oldfade",
-        label: "Urspr&uuml;nglicher SunRiser-Algorithmus [Dieser wurde standardm&auml;&szlig;ig bis 12/2018 verwendet, Helligkeitsbereich 1-10% wom&ouml;glich ungenau] (Standard = Aus)"
+        label: "Urspr&uuml;nglicher SunRiser-Algorithmus",
+        description: "Dieser wurde standardm&auml;&szlig;ig bis 12/2018 verwendet, Helligkeitsbereich 1-10% wom&ouml;glich ungenau (Standard = Aus)"
       },{
         name: "enforcenet",
-        label: "Erzwinge DHCP [Verhindert bei Schwierigkeiten im Netzwerk auf eine statische IP zur&uuml;ck zu fallen, wenn DHCP mehrmals scheitert] (Standard = Aus)"
+        label: "Erzwinge DHCP",
+        description: "Verhindert bei Schwierigkeiten im Netzwerk auf eine statische IP zur&uuml;ck zu fallen, wenn DHCP mehrmals scheitert (Standard = Aus)"
       }];
       $.each(dayplanner_pwms,function(i,pwm){
         fields.push({
@@ -167,10 +170,14 @@ $('body').on('sr_config',function(){
       });
       for (i = 1; i <= sr_config["pwm_count"]; i++) {
         fields.push({
-          name: 'pwm#' + i + '#max',
-          template: "slider", min: 10, max: 1000,
-          transform_value: function(value) { return parseInt(value); },
+          name: 'pwm#' + i + '#max', min: 10, max: 1000,
           label: "Maximum Wert LED #" + i
+        });
+      }
+      for (i = 1; i <= sr_config["pwm_count"]; i++) {
+        fields.push({
+          name: "pwm#" + i + "#nosmart",
+          label: "LED #" + i + " SmartControl abschalten",
         });
       }
       if (fields.length) {

@@ -1,0 +1,272 @@
+: cascade base { title => "Sensoren", nav => "sensor", no_bighelp => 1 }
+: override content -> {
+
+<div id="sensortabs"></div>
+
+<hr>
+
+<div class="form noautoload noload" id="sensor_value_div">
+  <div style="float:right" id="sensor_value"></div>
+  <div>Aktueller Sensor Wert:</div>
+  <hr>
+</div>
+
+<div class="form noautoload" id="form_sensor"></div>
+
+<div id="noledsensorwarning" class="warnarea js-hide">
+  Achtung! Noch keine LED konfiguriert!
+</div>
+
+: }
+: override postjs -> {
+
+<script type="text/javascript">
+
+function sr_sensors_update_value() {
+  if (get_sensors_sensor_id) {
+    var selected_sensor = sensors[get_sensors_sensor_id];
+    if (selected_sensor) {
+      if (typeof selected_sensor.value !== 'undefined') {
+        var sensor = new SrSensor(get_sensors_sensor_id);
+        $('#sensor_value').html(sensor.display_value());
+      } else {
+        $('#sensor_value').text('Sensor nicht gefunden!');
+      }
+    } else {
+      $('#sensor_value').text('Sensor nicht in der Konfiguration!');
+    }
+  } else {
+    $('#sensor_value').text('Kein Sensor ausgew' + unescape("%E4") + 'hlt');
+  }
+}
+
+function sr_sensors_update_state() {
+  $('#sensor_value').text('Lade neuen Wert...');
+  var before_active_sensors = active_sensors.length;
+  sr_request_state(function(values){
+    if (before_active_sensors == 0) {
+      if (active_sensors.length > 0) {
+        window.location.href = window.location.href;
+      }
+    }
+    sr_sensors_update_value();
+    setTimeout(function(){
+      sr_sensors_update_state();
+    }, 15000);
+  });
+}
+
+$('body').on('sr_config',function(){
+
+  var extra_keys = [];
+
+  var i;
+
+  for (i = 1; i <= sr_config['pwm_count']; i++) {
+    extra_keys.push('pwm#' + i + '#onoff');
+    extra_keys.push('pwm#' + i + '#color');
+  }
+
+  sr_request_mpack('POST','/',extra_keys,function(extra_vals){
+
+    sr_request_state(function(){
+
+      sr_sensors_update_value();
+
+      if (Object.keys(sensors).length == 0) {
+        $('#form_sensor').html('<h2>Keine Sensoren gefunden.</h2>');
+        var sr_sensors_web = sr_config['sensors#web'];
+        var known_sensors_count = Object.keys(sr_config['sensors#web']).length;
+        if (known_sensors_count > 0) {
+          $('#form_sensor').append('<div>Konfiguration beinhaltet ' + known_sensors_count + ' Sensor(en)</div>');
+        }
+      } else {
+
+        $.each(active_sensors,function(i,id){
+          var sensor = sensors[id];
+          if (sensor.value) {
+            var sensor_url = url.clone();
+            sensor_url.removeSearch('sensor').addSearch('sensor',id);
+            if (!get_sensors_sensor_id) {
+              window.location.href = sensor_url.toString();
+            }
+            $('<div class="daybox" id="sensortab' + id + '" style="float:left">' + sensor.name + '</div>').appendTo('#sensortabs').click(function(){
+              window.location.href = sensor_url.toString();
+            });
+            active_sensors.push(sensor);
+          }
+        });
+
+        if (!get_sensors_sensor_id) {
+          $('#form_sensor').html('<hr>');
+          if (active_sensors.length > 0) {
+            $('#sensor_value_div').text('Kein Sensor ausgew' + unescape("%E4") + 'hlt');
+          } else {
+            $('#sensor_value_div').text('Keine Sensoren gefunden!');
+            sr_sensors_update_state();
+          }
+          return;
+        }
+
+        var selected_sensor = sensors[get_sensors_sensor_id];
+        var sensor_obj = new SrSensor(get_sensors_sensor_id);
+
+        $('#sensortab' + get_sensors_sensor_id).css('background-color','#dddddd');
+
+        $("#form_sensor").each(function(){
+
+          var fields = [{
+            name: "sensors#sensor#" + get_sensors_sensor_id + "#name",
+            label: "Sensor Name"
+          },{
+            name: "sensors#sensor#" + get_sensors_sensor_id + "#active",
+            label: "Sensor Aktiv"
+          },{
+            name: "sensors#sensor#" + get_sensors_sensor_id + "#offset",
+            template: "slider", min: -50, max: 50,
+            display_value: function(value) {
+              if (value === undefined) {
+                value = this.value;
+              }
+              return sensor_obj.display_value(sensor_obj.result_value(value));
+            },
+            label: "Wert Korrektur"
+          },{
+            name: "sensors#sensor#" + get_sensors_sensor_id + "#desiredmin",
+            template: "slider", min: selected_sensor.min, max: selected_sensor.max,
+            display_value: function(value) {
+              if (value === undefined) {
+                value = this.value;
+              }
+              return sensor_obj.display_value(sensor_obj.result_value(value));
+            },
+            label: "Gew&uuml;nschter Minimum Wert"
+          },{
+            name: "sensors#sensor#" + get_sensors_sensor_id + "#desiredmax",
+            template: "slider", min: selected_sensor.min, max: selected_sensor.max,
+            display_value: function(value) {
+              if (value === undefined) {
+                value = this.value;
+              }
+              return sensor_obj.display_value(sensor_obj.result_value(value));
+            },
+            label: "Gew&uuml;nschter Maximum Wert"
+          // },{
+          //   name: "sensors#sensor#" + get_sensors_sensor_id + "#emails",
+          //   label: "Emails f&uuml;r Status (kommasepariert)"
+          // },{
+          //   name: "sensors#sensor#" + get_sensors_sensor_id + "#status",
+          //   label: "Alle X Stunden Status Email senden"
+          },{
+            name: "sensors#sensor#" + get_sensors_sensor_id + "#months",
+            label: "Sensor nur in diesen Monaten nutzen<br>(sonst alle)"
+          }];
+
+          if (sr_config.showexpert) {
+            fields.push({
+            });
+          }
+
+          var extrajs = function(doname){
+            var field = this;
+            var form = field.form;
+            var button = $('<input style="float:right" type="checkbox">');
+            var div = $('#div_' + field.id);
+            var value = form.fields_by_name[doname].value;
+            if (value == true) {
+              button.attr('checked','checked');
+            } else {
+              div.hide();
+            }
+            button.change(function(){
+              if (this.checked) {
+                form.fields_by_name[doname].value = true;
+                div.show();
+              } else {
+                form.fields_by_name[doname].value = false;
+                div.hide();
+              }
+            });
+            $('#label_' + field.id).append(button);
+          };
+
+          $('#noledsensorwarning').show();
+
+          for (i = 1; i <= sr_config['pwm_count']; i++) {
+            (function(i){
+              if (extra_vals['pwm#' + i + '#color']) {
+                $('#noledsensorwarning').hide();
+                var dominname = "sensors#sensor#" + get_sensors_sensor_id + "#pwm#" + i + "#domin";
+                var domaxname = "sensors#sensor#" + get_sensors_sensor_id + "#pwm#" + i + "#domax";
+                var minname = "sensors#sensor#" + get_sensors_sensor_id + "#pwm#" + i + "#percentmin";
+                var maxname = "sensors#sensor#" + get_sensors_sensor_id + "#pwm#" + i + "#percentmax";
+                fields.push({
+                  name: dominname,
+                  transform: function(){},
+                  hidden: true
+                });
+                fields.push({
+                  name: domaxname,
+                  transform: function(){},
+                  hidden: true
+                });
+                if (extra_vals['pwm#' + i + '#onoff']) {
+                  fields.push({
+                    name: minname,
+                    label: "LED #" + i + " AUS/AN bei unter Minimum Wert",
+                    template: "checkbox",
+                    extrajs: function(){ extrajs.call(this, dominname) },
+                    transform: function() { this.value = this.html_value() == 'no' ? 0 : 100 },
+                  });
+                  fields.push({
+                    name: maxname,
+                    label: "LED #" + i + " AUS/AN bei &uuml;ber Maximum Wert",
+                    template: "checkbox",
+                    extrajs: function(){ extrajs.call(this, domaxname) },
+                    transform: function() { this.value = this.html_value() == 'no' ? 0 : 100 },
+                  });
+                } else {
+                  fields.push({
+                    name: minname,
+                    label: "LED #" + i + " Wert bei unter Minimum Wert",
+                    template: "slider",
+                    percent_sign: true,
+                    extrajs: function(){ extrajs.call(this, dominname) },
+                    min: 0, max: 100,
+                    transform: function() { this.value = this.html_value() },
+                  });
+                  fields.push({
+                    name: maxname,
+                    label: "LED #" + i + " Wert bei &uuml;ber Maximum Wert",
+                    template: "slider",
+                    percent_sign: true,
+                    extrajs: function(){ extrajs.call(this, domaxname) },
+                    min: 0, max: 100,
+                    transform: function() { this.value = this.html_value() },
+                  });
+                }
+              }
+            }).call(this,i);
+          }
+          var form = new SrForm(this,{
+            title: "Sensor einstellen",
+            no_reset: true,
+            fields: fields
+          });
+
+        });
+
+      }
+
+      setTimeout(function(){
+        sr_sensors_update_state();
+      }, 15000);
+    });
+
+  });
+
+});
+
+</script>
+
+: }

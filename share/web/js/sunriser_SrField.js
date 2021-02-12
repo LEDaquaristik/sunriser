@@ -25,6 +25,7 @@ var SrField = Class.extend({
 
   prepare: function(){},
   initjs: function(){},
+  extrajs: function(){},
   initchange: function(){
     this.old_value = this.value;
     this.html_field().on('change input',function(){
@@ -159,33 +160,35 @@ var SrField_Integer = SrField_Text.extend({
         var factor = $(this).data('value');
         var diff = Math.floor(all * factor);
         var value = self.min + diff;
-        // if (this.minfield) {
-        //   var minfieldname = this.minfield.replace('weather#setup#X#','weather#setup#' + get_weather_setup_id + '#');
-        //   var minfield = this.form.fields_by_name[minfieldname];
-        //   var minval = minfield.value;
-        //   if (minval > value) {
-        //     minfield.val(value);
-        //   }
-        // }
-        // if (this.maxfield) {
-        //   var maxfieldname = this.maxfield.replace('weather#setup#X#','weather#setup#' + get_weather_setup_id + '#');
-        //   var maxfield = this.form.fields_by_name[maxfieldname];
-        //   var maxval = maxfield.value;
-        //   if (maxval < value) {
-        //     maxfield.val(value);
-        //   }
-        // }
         html_field.val(value);
         html_field.trigger('change');
-        html_field.parent().find('.slider_value').text(self.display_value(value));
+        html_field.parent().find('.slider_value').html(self.display_value(value));
       });
       // html_field.parent().find('.slider_value').on('keyup',function(){
       //   var value = $(this).val();
-      //   if (value >= min && value <= max) {
+      //   if (value >= self.min && value <= self.max) {
       //     $(this).css('background-color',undefined);
       //     html_field.parent().find('.sliderbar').data('value', 50);
       //   } else {
       //     $(this).css('background-color','yellow');
+      //   }
+      // });
+      // html_field.on('change',function(){
+      //   if (self.minfield) {
+      //     var minfieldname = self.minfield.replace('weather#setup#X#','weather#setup#' + get_weather_setup_id + '#');
+      //     var minfield = self.form.fields_by_name[minfieldname];
+      //     if (minfield.value > self.value) {
+      //       minfield.val(self.value);
+      //       console.log(minfield);
+      //     }
+      //   }
+      //   if (self.maxfield) {
+      //     var maxfieldname = self.maxfield.replace('weather#setup#X#','weather#setup#' + get_weather_setup_id + '#');
+      //     var maxfield = self.form.fields_by_name[maxfieldname];
+      //     if (maxfield.value < self.value) {
+      //       maxfield.val(self.value);
+      //       console.log(maxfield);
+      //     }
       //   }
       // });
     }
@@ -360,6 +363,17 @@ var SrField_Weekday = SrField_CSV.extend({
 
   transform_value: function(value) { return parseInt(value); },
 
+  validate: function(){
+    this._super();
+    if (!this.has_errors()) {
+      $.each(this.value,function(i,val){
+        if (val < 0 || val > 6) {
+          this.error("Unbekannter Fehler (Wert nicht zwischen 0 und 6)");
+        }
+      });
+    }
+  },
+
   initjs: function(){
     var self = this;
     var daypicker = $('#' + self.id + '_daypicker');
@@ -377,6 +391,46 @@ var SrField_Weekday = SrField_CSV.extend({
           }
         });
         self.html_field().val(days.join(self.comma));
+      });
+    });
+  }
+
+});
+
+var SrField_Month = SrField_CSV.extend({
+
+  template: 'month',
+
+  transform_value: function(value) { return parseInt(value); },
+
+  validate: function(){
+    this._super();
+    if (!this.has_errors()) {
+      $.each(this.value,function(i,val){
+        if (val < 1 || val > 12) {
+          this.error("Unbekannter Fehler (Wert nicht zwischen 1 und 12)");
+        }
+      });
+    }
+  },
+
+  initjs: function(){
+    var self = this;
+    var monthpicker = $('#' + self.id + '_monthpicker');
+    var checkboxes = monthpicker.find('input[type=checkbox]');
+    $.each(checkboxes,function(i,el){
+      var checkbox = $(el);
+      if ($.inArray(parseInt(checkbox.val()),self.value) != -1) {
+        checkbox.prop('checked',true);
+      }
+      checkbox.change(function(){
+        var months = new Array();
+        $.each(checkboxes,function(i,checkbox){
+          if ($(checkbox).prop('checked')) {
+            months.push($(checkbox).val());
+          }
+        });
+        self.html_field().val(months.join(self.comma));
       });
     });
   }

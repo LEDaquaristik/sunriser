@@ -1,4 +1,5 @@
 package SunRiser::Tester;
+# ABSTRACT: SunRiser Tester for testing an actual SunRiser device
 
 use MooX qw(
   Options
@@ -220,7 +221,7 @@ sub run {
               print "done\n";
 
               $sr->state({ pwms => { map { "".$_ => 0 } 1..8 }});
-              
+
             }
 
           } else {
@@ -235,3 +236,18 @@ sub run {
 }
 
 1;
+
+=head1 DESCRIPTION
+
+=head1 SUPPORT
+
+Repository
+
+  https://github.com/LEDaquaristik/sunriser
+  Pull request and additional contributors are welcome
+
+Issue Tracker
+
+  https://github.com/LEDaquaristik/sunriser/issues
+
+=cut

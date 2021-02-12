@@ -3,12 +3,24 @@
 
 <h2 class="upgraded">Die Firmware wurde erfolgreich erneuert!</h2>
 
+<h3>Seit Firmware v0.920:</h3>
+
+<div>
+- Einstellungen f&uuml;r die <u>Temperatursensoren</u> sind ab sofort unter dem Men&uuml;punkt Einstellungen zu finden. Die Funktionalit&auml;t um die Temperatursensoren wird laufend auch auf Basis von Kundenfeedback erweitert, insbesondere um die M&ouml;glichkeit einer Emailbenachrichtigung. Der passende Temperatursensor ist <a href="https://www.ledaquaristik.de/epages/64355316.sf/sec3947872783/?ObjectPath=/Shops/64355316/Products/158-TEMP">hier</a> zu finden.<br>
+- Vorbereitend auf die neuen Produkte <a href="https://www.ledaquaristik.de/epages/64355316.sf/de_DE/?ObjectPath=/Shops/64355316/Products/255">High-Power-Solution</a> bzw. <a href="https://www.ledaquaristik.de/epages/64355316.sf/de_DE/?ObjectPath=/Shops/64355316/Categories/Produkte/LEDs_Kompaktleuchten/powerBEAM_Haengeleuchten">powerBEAM</a> LED-Leuchten ist der neue Men&uuml;punkt <u>Einschaltpunkt</u> unter Einstellungen zu finden.<br>
+- Der AUS/AN Betrieb (f&uuml;r z.b. Minipumpe und CO2 Magnetventil) wurde &uuml;berarbeitet. AN ist nun 100% Maximum ohne PWM Dimmung. Damit wurde auch eine Funktion eingef&uuml;hrt in den Experteneinstellungen die SmartControl Funktion f&uuml;r die einzelnen Kan&auml;le zu deaktivieren.<br>
+- Die Wolkensimulation wurde angepasst, so dass auch bei maximaler Einstellung der Verdunkelung, das Licht nicht komplett abschaltet sondern noch minimal leuchtet.<br>
+- Der SunRiser reagiert nun durch eine Verbesserung unseres Debugging Konzepts merklich performanter, die Benutzeroberfl&auml;che l&auml;sst sich fl&uuml;ssiger bedienen.
+</div>
+ 
 <hr>
 
 <h3>Seit Firmware v0.910:</h3>
 
 <div>
-  Verbesserungen und Korrekturen bei Regen und Gewittersimulation. Bessere Standard-Werte f&uuml;r Gewitter. Neue Funktion um dauerhaftes Gewitter zu erzeugen. Neue Funktion um ein Formular auf Standard Werte zur&uuml;ck zu setzen. Falls Sie das Gewitter nutzen, empfehlen wir diese Funktion zu nutzen und unsere neuen Standard-Werte zu laden. <a href="/demo.html">Beispielkonfigurationen</a> werden jetzt direkt installiert.
+- Verbesserungen und Korrekturen bei Regen und Gewittersimulation. Bessere Standard-Werte f&uuml;r Gewitter. Neue Funktion um dauerhaftes Gewitter zu erzeugen.<br>
+- Neue Funktion um ein Formular auf Standard Werte zur&uuml;ck zu setzen. Falls Sie das Gewitter nutzen, empfehlen wir diese Funktion zu nutzen und unsere neuen Standard-Werte zu laden.<br>
+- <a href="/demo.html">Beispielkonfigurationen</a> werden jetzt direkt installiert.
 </div>
 
 <br><hr>
@@ -16,7 +28,8 @@
 <h3>Seit Firmware v0.903:</h3>
 
 <div>
-  Korrekturen bei Gewitter- und Regensimulation. Erh&ouml;hung der Standard-Wahrscheinlichkeit f&uuml;r Regen, Gewitter und Wolken. F&uuml;r die LEDs weitere alternative Farben hinzugef&uuml;gt. Bei der Tagesplanung wird nun auch die Lichtfarbe der LED unter dem Graphen in Textform angezeigt.
+- Korrekturen bei Gewitter- und Regensimulation. Erh&ouml;hung der Standard-Wahrscheinlichkeit f&uuml;r Regen, Gewitter und Wolken.<br>
+- F&uuml;r die LEDs weitere alternative Farben hinzugef&uuml;gt. Bei der Tagesplanung wird nun auch die Lichtfarbe der LED unter dem Graphen in Textform angezeigt.
 </div>
 
 <br><hr>
@@ -38,7 +51,7 @@
 <h3>Seit Firmware v0.886:</h3>
 
 <div>
-  Wir haben die neuen <a href="https://www.ledaquaristik.de/epages/64355316.sf/de_DE/?ObjectPath=/Shops/64355316/Categories/Produkte/LEDs_Kompaktleuchten/aquaLUMix">aquaLUMix Farben</a> hinzugef&uuml;gt. Fehler korrigiert bei der Farbe Mini-Pumpe, diese kann nun benutzt werden. Verbesserungen im Speichermanagement und &Auml;nderungen in den Netzwerk Einstellungen. Einf&uuml;hrung eines Men&uuml; um <a href="/demo.html">Beispielkonfigurationen</a> zu laden.
+  Wir haben die neuen <a href="https://www.ledaquaristik.de/aquaLUMix">aquaLUMix Farben</a> hinzugef&uuml;gt. Fehler korrigiert bei der Farbe Mini-Pumpe, diese kann nun benutzt werden. Verbesserungen im Speichermanagement und &Auml;nderungen in den Netzwerk Einstellungen. Einf&uuml;hrung eines Men&uuml; um <a href="/demo.html">Beispielkonfigurationen</a> zu laden.
 </div>
 
 <br><hr>

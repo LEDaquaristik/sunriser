@@ -112,7 +112,7 @@ option demo => (
 
 option demo_cache => (
   is => 'ro',
-  default => sub { 
+  default => sub {
     my ( $self ) = @_;
     return path($ENV{HOME},'.srdemocache',$self->versioned || getppid())->absolute;
   },
@@ -166,26 +166,33 @@ sub _build_c {
   return $c;
 }
 
-has state => (
+has start_time => (
   is => 'lazy',
   init_arg => undef,
 );
 
-sub _build_state {
+sub _build_start_time { scalar time() }
+
+sub state {
   my ( $self ) = @_;
   my $pwms = $self->model_info->{pwm_count};
   my $time = time();
   return {
     pwmloop_stopped => 0,
     service_mode => 0,
-    uptime => 80000,
+    uptime => $time - $self->start_time,
     time => $time,
-    tick => ( 80000 * 1000 ),
+    tick => ( ( $time - $self->start_time ) * 1000 ),
     logsize => 0,
     errsize => 1000,
     timewarp => 0,
     # PWM name is a number but must be treated like a string
-    pwms => { map { $_."", 100 } 1..$pwms },
+    pwms => { map { $_."", ( int(rand(21)) * 50 ) } 1..$pwms },
+    sensors => {
+      '1234567887b5ae21' => [ 1, int(rand(20)) + 200 ],
+      '23456789987b5ae2' => [ 1, int(rand(20)) + 220 ],
+      '345678900987b5ae' => [ 1, int(rand(20)) + 240 ],
+    },
   };
 }
 
@@ -390,7 +397,7 @@ sub _web_serve_file {
         $file = $index;
       } else {
         # Feature option: directory listing
-        return $self->_web_notfound;        
+        return $self->_web_notfound;
       }
     } else {
       return $self->_web_notfound;
@@ -736,7 +743,7 @@ sub _build_psgi {
             p(%values);
             return $self->_web_serve_msgpack(\%values);
           } else {
-            return $self->_web_serve_file('index.html');          
+            return $self->_web_serve_file('index.html');
           }
         } else {
           # if POST check if body matches password=$password
@@ -856,11 +863,11 @@ sub run {
 
 Repository
 
-  http://github.com/LEDaquaristik/sunriser
+  https://github.com/LEDaquaristik/sunriser
   Pull request and additional contributors are welcome
- 
+
 Issue Tracker
 
-  http://github.com/LEDaquaristik/sunriser/issues
+  https://github.com/LEDaquaristik/sunriser/issues
 
 =cut

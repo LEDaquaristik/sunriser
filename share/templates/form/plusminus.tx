@@ -1,0 +1,7 @@
+<div style="float:right">
+  <input size="5" style="width:75px;text-align:center" type="text" <: include form::idname :> value="<%=field.text_value()%>">
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <button class="fa fa-minus down"></button>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <button class="fa fa-plus up"></button>
+</div>

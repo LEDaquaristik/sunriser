@@ -57,7 +57,7 @@ body{
     -webkit-animation: BackAnim 175s ease infinite;
     -moz-animation: BackAnim 175s ease infinite;
     animation: BackAnim 175s linear infinite;
-  -------------------------------------------------- */  
+  -------------------------------------------------- */
   /* background: url("http://srdemo.ledaquaristik.de/img/background.jpg") no-repeat fixed center center / 150% 150% #145868; */
 }
 @-o-keyframes BackAnim {
@@ -150,7 +150,7 @@ hr{
   border:1px solid #ccc;
   overflow:auto;
   background-color:#101010;
-  color:#ffffff;  
+  color:#ffffff;
 }
 
 /***  FORMS  ***/
@@ -263,7 +263,7 @@ nav .selected a{
   height:100%;
   overflow:hidden;
   display:none;
-  width:300px; /* TODO : Also not the best solution. 
+  width:300px; /* TODO : Also not the best solution.
                   Have to check if something better exists */
 }
 .first-level .second-nav li a{
@@ -441,7 +441,6 @@ nav h2{
   background-color:#32A5F7;
 }
 .pleasewait:before{
-  content:"Please Wait...";
   position:absolute;
   color: #999;
   margin-left: -130px;
@@ -476,7 +475,7 @@ nav h2{
   -moz-animation: PleaseWait 5s ease infinite;
   animation: PleaseWait 5s ease infinite;
 }
-  
+
 @-o-keyframes PleaseWait {
    0%{
      width:0%;
@@ -817,6 +816,11 @@ tbody tr:first-child{
   padding: 10px 0;
 }
 
+#sensortabs{
+  height: 65px;
+  padding: 10px 0;
+}
+
 /**  Hilfe  **/
 
 .hilfe-sidebar{
@@ -828,7 +832,7 @@ tbody tr:first-child{
   bottom: 0;
   right: 0;
   z-index: 3;
-  background-color: #ECF0F1; 
+  background-color: #ECF0F1;
   transition-duration:0.2s;
   margin-right:-400px;
 }
@@ -847,7 +851,7 @@ tbody tr:first-child{
   overflow-y: scroll;
 }
 .hilfe-more-close{
-  background-color: #ECF0F1; 
+  background-color: #ECF0F1;
   height: 70px;
   bottom: 0;
   position: sticky;
@@ -1036,12 +1040,12 @@ tbody tr:first-child{
   background-color:#88d48f;
 }
 .install_firmware:active{
-  background-color:#27AE60 
+  background-color:#27AE60
 }
 .firmdown:before{
   content:"⬇";
   padding-right:7px;
-} 
+}
 /*Firmeware Upgrade*/
 
 .upgraded{
@@ -1226,7 +1230,7 @@ tbody tr:first-child{
   background-color:#88d48f;
 }
 .bigbutton:active{
-  background-color:#27AE60 
+  background-color:#27AE60
 }
 
 .bigbutton:not(:last-child){
@@ -1437,7 +1441,7 @@ a.index_function:active,div.index_function:active {
 .connectledanim i{
   font-size: 180px;
   margin-top: 100px;
-  color: #333; 
+  color: #333;
   transition-duration:0.2s;
   display: block !important;
   text-align: center;

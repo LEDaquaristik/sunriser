@@ -44,8 +44,6 @@
 </script>
 <script type="text/javascript">
 
-var bootloader_info = undefined;
-var state = undefined;
 var sr_sysinfo_request_count = 0;
 
 var sr_error_log;
@@ -53,8 +51,8 @@ var sr_info_log;
 
 function sr_sysinfo_done() {
   var bootloader_m;
-  if (bootloader_info) {
-    bootloader_m = moment(bootloader_info.timestamp * 1000);
+  if (sr_bootload) {
+    bootloader_m = moment(sr_bootload.timestamp * 1000);
     bootloader_m.utcOffset(0);
   }
   var firmware_m;
@@ -74,28 +72,28 @@ function sr_sysinfo_done() {
     info['<div class="warnarea">Keine Firmware Informationen!</div>'] = "";
   }
   if (bootloader_m) {
-    info["Bootloader Version"] = bootloader_info.version;
+    info["Bootloader Version"] = sr_bootload.version;
     info["Bootloader Zeitstempel"] = bootloader_m.format('LLL.ss');
-    if (bootloader_info.mac) {
-      info["Netzwerk MAC Adresse"] = bootloader_info.mac.map(function(m){
+    if (sr_bootload.mac) {
+      info["Netzwerk MAC Adresse"] = sr_bootload.mac.map(function(m){
         var h = m.toString(16); return h.length == 1 ? '0' + h : h;
       }).join(":");
     }
   } else {
     info['<div class="warnarea">Keine Bootloader Informationen!</div>'] = "";
   }
-  if (state) {
-    console.log(state);
-    if (Object.keys(state.sensors).length > 0) {
-      var sensors = [];
-      if (state.sensors["ds1822"]) {
-        sensors.push("Temperatur (DS1822)");
-      }
-      info["Sensoren"] = sensors.join(", ");
-      if (state.sensors["ds1822"]) {
-        var ds1822 = parseInt(state.sensors["ds1822"]) / 10;
-        info["Temperatur"] = ds1822 + "&deg;";
-      }
+  if (sr_state) {
+    if (sr_state.sensors) {
+      $.each(sr_state.sensors,function(rom,values){
+        var sensor = new SrSensor(rom);
+        if (sensor) {
+          info["Sensor "+rom] = sensor.display_value();
+        } else {
+          var id = values[0];
+          var raw = values[1];
+          info["Sensor "+rom+" (roh)"] = raw;
+        }
+      });
     } else {
       info["Sensoren"] = "Keine";
     }
@@ -105,12 +103,12 @@ function sr_sysinfo_done() {
   sr_load_info_log();
   setTimeout(function(){
     sr_sysinfo_request_state();
-  }, 60000);
+  }, 30000);
 }
 
 function sr_load_error_log() {
   if (!sr_config["no_error_logging"]) {
-    if (state.errsize > 0) {
+    if (sr_state.errsize > 0) {
       $('#sr_error_log').append('<hr><h3>Fehler Logbuch <a href="/errors">Herunterladen</a></h3>'); // <a href="#" id="show_sr_error_log">Anzeigen</a>
     } else {
       $('#sr_error_log').append('<h3>Kein Fehler Logbuch</h3>');
@@ -138,7 +136,7 @@ function sr_load_error_log() {
 
 function sr_load_info_log() {
   if (sr_config["info_logging"]) {
-    if (state.logsize > 0) {
+    if (sr_state.logsize > 0) {
       $('#sr_info_log').append('<hr><h3>Betriebs Logbuch <a href="/log">Herunterladen</a></h3>');
     } else {
       $('#sr_info_log').append('<h3>Kein Betriebs Logbuch</h3>');
@@ -165,16 +163,14 @@ function sr_load_info_log() {
 }
 
 function sr_sysinfo_request_state() {
-  sr_request_mpack('GET','/state',undefined,function(values){
-    state = values;
+  sr_request_state(function(values){
     sr_sysinfo_done();
   });
 }
 
 function sr_sysinfo_request_bootload() {
-  sr_request_mpack('GET','/bootload.mp',undefined,function(values){
+  sr_request_bootload(function(values){
     if (values) {
-      bootloader_info = values;
       sr_sysinfo_request_state();
     } else {
       sr_sysinfo_request_count++;

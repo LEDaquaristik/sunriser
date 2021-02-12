@@ -200,11 +200,11 @@ sub wait_for {
 
 Repository
 
-  http://github.com/LEDaquaristik/sunriser
+  https://github.com/LEDaquaristik/sunriser
   Pull request and additional contributors are welcome
- 
+
 Issue Tracker
 
-  http://github.com/LEDaquaristik/sunriser/issues
+  https://github.com/LEDaquaristik/sunriser/issues
 
 =cut

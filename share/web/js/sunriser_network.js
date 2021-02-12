@@ -1,12 +1,98 @@
 
+function sr_request_state(success){
+  sr_request_mpack('GET','/state',undefined,function(values){
+    sr_state = values;
+    $.each(sensors,function(rom,sensor){
+      if (typeof sensor['value'] !== 'undefined') {
+        delete sensor['value'];
+      }
+    });
+    active_sensors = [];
+    if (sr_state.sensors && Object.keys(sr_state.sensors).length > 0) {
+      var roms = Object.keys(sr_state.sensors);
+      var sr_sensors_web = sr_config['sensors#web'];
+      var update = 0;
+      var updated_values = {};
+      $.each(roms,function(i,rom){
+        var desc = sr_state.sensors[rom];
+        var device = desc[0];
+        var value = desc[1];
+        if (!sr_sensors_web[rom]) {
+          var new_sensor = {};
+          var id = Object.keys(sr_sensors_web).length + 1;
+          var new_sensors_web = {
+            id: rom,
+            sorting: id,
+            device: device
+          };
+          if (sr_sensors[device]) {
+            var name = '#' + id + ' ' + sr_sensors[device]['name'];
+            updated_values['sensors#sensor#' + rom + '#unit'] = sr_sensors[device]['unit'];
+            updated_values['sensors#sensor#' + rom + '#unitcomma'] = sr_sensors[device]['unitcomma'];
+            updated_values['sensors#sensor#' + rom + '#min'] = sr_sensors[device]['min'];
+            updated_values['sensors#sensor#' + rom + '#max'] = sr_sensors[device]['max'];
+            updated_values['sensors#sensor#' + rom + '#name'] = name;
+            updated_values['sensors#sensor#' + rom + '#device'] = device;
+            updated_values['sensors#sensor#' + rom + '#desiredmin'] = sr_sensors[device]['min'];
+            updated_values['sensors#sensor#' + rom + '#desiredmax'] = sr_sensors[device]['max'];
+            new_sensors_web['unit'] = sr_sensors[device]['unit'];
+            new_sensors_web['unitcomma'] = sr_sensors[device]['unitcomma'];
+            new_sensors_web['min'] = sr_sensors[device]['min'];
+            new_sensors_web['max'] = sr_sensors[device]['max'];
+            new_sensors_web['name'] = name;
+          } else {
+            var name = '#' + id;
+            updated_values['sensors#sensor#' + rom + '#device'] = device;
+            updated_values['sensors#sensor#' + rom + '#name'] = name;
+            new_sensors_web['unknown'] = 1;
+            new_sensors_web['name'] = name;
+          }
+          sr_sensors_web[rom] = new_sensors_web;
+          update = 1;
+        } else {
+          sensors[rom]['value'] = value;
+          active_sensors.push(rom);
+        }
+      });
+      if (update) {
+        updated_values['sensors#web'] = sr_sensors_web;
+        sr_request_send_config(updated_values,function(){
+          window.location.href = window.location.href;
+        });
+      }
+    }
+    if (success) {
+      success.call(this,values);
+    }
+  });
+}
+
+function sr_request_bootload(success){
+  sr_request_mpack('GET','/bootload.mp',undefined,function(values){
+    sr_bootload = values;
+    if (success) {
+      success.call(this,values);
+    }
+  });
+}
+
 function sr_request_send_config(sr_values, success) {
   var values = {};
   $.each(sr_values,function(k,v){
-    if (sr_type(k)) {
+    var type = sr_type(k);
+    if (type) {
       if (typeof sr_values[k] === 'undefined') {
-        values[k] = sr_default(k);
-      } else if (sr_type(k) == 'json') {
+        if (type == 'bool') {
+          values[k] = sr_default(k) ? true : false;
+        } else {
+          values[k] = sr_default(k);
+        }
+      } else if (type == 'json') {
         values[k] = JSON.stringify(sr_values[k]);
+      } else if (type == 'bool') {
+        values[k] = sr_values[k] ? true : false;
+      } else if (type == 'integer') {
+        values[k] = parseInt(sr_values[k]);
       } else {
         values[k] = sr_values[k];
       }
@@ -39,7 +125,7 @@ function sr_request_mpack(method,url,data,success) {
     cache: false,
     timeout: 10000,
     beforeSend: function(xhr,settings) {
-      if (method == 'PUT') {
+      if (method == 'PUT' && url == '/') {
         sr_screenblock('Speichern');
       }
       if (method == 'DELETE') {
@@ -65,7 +151,7 @@ function sr_request_mpack(method,url,data,success) {
           start_time = current_time - result.uptime;
         }
       };
-      if (method == 'PUT') {
+      if (method == 'PUT' && url == '/') {
         sr_finished();
       }
       if (success) {

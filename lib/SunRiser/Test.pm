@@ -1,4 +1,5 @@
 package SunRiser::Test;
+# ABSTRACT: SunRiser Test Helper for Simulator
 
 use Moo;
 use Test::More;
@@ -89,7 +90,7 @@ sub test_share {
     my $file = $share_file->relative($share)->stringify;
     if ($self->pub->versioned) {
       next if $file =~ /^css\//;
-      next if $file =~ /^js\//;      
+      next if $file =~ /^js\//;
     }
     my $res = $self->t->get($file);
     ok($res->is_success,'GET /'.$file.' succeed');
@@ -100,22 +101,19 @@ sub factory_test {
 
 }
 
-  # pwm#1#color            "",
-  # pwm#1#manager          0,
-  # pwm#2#color            "",
-  # pwm#2#manager          0,
-  # pwm#3#color            "",
-  # pwm#3#manager          0,
-  # pwm#4#color            "",
-  # pwm#4#manager          0,
-  # pwm#5#color            "",
-  # pwm#5#manager          0,
-  # pwm#6#color            "",
-  # pwm#6#manager          0,
-  # pwm#7#color            "",
-  # pwm#7#manager          0,
-  # pwm#8#color            "",
-  # pwm#8#manager          0,
-  # weather#setup#0#pwms   []
-
 1;
+
+=head1 DESCRIPTION
+
+=head1 SUPPORT
+
+Repository
+
+  https://github.com/LEDaquaristik/sunriser
+  Pull request and additional contributors are welcome
+
+Issue Tracker
+
+  https://github.com/LEDaquaristik/sunriser/issues
+
+=cut

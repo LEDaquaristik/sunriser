@@ -88,3 +88,18 @@ sub run_loop {
 }
 
 1;
+
+=head1 DESCRIPTION
+
+=head1 SUPPORT
+
+Repository
+
+  https://github.com/LEDaquaristik/sunriser
+  Pull request and additional contributors are welcome
+
+Issue Tracker
+
+  https://github.com/LEDaquaristik/sunriser/issues
+
+=cut

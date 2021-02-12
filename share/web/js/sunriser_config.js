@@ -5,7 +5,7 @@ function sr_type(){
   var found;
   $.each(sr_config_def,function(k,val){
     if (typeof found === 'undefined') {
-      var regexp = new RegExp('^' + k.replace('X','\\w+') + '$');
+      var regexp = new RegExp('^' + k.replace(/X/g,'\\w+') + '$');
       if (regexp.test(key)) {
         found = val['type'];
       }
@@ -20,7 +20,7 @@ function sr_default(){
   var found;
   $.each(sr_config_def,function(k,val){
     if (typeof found === 'undefined') {
-      var regexp = new RegExp('^' + k.replace('X','\\w+') + '$');
+      var regexp = new RegExp('^' + k.replace(/X/g,'\\w+') + '$');
       if (regexp.test(key)) {
         found = val['default'];
       }

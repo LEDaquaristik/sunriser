@@ -14,7 +14,7 @@
 
   <table>
     <tr>
-      <td class="contactlabel">Adresse</td>
+      <td class="contactlabel"><i class="fa fa-address-card-o"></i> Adresse</td>
       <td>
         <span itemprop="name">
           <a href="https://www.ledaquaristik.de/">LEDaquaristik UG (haftungsbeschr&auml;nkt)</a>
@@ -33,30 +33,38 @@
     </tr>
     <tr><td colspan="2">&nbsp;</td></tr>
     <tr>
-      <td class="contactlabel">Telefon</td>
+      <td class="contactlabel"><i class="fa fa-phone"></i> Telefon</td>
       <td itemprop="telephone">+49 5257 93 666 50</td>
     </tr>
     <tr>
-      <td class="contactlabel">Fax</td>
+      <td class="contactlabel"><i class="fa fa-fax"></i> Fax</td>
       <td itemprop="faxNumber">+49 5257 93 666 51</td>
     </tr>
     <tr><td colspan="2">&nbsp;</td></tr>
     <tr itemprop="founder" itemscope="" itemtype="http://schema.org/Person">
-      <td class="contactlabel">Gesch&auml;ftsf&uuml;hrung</td>
+      <td class="contactlabel"><i class="fa fa-user-o"></i> Gesch&auml;ftsf&uuml;hrung</td>
       <td itemprop="name">Dennis R&uuml;sing</td>
     </tr>
     <tr><td colspan="2">&nbsp;</td></tr>
     <tr>
       <td class="contactlabel">
-        Kontaktformular
+        <i class="fa fa-edit"></i> Kontaktformular
       </td>
       <td>
         <a href="https://www.ledaquaristik.de/epages/64355316.sf/de_DE/?ObjectPath=/Shops/64355316/Categories/ContactForm" rel="nofollow">auf LEDaquaristik.de</a>
       </td>
     </tr>
+    <tr>
+      <td>
+        <i class="fa fa-youtube-square"></i> YouTube
+      </td>
+      <td>
+        <a href="https://www.youtube.com/c/LEDaquaristikde/videos" rel="nofollow">LEDaquaristikde</a>
+      </td>
+    </tr>
     <tr><td colspan="2">&nbsp;</td></tr>
     <tr>
-      <td class="contactlabel">E-Mail</td>
+      <td class="contactlabel"><i class="fa fa-envelope-open-o"></i> E-Mail</td>
       <td>
         <a href="mailto:sunriser@ledaquaristik.de?subject=[SunRiser%208]" target="_blank" rel="nofollow"><span itemprop="email">SunRiser@LEDaquaristik.de</span></a><br>
         <span class="error">(Bitte h&auml;ngen Sie auch eine <a href="/backup.html">Sicherung</a> Ihrer Konfiguration an die E-Mail)</span>

@@ -1,0 +1,51 @@
+<div class="monthpicker" id="<%=field.id%>_monthpicker">
+  <div class="january month" style="float:left">
+    <input type="checkbox" id="january-check" value="1"></input>
+    <label for="january-check">Januar</label>
+  </div>
+  <div class="february month" style="float:left">
+    <input type="checkbox" id="february-check" value="2"></input>
+    <label for="february-check">Februar</label>
+  </div>
+  <div class="march month">
+    <input type="checkbox" id="march-check" value="3"></input>
+    <label for="march-check">M&auml;rz</label>
+  </div>
+  <div class="april month" style="float:left"> 
+    <input type="checkbox" id="april-check" value="4"></input>
+    <label for="april-check">April</label>
+  </div>
+  <div class="may month" style="float:left">
+    <input type="checkbox" id="may-check" value="5"></input>
+    <label for="may-check">Mai</label>
+  </div>
+  <div class="june month" style="float:left">
+    <input type="checkbox" id="june-check" value="6"></input>
+    <label for="june-check">Juni</label>
+  </div>
+  <div class="july month">
+    <input type="checkbox" id="july-check" value="7"></input>
+    <label for="july-check">Juli</label>
+  </div>
+  <div class="august month" style="float:left">
+    <input type="checkbox" id="august-check" value="8"></input>
+    <label for="august-check">August</label>
+  </div>
+  <div class="september month">
+    <input type="checkbox" id="september-check" value="9"></input>
+    <label for="september-check">September</label>
+  </div>
+  <div class="october month" style="float:left">
+    <input type="checkbox" id="october-check" value="10"></input>
+    <label for="october-check">Oktober</label>
+  </div>
+  <div class="november month">
+    <input type="checkbox" id="november-check" value="11"></input>
+    <label for="november-check">November</label>
+  </div>
+  <div class="december month">
+    <input type="checkbox" id="december-check" value="12"></input>
+    <label for="december-check">Dezember</label>
+  </div>
+</div>
+<input type="hidden" <: include form::idname :> value="<%=field.joined_value()%>">

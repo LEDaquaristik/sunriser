@@ -4,9 +4,9 @@ var sr_config;
 var sr_config_main_keys = [
   'model','model_id','pwm_count','factory_version','language','timezone',
   'gmtoff','nodst','updated','name','showexpert','nohelp','nofinder','usentp',
-  'weather#web','weather#last_setup_id','programs#web','programs#last_setup_id',
-  'ignoreupgrade','webport','save_version','factory_version','service_value',
-  'no_error_logging','info_logging'
+  'weather#web','weather#last_setup_id','programs#web','sensors#web',
+  'programs#last_setup_id','ignoreupgrade','webport','save_version',
+  'factory_version','service_value','no_error_logging','info_logging'
 ];
 
 var firmware_info;
@@ -21,11 +21,15 @@ var sr_config_types = {};
 var sr_color = {};
 var is_changed = false;
 
+var sr_state;
+var sr_bootload;
+
 var sr_config_version;
 
 var url = new URI();
 var query = url.search(true);
 var get_weather_setup_id = query.weather;
+var get_sensors_sensor_id = query.sensor;
 
 var mac;
 
@@ -36,14 +40,19 @@ var weather_profiles = [{
   name: "Kein Wetterprogramm"
 }];
 
+var sensors = {};
+var active_sensors = [];
+
 var programs = [{
   value: 0,
   label: "Kein Programm",
   name: "Kein Programm"
 }];
+
 var program_names = {};
 var program_colors = {};
 var weekdays = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Alltag'];
+var months = ['Januar','Februar',unescape("M%E4rz"),'April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
 var html_sr8_version;
 
 function isChrome() {
@@ -83,12 +92,12 @@ $(function(){
   // Remove all js-remove elements
   $('.js-remove').remove();
 
+  // Hide all js-hide elements
   $('.js-hide').hide();
 
   WebFont.load({
     custom: {
-      families: ['IcoMoon', 'Open Sans', 'DIN1451'],
-      urls: ['/fonts.css']
+      families: ['IcoMoon', 'Open Sans', 'DIN1451']
     },
     active: function() {
       sr_screenunblock();      
@@ -153,7 +162,7 @@ $(function(){
   });
 
   //
-  $(".form").each(function(){
+  $(".form").not('.noload').each(function(){
     $(this).html('<img class="loader" src="/img/ajaxload.gif"><div class="centerarrow">Wenn dieser Fisch nicht verschwindet, bitte die Seite neuladen.</div>');
   });
 
@@ -342,6 +351,18 @@ $('body').on('sr_config_init',function(){
     $('.expert-only').hide();
   }
 
+  var i = 0;
+  $.each(sr_config['sensors#web'],function(rom,v){
+    if (v) {
+      var bg_color = v.backgroundcolor ? v.backgroundcolor : sr_colors[i++ % sr_colors.length].color;
+      var sensor = $.extend({}, v);
+      if (!sensor['backgroundcolor']) {
+        sensor['backgroundcolor'] = sr_colors[i++ % sr_colors.length].color;
+      }
+      sensors[v.id] = sensor;
+    }
+  });
+
   var got_empty = false;
 
   var first_weather_setup_id;
@@ -422,13 +443,13 @@ $('body').on('sr_config_init',function(){
     }
   });
 
-  $('#weathertab' + get_weather_setup_id).css('background-color','#dddddd');
-
   $('.weather-profiled').each(function(){
     var link = new URI($(this).attr('href'));
     link.addSearch("weather",get_weather_setup_id);
     $(this).attr('href',link);
   });
+
+  $('#weathertab' + get_weather_setup_id).css('background-color','#dddddd');
 
   $(".form").not(".noautoload").each(function(){
     var id = $(this).attr('id');

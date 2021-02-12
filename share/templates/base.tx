@@ -43,7 +43,7 @@
           </h1>
           <div id="sunriser_datetime_header" class="sunriser sunriser_datetime"></div>
         <: } :>
-      </header>              
+      </header>
       <div class="page control_center <: if $no_form { :>no_dialogue<: } :>">
         <: block page -> { :>
           <nav>
@@ -75,7 +75,7 @@
       </div>
       <: if $demo { :>
         <div class="banderolebox">
-          <a href="http://www.ledaquaristik.de/SunRiser-8-Tagessimulation-und-Lichtsteuerung" class="sunriserbanderole">SunRiser 8 Produkt Demo</a>
+          <a href="https://www.ledaquaristik.de/SunRiser-8-Tagessimulation-und-Lichtsteuerung" class="sunriserbanderole">SunRiser 8 Produkt Demo</a>
         </div>
       <: } :>
     </div>

@@ -1,0 +1,78 @@
+: cascade base { title => "Einschaltpunkt", nav => "setup", no_bighelp => 1, help => r("Die Dimmfunktion der <a target='_blank' href='https://www.ledaquaristik.de/epages/64355316.sf/de_DE/?ObjectPath=/Shops/64355316/Products/255'>High-Power-Solution</a> bzw. <a target='_blank' href='https://www.ledaquaristik.de/epages/64355316.sf/de_DE/?ObjectPath=/Shops/64355316/Categories/Produkte/LEDs_Kompaktleuchten/powerBEAM_Haengeleuchten'>powerBEAM LED-Leuchten</a> kann Helligkeitswerte im Bereich von 1-10% technisch nicht umsetzen, so dass die LEDs erst bei ca. 10% Helligkeit ein- und ausschalten. Ein nur sehr schwaches Glimmen der LEDs wie es der SunRsier im Normalbetrieb erlaubt, ist deshalb nicht m&ouml;glich. Der Einschaltpunkt ist die kleinstm&ouml;gliche Dimmeinstellung des High-Power-Solution bzw. powerBEAM Netzteils und muss in Abh&auml;ngigkeit zur Netzteil- und LED-leistung individuell ermittelt und eingestellt werden, um eine zeitlich korrekte Umsetzung der Tages- und Wochenplanung zu erzielen.<br><br>So geht’s: Der Einschaltpunkt des betreffenden Kanals wird so weit nach oben verschoben, bis das Licht der dort angeschlossenen Lampe(n) einschaltet und kontinuierlich leuchtet. Dieser individuell ermittelte Einschaltpunkt ist nun zu speichern. In der Folge wird der Dimmbereich zwischen Wert 1 und dem neuen Einschaltpunkt von der Tages- und Wochenplanung ignoriert. Der neue Einschaltpunkt stellt die minimale Helligkeit beim Einschalten des Lichts bei 1% dar. Bei Wert 0 ist die Funktion deaktiviert.") }
+: override content -> {
+
+<div class="form noautoload" id="minimum"></div>
+
+: }
+: override postjs -> {
+
+<script type="text/javascript">
+
+// First execute stuff when the form is loaded
+$('body').on('sr_config',function(){
+
+  sr_request_mpack('GET','/state',undefined,function(values){
+    $("#minimum").each(function(){
+      var fields = new Array();
+      for (i = 1; i <= sr_config['pwm_count']; i++) {
+        var pwm_key = "" + i;
+        fields.push({
+          name: "pwm#" + i + "#min",
+          label: "Einschaltpunkt LED #" + i,
+          type: "integer",
+          template: "plusminus",
+          data: { pwm_id: i },
+          min: 0, max: 1000,
+          custom_init: function(){
+            var min = this.min;
+            var max = this.max;
+            var pwm = this.data.pwm_id;
+            var html_field = this.html_field();
+            html_field.on('change',function(){
+              var data = { pwms: {} };
+              var val = parseInt(html_field.val());
+              if (!isNaN(val)) {
+                if (val > max) {
+                  html_field.val(max);
+                }
+                if (val < min) {
+                  html_field.val(min);
+                }
+                data.pwms[pwm] = parseInt(html_field.val());
+                sr_request_mpack('PUT','/state',data,function(values){});
+              }
+            }).on('keyup',function(e){
+              e.preventDefault();
+              html_field.trigger('change');
+            });
+            html_field.parent().find('.up').on('click',function(e){
+              e.preventDefault();
+              var current = parseInt(html_field.val());
+              if (current < max) {
+                html_field.val(++current);
+                html_field.trigger('change');
+              }
+            });
+            html_field.parent().find('.down').on('click',function(e){
+              e.preventDefault();
+              var current = parseInt(html_field.val());
+              if (current > 0) {
+                html_field.val(--current);
+                html_field.trigger('change');
+              }
+            });
+          }
+        });
+      }
+      var form = new SrForm(this,{
+        title: "Einschaltpunkt setzen",
+        fields: fields
+      });
+    });
+  });
+
+});
+
+</script>
+
+: }

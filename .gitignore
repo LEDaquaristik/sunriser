@@ -26,7 +26,7 @@ CONFIG.MP
 
 *firmware_images.json*
 
-config/*
+/config/*
 
-tmp/*
+/tmp/*
 

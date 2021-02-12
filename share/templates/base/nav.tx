@@ -61,7 +61,7 @@
       </li>
       <li class="second-level">
         <a class="weather-profiled" href="/rain.html">
-          <i class="fa fa-pluie"></i>Regentage
+          <i class="fa fa-umbrella"></i>Regentage
         </a>
       </li>
       <li class="second-level">
@@ -79,6 +79,11 @@
       <li class="second-level">
         <a href="/led.html">
           <i class="fa fa-lightbulb-o"></i>LED
+        </a>
+      </li>
+      <li class="second-level">
+        <a href="/sensor.html">
+          <i class="fa fa-tachometer"></i>Temperatursensoren
         </a>
       </li>
       <li class="second-level">
@@ -114,6 +119,11 @@
       <li class="js-hide expert-menu second-level">
         <a href="/expert.html">
           <i class="fa fa-cloud"></i>Experten Funktionen
+        </a>
+      </li>
+      <li class="second-level">
+        <a href="/minimum.html">
+          <i class="fa fa-arrow-circle-o-up"></i>Einschaltpunkt
         </a>
       </li>
       <li class="second-level">

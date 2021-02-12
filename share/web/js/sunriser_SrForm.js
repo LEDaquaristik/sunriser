@@ -46,7 +46,10 @@ var SrForm = Class.extend({
         }
         // Weather setup replacement
         field.name = field.name.replace('weather#setup#X#','weather#setup#' + get_weather_setup_id + '#');
-        // -------------------------        
+        // -------------------------
+        // Sensor setup replacement
+        field.name = field.name.replace('sensors#sensor#X#','sensors#sensor#' + get_sensors_sensor_id + '#');
+        // -------------------------
       }
       self.fields_by_name[field.name] = self.get_field(field);
       self.fields.push(self.fields_by_name[field.name]);
@@ -80,6 +83,7 @@ var SrForm = Class.extend({
       }
       field.prepare();
       field.initjs();
+      field.extrajs();
       field.initchange();
       field.custom_init();
     });
@@ -92,10 +96,10 @@ var SrForm = Class.extend({
       var values = {};
       $.each(self.fields,function(i,field){
         if (typeof field.name !== 'undefined' && !field.nosubmit) {
-          values[field.name] = sr_default(field.name);
+          values[field.name] = undefined;
         }
       });
-      sr_request_mpack('PUT','/',values,function(){
+      sr_request_send_config(values,function(){
         sr_screenblock('Seite neu laden');
         window.location.href = window.location.href;
       });
@@ -124,7 +128,7 @@ var SrForm = Class.extend({
       }
     });
     if (!self.error) {
-      sr_request_mpack('PUT','/',values,function(){
+      sr_request_send_config(values,function(){
         var reload = false;
         $.each(values,function(key,val){
           if ( key == 'showexpert' || key == 'nohelp' || key == 'summertime' || key == 'nodst' || key == 'gmtoff') {
@@ -132,7 +136,7 @@ var SrForm = Class.extend({
               reload = true;
             }
           }
-          if ( key == 'weather#web' || key == 'programs#web' ) {
+          if ( key == 'weather#web' || key == 'programs#web' || key == 'sensors#web' ) {
             reload = true;
           }
           sr_config[key] = val;
@@ -152,6 +156,8 @@ var SrForm = Class.extend({
     switch(field.type) {
       case 'array(weekday)':
         return new SrField_Weekday(field);
+      case 'array(month)':
+        return new SrField_Month(field);
       case 'hidden':
         return new SrField_Hidden(field);
       case 'time':

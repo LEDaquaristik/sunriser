@@ -125,7 +125,7 @@ sub add_factory {
     my $file = $share_file->relative($share)->stringify;
     if ($publisher->versioned) {
       next if $file =~ /^css\//;
-      next if $file =~ /^js\//;      
+      next if $file =~ /^js\//;
     }
     $self->add_web($file,scalar $share_file->slurp_raw);
   }
@@ -223,3 +223,18 @@ sub add_web {
 }
 
 1;
+
+=head1 DESCRIPTION
+
+=head1 SUPPORT
+
+Repository
+
+  https://github.com/LEDaquaristik/sunriser
+  Pull request and additional contributors are welcome
+
+Issue Tracker
+
+  https://github.com/LEDaquaristik/sunriser/issues
+
+=cut

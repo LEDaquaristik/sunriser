@@ -80,6 +80,8 @@ sub _build_publish_files {
     program.html
     programs.html
     rain.html
+    minimum.html
+    sensor.html
     service.html
     system.html
     sysinfo.html
@@ -148,7 +150,12 @@ sub render_all_css {
   my $css = "";
   my $share = path(dist_dir('SunRiser'),'web');
   for my $css_file (@{$self->base_vars->{css_files}}) {
-    $css .= $share->child($css_file)->slurp_utf8;
+    my $css_path = $share->child($css_file);
+    if ($css_path->is_file) {
+      $css .= $css_path->slurp_utf8;
+    } else {
+      $css .= $self->render($css_file);
+    }
   }
   $css = CSS::Minifier::XS::minify($css);
   utf8::decode($css);
@@ -160,10 +167,15 @@ sub render_all_js {
   my $js = "var sr_config_def_factory = ".encode_json($self->json_sr_config_def).";\n";
   my $share = path(dist_dir('SunRiser'),'web');
   for my $js_file (@{$self->base_vars->{js_files}}) {
-    $js .= $share->child($js_file)->slurp_utf8;
+    my $js_path = $share->child($js_file);
+    if ($js_path->is_file) {
+      $js .= $js_path->slurp_utf8;
+    } else {
+      $js .= $self->render($js_file);
+    }
   }
   $js = minify( input => $js );
-  return $js;  
+  return $js;
 }
 
 ########################################################################
@@ -195,6 +207,7 @@ sub _build_base_vars {
     css_files => [qw(
       css/reset.css
       css/tipr-3.1.css
+      fonts.css
       css/icomoon.css
       css/sunriser.css
       css/sunriser_dayplanner.css
@@ -219,11 +232,13 @@ sub _build_base_vars {
       js/jquery-ajax-blob-arraybuffer.js
       js/webfontloader.js
 
+      js/sunriser_sensors_config.js
       js/sunriser_colors_config.js
       js/sunriser_forms_config.js
 
       js/sunriser_SrForm.js
       js/sunriser_SrField.js
+      js/sunriser_SrSensor.js
 
       js/sunriser_firmware.js
       js/sunriser_network.js
@@ -279,11 +294,11 @@ sub _build_template_engine {
 
 Repository
 
-  http://github.com/LEDaquaristik/sunriser
+  https://github.com/LEDaquaristik/sunriser
   Pull request and additional contributors are welcome
- 
+
 Issue Tracker
 
-  http://github.com/LEDaquaristik/sunriser/issues
+  https://github.com/LEDaquaristik/sunriser/issues
 
 =cut

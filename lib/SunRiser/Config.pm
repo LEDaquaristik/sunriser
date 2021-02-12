@@ -113,9 +113,9 @@ sub markdown {
     my ( $key, $desc, $type, $default, $submenu ) = @{$def};
     my $display_key = join(' # ',split(/#/,$key));
     if ($submenu) {
-      push(@rows,join(' | ', '**'.$display_key.'**', "", "", '**'.$desc.'**'));      
+      push(@rows,join(' | ', '**'.$display_key.'**', "", "", '**'.$desc.'**'));
     } else {
-      push(@rows,join(' | ', $display_key, $type || "", defined $default ? $default : "", $desc));      
+      push(@rows,join(' | ', $display_key, $type || "", defined $default ? $default : "", $desc));
     }
   }
   return "\n\n".join("\n",@rows)."\n\n\n";
@@ -138,11 +138,11 @@ sub get_defaults {
 
 Repository
 
-  http://github.com/LEDaquaristik/sunriser
+  https://github.com/LEDaquaristik/sunriser
   Pull request and additional contributors are welcome
- 
+
 Issue Tracker
 
-  http://github.com/LEDaquaristik/sunriser/issues
+  https://github.com/LEDaquaristik/sunriser/issues
 
 =cut
