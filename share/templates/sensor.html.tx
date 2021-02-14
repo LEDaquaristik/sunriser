@@ -162,11 +162,6 @@ $('body').on('sr_config',function(){
             label: "Sensor nur in diesen Monaten nutzen<br>(sonst alle)"
           }];
 
-          if (sr_config.showexpert) {
-            fields.push({
-            });
-          }
-
           var extrajs = function(doname){
             var field = this;
             var form = field.form;
