@@ -66,8 +66,9 @@ var SrForm = Class.extend({
   },
 
   reset: function() {
-    this.error = false;
-    $.each(this.fields,function(i,field){
+    var self = this;
+    self.error = false;
+    $.each(self.fields,function(i,field){
       field.reset();
     });
   },
@@ -99,6 +100,9 @@ var SrForm = Class.extend({
           values[field.name] = undefined;
         }
       });
+      if (typeof self.customreset === 'function') {
+        self.customreset.call(self, values);
+      }
       sr_request_send_config(values,function(){
         sr_screenblock('Seite neu laden');
         window.location.href = window.location.href;

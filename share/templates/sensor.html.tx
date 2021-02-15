@@ -245,7 +245,11 @@ $('body').on('sr_config',function(){
           }
           var form = new SrForm(this,{
             title: "Sensor einstellen",
-            no_reset: true,
+            customreset: function(values){
+              var sr_sensors_web = sr_config['sensors#web'];
+              delete sr_sensors_web[get_sensors_sensor_id];
+              values['sensors#web'] = sr_sensors_web;
+            },
             fields: fields
           });
 

@@ -31,7 +31,7 @@
   "ip4_filter",     [ "Use IPv4 access whitelist",  "bool", 0 ],
   "ip4_whitelist",  [ "IPv4 access whitelist",    "array(ip4)" ],
   "direct_ip4",     [ "Direct link IPv4",           "ip4", "192.168.0.2" ],
-  "direct_ip4_netmask", [ "Direct link IPv4 Netmask", "ip4", "255.255.255.0" ],
+  "direct_ip4_netmask",[ "Direct link IPv4 Netmask", "ip4", "255.255.255.0" ],
   "direct_ip4_gw",  [ "Direct link IPv4 Gateway", "ip4", "192.168.0.1" ],
   "webport",        [ "Webserver Port",             "integer", 80 ],
   "indexfile",      [ "Root file of webserver",     "text", "index.html" ],
@@ -43,7 +43,7 @@
   "name",           [ "Custom visual name of device", "text" ],
   "hostname",       [ "Hostname for the device",    "text", "sunriser" ],
   "upgraded0500",   [ "Upgrade to 0.500 done",     "bool", 0 ],
-  "pwm#X", "Main data of PWM X", [
+  "pwm#X", "Main data of PWM X",[
     "manager",      [ "Assigned manager, 0 = unassigned, 1 = dayplanner, 2 = weekplanner, 3 = celestial", "integer", 0 ],
     "max",          [ "Custom maximum value",       "integer", 1000 ],
     "min",          [ "Minimum value if above zero", "integer", 0 ],
@@ -53,7 +53,7 @@
     "color",        [ "Color definition",           "text" ],
     "weather",      [ "Weather program assigned",   "integer" ]
   ],
-  "web#X", "Web files storage for file X", [
+  "web#X", "Web files storage for file X",[
     "content",      [ "Content of file",            "binary" ],
     "gzip",         [ "File is gzipped",            "bool" ],
     "bytes",        [ "Original filesize (only on gzipped)", "integer" ],
@@ -62,8 +62,8 @@
     "extra_headers",[ "(TODO) Extra headers to add on send out (need to be full)", "text" ],
     "deleted",      [ "(TODO) File is deleted",     "bool"]
   ],
-  "programs", "Programs configuration", [
-    "setup#X", "Program X", [
+  "programs", "Programs configuration",[
+    "setup#X", "Program X",[
       "marker",     [ "Control markers (time and percent)", "array(time,percent)" ],
       "name",       [ "Name for program", "text" ],
       "deleted",    [ "Deleted weather profile", "bool", 0 ]
@@ -71,8 +71,8 @@
     "last_setup_id",["Holding the last id used for new setup", "integer", 0 ],
     "web",          [ "Web configuration for programs", "json", "[]" ]
   ],
-  "sensors", "Sensors configuration", [
-    "sensor#X", "Sensor X, where X is rom code", [
+  "sensors", "Sensors configuration",[
+    "sensor#X", "Sensor X, where X is rom code",[
       "active",     [ "Sensor is in use", "bool", 0 ],
       "device",     [ "Official device id, 0 = unknown, 1 = ds1820", "integer", 0 ],
       "unit",       [ "Unit of value, 0 = raw, 1 = celsius", "integer", 0 ],
@@ -81,13 +81,14 @@
       "min",        [ "Minimum value possible", "integer", 0 ],
       "max",        [ "Maximum value possible", "integer", 1000 ],
       "offset",     [ "Sensor value offset", "integer", 0 ],
+      "deviceoffset",[ "Device sensor value offset", "integer", 0 ],
       "name",       [ "Name for sensor", "text" ],
-      "months",     [ "Apply sensor behavior only to given months (else always)", "array(month)" ],
+      "months",     [ "Apply sensor behavior only to given months (else always)", "array(month)"],
       "desiredmin", [ "Minimum desired value", "integer" ],
       "desiredmax", [ "Maximum desired value", "integer" ],
       "emails",     [ "Emails for alarm", "text" ],
       "status",     [ "Send status email every X hours (0 = deactivate)", "integer", 0 ],
-      "pwm#X", "Setting for PWM X of sensor", [
+      "pwm#X", "Setting for PWM X of sensor",[
         "domin",    [ "Set percentage if under desiredmin", "bool", 0 ],
         "domax",    [ "Set percentage if over desiredmax", "bool", 0 ],
         "percentmin",[ "PWM percentage to set under desiredmin, is 0 or 100 for on/off", "integer", 0 ],
@@ -96,20 +97,20 @@
     ],
     "web",          [ "Web configuration for sensors", "json", "{}"]
   ],
-  "weekplanner", "Week planner configuration", [
+  "weekplanner", "Week planner configuration",[
     "programs#X",   [ "Programs of the week for PWM X (always 8, last = all day)", "array(integer)" ],
-    "randomdeferralmax", [ "(TODO) Maximum random deferral (in minutes)", "integer", 0 ],
+    "randomdeferralmax",[ "(TODO) Maximum random deferral (in minutes)", "integer", 0 ],
     "deferral",     [ "(TODO) Fixed deferral (in minutes)", "integer", 0 ]
   ],
-  "dayplanner", "Day planner configuration", [
+  "dayplanner", "Day planner configuration",[
     "marker#X",     [ "Control markers for PWM X (time and percent)", "array(time,percent)" ],
-    "randomdeferralmax", [ "(TODO) Maximum random deferral (in minutes)", "integer", 0 ],
+    "randomdeferralmax",[ "(TODO) Maximum random deferral (in minutes)", "integer", 0 ],
     "deferral",     [ "(TODO) Fixed deferral (in minutes)", "integer", 0 ]
   ],
-  "weather",       "Weather simulation configuration", [
+  "weather",       "Weather simulation configuration",[
     "last_setup_id",[ "Holding the last id used for new setup", "integer", 0],
     "web",          [ "Web configuration for the weather profiles", "json"],
-    "setup#X", "Weather simulation setup X", [
+    "setup#X", "Weather simulation setup X",[
       "name",       [ "Name of the weather profile", "text"],
       "deleted",    [ "Deleted weather profile", "bool", 0],
       "pwms",       [ "[LEGACY] Identification of pwms effected (Ignored)", "array(integer)"],
@@ -121,17 +122,17 @@
         "randstorm",[ "Maximum length added to a storm length in minutes", "integer", 120],
         "nightonly",[ "[LEGACY] Ignored", "bool"],
         "zeroonly", [ "Thunderstorm only if dayplanner sets pwm to 0", "bool", 0],
-        "nozeroonly", [ "Thunderstorm only if dayplanner sets pwm to not 0", "bool", 0],
+        "nozeroonly",[ "Thunderstorm only if dayplanner sets pwm to not 0", "bool", 0],
         "weekdays", [ "Apply thunderstorms to given weekdays (else always)", "array(weekday)"],
-        "minrainextra", [ "Minimum rainfront length extra in minutes", "integer", 2],
-        "randrainextra", [ "Maximum rainfront length extra added in minutes", "integer", 10],
-        "preflashlength", [ "Length of preflash in milliseconds", "integer", 150],
-        "pauselength", [ "Pause between preflash and main flash", "integer", 200],
-        "fullflashlength", [ "Length of main flash in milliseconds", "integer", 300],
-        "deloadflashlength", [ "Length of postflashs in milliseconds", "integer", 150],
-        "deloadpauselength", [ "Pause between postflashs in milliseconds", "integer", 200],
-        "minflashpause", [ "Minimum seconds between lightnings", "integer", 30],
-        "randflashpause", [ "Maximum seconds added between lightnings", "integer", 120],
+        "minrainextra",[ "Minimum rainfront length extra in minutes", "integer", 2],
+        "randrainextra",[ "Maximum rainfront length extra added in minutes", "integer", 10],
+        "preflashlength",[ "Length of preflash in milliseconds", "integer", 150],
+        "pauselength",[ "Pause between preflash and main flash", "integer", 200],
+        "fullflashlength",[ "Length of main flash in milliseconds", "integer", 300],
+        "deloadflashlength",[ "Length of postflashs in milliseconds", "integer", 150],
+        "deloadpauselength",[ "Pause between postflashs in milliseconds", "integer", 200],
+        "minflashpause",[ "Minimum seconds between lightnings", "integer", 30],
+        "randflashpause",[ "Maximum seconds added between lightnings", "integer", 120],
         "preflash", [ "Strength of the lightning preflash", "integer", 8],
         "flash",    [ "Strength of the main lightning flash", "integer", 16],
         "mindeload",[ "Minimum amount of deloads", "integer", 2],
@@ -139,12 +140,12 @@
         "fixdeload",[ "Same strength for all deload flashes if set higher than 0", "integer", 0],
         "permanent",[ "Permanent thunderstorms", "bool", 0]
       ],
-      "moon", "Moon setup", [
+      "moon", "Moon setup",[
         "activated",[ "Show moonphase based on reality", "bool", 0],
         "maximum",  [ "Maximum intensity of moonlight", "integer", 100],
         "weekdays", [ "Apply moon to given weekdays (else every day)", "array(weekday)"]
       ],
-      "clouds", "Clouds setup", [
+      "clouds", "Clouds setup",[
         "activated",[ "Show clouds", "bool", 0],
         "daychance",[ "Chance that it is a day with clouds", "integer", 30],
         "mincloudshare",[ "Minimum percentage share of cloud on a cloudy day", "integer", 10],
@@ -154,7 +155,7 @@
         "randcloud",[ "Maximum length added to the cloud length in seconds", "integer", 40],
         "weekdays", [ "Weekdays who may have rain (else every day)", "array(weekday)"]
       ],
-      "rain", "Rain setup", [
+      "rain", "Rain setup",[
         "activated",[ "Make rainy days", "bool", 0],
         "daychance",[ "Chance that the day is rainy (with clouds activated, also day with clouds automatically)", "integer", 30],
         "minrainshare",[ "Minimum percentage share of rain on a rainy day", "integer", 10],

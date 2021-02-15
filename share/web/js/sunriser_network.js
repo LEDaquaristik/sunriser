@@ -33,12 +33,14 @@ function sr_request_state(success){
             updated_values['sensors#sensor#' + rom + '#max'] = sr_sensors[device]['max'];
             updated_values['sensors#sensor#' + rom + '#name'] = name;
             updated_values['sensors#sensor#' + rom + '#device'] = device;
+            updated_values['sensors#sensor#' + rom + '#deviceoffset'] = sr_sensors[device]['offset'];
             updated_values['sensors#sensor#' + rom + '#desiredmin'] = sr_sensors[device]['min'];
             updated_values['sensors#sensor#' + rom + '#desiredmax'] = sr_sensors[device]['max'];
             new_sensors_web['unit'] = sr_sensors[device]['unit'];
             new_sensors_web['unitcomma'] = sr_sensors[device]['unitcomma'];
             new_sensors_web['min'] = sr_sensors[device]['min'];
             new_sensors_web['max'] = sr_sensors[device]['max'];
+            new_sensors_web['deviceoffset'] = sr_sensors[device]['offset'];
             new_sensors_web['name'] = name;
           } else {
             var name = '#' + id;
@@ -81,20 +83,28 @@ function sr_request_send_config(sr_values, success) {
   $.each(sr_values,function(k,v){
     var type = sr_type(k);
     if (type) {
-      if (typeof sr_values[k] === 'undefined') {
-        if (type == 'bool') {
-          values[k] = sr_default(k) ? true : false;
-        } else {
-          values[k] = sr_default(k);
-        }
-      } else if (type == 'json') {
-        values[k] = JSON.stringify(sr_values[k]);
-      } else if (type == 'bool') {
-        values[k] = sr_values[k] ? true : false;
-      } else if (type == 'integer') {
-        values[k] = parseInt(sr_values[k]);
+      var value;
+      if (typeof v === 'undefined') {
+        value = sr_default(k);
       } else {
-        values[k] = sr_values[k];
+        if (type == 'json') {
+          value = JSON.stringify(v);
+        } else if (type == 'integer') {
+          value = parseInt(v);
+        } else {
+          value = v;
+        }
+      }
+      if (type.startsWith('array')) {
+        if (Array.isArray(value)) {
+          values[k] = value;
+        } else {
+          values[k] = [];
+        }
+      } else if (type == 'bool') {
+        values[k] = value ? true : false;
+      } else {
+        values[k] = value;
       }
     }
   });

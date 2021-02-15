@@ -5,6 +5,7 @@ var sr_sensors = {
     "unitcomma": 1,
     "min": 150,
     "max": 350,
+    "offset": 10,
     "name": "Temperatur"
   }
 };
