@@ -22,7 +22,7 @@
 
 <script type="text/javascript">
 
-$('body').on('sr_config',function(){
+$('body').on('sr_firmware',function(){
 
   $.getJSON(firmware_root + "sunriser_firmware_images.json?" + (new Date().getTime()), function(firmwares) {
 
