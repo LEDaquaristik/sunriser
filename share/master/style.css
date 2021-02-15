@@ -11,6 +11,16 @@ body {
   background:url("background.jpg") no-repeat fixed center center / 150% 150% #145868;
 }
 
+.warnarea{
+  position:relative;
+  background-color:#E74C3C;
+  padding:25px;
+  color:#FFFFFF;
+  margin-bottom:25px;
+  transition-duration:0.2s;
+  overflow:hidden;
+}
+
 a {
   color: #d0d0d0;
   text-decoration: none;
