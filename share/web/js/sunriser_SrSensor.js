@@ -65,31 +65,3 @@ var SrSensor = Class.extend({
   }
 
 });
-
-
-
-  // "sensors", "Sensors configuration", [
-  //   "sensor#X", "Sensor X, where X is rom code", [
-  //     "active",     [ "Sensor is in use", "bool", 0 ],
-  //     "device",     [ "Official device id, 0 = unknown, 1 = ds1820", "integer", 0 ],
-  //     "unit",       [ "Unit of value, 0 = raw, 1 = celsius", "integer", 0 ],
-  //     "customunit", [ "Custom unit description", "text" ],
-  //     "unitcomma",  [ "Digits behind comma are part of the value", "integer", 0 ],
-  //     "min",        [ "Minimum value possible", "integer", 0 ],
-  //     "max",        [ "Maximum value possible", "integer", 1000 ],
-  //     "offset",     [ "Sensor value offset", "integer", 0 ],
-  //     "name",       [ "Name for sensor", "text" ],
-  //     "months",     [ "Apply sensor behavior only to given months (else always)", "array(month)" ],
-  //     "desiredmin", [ "Minimum desired value", "integer" ],
-  //     "desiredmax", [ "Maximum desired value", "integer" ],
-  //     "emails",     [ "Emails for alarm", "text" ],
-  //     "status",     [ "Send status email every X hours (0 = deactivate)", "integer", 0 ],
-  //     "pwm#X", "Setting for PWM X of sensor", [
-  //       "domin",    [ "Set percentage if under desiredmin", "bool", 0 ],
-  //       "domax",    [ "Set percentage if over desiredmax", "bool", 0 ],
-  //       "percentmin",[ "PWM percentage to set under desiredmin, is 0 or 100 for on/off", "integer", 0 ],
-  //       "percentmax",[ "PWM percentage to set over desiredmax, is 0 or 100 for on/off", "integer", 0 ]
-  //     ]
-  //   ],
-  //   "web",          [ "Web configuration for sensors", "json", "{}"]
-  // ],

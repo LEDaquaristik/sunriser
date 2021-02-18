@@ -35,7 +35,7 @@ $('body').on('sr_config',function(){
       name: next_name
     });
     var data = {};
-    data["programs#web"] = JSON.stringify(sr_config["programs#web"]);
+    data["programs#web"] = sr_config["programs#web"];
     data["programs#setup#" + next_id + "#name"] = next_name;
     data["programs#setup#" + next_id + "#deleted"] = false;
     data["programs#last_setup_id"] = next_id;
@@ -94,7 +94,7 @@ $('body').on('sr_config',function(){
                         new_web_config.push(wp);
                       }
                     });
-                    data["programs#web"] = JSON.stringify(new_web_config);
+                    data["programs#web"] = new_web_config;
                     sr_config["programs#web"] = new_web_config;
                     data["programs#setup#" + v.value + "#deleted"] = true;
                     sr_config["programs#setup#" + v.value + "#deleted"] = true;

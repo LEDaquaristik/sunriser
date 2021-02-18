@@ -228,15 +228,10 @@ var SrField_JSON = SrField.extend({
   pre: true,
   template: undefined, // will anyway not be used
 
-  prepare: function() {
-    this.data = $.parseJSON(this.value);
-  },
+  prepare: function() {},
 
   transform: function() {
-    if (this.getdata) {
-      this.data = this.getdata(this.data);
-    }
-    this.value = JSON.stringify(this.data);
+    this.value = this.getdata();
   }
 
 });

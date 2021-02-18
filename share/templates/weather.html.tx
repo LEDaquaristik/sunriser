@@ -24,11 +24,11 @@ $('body').on('sr_config',function(){
       name: next_name
     });
     var data = {};
-    data["weather#web"] = JSON.stringify(sr_config["weather#web"]);
+    data["weather#web"] = sr_config["weather#web"];
     data["weather#setup#" + next_id + "#name"] = next_name;
     data["weather#setup#" + next_id + "#deleted"] = false;
     data["weather#last_setup_id"] = next_id;
-    sr_request_mpack('PUT','/',data,function(){
+    sr_request_send_config(data,function(){
       window.location.href = window.location.href;
     });
 
@@ -119,9 +119,9 @@ $('body').on('sr_config',function(){
                         new_web_config.push(wp);
                       }
                     });
-                    data["weather#web"] = JSON.stringify(new_web_config);
+                    data["weather#web"] = new_web_config;
                     data["weather#setup#" + weather_id + "#deleted"] = true;
-                    sr_request_mpack('PUT','/',data, function(){
+                    sr_request_send_config(data,function(){
                       window.location.href = window.location.href;
                     });
                   }
