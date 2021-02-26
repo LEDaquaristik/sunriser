@@ -39,7 +39,7 @@ $('body').on('sr_config',function(){
     data["programs#setup#" + next_id + "#name"] = next_name;
     data["programs#setup#" + next_id + "#deleted"] = false;
     data["programs#last_setup_id"] = next_id;
-    sr_request_mpack('PUT','/',data,function(){
+    sr_request_send_config(data,function(){
       window.location.href = window.location.href;
     });
 
@@ -98,7 +98,7 @@ $('body').on('sr_config',function(){
                     sr_config["programs#web"] = new_web_config;
                     data["programs#setup#" + v.value + "#deleted"] = true;
                     sr_config["programs#setup#" + v.value + "#deleted"] = true;
-                    sr_request_mpack('PUT','/',data, function(){
+                    sr_request_send_config(data,function(){
                       window.location.href = window.location.href;
                     });
                   }
