@@ -32,7 +32,7 @@ echo "Upload to target..."
 scp $OBJS_FILE     $TARGET:~/htdocs/objs/
 scp $FIRMWARE_FILE $TARGET:~/htdocs/
 scp $RELEASE_FILE  $TARGET:~/
-scp $RELEASE_FILE  $TARGET:~/htdocs/NEW.BEE
+scp $FIRMWARE_FILE $TARGET:~/htdocs/NEW.BEE
 
 ssh $TARGET "(
   echo Killing old demo server... && \
