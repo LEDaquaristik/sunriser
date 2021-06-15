@@ -3,7 +3,15 @@
 
 <h2 class="upgraded">Die Firmware wurde erfolgreich erneuert!</h2>
 
-<h3>Seit Firmware v0.920:</h3>
+<h3>Seit Firmware v0.926:</h3>
+
+<div>
+- Bugfix f&uuml;r die Temperatursensoren.
+</div>
+
+<hr>
+
+<h3>Seit Firmware v0.925:</h3>
 
 <div>
 - Einstellungen f&uuml;r die <u>Temperatursensoren</u> sind ab sofort unter dem Men&uuml;punkt Einstellungen zu finden. Die Funktionalit&auml;t um die Temperatursensoren wird laufend auch auf Basis von Kundenfeedback erweitert, insbesondere um die M&ouml;glichkeit einer Emailbenachrichtigung. Der passende Temperatursensor ist <a href="https://www.ledaquaristik.de/epages/64355316.sf/sec3947872783/?ObjectPath=/Shops/64355316/Products/158-TEMP">hier</a> zu finden.<br>
