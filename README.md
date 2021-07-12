@@ -1,10 +1,9 @@
-[![Build Status](https://travis-ci.org/LEDaquaristik/sunriser.svg?branch=master)](https://travis-ci.org/LEDaquaristik/sunriser)
 
 OpenSource der SunRiser Produkte
 ================================
 
 An dieser Stelle finden Sie alle bisher veröffentlichen OpenSource Teile der
-**SunRiser** Produktreihe von [LEDaquaristik.de](http://www.ledaquaristik.de/).
+**SunRiser** Produktreihe von [LEDaquaristik.de](https://www.ledaquaristik.de/).
 
 Bitte beachten Sie das im Open Source Code und den internen Dokumentationen
 alles in Englisch verfasst ist, weil die Entwicklung mit Hilfe der
@@ -20,8 +19,8 @@ Installation
 
 Um mit der Umgebung zu arbeiten um z.B. uns Korrekturen zu schicken für das HTML
 welche Sie vorher direkt selber testen können, wird ein bisschen Erfahrung mit
-[git](http://de.wikipedia.org/wiki/Git) und der englischen Sprache vorausgesetzt.
-Ein Linux Betriebssystem und Erfahrung mit diesem sind auch notwendig.
+[git](https://de.wikipedia.org/wiki/Git) und der englischen Sprache vorausgesetzt.
+Ein [Linux](https://de.wikipedia.org/wiki/Linux) Betriebssystem und Erfahrung mit diesem sind auch notwendig.
 
 Sie können den Simulator und die Umgebung mit folgenden Anweisungen einrichten
 (neben git und curl wird auch ein C compiler benötigt):
@@ -37,7 +36,7 @@ perl -I$HOME/perl5/lib/perl5 -Mlocal::lib bin/sunriser_simulator
 Microcontroller Software
 ========================
 
-In diesem [Download Verzeichnis](https://sunriser.vbs.io/objs/) finden Sie alle
+In diesem [Download Verzeichnis](https://sunriser.ledaquaristik.de/objs/) finden Sie alle
 Archive der Objektdateien, von den bisher veröffentlichen Versionen von der
 SunRiser Microcontroller Software. In jedem Archiv befinden sich Informationen
 um die Microcontroller Software neu zu compilieren, um die
