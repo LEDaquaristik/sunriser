@@ -47,6 +47,8 @@
     "manager",      [ "Assigned manager, 0 = unassigned, 1 = dayplanner, 2 = weekplanner, 3 = celestial", "integer", 0 ],
     "max",          [ "Custom maximum value",       "integer", 1000 ],
     "min",          [ "Minimum value if above zero", "integer", 0 ],
+    "fixed",        [ "Fixed value if fixed manager is used", "integer", 0 ],
+    "nomaint",      [ "Do not change state on maintenance", "bool", 0 ],
     "onoff",        [ "PWM only on/off",            "bool", 0 ],
     "nosmart",      [ "Deactivate SmartControl",    "bool", 0 ],
     "name",         [ "Custom name for pwm",        "text" ],

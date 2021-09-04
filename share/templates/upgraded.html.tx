@@ -3,6 +3,22 @@
 
 <h2 class="upgraded">Die Firmware wurde erfolgreich erneuert!</h2>
 
+<h3>Seit Firmware v0.930:</h3>
+
+<div>
+- Bugfix f&uuml;r die Wolken.<br>
+- Einf&uuml;hrung der neuen Verlaufsplanung <u>Fester Wert</u>. Dieser speichert den letzten Wert der bei dem Funktionstest benutzt wurde, damit dieser auch nach einem Neustart wieder aktiv ist. Der Wert kann auch &uuml;ber die API gesetzt werden, eine erste Dokumentation daf&uuml;r finden Sie <a href="https://github.com/LEDaquaristik/sunriser/blob/master/SUNRISER8_API_DE.md">hier</a>.<br>
+- Einf&uuml;hrung der M&ouml;glichkeit eine LED oder Pumpe aus den Wartungsarbeiten auszuschlie&szlig;en. Hierf&uuml;r muss der Experten Modus aktiviert werden.
+</div>
+
+<hr>
+
+<div class="warnarea">
+  Beim Seitenwechsel von Wetter, Wochen und Sensor Einstellungen kann es zu Ladefehler im Chrome Browser kommen. Wir arbeiten an einer L&ouml;sung des Problems. Bis dahin k&ouml;nnen Sie entweder bei dem Auftreten des Fehlers einfach in die Addresszeile klicken und dort die Seite neu laden, das funktioniert dann meist (ein einfaches neu laden funktioniert leider nicht). Oder Sie benutzen kurzfristig den <a href="https://www.mozilla.org/de/firefox/new/">FireFox</a> Browser der jetzt ohne Warnung benutzt werden kann. Entschuldigung f&uuml;r die Unannehmlichkeiten.
+</div>
+
+<hr>
+
 <h3>Seit Firmware v0.926:</h3>
 
 <div>
@@ -19,12 +35,6 @@
 - Der AUS/AN Betrieb (f&uuml;r z.b. Minipumpe und CO2 Magnetventil) wurde &uuml;berarbeitet. AN ist nun 100% Maximum ohne PWM Dimmung. Damit wurde auch eine Funktion eingef&uuml;hrt in den Experteneinstellungen die SmartControl Funktion f&uuml;r die einzelnen Kan&auml;le zu deaktivieren.<br>
 - Die Wolkensimulation wurde angepasst, so dass auch bei maximaler Einstellung der Verdunkelung, das Licht nicht komplett abschaltet sondern noch minimal leuchtet.<br>
 - Der SunRiser reagiert nun durch eine Verbesserung unseres Debugging Konzepts merklich performanter, die Benutzeroberfl&auml;che l&auml;sst sich fl&uuml;ssiger bedienen.
-</div>
-
-<hr>
-
-<div class="warnarea">
-  Beim Seitenwechsel von Wetter, Wochen und Sensor Einstellungen kann es zu Ladefehler im Chrome Browser kommen. Wir arbeiten an einer L&ouml;sung des Problems. Bis dahin k&ouml;nnen Sie entweder bei dem Auftreten des Fehlers einfach in die Addresszeile klicken und dort die Seite neu laden, das funktioniert dann meist (ein einfaches neu laden funktioniert leider nicht). Oder Sie benutzen kurzfristig den <a href="https://www.mozilla.org/de/firefox/new/">FireFox</a> Browser der jetzt ohne Warnung benutzt werden kann.
 </div>
 
 <hr>

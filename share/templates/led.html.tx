@@ -1,4 +1,4 @@
-: cascade base { title => "LEDs verwalten", nav => "setup", help => r("Hier stellen Sie die Farben und Funktionen Ihrer LED ein. Vergessen Sie nicht nach der &Auml;nderung dieser Einstellungen am Ende der Seite auf 'Speichern' zu klicken.<br><br>F&uuml;r das Zuweisen der LEDs mit der Wettersimulation benutzen Sie bitte die <a href=\"/weather.html\">Wetter Profile</a>.") }
+: cascade base { title => "LEDs verwalten", nav => "setup", help => r("Hier stellen Sie die Farben und Funktionen Ihrer LED ein. F&uuml;r das Einstellen des festen Wertes bitte den Funktionstest benutzen oder die <a href=\"https://github.com/LEDaquaristik/sunriser/blob/master/SUNRISER8_API_DE.md\">API</a>. Vergessen Sie nicht nach der &Auml;nderung dieser Einstellungen am Ende der Seite auf 'Speichern' zu klicken.<br><br>F&uuml;r das Zuweisen der LEDs mit der Wettersimulation benutzen Sie bitte die <a href=\"/weather.html\">Wetter Profile</a>.") }
 : override content -> {
 
 <div class="form noautoload" id="led"></div>
@@ -83,9 +83,16 @@ $('body').on('sr_config',function(){
         },{
           value: 2,
           label: 'Wochenplanung'
+        },{
+          value: 3,
+          label: 'Fester Wert'
         }]
       });
       if (sr_config.showexpert) {
+        fields.push({
+          name: "pwm#" + i + "#nomaint",
+          label: "LED #" + i + " nicht beachten bei Wartungsarbeiten",
+        });
         fields.push({
           name: "pwm#" + i + "#onoff",
           label: "LED #" + i + " nur Aus/An (z.b. Pumpe)",
