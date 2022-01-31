@@ -211,14 +211,14 @@ $('body').on('sr_config',function(){
                     label: "LED #" + i + " AUS/AN bei unter Minimum Wert",
                     template: "checkbox",
                     extrajs: function(){ extrajs.call(this, dominname) },
-                    transform: function() { this.value = this.html_value() == 'no' ? 0 : 100 },
+                    transform: function() { this.value = this.html_field().prop("checked") ? 100 : 0 },
                   });
                   fields.push({
                     name: maxname,
                     label: "LED #" + i + " AUS/AN bei &uuml;ber Maximum Wert",
                     template: "checkbox",
                     extrajs: function(){ extrajs.call(this, domaxname) },
-                    transform: function() { this.value = this.html_value() == 'no' ? 0 : 100 },
+                    transform: function() { this.value = this.html_field().prop("checked") ? 100 : 0 },
                   });
                 } else {
                   fields.push({
@@ -226,8 +226,8 @@ $('body').on('sr_config',function(){
                     label: "LED #" + i + " Wert bei unter Minimum Wert",
                     template: "slider",
                     percent_sign: true,
-                    extrajs: function(){ extrajs.call(this, dominname) },
                     min: 0, max: 100,
+                    extrajs: function(){ extrajs.call(this, dominname) },
                     transform: function() { this.value = this.html_value() },
                   });
                   fields.push({
@@ -235,8 +235,8 @@ $('body').on('sr_config',function(){
                     label: "LED #" + i + " Wert bei &uuml;ber Maximum Wert",
                     template: "slider",
                     percent_sign: true,
-                    extrajs: function(){ extrajs.call(this, domaxname) },
                     min: 0, max: 100,
+                    extrajs: function(){ extrajs.call(this, domaxname) },
                     transform: function() { this.value = this.html_value() },
                   });
                 }
