@@ -94,7 +94,9 @@
         "domin",    [ "Set percentage if under desiredmin", "bool", 0 ],
         "domax",    [ "Set percentage if over desiredmax", "bool", 0 ],
         "percentmin",[ "PWM percentage to set under desiredmin, is 0 or 100 for on/off", "integer", 0 ],
-        "percentmax",[ "PWM percentage to set over desiredmax, is 0 or 100 for on/off", "integer", 0 ]
+        "percentmax",[ "PWM percentage to set over desiredmax, is 0 or 100 for on/off", "integer", 0 ],
+        "absmin",   [ "domin is absolute PWM value", "bool", 0 ],
+        "absmax",   [ "domax is absolute PWM value", "bool", 0 ]
       ]
     ],
     "web",          [ "Web configuration for sensors", "json", "{}"]

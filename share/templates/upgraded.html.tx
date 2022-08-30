@@ -3,6 +3,14 @@
 
 <h2 class="upgraded">Die Firmware wurde erfolgreich erneuert!</h2>
 
+<h3>Seit Firmware v0.932:</h3>
+
+<div>
+- Einstellung eingef&uuml;hrt um Temperatur Sensoren relativ zur aktuellen Helligkeit einzustellen.
+</div>
+
+<hr>
+
 <h3>Seit Firmware v0.931:</h3>
 
 <div>

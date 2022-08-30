@@ -142,3 +142,14 @@ function sr_update_weather_fields(success){
     success.call(this);
   }
 }
+
+function sr_update_sensors_abs(success){
+  var new_values = {};
+  $.each(sr_config["sensors#web"],function(key,v){
+    for (i = 1; i <= sr_config["pwm_count"]; i++) { 
+      new_values["sensors#sensor#" + key + "#pwm#" + i + "#absmin"] = true;
+      new_values["sensors#sensor#" + key + "#pwm#" + i + "#absmax"] = true;
+    }
+  });
+  success.call(this,new_values);
+}

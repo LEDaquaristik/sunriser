@@ -332,6 +332,13 @@ $('body').on('sr_config_legacy',function(){
       });
     }
 
+    if (sr_config_version < 932 && sr_config['sensors#web'] && Object.keys(sr_config['sensors#web']).length) {
+      task_count++;
+      sr_update_sensors_abs(function(new_config){
+        task_finished.call(this,new_config);
+      });      
+    }
+
     task_finished.call(this);    
   }
 

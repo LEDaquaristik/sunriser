@@ -1,4 +1,4 @@
-: cascade base { title => "Sensoren", nav => "sensor", no_bighelp => 1 }
+: cascade base { title => "Sensoren", nav => "sensor", help => mark_raw("Die Sensoren erm&#246;glichen es Ihnen die LED auf Temperaturwechsel zu reagieren. Sie k&#246;nnen hier einen maximum und minimum Wert setzen, und dann konfigurieren wie dies die LEDs beeinflusst. Der angegebene Prozentwert bei maximum oder minimum Wert wird auf den aktuellen LED Wert &#252;bertragen, d.h. wenn Sie 50% einstellen bei &#39;Wert bei unter Minimum Wert&#39;, dann wird die LED halb so hell, wie sie laut der Tages.- Wochenplanung sein sollte. Falls Sie m&#246;chten das die LED auf den absoluten Wert von 50% gesetzt wird, dann schalten Sie einfach den &#39;Minimum Wert ist absolut&#39; Schalter an.") }
 : override content -> {
 
 <div id="sensortabs"></div>
@@ -195,6 +195,8 @@ $('body').on('sr_config',function(){
                 var domaxname = "sensors#sensor#" + get_sensors_sensor_id + "#pwm#" + i + "#domax";
                 var minname = "sensors#sensor#" + get_sensors_sensor_id + "#pwm#" + i + "#percentmin";
                 var maxname = "sensors#sensor#" + get_sensors_sensor_id + "#pwm#" + i + "#percentmax";
+                var absminname = "sensors#sensor#" + get_sensors_sensor_id + "#pwm#" + i + "#absmin";
+                var absmaxname = "sensors#sensor#" + get_sensors_sensor_id + "#pwm#" + i + "#absmax";
                 fields.push({
                   name: dominname,
                   transform: function(){},
@@ -226,18 +228,28 @@ $('body').on('sr_config',function(){
                     label: "LED #" + i + " Wert bei unter Minimum Wert",
                     template: "slider",
                     percent_sign: true,
-                    min: 0, max: 100,
+                    min: 0, max: 200,
                     extrajs: function(){ extrajs.call(this, dominname) },
                     transform: function() { this.value = this.html_value() },
+                  });
+                  fields.push({
+                    name: absminname,
+                    label: "LED #" + i + " Minimum Wert ist absolut",
+                    template: "checkbox",
                   });
                   fields.push({
                     name: maxname,
                     label: "LED #" + i + " Wert bei &uuml;ber Maximum Wert",
                     template: "slider",
                     percent_sign: true,
-                    min: 0, max: 100,
+                    min: 0, max: 200,
                     extrajs: function(){ extrajs.call(this, domaxname) },
                     transform: function() { this.value = this.html_value() },
+                  });
+                  fields.push({
+                    name: absmaxname,
+                    label: "LED #" + i + " Maximum Wert ist absolut",
+                    template: "checkbox",
                   });
                 }
               }
