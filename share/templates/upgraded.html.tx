@@ -3,6 +3,15 @@
 
 <h2 class="upgraded">Die Firmware wurde erfolgreich erneuert!</h2>
 
+<h3>Seit Firmware v0.940:</h3>
+
+<div>
+- Neue Farben f&uuml;r die LEDs hinzugef&uuml;gt.<br>
+- Netzwerk Bibliothek auf den neusten Stand gebracht.
+</div>
+
+<hr>
+
 <h3>Seit Firmware v0.932:</h3>
 
 <div>

@@ -15,7 +15,7 @@ TARGET=sunriser@sunriser
 OBJS_FILE=SunRiser8_Firmware_v${VERSION_FILENAME}_objs.tar.gz
 FIRMWARE_FILE=SunRiser8_Firmware_v$VERSION_FILENAME.bee
 
-if [ ! -f $SUNRISER_MCU/xbin/generate_version_h.pl ]; then
+if [ ! -f $SUNRISER8_SRC/xbin/generate_version_h.pl ]; then
   echo "Full source of microcontroller required for making release"
   exit 1
 fi
@@ -24,7 +24,7 @@ echo "Generating v$VERSION..."
 
 rm -f $LOGFILE
 
-cd $SUNRISER_MCU
+cd $SUNRISER8_SRC
 
 echo "Generating microcontroller application and object file distribution..."
 V=$VERSION SR_TIMESTAMP=$NOW make PRODUCTION_FIRMWARE=1 -s clean main.bin bootloader.bin dist | tee $LOGFILE
