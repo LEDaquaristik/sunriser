@@ -13,9 +13,9 @@ ENV DEBIAN_FRONTEND  "noninteractive"
 RUN echo "locales locales/locales_to_be_generated multiselect en_US.UTF-8 UTF-8" > /debconf-preseed.txt \
   && echo "locales locales/default_environment_locale select en_US.UTF-8" >> /debconf-preseed.txt \
   && debconf-set-selections /debconf-preseed.txt && apt-get update -y \
-  && apt-get install -y git zip unzip bzip2 ca-certificates hostname \
-    build-essential wget libssl-dev zlib1g-dev curl locales apt-utils \
-    libcdb-dev libev-dev cmake python3 python-is-python3 libc6-i386 \
+  && apt-get install -y git zip unzip bzip2 ca-certificates hostname wget \
+    build-essential libssl-dev zlib1g-dev locales apt-utils curl libcdb-dev \
+    libev-dev cmake python3 python-is-python3 libc6-i386 openocd \
   && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/log/* /var/cache/*
 
 WORKDIR /usr/src
