@@ -1,5 +1,5 @@
-
 requires 'AnyEvent', '0';
+requires 'AnyEvent::ITM', '0';
 requires 'CDB::TinyCDB', '0';
 requires 'CSS::Minifier::XS', '0';
 requires 'Compress::Zlib', '0';

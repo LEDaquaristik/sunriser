@@ -57,6 +57,14 @@ DISTRIBUTIONS
       AnyEvent 5.33
       ExtUtils::MakeMaker 0
       common::sense 3.3
+  AnyEvent-ITM-0.003
+    pathname: G/GE/GETTY/AnyEvent-ITM-0.003.tar.gz
+    provides:
+      AnyEvent::ITM 0.003
+    requirements:
+      AnyEvent 0
+      ExtUtils::MakeMaker 0
+      ITM 0
   Apache-LogFormat-Compiler-0.36
     pathname: K/KA/KAZEBURO/Apache-LogFormat-Compiler-0.36.tar.gz
     provides:
@@ -713,6 +721,18 @@ DISTRIBUTIONS
       Exporter 5.57
       ExtUtils::MakeMaker 0
       perl 5.008
+  ITM-0.002
+    pathname: G/GE/GETTY/ITM-0.002.tar.gz
+    provides:
+      ITM 0.002
+      ITM::HardwareSource 0.002
+      ITM::Instrumentation 0.002
+      ITM::Overflow 0.002
+      ITM::Role 0.002
+      ITM::Sync 0.002
+    requirements:
+      ExtUtils::MakeMaker 0
+      Moo 0
   Import-Into-1.002005
     pathname: H/HA/HAARG/Import-Into-1.002005.tar.gz
     provides:
