@@ -1,0 +1,16 @@
+services:
+  sunriser:
+    container_name: sunriser
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SUNRISER_UID: "${SUNRISER_UID:-1000}"
+        SUNRISER_GID: "${SUNRISER_GID:-1000}"
+    command: ["bin/sunriser_simulator", "--port", "9000"]
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./config:/opt/sunriser/src/config
+    restart: unless-stopped
+    init: true

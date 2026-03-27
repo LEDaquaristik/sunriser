@@ -33,6 +33,24 @@ cd sunriser
 perl -I$HOME/perl5/lib/perl5 -Mlocal::lib bin/sunriser_simulator
 ```
 
+Docker
+======
+
+Zum lokalen Starten mit Docker:
+
+```bash
+cd sunriser
+docker compose up --build -d
+```
+
+Danach ist der Simulator unter <http://localhost:9000> erreichbar.
+
+Zum Stoppen und Aufräumen:
+
+```bash
+docker compose down
+```
+
 Microcontroller Software
 ========================
 
