@@ -185,7 +185,6 @@ sub state {
     tick => ( ( $time - $self->start_time ) * 1000 ),
     logsize => 0,
     errsize => 1000,
-    timewarp => 0,
     # PWM name is a number but must be treated like a string
     pwms => { map { $_."", ( int(rand(21)) * 50 ) } 1..$pwms },
     sensors => {
@@ -501,9 +500,17 @@ sub set_timewarp {
     if (!defined $env->{'psgix.session'}->{state}) {
       $env->{'psgix.session'}->{state} = $self->state;
     }
-    $env->{'psgix.session'}->{state}->{timewarp} = $value;
+    if ($value) {
+      $env->{'psgix.session'}->{state}->{timewarp} = $value;
+    } else {
+      delete $env->{'psgix.session'}->{state}->{timewarp};
+    }
   } else {
-    $self->state->{timewarp} = $value;
+    if ($value) {
+      $self->state->{timewarp} = $value;
+    } else {
+      delete $self->state->{timewarp};
+    }
   }
 }
 
