@@ -1,0 +1,15 @@
+---
+class: standard
+created: 2026-08-31T03:07:23Z
+id: 3
+priority: medium
+status: backlog
+tags:
+- mcp
+- device
+- v1
+title: 'sunriser-control: DeviceResolver + device_* HTTP-Tools (Finder-Tier)'
+updated: 2026-08-31T03:07:23Z
+---
+
+HTTP-API als tragende Ebene; Finder-Adressquelle. Spec §8.
