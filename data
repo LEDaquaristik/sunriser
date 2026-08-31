@@ -1,0 +1,15 @@
+---
+class: standard
+created: 2026-08-31T03:07:19Z
+id: 2
+priority: high
+status: backlog
+tags:
+- mcp
+- tools
+- v1
+title: 'sunriser-control: build/flash_usb/clean/itm_tail/status Tools'
+updated: 2026-08-31T03:07:19Z
+---
+
+docker exec make; ITM-FIFO Ringpuffer. Spec §5.
