@@ -1,0 +1,15 @@
+---
+class: standard
+created: 2026-08-31T03:07:36Z
+id: 6
+priority: low
+status: backlog
+tags:
+- mcp
+- web
+- v1
+title: 'sunriser-control: Minimal Web-UI (Status + ITM-Tail + Build/Flash)'
+updated: 2026-08-31T03:07:36Z
+---
+
+Spec §6.
