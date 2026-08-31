@@ -1,0 +1,14 @@
+---
+class: standard
+created: 2026-08-31T03:07:32Z
+id: 5
+priority: medium
+status: backlog
+tags:
+- docker
+- v1
+title: 'sunriser-control: Docker mcp-mode Entrypoint + sunriser_control_run Wrapper'
+updated: 2026-08-31T03:07:32Z
+---
+
+Spec §3 Packaging.
