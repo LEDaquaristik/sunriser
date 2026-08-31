@@ -1,0 +1,15 @@
+---
+class: standard
+created: 2026-08-31T03:07:15Z
+id: 1
+priority: high
+status: backlog
+tags:
+- mcp
+- daemon
+- v1
+title: 'sunriser-control: Daemon-Grundgerüst (IO::Async, /mcp + /, Token-Auth)'
+updated: 2026-08-31T03:07:15Z
+---
+
+Net::Async::MCP::Server + Net::Async::HTTP::Server, Bearer-Token. Spec §3/§4.
