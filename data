@@ -1,0 +1,15 @@
+---
+class: standard
+created: 2026-08-31T03:07:27Z
+id: 4
+priority: medium
+status: backlog
+tags:
+- mcp
+- build
+- v1
+title: 'sunriser-control: Source-Sync (rsync-WIP + Git-Ref-Pin)'
+updated: 2026-08-31T03:07:27Z
+---
+
+Agent->patrick Source. Spec §7.
